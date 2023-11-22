@@ -27,7 +27,7 @@ public interface IAccommodationService {
 
     ArrayList<FavouriteAccommodationDTO> findGuestsFavouriteAccommodations(Long guestId);
 
-    ArrayList<AccommodationListingDTO> findAccommodationsLocationBetweenDatesWithPeople(String startDate, String endDate, String location, int people);
+    ArrayList<AccommodationListingDTO> search(String startDate, String endDate, String location, int people);
 
-    ArrayList<AccommodationListingDTO> findAccommodationsBetweenDates(String startDate, String endDate);
+    ArrayList<AccommodationListingDTO> findAllOwnersAccommodations(Long ownerId);
 }
