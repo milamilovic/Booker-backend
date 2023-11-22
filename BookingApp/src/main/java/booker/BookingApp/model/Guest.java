@@ -1,4 +1,10 @@
 package booker.BookingApp.model;
 
-public class Guest {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class Guest extends Account {
 }

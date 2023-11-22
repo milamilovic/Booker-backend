@@ -1,4 +1,9 @@
 package booker.BookingApp.model;
 
-public class Admin {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class Admin extends Account {
 }

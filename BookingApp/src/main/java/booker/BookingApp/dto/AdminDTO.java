@@ -1,4 +1,9 @@
 package booker.BookingApp.dto;
 
-public class AdminDTO {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class AdminDTO extends AccountDTO {
 }
