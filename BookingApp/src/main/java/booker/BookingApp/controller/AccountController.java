@@ -40,9 +40,9 @@ public class AccountController {
         }
     }
 
-    @GetMapping(value = "/findUserId")
-    public ResponseEntity<AccountDTO> getAccountByUserId(@PathVariable Long userId) {
-        Account account = accountService.findOneByUserId(userId);
+    @GetMapping(value = "/{findUserId}")
+    public ResponseEntity<AccountDTO> getAccountByUserId(@PathVariable Long findUserId) {
+        Account account = accountService.findOneByUserId(findUserId);
 
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
