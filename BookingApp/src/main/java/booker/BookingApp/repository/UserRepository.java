@@ -11,15 +11,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository {
+public interface UserRepository extends JpaRepository<User, Long> {
+    public User findOneById(Long id);
 
-    Collection<User> findAll();
+    public User findOneByEmail(String email);
 
-    User create(User user) throws Exception;
+    public List<User> findAll();
 
-    User findOne(Long id);
+    public User create(User user);
 
-    User update(User user) throws Exception;
+    public User update(User user);
 
-    void delete(Long id);
+    public void delete(Long id);
+
 }
