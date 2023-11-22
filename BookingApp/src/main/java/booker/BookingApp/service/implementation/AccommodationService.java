@@ -148,12 +148,12 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public ArrayList<AccommodationListingDTO> findAccommodationsLocationBetweenDatesWithPeople(String startDate, String endDate, String location, int people) {
+    public ArrayList<AccommodationListingDTO> search(String startDate, String endDate, String location, int people) {
         return findOwnersActiveAccommodations(2L);
     }
 
     @Override
-    public ArrayList<AccommodationListingDTO> findAccommodationsBetweenDates(String startDate, String endDate) {
+    public ArrayList<AccommodationListingDTO> findAllOwnersAccommodations(Long ownerId) {
         return findOwnersActiveAccommodations(2L);
     }
 }

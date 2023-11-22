@@ -51,18 +51,18 @@ public class AccommodationController {
         return new ResponseEntity<ArrayList<AccommodationListingDTO>>(accommodations, HttpStatus.OK);
     }
 
-    //   /api/accommodations?startDate=12.12.2023.&endDate=15.12.2023.
-    @GetMapping(value = "/search/just-dates", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<AccommodationListingDTO>> findAccommodationsBetweenDates(@RequestParam String startDate, @RequestParam String endDate)
+    @GetMapping(value = "/owner/{ownerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllOwnersAccommodations(@PathVariable Long ownerId)
     {
-        ArrayList<AccommodationListingDTO> accommodations = service.findAccommodationsBetweenDates(startDate, endDate);
+        ArrayList<AccommodationListingDTO> accommodations = service.findAllOwnersAccommodations(ownerId);
         return new ResponseEntity<ArrayList<AccommodationListingDTO>>(accommodations, HttpStatus.OK);
     }
-    //   /api/accommodations?startDate=12.12.2023.&endDate=15.12.2023.&location=Kopaonik&people=2
+
+    //   /api/accommodations/search?startDate=12.12.2023.&endDate=15.12.2023.&location=Paris&people=2
     @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<AccommodationListingDTO>> findAccommodationsLocationBetweenDatesWithPeople(@RequestParam String startDate, @RequestParam String endDate, @RequestParam String location, @RequestParam int people)
+    public ResponseEntity<ArrayList<AccommodationListingDTO>> searchAccommodations(@RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate, @RequestParam(required = false) String location, @RequestParam(required = false) int people)
     {
-        ArrayList<AccommodationListingDTO> accommodations = service.findAccommodationsLocationBetweenDatesWithPeople(startDate, endDate, location, people);
+        ArrayList<AccommodationListingDTO> accommodations = service.search(startDate, endDate, location, people);
         return new ResponseEntity<ArrayList<AccommodationListingDTO>>(accommodations, HttpStatus.OK);
     }
 
