@@ -63,7 +63,7 @@ public class UserController {
         user.setPhone(userDTO.getPhone());
 
         user = userService.save(user);
-        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+        return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
     }
 
     @PutMapping(consumes = "application/json")
