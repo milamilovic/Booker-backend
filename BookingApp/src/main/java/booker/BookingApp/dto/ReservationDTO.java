@@ -1,10 +1,11 @@
 package booker.BookingApp.dto;
 
 import booker.BookingApp.model.Reservation;
+import lombok.Data;
 
 import java.util.Date;
 
-public class ReservationDTO {
+public @Data class ReservationDTO {
     private Date fromDate;
     private Date toDate;
     private int numberOfGuests;
