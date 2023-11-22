@@ -1,47 +1,19 @@
 package booker.BookingApp.service;
 
 import booker.BookingApp.model.User;
-import booker.BookingApp.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 
-@Service
-public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+public interface UserService {
 
-    public User findUserById(Integer id) {
-        if (userRepository.findUserById(id) == null) {
-            return null;
-        }
-        return userRepository.findUserById(id);
-    }
+    Collection<User> findAll();
 
-    public User findUserByEmail(String email) {
-        return this.userRepository.findUserByEmail(email).orElse(null);
-    }
+    User findOne(long id);
 
-    public User findOneUserByEmail(String email) {
-        return this.userRepository.findOneUserByEmail(email);
-    }
+    User create(User user) throws Exception;
 
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
+    User update(User user) throws Exception;
 
-    public Page<User> findAll(Pageable pageable) {
-        return this.userRepository.findAll(pageable);
-    }
+    void delete(long id);
 
-    public User save(User user) {
-        return userRepository.save(user);
-    }
-
-    public void remove(Integer id) {
-        userRepository.deleteById(id);
-    }
 }
