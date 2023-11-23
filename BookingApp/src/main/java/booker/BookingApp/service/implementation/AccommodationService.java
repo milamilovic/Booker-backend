@@ -66,13 +66,13 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public WholeAccommodationDTO create(Accommodation accommodation) throws Exception {
-        return WholeAccommodationDTO.makeFromAccommodation(accommodation);
+    public WholeAccommodationDTO create(WholeAccommodationDTO accommodation) throws Exception {
+        return accommodation;
     }
 
     @Override
-    public WholeAccommodationDTO update(Accommodation accommodation) throws Exception {
-        return WholeAccommodationDTO.makeFromAccommodation(accommodation);
+    public WholeAccommodationDTO update(WholeAccommodationDTO accommodation) throws Exception {
+        return accommodation;
     }
 
     @Override

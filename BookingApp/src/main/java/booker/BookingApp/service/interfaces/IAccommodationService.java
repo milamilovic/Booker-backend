@@ -16,9 +16,9 @@ public interface IAccommodationService {
 
     WholeAccommodationDTO findOne(Long id) throws IOException;
 
-    WholeAccommodationDTO create(Accommodation accommodation) throws Exception;
+    WholeAccommodationDTO create(WholeAccommodationDTO accommodation) throws Exception;
 
-    WholeAccommodationDTO update(Accommodation accommodation) throws Exception;
+    WholeAccommodationDTO update(WholeAccommodationDTO accommodation) throws Exception;
 
     void delete(Long id);
 

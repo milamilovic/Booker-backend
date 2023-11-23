@@ -20,11 +20,11 @@ import java.util.ArrayList;
 public class AccommodationController {
 
     @Autowired
-    IAccommodationService service = new AccommodationService();
+    IAccommodationService service;
 
     //create an accommodation
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WholeAccommodationDTO> insert(@RequestBody Accommodation accommodation) throws Exception {
+    public ResponseEntity<WholeAccommodationDTO> insert(@RequestBody WholeAccommodationDTO accommodation) throws Exception {
         WholeAccommodationDTO dto = service.create(accommodation);
         return new ResponseEntity<WholeAccommodationDTO>(dto, HttpStatus.OK);
     }
@@ -122,7 +122,7 @@ public class AccommodationController {
 
     //update accommodation
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateAccommodation(@RequestBody Accommodation updatedAccommodation) throws Exception {
+    public ResponseEntity<Void> updateAccommodation(@RequestBody WholeAccommodationDTO updatedAccommodation) throws Exception {
         service.update(updatedAccommodation);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
