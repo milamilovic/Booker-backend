@@ -2,7 +2,7 @@ package booker.BookingApp.controller;
 
 import booker.BookingApp.dto.AccountDTO;
 import booker.BookingApp.model.Account;
-import booker.BookingApp.service.AccountService;
+import booker.BookingApp.service.implementation.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

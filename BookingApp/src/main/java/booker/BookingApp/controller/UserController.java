@@ -2,15 +2,13 @@ package booker.BookingApp.controller;
 
 import booker.BookingApp.dto.UserDTO;
 import booker.BookingApp.model.User;
-import booker.BookingApp.service.UserService;
+import booker.BookingApp.service.implementation.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RestController

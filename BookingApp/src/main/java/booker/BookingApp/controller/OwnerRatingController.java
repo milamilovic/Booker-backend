@@ -2,7 +2,7 @@ package booker.BookingApp.controller;
 
 import booker.BookingApp.dto.OwnerRatingDTO;
 import booker.BookingApp.model.OwnerRating;
-import booker.BookingApp.service.OwnerRatingService;
+import booker.BookingApp.service.implementation.OwnerRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
