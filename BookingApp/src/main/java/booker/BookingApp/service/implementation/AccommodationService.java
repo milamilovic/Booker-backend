@@ -47,10 +47,10 @@ public class AccommodationService implements IAccommodationService {
         availabilities.add(new Availability(new Date(), new Date()));
         availabilities.add(new Availability(new Date(), new Date()));
         ArrayList<Price> prices = new ArrayList<>();
-        prices.add(new Price(120, new Date(), new Date(), "price type 1"));
-        prices.add(new Price(80, new Date(), new Date(), "price type 2"));
-        prices.add(new Price(210, new Date(), new Date(), "price type 3"));
-        prices.add(new Price(145, new Date(), new Date(), "price type 4"));
+        prices.add(new Price());
+        prices.add(new Price());
+        prices.add(new Price());
+        prices.add(new Price());
         ArrayList<AccommodationRating> ratings = new ArrayList<>();
         ratings.add(new AccommodationRating());
         ratings.add(new AccommodationRating());
