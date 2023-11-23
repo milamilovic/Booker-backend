@@ -1,12 +1,12 @@
-package booker.BookingApp.model.accommodation;
+package booker.BookingApp.model;
 
 import lombok.Data;
 
 import java.util.Date;
 
-public @Data class AccommodationRating {
+public @Data class OwnerRating {
     private Long id;
-    private Long accommodationId;
+    private Long ownerId;
     private Long guestId;
     private float rate;
     private Date when;

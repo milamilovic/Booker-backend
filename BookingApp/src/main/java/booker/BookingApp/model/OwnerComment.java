@@ -1,14 +1,14 @@
-package booker.BookingApp.model.accommodation;
+package booker.BookingApp.model;
 
 import lombok.Data;
 
 import java.util.Date;
 
-public @Data class AccommodationRating {
+public @Data class OwnerComment {
     private Long id;
-    private Long accommodationId;
     private Long guestId;
-    private float rate;
+    private Long ownerId;
+    private String content;
     private Date when;
     private boolean reported;
 }

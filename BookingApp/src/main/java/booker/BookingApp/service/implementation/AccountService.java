@@ -1,4 +1,4 @@
-package booker.BookingApp.service;
+package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.model.Account;
 import booker.BookingApp.repository.AccountRepository;

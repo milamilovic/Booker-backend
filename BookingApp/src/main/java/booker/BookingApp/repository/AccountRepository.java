@@ -1,4 +1,4 @@
-package booker.BookingApp.repository;
+/*package booker.BookingApp.repository;
 
 import booker.BookingApp.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +17,4 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     public Account update(Account account);
 
     public void delete(Long id);
-}
+}*/
