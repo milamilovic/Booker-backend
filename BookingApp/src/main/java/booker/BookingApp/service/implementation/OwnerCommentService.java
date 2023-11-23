@@ -1,4 +1,4 @@
-package booker.BookingApp.service;
+package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.model.OwnerComment;
 import booker.BookingApp.repository.OwnerCommentRepository;
