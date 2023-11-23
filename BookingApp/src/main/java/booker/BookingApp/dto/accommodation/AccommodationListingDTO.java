@@ -12,10 +12,10 @@ public @Data class AccommodationListingDTO {
     private String description;
     private Image image;
     private AccommodationRating rating;
-    private int totalPrice;
-    private int pricePerDay;
+    private double totalPrice;
+    private double pricePerDay;
 
-    public AccommodationListingDTO makeFromAccommodation(Accommodation accommodation) {
+    public static AccommodationListingDTO makeFromAccommodation(Accommodation accommodation) {
         AccommodationListingDTO listingDTO = new AccommodationListingDTO();
 
         listingDTO.id = accommodation.getId();
@@ -26,6 +26,20 @@ public @Data class AccommodationListingDTO {
         listingDTO.rating = accommodation.getRatings().get(0);
         listingDTO.pricePerDay = accommodation.getPrices().get(0).getCost();
         listingDTO.totalPrice = accommodation.getPrices().get(0).getCost();
+
+        return listingDTO;
+    }
+
+    public static AccommodationListingDTO makeFromWholeAccommodation(WholeAccommodationDTO a) {AccommodationListingDTO listingDTO = new AccommodationListingDTO();
+
+        listingDTO.id = a.getId();
+        listingDTO.title = a.getTitle();
+        listingDTO.description = a.getShortDescription();
+        listingDTO.image =a.getImages().get(0);
+        //TODO make getAverageRating, getTotalPrice and getPricePerDay methods in service
+        listingDTO.rating = a.getRatings().get(0);
+        listingDTO.pricePerDay = a.getPrices().get(0).getCost();
+        listingDTO.totalPrice = a.getPrices().get(0).getCost();
 
         return listingDTO;
     }
