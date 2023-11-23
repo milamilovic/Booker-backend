@@ -1,4 +1,4 @@
-package booker.BookingApp.repository;
+/*package booker.BookingApp.repository;
 
 import booker.BookingApp.model.User;
 import org.springframework.data.domain.Page;
@@ -24,4 +24,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public void delete(Long id);
 
-}
+}*/

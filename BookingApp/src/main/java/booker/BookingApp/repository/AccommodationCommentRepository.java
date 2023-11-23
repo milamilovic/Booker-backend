@@ -1,4 +1,4 @@
-package booker.BookingApp.repository;
+/*package booker.BookingApp.repository;
 
 import booker.BookingApp.model.accommodation.AccommodationComment;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +14,4 @@ public interface AccommodationCommentRepository extends JpaRepository<Accommodat
     public AccommodationComment create(AccommodationComment accommodationComment);
     public AccommodationComment update(AccommodationComment accommodationComment);
     public void delete(Long id);
-}
+}*/

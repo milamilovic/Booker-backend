@@ -1,4 +1,4 @@
-package booker.BookingApp.repository;
+/*package booker.BookingApp.repository;
 
 import booker.BookingApp.model.OwnerComment;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +14,4 @@ public interface OwnerCommentRepository extends JpaRepository<OwnerComment, Long
     public OwnerComment create(OwnerComment ownerComment);
     public OwnerComment update(OwnerComment ownerComment);
     public void delete(Long id);
-}
+}*/

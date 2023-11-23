@@ -1,4 +1,4 @@
-package booker.BookingApp.repository;
+/*package booker.BookingApp.repository;
 
 import booker.BookingApp.model.OwnerRating;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +15,4 @@ public interface OwnerRatingRepository extends JpaRepository<OwnerRating, Long> 
     public OwnerRating create(OwnerRating ownerRating);
     public OwnerRating update(OwnerRating ownerRating);
     public void delete(Long id);
-}
+}*/
