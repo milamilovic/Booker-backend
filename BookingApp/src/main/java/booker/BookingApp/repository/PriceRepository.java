@@ -1,4 +1,4 @@
-package booker.BookingApp.repository;
+/*package booker.BookingApp.repository;
 
 import booker.BookingApp.model.accommodation.Price;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +12,4 @@ public interface PriceRepository extends JpaRepository<Price, Long> {
     public Price create(Price price);
     public Price update(Price price);
     public void delete(Long id);
-}
+}*/

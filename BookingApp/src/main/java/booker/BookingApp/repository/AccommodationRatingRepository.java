@@ -1,4 +1,4 @@
-package booker.BookingApp.repository;
+/*package booker.BookingApp.repository;
 
 import booker.BookingApp.model.accommodation.AccommodationRating;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +14,4 @@ public interface AccommodationRatingRepository extends JpaRepository<Accommodati
     public AccommodationRating create(AccommodationRating accommodationRating);
     public AccommodationRating update(AccommodationRating accommodationRating);
     public void delete(Long id);
-}
+}*/
