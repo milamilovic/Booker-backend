@@ -1,14 +1,16 @@
 package booker.BookingApp.model.accommodation;
 
+import booker.BookingApp.enums.PriceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
 
-public @Data @AllArgsConstructor class Price {
-    private int cost;
+public @Data class Price {
+    private Long id;
+    private Long accommodationId;
+    private double cost;
     private Date fromDate;
     private Date toDate;
-    //TODO: make enum types
-    private String type;
+    private PriceType type;
 }
