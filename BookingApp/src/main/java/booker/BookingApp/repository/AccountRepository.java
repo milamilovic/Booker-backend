@@ -1,6 +1,6 @@
 /*package booker.BookingApp.repository;
 
-import booker.BookingApp.model.Account;
+import booker.BookingApp.model.users.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

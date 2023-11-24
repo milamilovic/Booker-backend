@@ -1,8 +1,6 @@
 package booker.BookingApp.service.interfaces;
 
-import booker.BookingApp.model.Guest;
-
-import java.util.ArrayList;
+import booker.BookingApp.model.users.Guest;
 
 public interface IGuestService {
     void findAll();

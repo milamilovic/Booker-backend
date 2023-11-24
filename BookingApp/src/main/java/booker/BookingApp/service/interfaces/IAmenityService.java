@@ -1,9 +1,7 @@
 package booker.BookingApp.service.interfaces;
 
-import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
+import booker.BookingApp.dto.accommodation.AccommodationDTO;
 import booker.BookingApp.dto.accommodation.AmenityDTO;
-import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
-import booker.BookingApp.dto.accommodation.WholeAccommodationDTO;
 import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.accommodation.Filter;
 

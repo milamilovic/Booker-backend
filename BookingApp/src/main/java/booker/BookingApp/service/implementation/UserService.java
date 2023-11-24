@@ -1,11 +1,10 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.model.User;
+import booker.BookingApp.model.users.User;
 import booker.BookingApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service
