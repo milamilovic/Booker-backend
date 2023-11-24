@@ -1,4 +1,4 @@
-package booker.BookingApp.controller;
+/*package booker.BookingApp.controller;
 
 import booker.BookingApp.dto.accommodation.AccommodationDTO;
 import booker.BookingApp.model.accommodation.*;
@@ -125,3 +125,4 @@ public class AccommodationController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
+*/

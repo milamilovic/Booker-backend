@@ -39,16 +39,7 @@ public class UserController {
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findEmail")
-    public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
-        User user = userService.findOneByEmail(email);
 
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
-    }
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
@@ -59,6 +50,7 @@ public class UserController {
         user.setPhone(userDTO.getPhone());
         user.setAddress(userDTO.getAddress());
         user.setPhone(userDTO.getPhone());
+        user.setPassword(userDTO.getPassword());
 
         user = userService.save(user);
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
@@ -77,6 +69,7 @@ public class UserController {
         user.setEmail(userDTO.getEmail());
         user.setAddress(userDTO.getAddress());
         user.setPhone(userDTO.getPhone());
+        user.setPassword(userDTO.getPassword());
 
         user = userService.save(user);
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);

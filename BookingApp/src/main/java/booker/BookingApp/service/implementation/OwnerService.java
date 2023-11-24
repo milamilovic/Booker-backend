@@ -2,7 +2,9 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.model.Owner;
 import booker.BookingApp.service.interfaces.IOwnerService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OwnerService implements IOwnerService {
     @Override
     public void findAll() {

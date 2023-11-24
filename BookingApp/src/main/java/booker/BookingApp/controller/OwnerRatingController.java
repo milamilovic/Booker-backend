@@ -28,18 +28,7 @@ public class OwnerRatingController {
         return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/all/{owner_id}")
-    public ResponseEntity<List<OwnerRatingDTO>> getAllRatingsForOwner(@PathVariable Long owner_id) {
-        List<OwnerRating> ownerRatings = ownerRatingService.findAll();
-        List<OwnerRatingDTO> ratingDTOS = new ArrayList<>();
 
-        for (OwnerRating ownerRating : ownerRatings) {
-            if (ownerRating.getOwnerId() == owner_id) {
-                ratingDTOS.add(new OwnerRatingDTO(ownerRating));
-            }
-        }
-        return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
-    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<OwnerRatingDTO> getRating(@PathVariable Long id) {
@@ -52,34 +41,17 @@ public class OwnerRatingController {
         }
     }
 
-    @GetMapping(value = "/{owner_id}")
-    public ResponseEntity<OwnerRatingDTO> getOwnerRatingByOwnerId(@PathVariable Long owner_id) {
-        OwnerRating ownerRating = ownerRatingService.findOneByOwnerId(owner_id);
 
-        if (ownerRating == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(new OwnerRatingDTO(ownerRating), HttpStatus.OK);
-    }
 
-    @GetMapping(value = "/{guest_id}")
-    public ResponseEntity<OwnerRatingDTO> getOwnerRatingByGuestId(@PathVariable Long guest_id) {
-        OwnerRating ownerRating = ownerRatingService.findOneByGuestRating(guest_id);
-
-        if (ownerRating == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(new OwnerRatingDTO(ownerRating), HttpStatus.OK);
-    }
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<OwnerRatingDTO> saveOwnerRating(@RequestBody OwnerRatingDTO ownerRatingDTO) {
         OwnerRating ownerRating = new OwnerRating();
 
-        ownerRating.setOwnerId(ownerRatingDTO.getOwnerId());
-        ownerRating.setGuestId(ownerRatingDTO.getGuestId());
+        //ownerRating.setOwnerId(ownerRatingDTO.getOwnerId());
+        //ownerRating.setGuestId(ownerRatingDTO.getGuestId());
         ownerRating.setRate(ownerRatingDTO.getRate());
-        ownerRating.setWhen(ownerRatingDTO.getWhen());
+        ownerRating.setDate(ownerRatingDTO.getDate());
         ownerRating.setReported(ownerRatingDTO.isReported());
 
         ownerRating = ownerRatingService.save(ownerRating);
@@ -94,10 +66,10 @@ public class OwnerRatingController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        ownerRating.setOwnerId(ownerRatingDTO.getOwnerId());
-        ownerRating.setGuestId(ownerRatingDTO.getGuestId());
+        //ownerRating.setOwnerId(ownerRatingDTO.getOwnerId());
+        //ownerRating.setGuestId(ownerRatingDTO.getGuestId());
         ownerRating.setRate(ownerRatingDTO.getRate());
-        ownerRating.setWhen(ownerRatingDTO.getWhen());
+        ownerRating.setDate(ownerRatingDTO.getDate());
         ownerRating.setReported(ownerRatingDTO.isReported());
 
         ownerRating = ownerRatingService.save(ownerRating);

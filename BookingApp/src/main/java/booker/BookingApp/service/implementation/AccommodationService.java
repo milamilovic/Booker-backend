@@ -1,4 +1,4 @@
-package booker.BookingApp.service.implementation;
+/*package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AccommodationDTO;
 import booker.BookingApp.model.accommodation.*;
@@ -122,4 +122,4 @@ public class AccommodationService implements IAccommodationService {
     public ArrayList<AccommodationDTO> applyFilters(ArrayList<AccommodationDTO> accommodations, Filter filter) {
         return findOwnersActiveAccommodations(2L);
     }
-}
+}*/
