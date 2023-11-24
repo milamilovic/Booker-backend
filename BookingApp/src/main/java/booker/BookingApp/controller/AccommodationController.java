@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class AccommodationController {
 
     @Autowired
-    IAccommodationService service = new AccommodationService();
+    IAccommodationService service;
 
     //create an accommodation
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
