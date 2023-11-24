@@ -3,10 +3,11 @@ package booker.BookingApp.service.implementation;
 import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.Guest;
 import booker.BookingApp.service.interfaces.IGuestService;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+@Service
 public class GuestService implements IGuestService {
     @Override
     public void findAll() {

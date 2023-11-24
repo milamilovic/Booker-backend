@@ -14,31 +14,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User findOne(Long id) {
-        if (userRepository.findOneById(id) == null) {
-            return null;
-        }
-        return userRepository.findOneById(id);
-    }
-
-    public User findOneByEmail(String email) {
-        if (userRepository.findOneByEmail(email) == null) {
-            return null;
-        }
-        return userRepository.findOneByEmail(email);
+    public User findOne(Long id){
+        return userRepository.findById(id).orElseGet(null);
     }
 
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User create(User user) {
-        return userRepository.create(user);
-    }
-
-    public User update(User user) {
-        return userRepository.update(user);
-    }
 
     public void remove(Long id) {
         userRepository.deleteById(id);

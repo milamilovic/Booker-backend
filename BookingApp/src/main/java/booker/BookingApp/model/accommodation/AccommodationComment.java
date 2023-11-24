@@ -1,14 +1,28 @@
 package booker.BookingApp.model.accommodation;
 
+import booker.BookingApp.model.User;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
-
+@Entity
 public @Data class AccommodationComment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long accommodationId;
-    private Long guestId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "accommodation_id")
+    private Accommodation accommodation;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "guest_id")
+    private User user;
+
+    @Column(name = "content", nullable = false) // unique = true
     private String content;
-    private Date when;
+    @Column(name = "date", nullable = false)
+    private Date date;
+    @Column(name = "reported", nullable = false)
     private boolean reported;
 }

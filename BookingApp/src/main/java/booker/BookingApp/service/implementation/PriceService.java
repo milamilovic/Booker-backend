@@ -18,20 +18,9 @@ public class PriceService {
     }
 
     public Price findOne(Long id) {
-        if (priceRepository.findOne(id) == null) {
-            return null;
-        }
-        return priceRepository.findOne(id);
+        return priceRepository.findById(id).orElse(null);
     }
-
-    public Price create(Price price) {
-        return priceRepository.create(price);
-    }
-
-    public Price update(Price price) {
-        return priceRepository.update(price);
-    }
-
+    
     public void delete(Long id) {
         priceRepository.deleteById(id);
     }

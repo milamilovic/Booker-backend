@@ -13,18 +13,9 @@ public class AccommodationCommentService {
     private AccommodationCommentRepository accommodationCommentRepository;
 
     public AccommodationComment findOne(Long id) {
-        if (accommodationCommentRepository.findOne(id) == null) {
-            return null;
-        }
-        return accommodationCommentRepository.findOne(id);
+        return accommodationCommentRepository.findById(id).orElse(null);
     }
 
-    public AccommodationComment findOneByAccommodationId(Long accommodationId) {
-        if (accommodationCommentRepository.findByAccommodationId(accommodationId) == null) {
-            return null;
-        }
-        return accommodationCommentRepository.findByAccommodationId(accommodationId);
-    }
 
     public List<AccommodationComment> findAll() {
         return accommodationCommentRepository.findAll();
@@ -34,13 +25,6 @@ public class AccommodationCommentService {
         return accommodationCommentRepository.findAllForAccommodation(accommodationId);
     }
 
-    public AccommodationComment create(AccommodationComment accommodationComment) {
-        return accommodationCommentRepository.create(accommodationComment);
-    }
-
-    public AccommodationComment update(AccommodationComment accommodationComment) {
-        return accommodationCommentRepository.update(accommodationComment);
-    }
     public void remove(Long id) {
         accommodationCommentRepository.deleteById(id);
     }

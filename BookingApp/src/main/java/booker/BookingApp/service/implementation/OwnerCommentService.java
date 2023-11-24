@@ -14,47 +14,11 @@ public class OwnerCommentService {
     private OwnerCommentRepository ownerCommentRepository;
 
     public OwnerComment findOne(Long id) {
-        if(ownerCommentRepository.findOne(id) == null) {
-            return null;
-        }
-        return ownerCommentRepository.findOne(id);
-    }
-
-    public OwnerComment findOneByOwnerId(Long ownerId) {
-        if(ownerCommentRepository.findOneByOwnerId(ownerId) == null) {
-            return null;
-        }
-        return ownerCommentRepository.findOneByOwnerId(ownerId);
-    }
-
-    public OwnerComment findOneByGuestId(Long guestId) {
-        if (ownerCommentRepository.findOneByGuestId(guestId) == null) {
-            return null;
-        }
-        return ownerCommentRepository.findOneByGuestId(guestId);
+        return ownerCommentRepository.findById(id).orElse(null);
     }
 
     public List<OwnerComment> findAll() {
-        return ownerCommentRepository.getAll();
-    }
-
-    public List<OwnerComment> findAllForOwner(Long ownerId) {
-        List<OwnerComment> ownerComments = new ArrayList<>();
-
-        for (OwnerComment comment : ownerCommentRepository.getAll()) {
-            if (comment.getOwnerId() == ownerId) {
-                ownerComments.add(comment);
-            }
-        }
-        return ownerComments;
-    }
-
-    public OwnerComment create(OwnerComment ownerComment) {
-        return ownerCommentRepository.create(ownerComment);
-    }
-
-    public OwnerComment update(OwnerComment ownerComment) {
-        return ownerCommentRepository.update(ownerComment);
+        return ownerCommentRepository.findAll();
     }
 
     public void remove(Long id) {
