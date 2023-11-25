@@ -57,7 +57,7 @@ public class AmenityController {
     }
 
     //get names of all amenities
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/names", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<String>> getNames() throws IOException {
         ArrayList<String> names = service.getAllNames();
         return new ResponseEntity<ArrayList<String>>(names, HttpStatus.OK);

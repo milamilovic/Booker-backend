@@ -14,60 +14,18 @@ public class OwnerRatingService {
     private OwnerRatingRepository ownerRatingRepository;
 
     public OwnerRating findOne(Long id) {
-        if (ownerRatingRepository.findOne(id) == null) {
-            return null;
-        }
-        return ownerRatingRepository.findOne(id);
+        return ownerRatingRepository.findById(id).orElse(null);
     }
 
-    public OwnerRating findOneByOwnerId(Long ownerId) {
-        if (ownerRatingRepository.findOneByOwnerId(ownerId) == null) {
-            return null;
-        }
-        return ownerRatingRepository.findOneByOwnerId(ownerId);
-    }
 
-    public OwnerRating findOneByGuestRating(Long guestId) {
-        if (ownerRatingRepository.findOneByGuestId(guestId) == null) {
-            return null;
-        }
-        return ownerRatingRepository.findOneByGuestId(guestId);
-    }
 
     public List<OwnerRating> findAll() {
         return ownerRatingRepository.findAll();
     }
 
-    public List<OwnerRating> findAllForOwner(Long ownerId) {
-        List<OwnerRating> ratings = ownerRatingRepository.findAll();
-        List<OwnerRating> ownerRatings = new ArrayList<>();
-
-        for(OwnerRating ownerRating : ratings) {
-            if (ownerRating.getOwnerId() == ownerId) {
-                ownerRatings.add(ownerRating);
-            }
-        }
-        return ownerRatings;
-    }
-
     public List<OwnerRating> findAllReported() {
-        List<OwnerRating> ratings = ownerRatingRepository.findAll();
-        List<OwnerRating> reported = new ArrayList<>();
-
-        for (OwnerRating ownerRating : ratings) {
-            if (ownerRating.isReported()) {
-                reported.add(ownerRating);
-            }
-        }
+        List<OwnerRating> reported = ownerRatingRepository.findAllReported();
         return reported;
-    }
-
-    public OwnerRating create(OwnerRating ownerRating) {
-        return ownerRatingRepository.create(ownerRating);
-    }
-
-    public OwnerRating update(OwnerRating ownerRating) {
-        return ownerRatingRepository.update(ownerRating);
     }
 
     public void delete(Long id) {

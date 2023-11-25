@@ -39,47 +39,20 @@ public class OwnerCommentController {
         return new ResponseEntity<>(new OwnerCommentDTO(ownerComment), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{ownerId}")
-    public ResponseEntity<OwnerCommentDTO> getOwnerCommentByOwnerId(@PathVariable Long ownerId) {
-        OwnerComment ownerComment = ownerCommentService.findOneByOwnerId(ownerId);
 
-        if (ownerComment == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
-        return new ResponseEntity<>(new OwnerCommentDTO(ownerComment), HttpStatus.OK);
-    }
 
-    @GetMapping(value = "/{guestId}")
-    public ResponseEntity<OwnerCommentDTO> getOwnerCommentByGuestId(@PathVariable Long guestId) {
-        OwnerComment ownerComment = ownerCommentService.findOneByGuestId(guestId);
 
-        if (ownerComment == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(new OwnerCommentDTO(ownerComment), HttpStatus.OK);
-    }
 
-    @GetMapping(value = "/all/{ownerId}")
-    public ResponseEntity<List<OwnerCommentDTO>> getAllOwnersComments(@PathVariable Long ownerId) {
-        List<OwnerComment> ownerComments = ownerCommentService.findAllForOwner(ownerId);
-
-        List<OwnerCommentDTO> ownerCommentsDTO = new ArrayList<>();
-        for (OwnerComment ownerComment : ownerComments) {
-            ownerCommentsDTO.add(new OwnerCommentDTO(ownerComment));
-        }
-
-        return new ResponseEntity<>(ownerCommentsDTO, HttpStatus.OK);
-    }
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<OwnerCommentDTO> saveUser(@RequestBody OwnerCommentDTO ownerCommentDTO) {
         OwnerComment ownerComment = new OwnerComment();
 
-        ownerComment.setOwnerId(ownerCommentDTO.getOwnerId());
-        ownerComment.setGuestId(ownerCommentDTO.getGuestId());
+        //ownerComment.setOwnerId(ownerCommentDTO.getOwnerId());
+        //ownerComment.setGuestId(ownerCommentDTO.getGuestId());
         ownerComment.setContent(ownerCommentDTO.getContent());
-        ownerComment.setWhen(ownerCommentDTO.getWhen());
+        ownerComment.setDate(ownerCommentDTO.getDate());
         ownerComment.setReported(ownerCommentDTO.isReported());
 
         ownerComment = ownerCommentService.save(ownerComment);
@@ -94,10 +67,10 @@ public class OwnerCommentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        ownerComment.setOwnerId(ownerCommentDTO.getOwnerId());
-        ownerComment.setGuestId(ownerCommentDTO.getGuestId());
+        //ownerComment.setOwnerId(ownerCommentDTO.getOwnerId());
+        //ownerComment.setGuestId(ownerCommentDTO.getGuestId());
         ownerComment.setContent(ownerCommentDTO.getContent());
-        ownerComment.setWhen(ownerCommentDTO.getWhen());
+        ownerComment.setDate(ownerCommentDTO.getDate());
         ownerComment.setReported(ownerComment.isReported());
 
         ownerComment = ownerCommentService.save(ownerComment);

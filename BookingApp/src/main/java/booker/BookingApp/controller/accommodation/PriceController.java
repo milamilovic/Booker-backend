@@ -44,7 +44,7 @@ public class PriceController {
     public ResponseEntity<PriceDTO> savePrice(@RequestBody PriceDTO priceDTO) {
         Price price = new Price();
 
-        price.setAccommodationId(priceDTO.getAccommodationId());
+        //price.setAccommodationId(priceDTO.getAccommodationId());
         price.setCost(priceDTO.getCost());
         price.setFromDate(priceDTO.getFromDate());
         price.setToDate(priceDTO.getToDate());
@@ -62,7 +62,7 @@ public class PriceController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        price.setAccommodationId(priceDTO.getAccommodationId());
+        //price.setAccommodationId(priceDTO.getAccommodationId());
         price.setCost(priceDTO.getCost());
         price.setFromDate(priceDTO.getFromDate());
         price.setToDate(priceDTO.getToDate());

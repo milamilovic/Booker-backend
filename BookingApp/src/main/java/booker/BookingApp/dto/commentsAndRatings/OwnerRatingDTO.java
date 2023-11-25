@@ -7,25 +7,23 @@ import java.util.Date;
 
 public @Data class OwnerRatingDTO {
     private Long id;
-    private Long ownerId;
-    private Long guestId;
+    //private Long ownerId;
+    //private Long guestId;
     private float rate;
-    private Date when;
+    private Date date;
     private boolean reported;
 
     public OwnerRatingDTO() {
     }
 
     public OwnerRatingDTO(OwnerRating ownerRating) {
-        this(ownerRating.getId(), ownerRating.getOwnerId(), ownerRating.getGuestId(), ownerRating.getRate(), ownerRating.getWhen(), ownerRating.isReported());
+        this(ownerRating.getId(), ownerRating.getRate(), ownerRating.getDate(), ownerRating.isReported());
     }
 
-    public OwnerRatingDTO(Long id, Long ownerId, Long guestId, float rate, Date when, boolean reported) {
+    public OwnerRatingDTO(Long id, float rate, Date date, boolean reported) {
         this.id = id;
-        this.ownerId = ownerId;
-        this.guestId = guestId;
         this.rate = rate;
-        this.when = when;
+        this.date = date;
         this.reported = reported;
     }
 }

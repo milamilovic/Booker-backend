@@ -2,7 +2,11 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.service.interfaces.IGuestService;
+import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+@Service
 public class GuestService implements IGuestService {
     @Override
     public void findAll() {

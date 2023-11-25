@@ -34,9 +34,9 @@ public class AccommodationCommentController {
 
         List<AccommodationCommentDTO> commentDTOS = new ArrayList<>();
         for (AccommodationComment comment : comments) {
-            if (comment.getAccommodationId() == accommodation_id) {
-                commentDTOS.add(new AccommodationCommentDTO(comment));
-            }
+            //if (comment.getAccommodationId() == accommodation_id) {
+                //commentDTOS.add(new AccommodationCommentDTO(comment));
+            //}
         }
         return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
     }
@@ -55,10 +55,10 @@ public class AccommodationCommentController {
     public ResponseEntity<AccommodationCommentDTO> saveAccommodationComment(@RequestBody AccommodationCommentDTO accommodationCommentDTO) {
         AccommodationComment accommodationComment = new AccommodationComment();
 
-        accommodationComment.setAccommodationId(accommodationCommentDTO.getAccommodationId());
-        accommodationComment.setGuestId(accommodationCommentDTO.getGuestId());
+        //accommodationComment.setAccommodationId(accommodationCommentDTO.getAccommodationId());
+       // accommodationComment.setGuestId(accommodationCommentDTO.getGuestId());
         accommodationComment.setContent(accommodationCommentDTO.getContent());
-        accommodationComment.setWhen(accommodationCommentDTO.getWhen());
+        accommodationComment.setDate(accommodationCommentDTO.getDate());
         accommodationComment.setReported(accommodationCommentDTO.isReported());
 
         accommodationComment = accommodationCommentService.save(accommodationComment);
@@ -73,10 +73,10 @@ public class AccommodationCommentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        accommodationComment.setAccommodationId(accommodationCommentDTO.getAccommodationId());
-        accommodationComment.setGuestId(accommodationCommentDTO.getGuestId());
+        //accommodationComment.setAccommodationId(accommodationCommentDTO.getAccommodationId());
+        //accommodationComment.setGuestId(accommodationCommentDTO.getGuestId());
         accommodationComment.setContent(accommodationCommentDTO.getContent());
-        accommodationComment.setWhen(accommodationCommentDTO.getWhen());
+        accommodationComment.setDate(accommodationCommentDTO.getDate());
         accommodationComment.setReported(accommodationCommentDTO.isReported());
 
         accommodationComment = accommodationCommentService.save(accommodationComment);

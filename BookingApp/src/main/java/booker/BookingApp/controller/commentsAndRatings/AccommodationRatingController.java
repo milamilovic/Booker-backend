@@ -35,9 +35,9 @@ public class AccommodationRatingController {
         List<AccommodationRatingDTO> ratingDTOS = new ArrayList<>();
 
         for (AccommodationRating accommodationRating : ratings) {
-            if (accommodationRating.getAccommodationId()  == accommodation_id) {
-                ratingDTOS.add(new AccommodationRatingDTO(accommodationRating));
-            }
+            //if (accommodationRating.getAccommodationId()  == accommodation_id) {
+                //ratingDTOS.add(new AccommodationRatingDTO(accommodationRating));
+            //}
         }
         return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
     }
@@ -57,10 +57,10 @@ public class AccommodationRatingController {
     public ResponseEntity<AccommodationRatingDTO> saveAccommodationRating(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
         AccommodationRating accommodationRating = new AccommodationRating();
 
-        accommodationRating.setAccommodationId(accommodationRatingDTO.getAccommodationId());
-        accommodationRating.setGuestId(accommodationRatingDTO.getGuestId());
+        //accommodationRating.setAccommodationId(accommodationRatingDTO.getAccommodationId());
+        //accommodationRating.setGuestId(accommodationRatingDTO.getGuestId());
         accommodationRating.setRate(accommodationRatingDTO.getRate());
-        accommodationRating.setWhen(accommodationRatingDTO.getWhen());
+        accommodationRating.setDate(accommodationRatingDTO.getDate());
         accommodationRating.setReported(accommodationRatingDTO.isReported());
 
         accommodationRating = accommodationRatingService.save(accommodationRating);
@@ -75,10 +75,10 @@ public class AccommodationRatingController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        accommodationRating.setAccommodationId(accommodationRatingDTO.getAccommodationId());
-        accommodationRating.setGuestId(accommodationRatingDTO.getGuestId());
+        //accommodationRating.setAccommodationId(accommodationRatingDTO.getAccommodationId());
+        //accommodationRating.setGuestId(accommodationRatingDTO.getGuestId());
         accommodationRating.setRate(accommodationRatingDTO.getRate());
-        accommodationRating.setWhen(accommodationRatingDTO.getWhen());
+        accommodationRating.setDate(accommodationRatingDTO.getDate());
         accommodationRating.setReported(accommodationRatingDTO.isReported());
 
         accommodationRating = accommodationRatingService.save(accommodationRating);

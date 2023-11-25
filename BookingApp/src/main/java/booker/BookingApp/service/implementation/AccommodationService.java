@@ -17,9 +17,10 @@ public class AccommodationService implements IAccommodationService {
     @Override
     public ArrayList<AccommodationDTO> findAll() throws IOException {
         AccommodationDTO accommodation = findOne(1L);
-        AccommodationDTO accommodation1 = new AccommodationDTO(1L, "Example accommodation 1", "Description 1", "short description 1", "address of accommodation 1", accommodation.getAmenities(), accommodation.getImages(), accommodation.getAvailabilities(), accommodation.getPrices(), accommodation.getRatings(), accommodation.getComments(), 5);
-        AccommodationDTO accommodation2 = new AccommodationDTO(2L, "Example accommodation 2", "Description 2", "short description 2", "address of accommodation 2", accommodation.getAmenities(), accommodation.getImages(), accommodation.getAvailabilities(), accommodation.getPrices(), accommodation.getRatings(), accommodation.getComments(), 5);
-        AccommodationDTO accommodation3 = new AccommodationDTO(3L, "Example accommodation 3", "Description 3", "short description 3", "address of accommodation 3", accommodation.getAmenities(), accommodation.getImages(), accommodation.getAvailabilities(), accommodation.getPrices(), accommodation.getRatings(), accommodation.getComments(), 5);
+        //TODO: images
+        AccommodationDTO accommodation1 = new AccommodationDTO(1L, "Example accommodation 1", "Description 1", "short description 1", "address of accommodation 1", accommodation.getAmenities(), accommodation.getAvailabilities(), accommodation.getPrices(), accommodation.getRatings(), accommodation.getComments(), 5);
+        AccommodationDTO accommodation2 = new AccommodationDTO(2L, "Example accommodation 2", "Description 2", "short description 2", "address of accommodation 2", accommodation.getAmenities(), accommodation.getAvailabilities(), accommodation.getPrices(), accommodation.getRatings(), accommodation.getComments(), 5);
+        AccommodationDTO accommodation3 = new AccommodationDTO(3L, "Example accommodation 3", "Description 3", "short description 3", "address of accommodation 3", accommodation.getAmenities(), accommodation.getAvailabilities(), accommodation.getPrices(), accommodation.getRatings(), accommodation.getComments(), 5);
         ArrayList<AccommodationDTO> accommodations = new ArrayList<>();
         accommodations.add(accommodation1);
         accommodations.add(accommodation2);
@@ -29,21 +30,30 @@ public class AccommodationService implements IAccommodationService {
 
     @Override
     public AccommodationDTO findOne(Long id) throws IOException {
-        ArrayList<Image> images = new ArrayList<>();
-        images.add(ImageIO.read(new File("src/main/resources/lisbon_image.jpg")));
-        images.add(ImageIO.read(new File("src/main/resources/london_image.jpg")));
-        images.add(ImageIO.read(new File("src/main/resources/madrid_image.jpg")));
-        images.add(ImageIO.read(new File("src/main/resources/paris_image.jpg")));
+//        ArrayList<Image> images = new ArrayList<>();
+//        images.add(ImageIO.read(new File("src/main/resources/lisbon_image.jpg")));
+//        images.add(ImageIO.read(new File("src/main/resources/london_image.jpg")));
+//        images.add(ImageIO.read(new File("src/main/resources/madrid_image.jpg")));
+//        images.add(ImageIO.read(new File("src/main/resources/paris_image.jpg")));
         ArrayList<Amenity> amenities = new ArrayList<>();
-        amenities.add(new Amenity(1L, "wifi", ImageIO.read(new File("src/main/resources/lisbon_image.jpg"))));
-        amenities.add(new Amenity(2L, "good place", ImageIO.read(new File("src/main/resources/london_image.jpg"))));
-        amenities.add(new Amenity(3L, "AC", ImageIO.read(new File("src/main/resources/madrid_image.jpg"))));
-        amenities.add(new Amenity(4L, "parking spot", ImageIO.read(new File("src/main/resources/paris_image.jpg"))));
+        //TODO: FIX!!!
+        char[] name = new char[4];
+        name[1] = 'w';
+        name[1] = 'i';
+        name[1] = 'f';
+        name[1] = 'i';
+        amenities.add(new Amenity(1L, "wifi", new Accommodation()));
+        amenities.add(new Amenity(2L, "ad", new Accommodation()));
+        amenities.add(new Amenity(3L, "parking", new Accommodation()));
+        amenities.add(new Amenity(4L, "coffee machine", new Accommodation()));
+//        amenities.add(new Amenity(2L, "good place", ImageIO.read(new File("src/main/resources/london_image.jpg"))));
+//        amenities.add(new Amenity(3L, "AC", ImageIO.read(new File("src/main/resources/madrid_image.jpg"))));
+//        amenities.add(new Amenity(4L, "parking spot", ImageIO.read(new File("src/main/resources/paris_image.jpg"))));
         ArrayList<Availability> availabilities = new ArrayList<>();
-        availabilities.add(new Availability(new Date(), new Date()));
-        availabilities.add(new Availability(new Date(), new Date()));
-        availabilities.add(new Availability(new Date(), new Date()));
-        availabilities.add(new Availability(new Date(), new Date()));
+        availabilities.add(new Availability(1L, new Date(), new Date(), new Accommodation()));
+        availabilities.add(new Availability(2L, new Date(), new Date(), new Accommodation()));
+        availabilities.add(new Availability(3L, new Date(), new Date(), new Accommodation()));
+        availabilities.add(new Availability(4L, new Date(), new Date(), new Accommodation()));
         ArrayList<Price> prices = new ArrayList<>();
         prices.add(new Price());
         prices.add(new Price());
@@ -59,7 +69,8 @@ public class AccommodationService implements IAccommodationService {
         comments.add(new AccommodationComment());
         comments.add(new AccommodationComment());
         comments.add(new AccommodationComment());
-        AccommodationDTO accommodation = new AccommodationDTO(id, "Example accommodation", "Description 1", "short description 1", "address of accommodation 1", amenities, images, availabilities, prices, ratings, comments, 5);
+        //TODO: images
+        AccommodationDTO accommodation = new AccommodationDTO(id, "Example accommodation", "Description 1", "short description 1", "address of accommodation 1", amenities, availabilities, prices, ratings, comments, 5);
         return accommodation;
     }
 

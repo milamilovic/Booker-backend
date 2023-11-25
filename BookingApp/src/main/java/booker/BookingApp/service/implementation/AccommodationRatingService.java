@@ -17,7 +17,7 @@ public class AccommodationRatingService {
         return accommodationRatingRepository.findAll();
     }
 
-    public List<AccommodationRating> findAllForAccommodation(Long id) {
+    /*public List<AccommodationRating> findAllForAccommodation(Long id) {
         List<AccommodationRating> ratings = accommodationRatingRepository.findAll();
         List<AccommodationRating> accommodationRatings = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class AccommodationRatingService {
             }
         }
         return accommodationRatings;
-    }
+    }*/
 
     public List<AccommodationRating> findAllReported() {
         List<AccommodationRating> ratings = accommodationRatingRepository.findAll();
@@ -42,19 +42,9 @@ public class AccommodationRatingService {
     }
 
     public AccommodationRating findOne(Long id) {
-        if (accommodationRatingRepository.findOne(id) == null) {
-            return null;
-        }
-        return accommodationRatingRepository.findOne(id);
+        return accommodationRatingRepository.findById(id).orElse(null);
     }
 
-    public AccommodationRating create(AccommodationRating accommodationRating) {
-        return accommodationRatingRepository.create(accommodationRating);
-    }
-
-    public AccommodationRating update(AccommodationRating accommodationRating) {
-        return accommodationRatingRepository.update(accommodationRating);
-    }
 
     public void remove(Long id) {
         accommodationRatingRepository.deleteById(id);
