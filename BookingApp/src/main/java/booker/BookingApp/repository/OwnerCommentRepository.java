@@ -1,6 +1,6 @@
 package booker.BookingApp.repository;
 
-import booker.BookingApp.model.OwnerComment;
+import booker.BookingApp.model.commentsAndRatings.OwnerComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

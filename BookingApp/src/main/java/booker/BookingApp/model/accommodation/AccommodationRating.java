@@ -1,6 +1,6 @@
 package booker.BookingApp.model.accommodation;
 
-import booker.BookingApp.model.User;
+import booker.BookingApp.model.users.User;
 import jakarta.persistence.*;
 import lombok.Data;
 

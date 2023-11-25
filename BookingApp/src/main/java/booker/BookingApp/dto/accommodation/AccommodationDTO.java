@@ -13,7 +13,7 @@ public @Data class AccommodationDTO {
     private String shortDescription;
     private String address;
     private ArrayList<Amenity> amenities;
-    private ArrayList<Image> images;
+    //private ArrayList<Image> images;
     private ArrayList<Availability> availabilities;
     private ArrayList<Price> prices;
     private ArrayList<AccommodationRating> ratings;
@@ -25,7 +25,7 @@ public @Data class AccommodationDTO {
     public AccommodationDTO() {
         // Initialize ArrayLists to avoid null references
         this.amenities = new ArrayList<>();
-        this.images = new ArrayList<>();
+        //this.images = new ArrayList<>();
         this.availabilities = new ArrayList<>();
         this.prices = new ArrayList<>();
         this.ratings = new ArrayList<>();
@@ -34,7 +34,7 @@ public @Data class AccommodationDTO {
 
     // All parameters constructor
     public AccommodationDTO(Long id, String title, String description, String shortDescription, String address,
-                            ArrayList<Amenity> amenities, ArrayList<Image> images,
+                            ArrayList<Amenity> amenities,
                             ArrayList<Availability> availabilities, ArrayList<Price> prices,
                             ArrayList<AccommodationRating> ratings, ArrayList<AccommodationComment> comments,
                             int deadline) {
@@ -44,7 +44,8 @@ public @Data class AccommodationDTO {
         this.shortDescription = shortDescription;
         this.address = address;
         this.amenities = amenities;
-        this.images = images;
+        //TODO: images
+        //this.images = images;
         this.availabilities = availabilities;
         this.prices = prices;
         this.ratings = ratings;
@@ -55,13 +56,13 @@ public @Data class AccommodationDTO {
     //constructor for accommodation listing dto
     public AccommodationDTO(String title,
                             String shortDescription,
-                            ArrayList<Image> images,
                             ArrayList<Price> prices,
                             ArrayList<AccommodationRating> ratings) {
         this.id = id;
         this.title = title;
         this.shortDescription = shortDescription;
-        this.images = images;
+        //TODO: images
+        //this.images = images;
         this.prices = prices;
         this.ratings = ratings;
     }
@@ -69,14 +70,14 @@ public @Data class AccommodationDTO {
     //constructor for accommodation listing dto
     public AccommodationDTO(String title,
                             String shortDescription,
-                            ArrayList<Image> images,
                             ArrayList<Price> prices,
                             ArrayList<AccommodationRating> ratings,
                             String address) {
         this.id = id;
         this.title = title;
         this.shortDescription = shortDescription;
-        this.images = images;
+        //TODO: images
+        //this.images = images;
         this.prices = prices;
         this.ratings = ratings;
         this.address = address;

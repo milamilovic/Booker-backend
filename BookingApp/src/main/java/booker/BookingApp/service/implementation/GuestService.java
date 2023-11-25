@@ -1,7 +1,6 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.enums.Role;
-import booker.BookingApp.model.Guest;
+import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.service.interfaces.IGuestService;
 import org.springframework.stereotype.Service;
 

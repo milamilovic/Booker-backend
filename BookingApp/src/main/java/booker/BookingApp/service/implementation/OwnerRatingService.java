@@ -1,6 +1,6 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.model.OwnerRating;
+import booker.BookingApp.model.commentsAndRatings.OwnerRating;
 import booker.BookingApp.repository.OwnerRatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
