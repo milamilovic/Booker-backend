@@ -31,13 +31,11 @@ public class AccommodationRatingController {
 
     @GetMapping(value = "/all/{accommodation_id}")
     public ResponseEntity<List<AccommodationRatingDTO>> findAllForAccommodation(@PathVariable Long accommodation_id) {
-        List<AccommodationRating> ratings = accommodationRatingService.findAll();
+        List<AccommodationRating> ratings = accommodationRatingService.findAllForAccommodation(accommodation_id);
         List<AccommodationRatingDTO> ratingDTOS = new ArrayList<>();
 
         for (AccommodationRating accommodationRating : ratings) {
-            //if (accommodationRating.getAccommodationId()  == accommodation_id) {
-                //ratingDTOS.add(new AccommodationRatingDTO(accommodationRating));
-            //}
+            ratingDTOS.add(new AccommodationRatingDTO(accommodationRating));
         }
         return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
     }
@@ -57,7 +55,7 @@ public class AccommodationRatingController {
     public ResponseEntity<AccommodationRatingDTO> saveAccommodationRating(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
         AccommodationRating accommodationRating = new AccommodationRating();
 
-        //accommodationRating.setAccommodationId(accommodationRatingDTO.getAccommodationId());
+        //accommodationRating.setAccommodation();
         //accommodationRating.setGuestId(accommodationRatingDTO.getGuestId());
         accommodationRating.setRate(accommodationRatingDTO.getRate());
         accommodationRating.setDate(accommodationRatingDTO.getDate());

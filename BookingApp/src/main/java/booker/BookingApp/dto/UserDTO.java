@@ -11,17 +11,18 @@ public @Data class UserDTO {
     private String surname;
 
     private String email;
+    private String password;
 
     private String address;
 
     private String phone;
-    private String password;
+
 
     public UserDTO() {
     }
 
     public UserDTO(User user) {
-        this(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getAddress(), user.getPhone(), user.getPassword());
+        this(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getAddress(), user.getPhone());
     }
 
     public UserDTO(Long id, String name, String surname, String email, String address, String phone, String password) {

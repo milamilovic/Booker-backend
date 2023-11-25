@@ -1,4 +1,4 @@
-package booker.BookingApp.service.interfaces;
+/*package booker.BookingApp.service.interfaces;
 
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.AmenityDTO;
@@ -22,4 +22,4 @@ public interface IAmenityService {
     ArrayList<AmenityDTO> findAll() throws IOException;
 
     ArrayList<String> getAllNames();
-}
+}*/

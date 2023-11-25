@@ -2,6 +2,7 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.model.User;
 import booker.BookingApp.repository.UserRepository;
+import booker.BookingApp.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;

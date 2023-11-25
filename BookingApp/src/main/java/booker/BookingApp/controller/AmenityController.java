@@ -1,4 +1,4 @@
-package booker.BookingApp.controller;
+/*package booker.BookingApp.controller;
 
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.AmenityDTO;
@@ -65,4 +65,4 @@ public class AmenityController {
         ArrayList<String> names = service.getAllNames();
         return new ResponseEntity<ArrayList<String>>(names, HttpStatus.OK);
     }
-}
+}*/

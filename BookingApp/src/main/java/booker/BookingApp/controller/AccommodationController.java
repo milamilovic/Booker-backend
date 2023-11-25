@@ -124,5 +124,4 @@ public class AccommodationController {
         service.update(updatedAccommodation);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-}
-*/
+}*/
