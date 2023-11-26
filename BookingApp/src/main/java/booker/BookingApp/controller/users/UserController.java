@@ -47,10 +47,11 @@ public class UserController {
 
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
-        user.setPhone(userDTO.getPhone());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
         user.setAddress(userDTO.getAddress());
         user.setPhone(userDTO.getPhone());
-        user.setPassword(userDTO.getPassword());
+
 
         user = userService.save(user);
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
@@ -67,9 +68,10 @@ public class UserController {
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
         user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
         user.setAddress(userDTO.getAddress());
         user.setPhone(userDTO.getPhone());
-        user.setPassword(userDTO.getPassword());
+
 
         user = userService.save(user);
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
