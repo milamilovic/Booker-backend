@@ -1,4 +1,4 @@
-/*package booker.BookingApp.service.implementation;
+package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AmenityDTO;
 import booker.BookingApp.model.accommodation.Amenity;
@@ -47,4 +47,4 @@ public class AmenityService implements IAmenityService {
     public ArrayList<String> getAllNames() {
         return new ArrayList<>(Arrays.asList("wi-fi", "ac", "coffee machine"));
     }
-}*/
+}

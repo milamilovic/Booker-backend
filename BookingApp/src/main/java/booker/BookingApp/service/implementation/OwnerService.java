@@ -1,6 +1,6 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.model.Owner;
+import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.service.interfaces.IOwnerService;
 import org.springframework.stereotype.Service;
 

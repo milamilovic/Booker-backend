@@ -1,6 +1,6 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.model.OwnerComment;
+import booker.BookingApp.model.commentsAndRatings.OwnerComment;
 import booker.BookingApp.repository.OwnerCommentRepository;
 import booker.BookingApp.service.interfaces.IOwnerCommentService;
 import org.springframework.beans.factory.annotation.Autowired;

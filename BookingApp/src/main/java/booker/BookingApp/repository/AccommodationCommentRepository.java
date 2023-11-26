@@ -1,6 +1,6 @@
 package booker.BookingApp.repository;
 
-import booker.BookingApp.model.OwnerRating;
+import booker.BookingApp.model.commentsAndRatings.OwnerRating;
 import booker.BookingApp.model.accommodation.AccommodationComment;
 import jakarta.persistence.Entity;
 import org.springframework.data.jpa.repository.JpaRepository;

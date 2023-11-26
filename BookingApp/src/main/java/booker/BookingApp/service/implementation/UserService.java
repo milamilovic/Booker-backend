@@ -1,6 +1,6 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.model.User;
+import booker.BookingApp.model.users.User;
 import booker.BookingApp.repository.UserRepository;
 import booker.BookingApp.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

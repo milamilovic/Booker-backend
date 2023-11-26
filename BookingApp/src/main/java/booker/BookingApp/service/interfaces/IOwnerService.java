@@ -1,6 +1,6 @@
 package booker.BookingApp.service.interfaces;
 
-import booker.BookingApp.model.Owner;
+import booker.BookingApp.model.users.Owner;
 
 public interface IOwnerService {
     void findAll();
