@@ -3,6 +3,7 @@ package booker.BookingApp.controller.commentsAndRatings;
 import booker.BookingApp.dto.accommodation.AccommodationCommentDTO;
 import booker.BookingApp.model.accommodation.AccommodationComment;
 import booker.BookingApp.service.implementation.AccommodationCommentService;
+import booker.BookingApp.service.implementation.AccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,8 @@ import java.util.List;
 public class AccommodationCommentController {
     @Autowired
     private AccommodationCommentService accommodationCommentService;
+    @Autowired
+    private AccommodationService accommodationService;
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<AccommodationCommentDTO>> getAllComments() {
@@ -28,15 +31,13 @@ public class AccommodationCommentController {
         return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/all/{accommodation_id}")
+    @GetMapping(value = "/{accommodation_id}/comments")
     public ResponseEntity<List<AccommodationCommentDTO>> getAllAccommodationComments(@PathVariable Long accommodation_id) {
-        List<AccommodationComment> comments = accommodationCommentService.findAll();
+        List<AccommodationComment> comments = accommodationCommentService.findAllForAccommodation(accommodation_id);
 
         List<AccommodationCommentDTO> commentDTOS = new ArrayList<>();
         for (AccommodationComment comment : comments) {
-            //if (comment.getAccommodationId() == accommodation_id) {
-                //commentDTOS.add(new AccommodationCommentDTO(comment));
-            //}
+            commentDTOS.add(new AccommodationCommentDTO(comment));
         }
         return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
     }
@@ -55,7 +56,7 @@ public class AccommodationCommentController {
     public ResponseEntity<AccommodationCommentDTO> saveAccommodationComment(@RequestBody AccommodationCommentDTO accommodationCommentDTO) {
         AccommodationComment accommodationComment = new AccommodationComment();
 
-        //accommodationComment.setAccommodationId(accommodationCommentDTO.getAccommodationId());
+        //accommodationComment.setAccommodation(accommodationService.findOne(accommodationCommentDTO.getAccommodationId()));
        // accommodationComment.setGuestId(accommodationCommentDTO.getGuestId());
         accommodationComment.setContent(accommodationCommentDTO.getContent());
         accommodationComment.setDate(accommodationCommentDTO.getDate());
