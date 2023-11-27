@@ -126,4 +126,16 @@ public class UserController {
 
         return new ResponseEntity<>(blockedDTOS, HttpStatus.OK);
     }
+
+    @GetMapping("/deleted")
+    public ResponseEntity<List<UserDTO>> findAllDeleted() {
+        List<User> deleted = userService.findAllDeleted();
+
+        List<UserDTO> deletedDTOS = new ArrayList<>();
+        for(User user : deleted) {
+            deletedDTOS.add(new UserDTO());
+        }
+
+        return new ResponseEntity<>(deletedDTOS, HttpStatus.OK);
+    }
 }

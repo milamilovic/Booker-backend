@@ -64,4 +64,9 @@ public class UserService implements IUserService {
        return userRepository.findAllBlocked();
     }
 
+    @Override
+    public List<User> findAllDeleted() {
+        return userRepository.findAllDeleted();
+    }
+
 }

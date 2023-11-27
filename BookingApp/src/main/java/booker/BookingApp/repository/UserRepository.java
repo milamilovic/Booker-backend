@@ -19,4 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.blocked = true")
     public List<User> findAllBlocked();
 
+    @Query("select u from User u where u.deleted = true")
+    public List<User> findAllDeleted();
+
 }
