@@ -5,14 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public @Data @AllArgsConstructor class Accommodation {
+public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,7 +36,4 @@ public @Data @AllArgsConstructor class Accommodation {
     @Column(name = "deadline", nullable = false)
     private int deadline;
 
-    public Accommodation(){
-
-    }
 }
