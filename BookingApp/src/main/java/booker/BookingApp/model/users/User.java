@@ -1,6 +1,7 @@
 package booker.BookingApp.model.users;
 
 
+import booker.BookingApp.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -28,6 +29,12 @@ public @Data class User {
     private String address;
     @Column(name = "phone", nullable = false)
     private String phone;
+    @Column(name = "role", nullable = false)
+    private Role role;
+    @Column(name = "blocked", nullable = false)
+    private boolean blocked;
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
 
 
 }

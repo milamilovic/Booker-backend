@@ -1,6 +1,6 @@
-/*package booker.BookingApp.repository;
+package booker.BookingApp.repository;
 
-import booker.BookingApp.model.User;
+import booker.BookingApp.model.users.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,16 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    public User findOneById(Long id);
+    public User findByEmail(String email);
 
-    public User findOneByEmail(String email);
+    public User findByEmailAndPassword(String email, String password);
 
-    public List<User> findAll();
+    @Query("select u from User u where u.blocked = true")
+    public List<User> findAllBlocked();
 
-    public User create(User user);
-
-    public User update(User user);
-
-    public void delete(Long id);
-
-}*/
+}

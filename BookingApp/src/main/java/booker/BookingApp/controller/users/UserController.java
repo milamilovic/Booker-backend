@@ -1,5 +1,7 @@
 package booker.BookingApp.controller.users;
 
+import booker.BookingApp.dto.users.LoginUserDTO;
+import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.dto.users.UserDTO;
 import booker.BookingApp.model.users.User;
 import booker.BookingApp.service.implementation.UserService;
@@ -42,37 +44,42 @@ public class UserController {
 
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UpdateUserDTO> saveUser(@RequestBody UpdateUserDTO updateUserDTO) {
         User user = new User();
 
-        user.setName(userDTO.getName());
-        user.setSurname(userDTO.getSurname());
-        user.setPhone(userDTO.getPhone());
-        user.setAddress(userDTO.getAddress());
-        user.setPhone(userDTO.getPhone());
-        user.setPassword(userDTO.getPassword());
-
+        user.setName(updateUserDTO.getName());
+        user.setSurname(updateUserDTO.getSurname());
+        user.setEmail(updateUserDTO.getEmail());
+        user.setPassword(updateUserDTO.getPassword());
+        user.setAddress(updateUserDTO.getAddress());
+        user.setPhone(updateUserDTO.getPhone());
+        user.setRole(updateUserDTO.getRole());
+        user.setBlocked(updateUserDTO.isBlocked());
+        user.setDeleted(updateUserDTO.isDeleted());
         user = userService.save(user);
-        return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(new UpdateUserDTO(user), HttpStatus.CREATED);
     }
 
     @PutMapping(consumes = "application/json")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
-        User user = userService.findOne(userDTO.getId());
+    public ResponseEntity<UpdateUserDTO> updateUser(@RequestBody UpdateUserDTO updateUserDTO) {
+        User user = userService.findOne(updateUserDTO.getId());
 
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        user.setName(userDTO.getName());
-        user.setSurname(userDTO.getSurname());
-        user.setEmail(userDTO.getEmail());
-        user.setAddress(userDTO.getAddress());
-        user.setPhone(userDTO.getPhone());
-        user.setPassword(userDTO.getPassword());
+        user.setName(updateUserDTO.getName());
+        user.setSurname(updateUserDTO.getSurname());
+        user.setEmail(updateUserDTO.getEmail());
+        user.setPassword(updateUserDTO.getPassword());
+        user.setAddress(updateUserDTO.getAddress());
+        user.setPhone(updateUserDTO.getPhone());
+        user.setRole(updateUserDTO.getRole());
+        user.setBlocked(updateUserDTO.isBlocked());
+        user.setDeleted(updateUserDTO.isDeleted());
 
         user = userService.save(user);
-        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+        return new ResponseEntity<>(new UpdateUserDTO(user), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -85,5 +92,38 @@ public class UserController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping(value = "/by-email/{email}")
+    public ResponseEntity<UserDTO> findByEmail(@PathVariable String email) {
+        User user = userService.findByEmail(email);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+    }
+
+    @GetMapping(consumes = "application/json")
+    public ResponseEntity<UserDTO> findByEmailAndPassword(@RequestBody LoginUserDTO loginUserDTO) {
+        User user = userService.findByEmailAndPassword(loginUserDTO.getEmail(), loginUserDTO.getPassword());
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/blocked")
+    public ResponseEntity<List<UserDTO>> findAllBlocked() {
+        List<User> blocked = userService.findAllBlocked();
+
+        List<UserDTO> blockedDTOS = new ArrayList<>();
+        for (User user : blocked) {
+            blockedDTOS.add(new UserDTO(user));
+        }
+
+        return new ResponseEntity<>(blockedDTOS, HttpStatus.OK);
     }
 }

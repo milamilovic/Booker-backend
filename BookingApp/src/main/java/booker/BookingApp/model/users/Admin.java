@@ -5,5 +5,5 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Admin extends Account {
+public class Admin extends User {
 }
