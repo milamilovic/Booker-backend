@@ -1,11 +1,13 @@
 package booker.BookingApp.controller.commentsAndRatings;
 
 import booker.BookingApp.dto.accommodation.AccommodationCommentDTO;
+import booker.BookingApp.dto.accommodation.ReportAccommodationCommentDTO;
 import booker.BookingApp.model.accommodation.AccommodationComment;
 import booker.BookingApp.service.implementation.AccommodationCommentService;
 import booker.BookingApp.service.implementation.AccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,47 +54,67 @@ public class AccommodationCommentController {
         return new ResponseEntity<>(new AccommodationCommentDTO(accommodationComment), HttpStatus.OK);
     }
 
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<AccommodationCommentDTO> saveAccommodationComment(@RequestBody AccommodationCommentDTO accommodationCommentDTO) {
-        AccommodationComment accommodationComment = new AccommodationComment();
+//    @PostMapping(consumes = "application/json")
+//    public ResponseEntity<AccommodationCommentDTO> saveAccommodationComment(@RequestBody AccommodationCommentDTO accommodationCommentDTO) {
+//        AccommodationComment accommodationComment = new AccommodationComment();
+//
+//        accommodationComment.setAccommodationId(accommodationCommentDTO.getAccommodationId());
+//        accommodationComment.setGuestId(accommodationCommentDTO.getGuestId());
+//        accommodationComment.setContent(accommodationCommentDTO.getContent());
+//        accommodationComment.setDate(accommodationCommentDTO.getDate());
+//        accommodationComment.setReported(accommodationCommentDTO.isReported());
+//
+//        accommodationComment = accommodationCommentService.save(accommodationComment);
+//        return new ResponseEntity<>(new AccommodationCommentDTO(accommodationComment), HttpStatus.CREATED);
+//    }
+//
+//    @PutMapping(consumes = "application/json")
+//    public ResponseEntity<AccommodationCommentDTO> updateAccommodationComment(@RequestBody AccommodationCommentDTO accommodationCommentDTO) {
+//        AccommodationComment accommodationComment = accommodationCommentService.findOne(accommodationCommentDTO.getId());
+//
+//        if (accommodationComment == null) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//
+//        //accommodationComment.setAccommodationId(accommodationCommentDTO.getAccommodationId());
+//        //accommodationComment.setGuestId(accommodationCommentDTO.getGuestId());
+//        accommodationComment.setContent(accommodationCommentDTO.getContent());
+//        accommodationComment.setDate(accommodationCommentDTO.getDate());
+//        accommodationComment.setReported(accommodationCommentDTO.isReported());
+//
+//        accommodationComment = accommodationCommentService.save(accommodationComment);
+//        return new ResponseEntity<>(new AccommodationCommentDTO(accommodationComment), HttpStatus.OK);
+//    }
+//
+//    @DeleteMapping(value = "/{id}")
+//    public ResponseEntity<Void> deleteAccommodationComment(@PathVariable Long id) {
+//        AccommodationComment accommodationComment = accommodationCommentService.findOne(id);
+//
+//        if (accommodationComment != null) {
+//            accommodationCommentService.remove(id);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
-        //accommodationComment.setAccommodation(accommodationService.findOne(accommodationCommentDTO.getAccommodationId()));
-       // accommodationComment.setGuestId(accommodationCommentDTO.getGuestId());
-        accommodationComment.setContent(accommodationCommentDTO.getContent());
-        accommodationComment.setDate(accommodationCommentDTO.getDate());
-        accommodationComment.setReported(accommodationCommentDTO.isReported());
-
-        accommodationComment = accommodationCommentService.save(accommodationComment);
-        return new ResponseEntity<>(new AccommodationCommentDTO(accommodationComment), HttpStatus.CREATED);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AccommodationCommentDTO> create(@RequestBody AccommodationCommentDTO accommodationCommentDTO) {
+        AccommodationCommentDTO commentDTO = accommodationCommentService.create(accommodationCommentDTO);
+        return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping(consumes = "application/json")
-    public ResponseEntity<AccommodationCommentDTO> updateAccommodationComment(@RequestBody AccommodationCommentDTO accommodationCommentDTO) {
-        AccommodationComment accommodationComment = accommodationCommentService.findOne(accommodationCommentDTO.getId());
-
-        if (accommodationComment == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        //accommodationComment.setAccommodationId(accommodationCommentDTO.getAccommodationId());
-        //accommodationComment.setGuestId(accommodationCommentDTO.getGuestId());
-        accommodationComment.setContent(accommodationCommentDTO.getContent());
-        accommodationComment.setDate(accommodationCommentDTO.getDate());
-        accommodationComment.setReported(accommodationCommentDTO.isReported());
-
-        accommodationComment = accommodationCommentService.save(accommodationComment);
-        return new ResponseEntity<>(new AccommodationCommentDTO(accommodationComment), HttpStatus.OK);
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> update(@RequestBody AccommodationCommentDTO accommodationCommentDTO) {
+        accommodationCommentService.update(accommodationCommentDTO);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteAccommodationComment(@PathVariable Long id) {
-        AccommodationComment accommodationComment = accommodationCommentService.findOne(id);
-
-        if (accommodationComment != null) {
-            accommodationCommentService.remove(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @DeleteMapping(value = "/remove/{accommodation_comment_id}")
+    public ResponseEntity<Void> delete(@PathVariable Long accommodation_comment_id) {
+        accommodationCommentService.delete(accommodation_comment_id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    
 }
