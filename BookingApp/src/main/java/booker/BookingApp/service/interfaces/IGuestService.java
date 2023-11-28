@@ -1,13 +1,15 @@
 package booker.BookingApp.service.interfaces;
 
+import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.model.users.Guest;
 
+import java.util.ArrayList;
+
 public interface IGuestService {
-    void findAll();
-    void getGuestById(Long guestId);
-    Guest create(Guest guest);
-    Guest update(Guest guest);
-
-
+    ArrayList<GuestDTO> findAll();
+    GuestDTO getGuestById(Long guestId);
+    GuestDTO getGuestByEmail(String email);
+    GuestDTO insert(GuestDTO guest);
+    GuestDTO update(GuestDTO guest);
     void delete(Long guestId);
 }

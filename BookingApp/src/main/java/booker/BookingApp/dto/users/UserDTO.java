@@ -40,4 +40,10 @@ public @Data class UserDTO {
         this.blocked = blocked;
         this.deleted = deleted;
     }
+
+    public UserDTO(String name, String surname, String email){
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+    }
 }
