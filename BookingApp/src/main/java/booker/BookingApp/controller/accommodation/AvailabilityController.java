@@ -27,13 +27,13 @@ public class AvailabilityController {
 
     //get availabilty of accommodation
     @GetMapping(value = "/{id}/{startDate}/{endDate}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<AvailabilityDTO>> findAllFreeInRange(@PathVariable Long id, @PathVariable Date startDate, @PathVariable Date endDate) throws IOException {
+    public ResponseEntity<ArrayList<AvailabilityDTO>> findAllFreeInRange(@PathVariable Long id, @PathVariable String startDate, @PathVariable String endDate) throws IOException {
         ArrayList<AvailabilityDTO> accommodation = service.findAllFreeInRange(id, startDate, endDate);
         return new ResponseEntity<>(accommodation, HttpStatus.OK);
     }
     //delete availability
     @DeleteMapping(value = "/{id}/{startDate}/{endDate}")
-    public ResponseEntity<Void> deleteAvailability(@PathVariable Long id, @PathVariable Date startDate, @PathVariable Date endDate) {
+    public ResponseEntity<Void> deleteAvailability(@PathVariable Long id, @PathVariable String startDate, @PathVariable String endDate) {
         service.markAsNotAvailable(id, startDate, endDate);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -48,7 +48,7 @@ public class AvailabilityController {
 
     //check if accommodation is available for date
     @GetMapping(value = "/{id}/{date}")
-    public ResponseEntity<Boolean> checkForDate(@PathVariable Long id, @PathVariable Date date) {
+    public ResponseEntity<Boolean> checkForDate(@PathVariable Long id, @PathVariable String date) {
         boolean available = service.checkForDate(id, date);
         return new ResponseEntity<>(available, HttpStatus.OK);
     }

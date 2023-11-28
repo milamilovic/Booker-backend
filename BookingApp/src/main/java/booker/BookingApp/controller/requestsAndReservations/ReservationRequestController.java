@@ -132,7 +132,7 @@ public class ReservationRequestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //accept or decline request for owner
-    @PostMapping(value = "/owner/{ownerId}/{requestId}/{accept}")
+    @PutMapping(value = "/owner/{ownerId}/{requestId}/{accept}")
     public ResponseEntity<Void> declineAccommodation(@PathVariable Long ownerId,
                                                      @PathVariable Long requestId,
                                                      @PathVariable boolean accept) {

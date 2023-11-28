@@ -16,10 +16,10 @@ public class AmenityService implements IAmenityService {
     @Override
     public ArrayList<AmenityDTO> findAllAmenitiesForAccommodation(Long accommodationId) throws IOException {
         ArrayList<AmenityDTO> amenities = new ArrayList<>();
-        amenities.add(new AmenityDTO(1L, "wifi", ImageIO.read(new File("src/main/resources/lisbon_image.jpg"))));
-        amenities.add(new AmenityDTO(2L, "good place", ImageIO.read(new File("src/main/resources/london_image.jpg"))));
-        amenities.add(new AmenityDTO(3L, "AC", ImageIO.read(new File("src/main/resources/madrid_image.jpg"))));
-        amenities.add(new AmenityDTO(4L, "parking spot", ImageIO.read(new File("src/main/resources/paris_image.jpg"))));
+        amenities.add(new AmenityDTO(1L, "wifi", null));
+        amenities.add(new AmenityDTO(2L, "good place", null));
+        amenities.add(new AmenityDTO(3L, "AC", null));
+        amenities.add(new AmenityDTO(4L, "parking spot", null));
         return amenities;
     }
 

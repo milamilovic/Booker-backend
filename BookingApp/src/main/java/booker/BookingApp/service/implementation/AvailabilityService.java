@@ -22,7 +22,7 @@ public class AvailabilityService implements IAvailabilityService {
     }
 
     @Override
-    public ArrayList<AvailabilityDTO> findAllFreeInRange(Long accommodationId, Date startDate, Date endDate) throws IOException {
+    public ArrayList<AvailabilityDTO> findAllFreeInRange(Long accommodationId, String startDate, String endDate) throws IOException {
         ArrayList<AvailabilityDTO> availabilities = new ArrayList<>();
         availabilities.add(new AvailabilityDTO(new Date(), new Date()));
         availabilities.add(new AvailabilityDTO(new Date(), new Date()));
@@ -32,12 +32,12 @@ public class AvailabilityService implements IAvailabilityService {
     }
 
     @Override
-    public boolean checkForDate(Long accommodationId, Date date) {
+    public boolean checkForDate(Long accommodationId, String date) {
         return true;
     }
 
     @Override
-    public void markAsNotAvailable(Long accommodationId, Date startDate, Date endDate) {
+    public void markAsNotAvailable(Long accommodationId, String startDate, String endDate) {
 
     }
 }
