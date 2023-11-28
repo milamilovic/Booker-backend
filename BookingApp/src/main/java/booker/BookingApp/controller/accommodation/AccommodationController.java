@@ -88,13 +88,6 @@ public class AccommodationController {
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
-    //find guests favourite accommodations
-    @GetMapping(value = "/guest/{guestId}/favourite", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<FavouriteAccommodationDTO>> findGuestsFavouriteAccommodations(@PathVariable Long guestId) throws IOException {
-        ArrayList<FavouriteAccommodationDTO> accommodations = service.findGuestsFavouriteAccommodations(guestId);
-        return new ResponseEntity<>(accommodations, HttpStatus.OK);
-    }
-
     //admin - get all unapproved accommodations
     @GetMapping(value = "/admin/unapproved", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findUnapprovedAccommodations()
@@ -103,13 +96,6 @@ public class AccommodationController {
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
-    //remove from favourite for guest
-    @DeleteMapping(value = "/guest/{guestId}/remove-favourite/{accommodationId}")
-    public ResponseEntity<Void> removeFavoriteAccommodation(@PathVariable Long guestId, @PathVariable Long accommodationId) {
-        service.removeFavoriteAccommodation(guestId, accommodationId);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
     //admin - decline accommodation
     @DeleteMapping(value = "/admin/remove/{accommodationId}")
     public ResponseEntity<Void> declineAccommodation(@PathVariable Long accommodationId) {

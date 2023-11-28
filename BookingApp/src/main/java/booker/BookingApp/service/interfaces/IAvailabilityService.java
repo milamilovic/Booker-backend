@@ -12,9 +12,9 @@ public interface IAvailabilityService {
 
     AvailabilityDTO update(Long accommodationId, AvailabilityDTO availabilityDTO);
 
-    ArrayList<AvailabilityDTO> findAllFreeInRange(Long accommodationId, Date startDate, Date endDate) throws IOException;
+    ArrayList<AvailabilityDTO> findAllFreeInRange(Long accommodationId, String startDate, String endDate) throws IOException;
 
-    boolean checkForDate(Long accommodationId, Date date);
+    boolean checkForDate(Long accommodationId, String date);
 
-    void markAsNotAvailable(Long accommodationId, Date startDate, Date endDate);
+    void markAsNotAvailable(Long accommodationId, String startDate, String endDate);
 }
