@@ -3,10 +3,12 @@ package booker.BookingApp.service.implementation;
 import booker.BookingApp.dto.notifications.NotificationDTO;
 import booker.BookingApp.dto.users.UserDTO;
 import booker.BookingApp.service.interfaces.INotificationService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+@Service
 public class NotificationService implements INotificationService {
     @Override
     public ArrayList<NotificationDTO> getAll() {

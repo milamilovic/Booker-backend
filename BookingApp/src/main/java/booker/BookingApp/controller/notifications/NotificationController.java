@@ -2,6 +2,7 @@ package booker.BookingApp.controller.notifications;
 
 import booker.BookingApp.dto.notifications.NotificationDTO;
 import booker.BookingApp.service.implementation.NotificationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api/notifications")
 public class NotificationController {
+    @Autowired
     private final NotificationService notificationService;
 
     public NotificationController(NotificationService notificationService) {
