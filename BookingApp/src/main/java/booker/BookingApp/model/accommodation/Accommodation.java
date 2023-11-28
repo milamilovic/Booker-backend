@@ -26,11 +26,11 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
 //    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private ArrayList<ImageIO> images;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private ArrayList<Availability> availabilities;
+    private List<Availability> availabilities;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private ArrayList<Price> prices;
+    private List<Price> prices;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private ArrayList<AccommodationRating> ratings;
+    private List<AccommodationRating> ratings;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AccommodationComment> comments;
     @Column(name = "deadline", nullable = false)

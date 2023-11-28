@@ -1,5 +1,7 @@
 package booker.BookingApp.service.implementation;
 
+import booker.BookingApp.dto.accommodation.AccommodationCommentDTO;
+import booker.BookingApp.dto.accommodation.ReportAccommodationCommentDTO;
 import booker.BookingApp.model.accommodation.AccommodationComment;
 import booker.BookingApp.repository.AccommodationCommentRepository;
 import booker.BookingApp.service.interfaces.IAccommodationCommentService;
@@ -33,6 +35,29 @@ public class AccommodationCommentService implements IAccommodationCommentService
         accommodationCommentRepository.deleteById(id);
     }
 
+//    public AccommodationComment save(AccommodationComment accommodationComment) {
+//        return accommodationCommentRepository.save(accommodationComment);
+//    }
+
+    @Override
+    public AccommodationCommentDTO create(AccommodationCommentDTO accommodationComment) {
+        return accommodationComment;
+    }
+
+    @Override
+    public AccommodationCommentDTO update(AccommodationCommentDTO accommodationCommentDTO) {
+        return accommodationCommentDTO;
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public ReportAccommodationCommentDTO report(ReportAccommodationCommentDTO dto) {
+        return dto;
+      
     @Override
     public AccommodationComment save(AccommodationComment accommodationComment) {
         return accommodationCommentRepository.save(accommodationComment);
