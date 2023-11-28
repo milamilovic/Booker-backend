@@ -22,17 +22,17 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     @Column(name = "address", nullable = false)
     private String address;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Amenity> amenities;
+    private ArrayList<Amenity> amenities;
 //    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private ArrayList<ImageIO> images;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Availability> availabilities;
+    private ArrayList<Availability> availabilities;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Price> prices;
+    private ArrayList<Price> prices;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AccommodationRating> ratings;
+    private ArrayList<AccommodationRating> ratings;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AccommodationComment> comments;
+    private ArrayList<AccommodationComment> comments;
     @Column(name = "deadline", nullable = false)
     private int deadline;
 

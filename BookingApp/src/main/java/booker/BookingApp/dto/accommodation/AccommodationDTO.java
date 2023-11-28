@@ -67,7 +67,7 @@ public @Data class AccommodationDTO {
         this.ratings = ratings;
     }
 
-    //constructor for accommodation listing dto
+    //constructor for favourite listing dto
     public AccommodationDTO(String title,
                             String shortDescription,
                             ArrayList<Price> prices,

@@ -99,6 +99,7 @@ public class AccommodationRatingController {
     public ResponseEntity<AccommodationRatingDTO> create(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
         AccommodationRatingDTO ratingDTO = accommodationRatingService.create(accommodationRatingDTO);
         return new ResponseEntity<>(ratingDTO, HttpStatus.CREATED);
+    }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> update(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
