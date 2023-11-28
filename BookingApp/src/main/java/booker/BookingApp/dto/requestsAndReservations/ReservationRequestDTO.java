@@ -19,7 +19,7 @@ public @Data @AllArgsConstructor class ReservationRequestDTO {
     private ReservationRequestStatus status;
     private boolean deleted;
 
-    public ReservationRequestDTO makeFromRequest(ReservationRequest request){
+    public static ReservationRequestDTO makeFromRequest(ReservationRequest request){
         ReservationRequestDTO requestDTO = new ReservationRequestDTO(
                 request.getGuestId(),
                 request.getAccommodationId(),
