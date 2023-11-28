@@ -14,13 +14,13 @@ import java.util.Date;
 @Service
 public class ReportService implements IReportService {
     @Override
-    public IntervalReportDTO getIntervalReport(Long ownerId, Date from, Date to) {
+    public IntervalReportDTO getIntervalReport(Long ownerId, String from, String to) {
         ArrayList<OneAccIntervalReport> data = new ArrayList<>();
         data.add(new OneAccIntervalReport(1L, new Date(), new Date(), 5, 312.25));
         data.add(new OneAccIntervalReport(2L, new Date(), new Date(), 2, 115.33));
         data.add(new OneAccIntervalReport(3L, new Date(), new Date(), 6, 550.00));
         data.add(new OneAccIntervalReport(4L, new Date(), new Date(), 8, 670.50));
-        return new IntervalReportDTO(1L, ReportType.PERIOD_REPORT, from, to, data);
+        return new IntervalReportDTO(1L, ReportType.PERIOD_REPORT, new Date(), new Date(), data);
     }
 
     @Override
