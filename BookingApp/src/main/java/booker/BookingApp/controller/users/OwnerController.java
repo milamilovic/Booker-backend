@@ -1,10 +1,15 @@
 package booker.BookingApp.controller.users;
 
 
+import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.service.implementation.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 public class OwnerController {
     private final OwnerService ownerService;
@@ -14,34 +19,61 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
-    @GetMapping("/findAll")
-    public void getAllOwners() {
-        // Pozovi metodu findAll() iz ownerService-a
-        ownerService.findAll();
+    @GetMapping(value = "/all")
+    public ResponseEntity<ArrayList<OwnerDTO>> getAll() {
+        ArrayList<OwnerDTO> owners = ownerService.findAll();
+        return new ResponseEntity<>(owners, HttpStatus.OK);
     }
 
-    @GetMapping("/{ownerId}")
-    public void getOwner(@PathVariable Long ownerId) {
-        // Pozovi metodu getOwnerById() iz ownerService-a
-        ownerService.getOwnerById(ownerId);
+    @GetMapping(value = "/{ownerId}")
+    public ResponseEntity<OwnerDTO> getOwnerById(@PathVariable Long ownerId) {
+        OwnerDTO ownerDTO = ownerService.getOwnerById(ownerId);
+        if(ownerDTO == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(ownerDTO, HttpStatus.OK);
+        }
     }
 
-    @PostMapping("/create")
-    public Owner createOwner(@RequestBody Owner owner) {
-        // Pozovi metodu create() iz ownerService-a i vrati novog vlasnika
-        return ownerService.create(owner);
+    @GetMapping(value = "/by-email/{email}")
+    public ResponseEntity<OwnerDTO> getOwnerByEmail(@PathVariable String email) {
+        OwnerDTO ownerDTO = ownerService.getOwnerByEmail(email);
+        if (ownerDTO == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(ownerDTO, HttpStatus.OK);
+        }
     }
 
-    @PutMapping("/{ownerId}")
-    public Owner updateOwner(@PathVariable Long ownerId, @RequestBody Owner owner) throws Exception {
-        // Pozovi metodu update() iz ownerService-a i vrati ažuriranog vlasnika
-        return ownerService.update(owner);
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity<OwnerDTO> insert(@RequestBody OwnerDTO owner) {
+        OwnerDTO ownerDTO = ownerService.insert(owner);
+        return new ResponseEntity<>(ownerDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{ownerId}")
-    public void deleteOwner(@PathVariable Long ownerId) {
-        // Pozovi metodu delete() iz ownerService-a
-        ownerService.delete(ownerId);
+    @PutMapping(consumes = "application/json")
+    public ResponseEntity<OwnerDTO> update(@RequestBody OwnerDTO owner) throws Exception {
+        OwnerDTO ownerDTO = ownerService.getOwnerById(owner.getId());
+        if (ownerDTO == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        OwnerDTO updatedOwner = ownerService.update(owner);
+        return new ResponseEntity<>(updatedOwner, HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/{ownerId}")
+    public ResponseEntity<Void> delete(@PathVariable Long ownerId) {
+        OwnerDTO ownerDTO = ownerService.getOwnerById(ownerId);
+        if (ownerDTO == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else{
+            ownerService.delete(ownerId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
+    // get all owner's guests
+    // get all owner's notifications
+
 }
 
