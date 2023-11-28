@@ -1,8 +1,9 @@
 package booker.BookingApp.dto.accommodation;
 
 import booker.BookingApp.model.accommodation.AccommodationComment;
+import lombok.Data;
 
-public class ReportAccommodationCommentDTO {
+public @Data class ReportAccommodationCommentDTO {
     private Long id;
     private boolean reported;
 

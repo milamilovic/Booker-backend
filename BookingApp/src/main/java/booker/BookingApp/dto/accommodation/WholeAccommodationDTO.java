@@ -4,8 +4,8 @@ import booker.BookingApp.model.accommodation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public @Data @AllArgsConstructor class WholeAccommodationDTO {
     private Long id;
@@ -13,12 +13,12 @@ public @Data @AllArgsConstructor class WholeAccommodationDTO {
     private String description;
     private String shortDescription;
     private String address;
-    private ArrayList<Amenity> amenities;
+    private List<Amenity> amenities;
     //private ArrayList<Image> images;
-    private ArrayList<Availability> availabilities;
-    private ArrayList<Price> prices;
-    private ArrayList<AccommodationRating> ratings;
-    private ArrayList<AccommodationComment> comments;
+    private List<Availability> availabilities;
+    private List<Price> prices;
+    private List<AccommodationRating> ratings;
+    private List<AccommodationComment> comments;
     private int deadline;
 
     public static WholeAccommodationDTO makeFromAccommodation(Accommodation accommodation) {
