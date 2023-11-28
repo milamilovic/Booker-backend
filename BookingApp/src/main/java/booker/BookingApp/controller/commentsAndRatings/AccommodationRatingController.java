@@ -30,7 +30,7 @@ public class AccommodationRatingController {
         return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/all/{accommodation_id}")
+    @GetMapping(value = "/all/{accommodation_id}/ratings")
     public ResponseEntity<List<AccommodationRatingDTO>> findAllForAccommodation(@PathVariable Long accommodation_id) {
         List<AccommodationRating> ratings = accommodationRatingService.findAllForAccommodation(accommodation_id);
         List<AccommodationRatingDTO> ratingDTOS = new ArrayList<>();
@@ -123,4 +123,5 @@ public class AccommodationRatingController {
 
         return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
     }
+
 }

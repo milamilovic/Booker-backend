@@ -43,42 +43,37 @@ public class OwnerCommentController {
     }
 
 
+//     @PostMapping(consumes = "application/json")
+//     public ResponseEntity<OwnerCommentDTO> saveOwnerComment(@RequestBody OwnerCommentDTO ownerCommentDTO) {
+//         OwnerComment ownerComment = new OwnerComment();
 
+//         //ownerComment.setOwnerId(ownerCommentDTO.getOwnerId());
+//         //ownerComment.setGuestId(ownerCommentDTO.getGuestId());
+//         ownerComment.setContent(ownerCommentDTO.getContent());
+//         ownerComment.setDate(ownerCommentDTO.getDate());
+//         ownerComment.setReported(ownerCommentDTO.isReported());
 
+//         ownerComment = ownerCommentService.save(ownerComment);
+//         return new ResponseEntity<>(new OwnerCommentDTO(ownerComment), HttpStatus.CREATED);
+//     }
 
+//     @PutMapping(consumes = "application/json")
+//     public ResponseEntity<OwnerCommentDTO> updateOwnerComment(@RequestBody OwnerCommentDTO ownerCommentDTO) {
+//         OwnerComment ownerComment = ownerCommentService.findOne(ownerCommentDTO.getId());
 
+//         if (ownerComment == null) {
+//             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//         }
 
-//    @PostMapping(consumes = "application/json")
-//    public ResponseEntity<OwnerCommentDTO> saveUser(@RequestBody OwnerCommentDTO ownerCommentDTO) {
-//        OwnerComment ownerComment = new OwnerComment();
-//
-//        //ownerComment.setOwnerId(ownerCommentDTO.getOwnerId());
-//        //ownerComment.setGuestId(ownerCommentDTO.getGuestId());
-//        ownerComment.setContent(ownerCommentDTO.getContent());
-//        ownerComment.setDate(ownerCommentDTO.getDate());
-//        ownerComment.setReported(ownerCommentDTO.isReported());
-//
-//        ownerComment = ownerCommentService.save(ownerComment);
-//        return new ResponseEntity<>(new OwnerCommentDTO(ownerComment), HttpStatus.CREATED);
-//    }
-//
-//    @PutMapping(consumes = "application/json")
-//    public ResponseEntity<OwnerCommentDTO> updateUser(@RequestBody OwnerCommentDTO ownerCommentDTO) {
-//        OwnerComment ownerComment = ownerCommentService.findOne(ownerCommentDTO.getId());
-//
-//        if (ownerComment == null) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//
-//        //ownerComment.setOwnerId(ownerCommentDTO.getOwnerId());
-//        //ownerComment.setGuestId(ownerCommentDTO.getGuestId());
-//        ownerComment.setContent(ownerCommentDTO.getContent());
-//        ownerComment.setDate(ownerCommentDTO.getDate());
-//        ownerComment.setReported(ownerComment.isReported());
-//
-//        ownerComment = ownerCommentService.save(ownerComment);
-//        return new ResponseEntity<>(new OwnerCommentDTO(ownerComment), HttpStatus.OK);
-//    }
+//         //ownerComment.setOwnerId(ownerCommentDTO.getOwnerId());
+//         //ownerComment.setGuestId(ownerCommentDTO.getGuestId());
+//         ownerComment.setContent(ownerCommentDTO.getContent());
+//         ownerComment.setDate(ownerCommentDTO.getDate());
+//         ownerComment.setReported(ownerComment.isReported());
+
+//         ownerComment = ownerCommentService.save(ownerComment);
+//         return new ResponseEntity<>(new OwnerCommentDTO(ownerComment), HttpStatus.OK);
+//     }
 
     @DeleteMapping(value = "/remove/{id}")
     public ResponseEntity<Void> deleteOwnerComment(@PathVariable Long id) {
@@ -113,15 +108,15 @@ public class OwnerCommentController {
         }
         return new ResponseEntity<>(reportedDTOS, HttpStatus.OK);
     }
-
     @GetMapping(value = "/all/{owner_id}/comments")
-    public ResponseEntity<List<OwnerCommentDTO>> findAllForOwner(@PathVariable Long owner_id) {
+    public ResponseEntity<List<OwnerCommentDTO>> getAllForOwner(@PathVariable Long owner_id) {
         List<OwnerComment> comments = ownerCommentService.findAllForOwner(owner_id);
         List<OwnerCommentDTO> commentDTOS = new ArrayList<>();
-        for (OwnerComment comment : comments) {
-            commentDTOS.add(new OwnerCommentDTO(comment));
+
+        for(OwnerComment ownerComment : comments) {
+            commentDTOS.add(new OwnerCommentDTO(ownerComment));
         }
+
         return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
     }
-    
 }

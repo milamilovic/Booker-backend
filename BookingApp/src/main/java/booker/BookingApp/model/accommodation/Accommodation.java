@@ -5,14 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public @Data @AllArgsConstructor class Accommodation {
+public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,21 +22,18 @@ public @Data @AllArgsConstructor class Accommodation {
     @Column(name = "address", nullable = false)
     private String address;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Amenity> amenities;
+    private ArrayList<Amenity> amenities;
 //    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private ArrayList<ImageIO> images;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Availability> availabilities;
+    private ArrayList<Availability> availabilities;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Price> prices;
+    private ArrayList<Price> prices;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AccommodationRating> ratings;
+    private ArrayList<AccommodationRating> ratings;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AccommodationComment> comments;
+    private ArrayList<AccommodationComment> comments;
     @Column(name = "deadline", nullable = false)
     private int deadline;
 
-    public Accommodation(){
-
-    }
 }

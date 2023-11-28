@@ -35,6 +35,7 @@ public class OwnerCommentService implements IOwnerCommentService {
         ownerCommentRepository.deleteById(id);
     }
 
+
     @Override
     public OwnerCommentDTO create(OwnerCommentDTO ownerCommentDTO) {
         return ownerCommentDTO;
@@ -48,7 +49,11 @@ public class OwnerCommentService implements IOwnerCommentService {
     @Override
     public void delete(Long id) {
 
-    }
+//     @Override
+//     public OwnerComment save(OwnerComment ownerComment) {
+//         return ownerCommentRepository.save(ownerComment);
+//     }
+
 
     @Override
     public List<OwnerComment> findAllReported() {
@@ -60,7 +65,5 @@ public class OwnerCommentService implements IOwnerCommentService {
         return reportOwnerCommentDTO;
     }
 
-    //public OwnerComment save(OwnerComment ownerComment) {
-        //return ownerCommentRepository.save(ownerComment);
-    //}
+
 }

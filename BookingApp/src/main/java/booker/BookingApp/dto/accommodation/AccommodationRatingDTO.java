@@ -13,8 +13,6 @@ public @Data class AccommodationRatingDTO {
     private Date date;
     private boolean reported;
 
-    public AccommodationRatingDTO() {
-    }
 
     public AccommodationRatingDTO(AccommodationRating accommodationRating) {
         this(accommodationRating.getId(), accommodationRating.getAccommodation().getId(), accommodationRating.getGuest().getId(), accommodationRating.getRate(), accommodationRating.getDate(), accommodationRating.isReported());

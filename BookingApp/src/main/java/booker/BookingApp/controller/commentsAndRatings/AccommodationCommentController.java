@@ -22,6 +22,7 @@ public class AccommodationCommentController {
     @Autowired
     private AccommodationService accommodationService;
 
+
     @GetMapping(value = "/all")
     public ResponseEntity<List<AccommodationCommentDTO>> getAllComments() {
         List<AccommodationComment> comments = accommodationCommentService.findAll();
@@ -32,6 +33,7 @@ public class AccommodationCommentController {
         }
         return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
     }
+
 
     @GetMapping(value = "/{accommodation_id}/comments")
     public ResponseEntity<List<AccommodationCommentDTO>> getAllAccommodationComments(@PathVariable Long accommodation_id) {
@@ -53,6 +55,7 @@ public class AccommodationCommentController {
         }
         return new ResponseEntity<>(new AccommodationCommentDTO(accommodationComment), HttpStatus.OK);
     }
+
 
 //    @PostMapping(consumes = "application/json")
 //    public ResponseEntity<AccommodationCommentDTO> saveAccommodationComment(@RequestBody AccommodationCommentDTO accommodationCommentDTO) {
@@ -116,5 +119,15 @@ public class AccommodationCommentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping(value = "/all/reported")
+    public ResponseEntity<List<AccommodationCommentDTO>> findAllReported() {
+        List<AccommodationComment> reportedComments = accommodationCommentService.findAllReported();
+        List<AccommodationCommentDTO> reportedCommentsDTO = new ArrayList<>();
 
+        for(AccommodationComment accommodationComment :reportedComments) {
+            reportedCommentsDTO.add(new AccommodationCommentDTO(accommodationComment));
+        }
+
+        return new ResponseEntity<>(reportedCommentsDTO, HttpStatus.OK);
+    }
 }
