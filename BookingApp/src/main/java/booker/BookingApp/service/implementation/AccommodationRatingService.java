@@ -20,9 +20,11 @@ public class AccommodationRatingService implements IAccommodationRatingService {
         return accommodationRatingRepository.findAll();
     }
 
+
     @Override
     public List<AccommodationRating> findAllForAccommodation(Long id) {
         return accommodationRatingRepository.findAllForAccommodation(id);
+
     }
 
     @Override
@@ -30,6 +32,7 @@ public class AccommodationRatingService implements IAccommodationRatingService {
         List<AccommodationRating> ratings = accommodationRatingRepository.findAllReported();
         return ratings;
     }
+
     @Override
     public AccommodationRating findOne(Long id) {
         return accommodationRatingRepository.findById(id).orElse(null);
@@ -40,7 +43,6 @@ public class AccommodationRatingService implements IAccommodationRatingService {
         accommodationRatingRepository.deleteById(id);
     }
 
-    @Override
     public AccommodationRatingDTO create(AccommodationRatingDTO ratingDTO) {
         return ratingDTO;
     }
@@ -61,5 +63,5 @@ public class AccommodationRatingService implements IAccommodationRatingService {
 
     public ReportAccommodationRatingDTO report(ReportAccommodationRatingDTO reportAccommodationRatingDTO) {
         return reportAccommodationRatingDTO;
-    }
+
 }

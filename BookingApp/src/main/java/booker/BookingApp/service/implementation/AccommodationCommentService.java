@@ -57,5 +57,14 @@ public class AccommodationCommentService implements IAccommodationCommentService
     @Override
     public ReportAccommodationCommentDTO report(ReportAccommodationCommentDTO dto) {
         return dto;
+      
+    @Override
+    public AccommodationComment save(AccommodationComment accommodationComment) {
+        return accommodationCommentRepository.save(accommodationComment);
+    }
+
+    @Override
+    public List<AccommodationComment> findAllReported() {
+        return accommodationCommentRepository.findAllReported();
     }
 }
