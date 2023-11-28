@@ -5,6 +5,7 @@ import booker.BookingApp.model.accommodation.AccommodationRating;
 import booker.BookingApp.service.implementation.AccommodationRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,6 @@ public class AccommodationRatingController {
     public ResponseEntity<List<AccommodationRatingDTO>> findAllForAccommodation(@PathVariable Long accommodation_id) {
         List<AccommodationRating> ratings = accommodationRatingService.findAllForAccommodation(accommodation_id);
         List<AccommodationRatingDTO> ratingDTOS = new ArrayList<>();
-
         for (AccommodationRating accommodationRating : ratings) {
             ratingDTOS.add(new AccommodationRatingDTO(accommodationRating));
         }
@@ -51,58 +51,76 @@ public class AccommodationRatingController {
         return new ResponseEntity<>(new AccommodationRatingDTO(accommodationRating), HttpStatus.OK);
     }
 
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<AccommodationRatingDTO> saveAccommodationRating(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
-        AccommodationRating accommodationRating = new AccommodationRating();
+//    @PostMapping(consumes = "application/json")
+//    public ResponseEntity<AccommodationRatingDTO> saveAccommodationRating(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
+//        AccommodationRating accommodationRating = new AccommodationRating();
+//
+//        //accommodationRating.setAccommodationId(accommodationRatingDTO.getAccommodationId());
+//        //accommodationRating.setGuestId(accommodationRatingDTO.getGuestId());
+//        accommodationRating.setRate(accommodationRatingDTO.getRate());
+//        accommodationRating.setDate(accommodationRatingDTO.getDate());
+//        accommodationRating.setReported(accommodationRatingDTO.isReported());
+//
+//        accommodationRating = accommodationRatingService.save(accommodationRating);
+//        return new ResponseEntity<>(new AccommodationRatingDTO(accommodationRating), HttpStatus.CREATED);
+//    }
+//
+//    @PutMapping(consumes = "application/json")
+//    public ResponseEntity<AccommodationRatingDTO> updateAccommodationRating(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
+//        AccommodationRating accommodationRating = accommodationRatingService.findOne(accommodationRatingDTO.getId());
+//
+//        if (accommodationRating == null) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//
+//        //accommodationRating.setAccommodationId(accommodationRatingDTO.getAccommodationId());
+//        //accommodationRating.setGuestId(accommodationRatingDTO.getGuestId());
+//        accommodationRating.setRate(accommodationRatingDTO.getRate());
+//        accommodationRating.setDate(accommodationRatingDTO.getDate());
+//        accommodationRating.setReported(accommodationRatingDTO.isReported());
+//
+//        accommodationRating = accommodationRatingService.save(accommodationRating);
+//        return new ResponseEntity<>(new AccommodationRatingDTO(accommodationRating), HttpStatus.OK);
+//    }
+//
+//    @DeleteMapping(value = "/{id}")
+//    public ResponseEntity<Void> deleteAccommodationRating(@PathVariable Long id) {
+//        AccommodationRating accommodationRating = accommodationRatingService.findOne(id);
+//
+//        if (accommodationRating != null) {
+//            accommodationRatingService.remove(id);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
-        //accommodationRating.setAccommodation();
-        //accommodationRating.setGuestId(accommodationRatingDTO.getGuestId());
-        accommodationRating.setRate(accommodationRatingDTO.getRate());
-        accommodationRating.setDate(accommodationRatingDTO.getDate());
-        accommodationRating.setReported(accommodationRatingDTO.isReported());
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AccommodationRatingDTO> create(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
+        AccommodationRatingDTO ratingDTO = accommodationRatingService.create(accommodationRatingDTO);
+        return new ResponseEntity<>(ratingDTO, HttpStatus.CREATED);
 
-        accommodationRating = accommodationRatingService.save(accommodationRating);
-        return new ResponseEntity<>(new AccommodationRatingDTO(accommodationRating), HttpStatus.CREATED);
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> update(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
+        accommodationRatingService.update(accommodationRatingDTO);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(consumes = "application/json")
-    public ResponseEntity<AccommodationRatingDTO> updateAccommodationRating(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
-        AccommodationRating accommodationRating = accommodationRatingService.findOne(accommodationRatingDTO.getId());
-
-        if (accommodationRating == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        //accommodationRating.setAccommodationId(accommodationRatingDTO.getAccommodationId());
-        //accommodationRating.setGuestId(accommodationRatingDTO.getGuestId());
-        accommodationRating.setRate(accommodationRatingDTO.getRate());
-        accommodationRating.setDate(accommodationRatingDTO.getDate());
-        accommodationRating.setReported(accommodationRatingDTO.isReported());
-
-        accommodationRating = accommodationRatingService.save(accommodationRating);
-        return new ResponseEntity<>(new AccommodationRatingDTO(accommodationRating), HttpStatus.OK);
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteAccommodationRating(@PathVariable Long id) {
-        AccommodationRating accommodationRating = accommodationRatingService.findOne(id);
-
-        if (accommodationRating != null) {
-            accommodationRatingService.remove(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @DeleteMapping(value = "/remove/{accommodation_rating_id}")
+    public ResponseEntity<Void> delete(@PathVariable Long accommodation_rating_id) {
+        accommodationRatingService.delete(accommodation_rating_id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/all/reported")
     public ResponseEntity<List<AccommodationRatingDTO>> findAllReported() {
-        List<AccommodationRating> reported = accommodationRatingService.findAllReported();
-        List<AccommodationRatingDTO> reportedDTOS = new ArrayList<>();
-        for (AccommodationRating accommodationRating : reported) {
-            reportedDTOS.add(new AccommodationRatingDTO(accommodationRating));
+        List<AccommodationRating> ratings = accommodationRatingService.findAllReported();
+        List<AccommodationRatingDTO> ratingDTOS = new ArrayList<>();
+        for(AccommodationRating accommodationRating : ratings) {
+            ratingDTOS.add(new AccommodationRatingDTO(accommodationRating));
         }
 
-        return new ResponseEntity<>(reportedDTOS, HttpStatus.OK);
+        return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
     }
+
 }
