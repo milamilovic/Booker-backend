@@ -46,7 +46,7 @@ public class ReservationRequestController {
     }
 
     //   find all requests for owner, search
-    //   /api/requests/owner/5/search?date=12.12.2023.&name=Modern
+    //   /api/requests/owner/5/search/12.12.2023./Modern
     @GetMapping(value = "/owner/{ownerId}/search/{date}/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<ReservationRequestDTO>> searchOwnersRequests(@PathVariable Long ownerId,
                                                                                  @PathVariable String date,
@@ -58,7 +58,7 @@ public class ReservationRequestController {
     }
 
     //   searching accommodations with filters, path looks like
-    //   /api/requests/owner/5/search?date=12.12.2023.&name=Modern?status=WAITING
+    //   /api/requests/owner/5/search/12.12.2023/Modern/filter
     //   and request body contains json with filter array
     @GetMapping(value = "/owner/{ownerId}/search/{date}/{name}/filter", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<ReservationRequestDTO>> searchAndFilterOwnersRequests(@PathVariable Long ownerId,

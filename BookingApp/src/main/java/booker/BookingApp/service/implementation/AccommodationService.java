@@ -1,13 +1,12 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.dto.accommodation.AccommodationDTO;
+import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
+import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
+import booker.BookingApp.dto.accommodation.WholeAccommodationDTO;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,13 +14,13 @@ import java.util.Date;
 @Service
 public class AccommodationService implements IAccommodationService {
     @Override
-    public ArrayList<AccommodationDTO> findAll() throws IOException {
-        AccommodationDTO accommodation = findOne(1L);
+    public ArrayList<AccommodationListingDTO> findAll() throws IOException {
+        WholeAccommodationDTO accommodation = findOne(1L);
         //TODO: images
-        AccommodationDTO accommodation1 = new AccommodationDTO(1L, "Example accommodation 1", "Description 1", "short description 1", "address of accommodation 1", accommodation.getAmenities(), accommodation.getAvailabilities(), accommodation.getPrices(), accommodation.getRatings(), accommodation.getComments(), 5);
-        AccommodationDTO accommodation2 = new AccommodationDTO(2L, "Example accommodation 2", "Description 2", "short description 2", "address of accommodation 2", accommodation.getAmenities(), accommodation.getAvailabilities(), accommodation.getPrices(), accommodation.getRatings(), accommodation.getComments(), 5);
-        AccommodationDTO accommodation3 = new AccommodationDTO(3L, "Example accommodation 3", "Description 3", "short description 3", "address of accommodation 3", accommodation.getAmenities(), accommodation.getAvailabilities(), accommodation.getPrices(), accommodation.getRatings(), accommodation.getComments(), 5);
-        ArrayList<AccommodationDTO> accommodations = new ArrayList<>();
+        AccommodationListingDTO accommodation1 = new AccommodationListingDTO(1L, "Example accommodation 1", "Description 1", 3.2F, 118F, 35F);
+        AccommodationListingDTO accommodation2 = new AccommodationListingDTO(2L, "Example accommodation 2", "Description 2", 4.5F, 250F, 50F);
+        AccommodationListingDTO accommodation3 = new AccommodationListingDTO(3L, "Example accommodation 3", "Description 3", 5.0F, 18F, 6F);
+        ArrayList<AccommodationListingDTO> accommodations = new ArrayList<>();
         accommodations.add(accommodation1);
         accommodations.add(accommodation2);
         accommodations.add(accommodation3);
@@ -29,7 +28,7 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public AccommodationDTO findOne(Long id) throws IOException {
+    public WholeAccommodationDTO findOne(Long id) throws IOException {
 //        ArrayList<Image> images = new ArrayList<>();
 //        images.add(ImageIO.read(new File("src/main/resources/lisbon_image.jpg")));
 //        images.add(ImageIO.read(new File("src/main/resources/london_image.jpg")));
@@ -70,17 +69,17 @@ public class AccommodationService implements IAccommodationService {
         comments.add(new AccommodationComment());
         comments.add(new AccommodationComment());
         //TODO: images
-        AccommodationDTO accommodation = new AccommodationDTO(id, "Example accommodation", "Description 1", "short description 1", "address of accommodation 1", amenities, availabilities, prices, ratings, comments, 5);
+        WholeAccommodationDTO accommodation = new WholeAccommodationDTO(id, "Example accommodation", "Description 1", "short description 1", "address of accommodation 1", amenities, availabilities, prices, ratings, comments, 5);
         return accommodation;
     }
 
     @Override
-    public AccommodationDTO create(AccommodationDTO accommodation) throws Exception {
+    public WholeAccommodationDTO create(WholeAccommodationDTO accommodation) throws Exception {
         return accommodation;
     }
 
     @Override
-    public AccommodationDTO update(AccommodationDTO accommodation) throws Exception {
+    public WholeAccommodationDTO update(WholeAccommodationDTO accommodation) throws Exception {
         return accommodation;
     }
 
@@ -90,7 +89,7 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public ArrayList<AccommodationDTO> findOwnersActiveAccommodations(Long ownerId) {
+    public ArrayList<AccommodationListingDTO> findOwnersActiveAccommodations(Long ownerId) {
         try {
             //TODO: this should return accommodation listing dto
             return findAll();
@@ -105,32 +104,37 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public ArrayList<AccommodationDTO> findUnapprovedAccommodations() {
+    public ArrayList<AccommodationListingDTO> findUnapprovedAccommodations() {
         return findOwnersActiveAccommodations(2L);
     }
 
     @Override
-    public ArrayList<AccommodationDTO> findGuestsFavouriteAccommodations(Long guestId) {
-        try {
-            //TODO: this should return favourite accommodations dto
-            return findAll();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public ArrayList<FavouriteAccommodationDTO> findGuestsFavouriteAccommodations(Long guestId) throws IOException {
+        WholeAccommodationDTO accommodation = findOne(1L);
+        //TODO: images
+        FavouriteAccommodationDTO accommodation1 = new FavouriteAccommodationDTO(1L, "Example accommodation 1", "Description 1", 80.00, 4,"Example address 1");
+        FavouriteAccommodationDTO accommodation2 = new FavouriteAccommodationDTO(2L, "Example accommodation 2", "Description 2", 100.00, 5,"Example address 2");
+        FavouriteAccommodationDTO accommodation3 = new FavouriteAccommodationDTO(3L, "Example accommodation 3", "Description 3", 85.50, 3.2F,"Example address 3");
+        ArrayList<FavouriteAccommodationDTO> accommodations = new ArrayList<>();
+        accommodations.add(accommodation1);
+        accommodations.add(accommodation2);
+        accommodations.add(accommodation3);
+        return accommodations;
+
     }
 
     @Override
-    public ArrayList<AccommodationDTO> search(String startDate, String endDate, String location, int people) {
+    public ArrayList<AccommodationListingDTO> search(String startDate, String endDate, String location, int people) {
         return findOwnersActiveAccommodations(2L);
     }
 
     @Override
-    public ArrayList<AccommodationDTO> findAllOwnersAccommodations(Long ownerId) {
+    public ArrayList<AccommodationListingDTO> findAllOwnersAccommodations(Long ownerId) {
         return findOwnersActiveAccommodations(2L);
     }
 
     @Override
-    public ArrayList<AccommodationDTO> applyFilters(ArrayList<AccommodationDTO> accommodations, Filter filter) {
+    public ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter) {
         return findOwnersActiveAccommodations(2L);
     }
 }
