@@ -47,7 +47,7 @@ public class OwnerCommentService implements IOwnerCommentService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) {}
 
 //     @Override
 //     public OwnerComment save(OwnerComment ownerComment) {

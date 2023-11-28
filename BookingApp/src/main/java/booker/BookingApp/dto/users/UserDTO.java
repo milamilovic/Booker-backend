@@ -12,24 +12,22 @@ public @Data class UserDTO {
     private String surname;
 
     private String email;
-    private String password;
 
     private String address;
 
     private String phone;
     private Role role;
-    private boolean blocked;
     private boolean deleted;
 
     public UserDTO() {
     }
 
     public UserDTO(User user) {
-        this(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getAddress(), user.getPhone(), user.getRole(), user.isBlocked(), user.isDeleted());
+        this(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getAddress(), user.getPhone(), user.getRole(), user.isDeleted());
 
     }
 
-    public UserDTO(Long id, String name, String surname, String email, String address, String phone, Role role, boolean blocked, boolean deleted) {
+    public UserDTO(Long id, String name, String surname, String email, String address, String phone, Role role, boolean deleted) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -37,7 +35,6 @@ public @Data class UserDTO {
         this.address = address;
         this.phone = phone;
         this.role = role;
-        this.blocked = blocked;
         this.deleted = deleted;
     }
 }
