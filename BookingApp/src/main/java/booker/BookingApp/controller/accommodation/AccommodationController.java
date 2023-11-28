@@ -103,10 +103,10 @@ public class AccommodationController {
         return new ResponseEntity<ArrayList<AccommodationDTO>>(accommodations, HttpStatus.OK);
     }
 
-    //remove from favourite for user
-    @DeleteMapping(value = "/user/{userId}/remove-favourite/{accommodationId}")
-    public ResponseEntity<Void> removeFavoriteAccommodation(@PathVariable Long userId, @PathVariable Long accommodationId) {
-        service.removeFavoriteAccommodation(userId, accommodationId);
+    //remove from favourite for guest
+    @DeleteMapping(value = "/guest/{guestId}/remove-favourite/{accommodationId}")
+    public ResponseEntity<Void> removeFavoriteAccommodation(@PathVariable Long guestId, @PathVariable Long accommodationId) {
+        service.removeFavoriteAccommodation(guestId, accommodationId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
