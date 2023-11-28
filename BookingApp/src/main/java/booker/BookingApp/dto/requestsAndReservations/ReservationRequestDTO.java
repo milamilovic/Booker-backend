@@ -18,8 +18,9 @@ public @Data @AllArgsConstructor class ReservationRequestDTO {
     private int numberOfGuests;
     private ReservationRequestStatus status;
     private boolean deleted;
+    private double price;
 
-    public ReservationRequestDTO makeFromRequest(ReservationRequest request){
+    public static ReservationRequestDTO makeFromRequest(ReservationRequest request){
         ReservationRequestDTO requestDTO = new ReservationRequestDTO(
                 request.getGuestId(),
                 request.getAccommodationId(),
@@ -28,7 +29,8 @@ public @Data @AllArgsConstructor class ReservationRequestDTO {
                 request.getToDate(),
                 request.getNumberOfGuests(),
                 request.getStatus(),
-                request.isDeleted()
+                request.isDeleted(),
+                request.getPrice()
         );
         return  requestDTO;
     }

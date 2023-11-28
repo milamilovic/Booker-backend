@@ -1,6 +1,8 @@
 package booker.BookingApp.service.interfaces;
 
-import booker.BookingApp.dto.accommodation.AccommodationDTO;
+import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
+import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
+import booker.BookingApp.dto.accommodation.WholeAccommodationDTO;
 import booker.BookingApp.model.accommodation.Filter;
 
 import java.io.IOException;
@@ -8,27 +10,27 @@ import java.util.ArrayList;
 
 public interface IAccommodationService {
 
-    ArrayList<AccommodationDTO> findAll() throws IOException;
+    ArrayList<AccommodationListingDTO> findAll() throws IOException;
 
-    AccommodationDTO findOne(Long id) throws IOException;
+    WholeAccommodationDTO findOne(Long id) throws IOException;
 
-    AccommodationDTO create(AccommodationDTO accommodation) throws Exception;
+    WholeAccommodationDTO create(WholeAccommodationDTO accommodation) throws Exception;
 
-    AccommodationDTO update(AccommodationDTO accommodation) throws Exception;
+    WholeAccommodationDTO update(WholeAccommodationDTO accommodation) throws Exception;
 
     void delete(Long id);
 
-    ArrayList<AccommodationDTO> findOwnersActiveAccommodations(Long ownerId);
+    ArrayList<AccommodationListingDTO> findOwnersActiveAccommodations(Long ownerId);
 
     void removeFavoriteAccommodation(Long userId, Long accommodationId);
 
-    ArrayList<AccommodationDTO> findUnapprovedAccommodations();
+    ArrayList<AccommodationListingDTO> findUnapprovedAccommodations();
 
-    ArrayList<AccommodationDTO> findGuestsFavouriteAccommodations(Long guestId);
+    ArrayList<FavouriteAccommodationDTO> findGuestsFavouriteAccommodations(Long guestId) throws IOException;
 
-    ArrayList<AccommodationDTO> search(String startDate, String endDate, String location, int people);
+    ArrayList<AccommodationListingDTO> search(String startDate, String endDate, String location, int people);
 
-    ArrayList<AccommodationDTO> findAllOwnersAccommodations(Long ownerId);
+    ArrayList<AccommodationListingDTO> findAllOwnersAccommodations(Long ownerId);
 
-    ArrayList<AccommodationDTO> applyFilters(ArrayList<AccommodationDTO> accommodations, Filter filter);
+    ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter);
 }

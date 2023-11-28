@@ -1,6 +1,7 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AccommodationRatingDTO;
+import booker.BookingApp.dto.accommodation.ReportAccommodationRatingDTO;
 import booker.BookingApp.model.accommodation.AccommodationRating;
 import booker.BookingApp.repository.AccommodationRatingRepository;
 import booker.BookingApp.service.interfaces.IAccommodationRatingService;
@@ -63,5 +64,5 @@ public class AccommodationRatingService implements IAccommodationRatingService {
 
     public ReportAccommodationRatingDTO report(ReportAccommodationRatingDTO reportAccommodationRatingDTO) {
         return reportAccommodationRatingDTO;
-
+    }
 }

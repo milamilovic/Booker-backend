@@ -18,7 +18,7 @@ public class ReservationRequestService implements IReservationRequestService {
 
     @Override
     public ReservationRequestDTO findOne(Long id) {
-        return new ReservationRequestDTO(id, 1L, 1L, new Date(), new Date(), 2, ReservationRequestStatus.WAITING, false);
+        return new ReservationRequestDTO(id, 1L, 1L, new Date(), new Date(), 2, ReservationRequestStatus.WAITING, false, 150.5);
     }
 
     @Override

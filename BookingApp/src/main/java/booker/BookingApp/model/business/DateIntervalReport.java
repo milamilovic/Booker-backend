@@ -1,4 +1,9 @@
 package booker.BookingApp.model.business;
 
-public class DateIntervalReport {
+import lombok.Data;
+
+import java.util.ArrayList;
+
+public @Data class DateIntervalReport extends Report {
+    ArrayList<OneAccIntervalReport> accommodations;
 }

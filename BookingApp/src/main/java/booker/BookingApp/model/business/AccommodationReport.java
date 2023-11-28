@@ -1,4 +1,10 @@
 package booker.BookingApp.model.business;
 
-public class AccommodationReport {
+import lombok.Data;
+
+import java.util.ArrayList;
+
+public @Data class AccommodationReport extends Report{
+    Long accommodation;
+    ArrayList<MonthReport> monthlyReports;
 }
