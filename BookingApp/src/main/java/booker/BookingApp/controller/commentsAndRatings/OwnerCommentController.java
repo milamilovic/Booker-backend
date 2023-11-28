@@ -1,6 +1,8 @@
 package booker.BookingApp.controller.commentsAndRatings;
 
+import booker.BookingApp.dto.accommodation.AccommodationCommentDTO;
 import booker.BookingApp.dto.commentsAndRatings.OwnerCommentDTO;
+import booker.BookingApp.dto.commentsAndRatings.ReportOwnerCommentDTO;
 import booker.BookingApp.model.commentsAndRatings.OwnerComment;
 import booker.BookingApp.service.implementation.OwnerCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +102,26 @@ public class OwnerCommentController {
     public ResponseEntity<OwnerCommentDTO> update(OwnerCommentDTO commentDTO) {
         ownerCommentService.update(commentDTO);
         return new ResponseEntity<>(commentDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all/reported")
+    public ResponseEntity<List<OwnerCommentDTO>> findAllReported() {
+        List<OwnerComment> reported = ownerCommentService.findAllReported();
+        List<OwnerCommentDTO> reportedDTOS = new ArrayList<>();
+        for (OwnerComment comment : reported) {
+            reportedDTOS.add(new OwnerCommentDTO(comment));
+        }
+        return new ResponseEntity<>(reportedDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all/{owner_id}/comments")
+    public ResponseEntity<List<OwnerCommentDTO>> findAllForOwner(@PathVariable Long owner_id) {
+        List<OwnerComment> comments = ownerCommentService.findAllForOwner(owner_id);
+        List<OwnerCommentDTO> commentDTOS = new ArrayList<>();
+        for (OwnerComment comment : comments) {
+            commentDTOS.add(new OwnerCommentDTO(comment));
+        }
+        return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
     }
     
 }

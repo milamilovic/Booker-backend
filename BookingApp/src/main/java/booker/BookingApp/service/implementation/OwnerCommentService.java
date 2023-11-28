@@ -1,6 +1,7 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.commentsAndRatings.OwnerCommentDTO;
+import booker.BookingApp.dto.commentsAndRatings.ReportOwnerCommentDTO;
 import booker.BookingApp.model.commentsAndRatings.OwnerComment;
 import booker.BookingApp.repository.OwnerCommentRepository;
 import booker.BookingApp.service.interfaces.IOwnerCommentService;
@@ -52,6 +53,11 @@ public class OwnerCommentService implements IOwnerCommentService {
     @Override
     public List<OwnerComment> findAllReported() {
         return ownerCommentRepository.findAllReported();
+    }
+
+    @Override
+    public ReportOwnerCommentDTO report(ReportOwnerCommentDTO reportOwnerCommentDTO) {
+        return reportOwnerCommentDTO;
     }
 
     //public OwnerComment save(OwnerComment ownerComment) {
