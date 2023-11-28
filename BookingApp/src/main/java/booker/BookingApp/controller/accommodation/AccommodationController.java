@@ -24,7 +24,7 @@ public class AccommodationController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccommodationDTO> insert(@RequestBody AccommodationDTO accommodation) throws Exception {
         AccommodationDTO dto = service.create(accommodation);
-        return new ResponseEntity<AccommodationDTO>(dto, HttpStatus.OK);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     //get one accommodation
@@ -38,7 +38,7 @@ public class AccommodationController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationDTO>> getAll() throws IOException {
         ArrayList<AccommodationDTO> accommodations = service.findAll();
-        return new ResponseEntity<ArrayList<AccommodationDTO>>(accommodations, HttpStatus.OK);
+        return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
     //find accepted accommodations for owner
@@ -46,7 +46,7 @@ public class AccommodationController {
     public ResponseEntity<ArrayList<AccommodationDTO>> findOwnersAcceptedAccommodations(@PathVariable Long ownerId)
     {
         ArrayList<AccommodationDTO> accommodations = service.findOwnersActiveAccommodations(ownerId);
-        return new ResponseEntity<ArrayList<AccommodationDTO>>(accommodations, HttpStatus.OK);
+        return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
     //find all accommodations for owner
@@ -54,7 +54,7 @@ public class AccommodationController {
     public ResponseEntity<ArrayList<AccommodationDTO>> findAllOwnersAccommodations(@PathVariable Long ownerId)
     {
         ArrayList<AccommodationDTO> accommodations = service.findAllOwnersAccommodations(ownerId);
-        return new ResponseEntity<ArrayList<AccommodationDTO>>(accommodations, HttpStatus.OK);
+        return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
     //    searching accommodations, path looks like
@@ -66,7 +66,7 @@ public class AccommodationController {
                                                                                    @PathVariable int people)
     {
         ArrayList<AccommodationDTO> accommodations = service.search(startDate, endDate, location, people);
-        return new ResponseEntity<ArrayList<AccommodationDTO>>(accommodations, HttpStatus.OK);
+        return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
     //   searching accommodations with filters, path looks like
@@ -84,7 +84,7 @@ public class AccommodationController {
         for(Filter filter : filters) {
             accommodations = service.applyFilters(accommodations, filter);
         }
-        return new ResponseEntity<ArrayList<AccommodationDTO>>(accommodations, HttpStatus.OK);
+        return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
     //find guests favourite accommodations
@@ -92,7 +92,7 @@ public class AccommodationController {
     public ResponseEntity<ArrayList<AccommodationDTO>> findGuestsFavouriteAccommodations(@PathVariable Long guestId)
     {
         ArrayList<AccommodationDTO> accommodations = service.findGuestsFavouriteAccommodations(guestId);
-        return new ResponseEntity<ArrayList<AccommodationDTO>>(accommodations, HttpStatus.OK);
+        return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
     //admin - get all unapproved accommodations
@@ -100,7 +100,7 @@ public class AccommodationController {
     public ResponseEntity<ArrayList<AccommodationDTO>> findUnapprovedAccommodations()
     {
         ArrayList<AccommodationDTO> accommodations = service.findUnapprovedAccommodations();
-        return new ResponseEntity<ArrayList<AccommodationDTO>>(accommodations, HttpStatus.OK);
+        return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
     //remove from favourite for guest
