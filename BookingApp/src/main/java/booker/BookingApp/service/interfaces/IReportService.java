@@ -6,7 +6,7 @@ import booker.BookingApp.dto.business.IntervalReportDTO;
 import java.util.Date;
 
 public interface IReportService {
-    IntervalReportDTO getIntervalReport(Long ownerId, Date from, Date to);
+    IntervalReportDTO getIntervalReport(Long ownerId, String from, String to);
 
     AccommodationReportDTO getAccommodationReport(Long ownerId, Long accommodationId);
 }
