@@ -20,8 +20,8 @@ public class AvailabilityController {
 
     //create an availability
     @PostMapping(value = "/{accommodationId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AvailabilityDTO> insert(@RequestBody AvailabilityDTO amenity, @PathVariable Long accommodationId)  {
-        AvailabilityDTO dto = service.create(accommodationId, amenity);
+    public ResponseEntity<AvailabilityDTO> insert(@RequestBody AvailabilityDTO availability, @PathVariable Long accommodationId)  {
+        AvailabilityDTO dto = service.create(accommodationId, availability);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -31,7 +31,7 @@ public class AvailabilityController {
         ArrayList<AvailabilityDTO> accommodation = service.findAllFreeInRange(id, startDate, endDate);
         return new ResponseEntity<>(accommodation, HttpStatus.OK);
     }
-    //delete amenity
+    //delete availability
     @DeleteMapping(value = "/{id}/{startDate}/{endDate}")
     public ResponseEntity<Void> deleteAvailability(@PathVariable Long id, @PathVariable Date startDate, @PathVariable Date endDate) {
         service.markAsNotAvailable(id, startDate, endDate);
@@ -39,14 +39,14 @@ public class AvailabilityController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    //update amenity
+    //update availability
     @PutMapping(value = "/{accommodationId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateAvailability(@RequestBody AvailabilityDTO updatedAvailability, @PathVariable Long accommodationId)  {
         service.update(accommodationId, updatedAvailability);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    //get names of all amenities
+    //check if accommodation is available for date
     @GetMapping(value = "/{id}/{date}")
     public ResponseEntity<Boolean> checkForDate(@PathVariable Long id, @PathVariable Date date) {
         boolean available = service.checkForDate(id, date);
