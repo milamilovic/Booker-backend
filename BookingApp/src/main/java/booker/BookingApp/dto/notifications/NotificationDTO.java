@@ -21,9 +21,4 @@ public @Data @AllArgsConstructor @NoArgsConstructor class NotificationDTO {
         return notificationDTO;
     }
 
-    public NotificationDTO(Long userId, String title){
-        this.userId = userId;
-        this.title = title;
-    }
-
 }

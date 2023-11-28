@@ -13,9 +13,9 @@ public class NotificationService implements INotificationService {
     @Override
     public ArrayList<NotificationDTO> getAll() {
         ArrayList<NotificationDTO> notifications = new ArrayList<>();
-        NotificationDTO n1 = new NotificationDTO(1L, "Someone rated you.");
-        NotificationDTO n2 = new NotificationDTO(1L, "Someone rated your accommodation.");
-        NotificationDTO n3 = new NotificationDTO(2L, "Someone rated you.");
+        NotificationDTO n1 = new NotificationDTO(1L,null, null, "Someone rated you.");
+        NotificationDTO n2 = new NotificationDTO(1L,null,null, "Someone rated your accommodation.");
+        NotificationDTO n3 = new NotificationDTO(2L,null,null, "Someone rated you.");
         notifications.add(n1);
         notifications.add(n2);
         notifications.add(n3);
