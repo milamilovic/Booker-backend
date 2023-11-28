@@ -26,6 +26,22 @@ VALUES
     (2, 1, 4.5, '2023-09-25', false),
     (3, 2, 3.8, '2023-10-05', true);
 
+INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
+VALUES (1, 2, 4.5, '2023-01-01', false);
+INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
+VALUES (3, 1, 3.8, '2023-02-15', false);
+INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
+VALUES (2, 1, 4.9, '2023-03-10', true);
+INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
+VALUES (2, 3, 2.5, '2023-04-20', false);
+INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
+VALUES (3, 1, 4.0, '2023-05-05', true);
+
+
+
+
+
+
 
 
 
