@@ -1,5 +1,7 @@
 package booker.BookingApp.service.implementation;
 
+import booker.BookingApp.dto.commentsAndRatings.OwnerCommentDTO;
+import booker.BookingApp.dto.commentsAndRatings.ReportOwnerCommentDTO;
 import booker.BookingApp.model.commentsAndRatings.OwnerComment;
 import booker.BookingApp.repository.OwnerCommentRepository;
 import booker.BookingApp.service.interfaces.IOwnerCommentService;
@@ -22,14 +24,6 @@ public class OwnerCommentService implements IOwnerCommentService {
     public List<OwnerComment> findAll() {
         return ownerCommentRepository.findAll();
     }
-    @Override
-    public void remove(Long id) {
-        ownerCommentRepository.deleteById(id);
-    }
-    @Override
-    public OwnerComment save(OwnerComment ownerComment) {
-        return ownerCommentRepository.save(ownerComment);
-    }
 
     @Override
     public List<OwnerComment> findAllForOwner(Long ownerId) {
@@ -37,7 +31,39 @@ public class OwnerCommentService implements IOwnerCommentService {
     }
 
     @Override
+    public void remove(Long id) {
+        ownerCommentRepository.deleteById(id);
+    }
+
+
+    @Override
+    public OwnerCommentDTO create(OwnerCommentDTO ownerCommentDTO) {
+        return ownerCommentDTO;
+    }
+
+    @Override
+    public OwnerCommentDTO update(OwnerCommentDTO ownerCommentDTO) {
+        return ownerCommentDTO;
+    }
+
+    @Override
+    public void delete(Long id) {}
+
+//     @Override
+//     public OwnerComment save(OwnerComment ownerComment) {
+//         return ownerCommentRepository.save(ownerComment);
+//     }
+
+
+    @Override
     public List<OwnerComment> findAllReported() {
         return ownerCommentRepository.findAllReported();
     }
+
+    @Override
+    public ReportOwnerCommentDTO report(ReportOwnerCommentDTO reportOwnerCommentDTO) {
+        return reportOwnerCommentDTO;
+    }
+
+
 }

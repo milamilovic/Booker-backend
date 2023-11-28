@@ -15,8 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public User findByEmailAndPassword(String email, String password);
 
-    @Query("select u from User u where u.blocked = true")
-    public List<User> findAllBlocked();
 
     @Query("select u from User u where u.deleted = true")
     public List<User> findAllDeleted();

@@ -1,5 +1,6 @@
 package booker.BookingApp.controller.users;
 
+import booker.BookingApp.dto.users.CreateUserDTO;
 import booker.BookingApp.dto.users.LoginUserDTO;
 import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.dto.users.UserDTO;
@@ -44,20 +45,18 @@ public class UserController {
 
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<UpdateUserDTO> saveUser(@RequestBody UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<CreateUserDTO> saveUser(@RequestBody CreateUserDTO createUserDTO) {
         User user = new User();
 
-        user.setName(updateUserDTO.getName());
-        user.setSurname(updateUserDTO.getSurname());
-        user.setEmail(updateUserDTO.getEmail());
-        user.setPassword(updateUserDTO.getPassword());
-        user.setAddress(updateUserDTO.getAddress());
-        user.setPhone(updateUserDTO.getPhone());
-        user.setRole(updateUserDTO.getRole());
-        user.setBlocked(updateUserDTO.isBlocked());
-        user.setDeleted(updateUserDTO.isDeleted());
+        user.setName(createUserDTO.getName());
+        user.setSurname(createUserDTO.getSurname());
+        user.setEmail(createUserDTO.getEmail());
+        user.setPassword(createUserDTO.getPassword());
+        user.setAddress(createUserDTO.getAddress());
+        user.setPhone(createUserDTO.getPhone());
+        user.setRole(createUserDTO.getRole());
         user = userService.save(user);
-        return new ResponseEntity<>(new UpdateUserDTO(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CreateUserDTO(user), HttpStatus.CREATED);
     }
 
     @PutMapping(consumes = "application/json")
@@ -75,14 +74,13 @@ public class UserController {
         user.setAddress(updateUserDTO.getAddress());
         user.setPhone(updateUserDTO.getPhone());
         user.setRole(updateUserDTO.getRole());
-        user.setBlocked(updateUserDTO.isBlocked());
         user.setDeleted(updateUserDTO.isDeleted());
 
         user = userService.save(user);
         return new ResponseEntity<>(new UpdateUserDTO(user), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/remove/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         User user = userService.findOne(id);
 
@@ -94,7 +92,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/by-email/{email}")
+    @GetMapping(value = "/by-email&={email}")
     public ResponseEntity<UserDTO> findByEmail(@PathVariable String email) {
         User user = userService.findByEmail(email);
 
@@ -113,18 +111,6 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/blocked")
-    public ResponseEntity<List<UserDTO>> findAllBlocked() {
-        List<User> blocked = userService.findAllBlocked();
-
-        List<UserDTO> blockedDTOS = new ArrayList<>();
-        for (User user : blocked) {
-            blockedDTOS.add(new UserDTO(user));
-        }
-
-        return new ResponseEntity<>(blockedDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/deleted")

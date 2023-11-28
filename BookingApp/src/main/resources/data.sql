@@ -1,6 +1,6 @@
-insert into users (name, surname, email, password, address, phone, role, blocked, deleted) values ('Marko', 'Marković', 'email1', '123', 'adresa1', '060000000', 0, false, false);
-insert into users (name, surname, email, password, address, phone, role, blocked, deleted) values ('Petar', 'Petrović', 'email2', '1234', 'adresa2', '060000001', 1, false, false);
-insert into users (name, surname, email, password, address, phone, role, blocked, deleted) values ('Adam', 'Adamović', 'email3', '12345', 'adresa3', '060000002', 0, false, false);
+insert into users (name, surname, email, password, address, phone, role, deleted) values ('Marko', 'Marković', 'email1', '123', 'adresa1', '060000000', 0, false);
+insert into users (name, surname, email, password, address, phone, role, deleted) values ('Petar', 'Petrović', 'email2', '1234', 'adresa2', '060000001', 1, false);
+insert into users (name, surname, email, password, address, phone, role, deleted) values ('Adam', 'Adamović', 'email3', '12345', 'adresa3', '060000002', 0, false);
 
 -- Inserting data into Accommodation table
 INSERT INTO Accommodation (title, description, short_description, address, deadline) VALUES ('Luxury Villa', 'A luxurious villa with stunning views.', 'Luxury villa with pool', '123 Main Street', 30);
@@ -28,6 +28,15 @@ VALUES
 
 
 
+
+
+-- Example 1: Inserting a new OwnerComment with reported set to false
+INSERT INTO Owner_Comment (guest_id, owner_id, content, date, reported)
+VALUES (1, 2, 'This is a comment.', '2023-01-01', false);
+
+-- Example 2: Inserting another OwnerComment with reported set to true
+INSERT INTO Owner_Comment (guest_id, owner_id, content, date, reported)
+VALUES (3, 2, 'Another comment.', '2023-02-15', true);
 
 
 
