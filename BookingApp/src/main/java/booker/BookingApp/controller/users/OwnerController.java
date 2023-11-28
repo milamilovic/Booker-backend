@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+@RestController
+@RequestMapping("/owners")
 public class OwnerController {
     private final OwnerService ownerService;
 
