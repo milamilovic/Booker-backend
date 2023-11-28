@@ -74,6 +74,31 @@ public class GuestController {
         }
     }
 
-    // get all guest's reservations
+    @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/{accommodationId}")
+    public ResponseEntity<ArrayList<Long>> addToFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
+                                                                        @PathVariable Long accommodationId) throws Exception {
+        GuestDTO guest = guestService.getGuestById(guestDTO.getId());
+        if (guest == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ArrayList<Long> favourites = guest.getFavouriteAccommodations();
+        favourites.add(accommodationId);
+        guest.setFavouriteAccommodations(favourites);
+        return new ResponseEntity<>(favourites, HttpStatus.OK);
+    }
+
+    @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/{accommodationId}")
+    public ResponseEntity<ArrayList<Long>> removeFromFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
+                                                                        @PathVariable Long accommodationId) throws Exception {
+        GuestDTO guest = guestService.getGuestById(guestDTO.getId());
+        if (guest == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ArrayList<Long> favourites = guest.getFavouriteAccommodations();
+        favourites.remove(accommodationId);
+        guest.setFavouriteAccommodations(favourites);
+        return new ResponseEntity<>(favourites, HttpStatus.OK);
+    }
+
     // get all guest's notifications
 }

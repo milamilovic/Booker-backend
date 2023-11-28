@@ -12,4 +12,6 @@ public interface IGuestService {
     GuestDTO insert(GuestDTO guest);
     GuestDTO update(GuestDTO guest);
     void delete(Long guestId);
+    ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId);
+    ArrayList<Long> removeFromFavouriteAccommodations(GuestDTO guest, Long accommodationId);
 }

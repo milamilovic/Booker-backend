@@ -1,6 +1,7 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.users.GuestDTO;
+import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.service.interfaces.IGuestService;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 public class GuestService implements IGuestService {
     @Override
     public ArrayList<GuestDTO> findAll() {
-        GuestDTO g1 = new GuestDTO("Pera", "Peric", "pera123@gmail.com");
-        GuestDTO g2 = new GuestDTO("Pera", "Peric", "pera123@gmail.com");
-        GuestDTO g3 = new GuestDTO("Pera", "Peric", "pera123@gmail.com");
-        GuestDTO g4 = new GuestDTO("Pera", "Peric", "pera123@gmail.com");
-        GuestDTO g5 = new GuestDTO("Pera", "Peric", "pera123@gmail.com");
-        GuestDTO g6 = new GuestDTO("Pera", "Peric", "pera123@gmail.com");
+        GuestDTO g1 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
+        GuestDTO g2 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
+        GuestDTO g3 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
+        GuestDTO g4 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
+        GuestDTO g5 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
+        GuestDTO g6 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
         ArrayList<GuestDTO> guests = new ArrayList<>();
         guests.add(g1);
         guests.add(g2);
@@ -28,12 +29,12 @@ public class GuestService implements IGuestService {
     }
     @Override
     public GuestDTO getGuestById(Long id) {
-        return new GuestDTO("Pera", "Peric", "pera123@gmail.com");
+        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
     }
 
     @Override
     public GuestDTO getGuestByEmail(String email) {
-        return new GuestDTO("Pera", "Peric", "pera123@gmail.com");
+        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
     }
 
     @Override
@@ -48,5 +49,15 @@ public class GuestService implements IGuestService {
 
     @Override
     public void delete(Long id) {
+    }
+
+    @Override
+    public ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Long> removeFromFavouriteAccommodations(GuestDTO guest, Long accommodationId) {
+        return null;
     }
 }
