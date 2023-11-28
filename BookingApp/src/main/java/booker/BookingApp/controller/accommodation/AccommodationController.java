@@ -1,11 +1,9 @@
 package booker.BookingApp.controller.accommodation;
 
-import booker.BookingApp.dto.accommodation.AccommodationDTO;
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
 import booker.BookingApp.dto.accommodation.WholeAccommodationDTO;
 import booker.BookingApp.model.accommodation.*;
-import booker.BookingApp.service.implementation.AccommodationService;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
