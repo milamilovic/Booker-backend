@@ -58,4 +58,8 @@ public class AccommodationRatingService implements IAccommodationRatingService {
 //    public AccommodationRating save(AccommodationRating accommodationRating) {
 //        return accommodationRatingRepository.save(accommodationRating);
 //    }
+
+    public ReportAccommodationRatingDTO report(ReportAccommodationRatingDTO reportAccommodationRatingDTO) {
+        return reportAccommodationRatingDTO;
+    }
 }
