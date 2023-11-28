@@ -14,4 +14,5 @@ public @Data class ReservationRequest {
     private int numberOfGuests;
     private ReservationRequestStatus status;
     private boolean deleted;
+    private double price;
 }
