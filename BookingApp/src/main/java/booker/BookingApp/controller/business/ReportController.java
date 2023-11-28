@@ -1,6 +1,5 @@
 package booker.BookingApp.controller.business;
 
-import booker.BookingApp.dto.accommodation.AccommodationDTO;
 import booker.BookingApp.dto.business.AccommodationReportDTO;
 import booker.BookingApp.dto.business.IntervalReportDTO;
 import booker.BookingApp.model.accommodation.Filter;
@@ -24,8 +23,8 @@ public class ReportController {
     //get report for owner for date interval
     @GetMapping(value = "/owner/{ownerId}/interval/{from}/{to}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IntervalReportDTO> getIntervalReport(@PathVariable Long ownerId ,
-                                                               @PathVariable Date from,
-                                                               @PathVariable Date to){
+                                                               @PathVariable String from,
+                                                               @PathVariable String to){
         IntervalReportDTO report = service.getIntervalReport(ownerId, from, to);
         return new ResponseEntity<>(report, HttpStatus.OK);
     }
