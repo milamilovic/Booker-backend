@@ -26,6 +26,15 @@ VALUES
     (2, 1, 4.5, '2023-09-25', false),
     (3, 2, 3.8, '2023-10-05', false);
 
+-- Example 1: Inserting a new OwnerComment with reported set to false
+INSERT INTO Owner_Comment (guest_id, owner_id, content, date, reported)
+VALUES (1, 2, 'This is a comment.', '2023-01-01', false);
+
+-- Example 2: Inserting another OwnerComment with reported set to true
+INSERT INTO Owner_Comment (guest_id, owner_id, content, date, reported)
+VALUES (3, 2, 'Another comment.', '2023-02-15', true);
+
+
 
 
 
