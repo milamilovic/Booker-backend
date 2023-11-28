@@ -116,5 +116,5 @@ public class AccommodationCommentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    
+
 }
