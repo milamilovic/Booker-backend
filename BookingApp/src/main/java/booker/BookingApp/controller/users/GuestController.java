@@ -1,5 +1,6 @@
 package booker.BookingApp.controller.users;
 
+import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.service.implementation.GuestService;
@@ -74,29 +75,23 @@ public class GuestController {
         }
     }
 
-    @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/{accommodationId}")
+    @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/add/{accommodationId}")
     public ResponseEntity<ArrayList<Long>> addToFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
                                                                         @PathVariable Long accommodationId) throws Exception {
-        GuestDTO guest = guestService.getGuestById(guestDTO.getId());
-        if (guest == null){
+        ArrayList<Long> favourites = guestService.addToFavouriteAccommodations(guestDTO, accommodationId);
+        if (favourites == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        ArrayList<Long> favourites = guest.getFavouriteAccommodations();
-        favourites.add(accommodationId);
-        guest.setFavouriteAccommodations(favourites);
         return new ResponseEntity<>(favourites, HttpStatus.OK);
     }
 
-    @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/{accommodationId}")
+    @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/remove/{accommodationId}")
     public ResponseEntity<ArrayList<Long>> removeFromFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
                                                                         @PathVariable Long accommodationId) throws Exception {
-        GuestDTO guest = guestService.getGuestById(guestDTO.getId());
-        if (guest == null){
+        ArrayList<Long> favourites = guestService.removeFromFavouriteAccommodations(guestDTO, accommodationId);
+        if (favourites == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        ArrayList<Long> favourites = guest.getFavouriteAccommodations();
-        favourites.remove(accommodationId);
-        guest.setFavouriteAccommodations(favourites);
         return new ResponseEntity<>(favourites, HttpStatus.OK);
     }
 

@@ -4,6 +4,8 @@ import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.service.interfaces.IGuestService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -53,11 +55,29 @@ public class GuestService implements IGuestService {
 
     @Override
     public ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId) {
-        return null;
+        GuestDTO guestDTO = getGuestById(guest.getId());
+        if (guestDTO == null){
+            return null;
+        }
+        ArrayList<Long> favourites = guestDTO.getFavouriteAccommodations();
+        favourites.add(accommodationId);
+        guest.setFavouriteAccommodations(favourites);
+        return favourites;
     }
 
     @Override
     public ArrayList<Long> removeFromFavouriteAccommodations(GuestDTO guest, Long accommodationId) {
-        return null;
+        GuestDTO guestDTO = getGuestById(guest.getId());
+        if (guestDTO == null){
+            return null;
+        }
+        ArrayList<Long> favourites = guestDTO.getFavouriteAccommodations();
+        favourites.remove(accommodationId);
+        guest.setFavouriteAccommodations(favourites);
+        return favourites;
     }
+
+
+
+
 }
