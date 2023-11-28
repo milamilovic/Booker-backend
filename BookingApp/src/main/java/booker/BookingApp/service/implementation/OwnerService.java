@@ -1,6 +1,7 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.users.OwnerDTO;
+import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.service.interfaces.IOwnerService;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 public class OwnerService implements IOwnerService {
     @Override
     public ArrayList<OwnerDTO> findAll() {
-        OwnerDTO o1 = new OwnerDTO("Mika", "Mikic", "mika123@gmail.com");
-        OwnerDTO o2 = new OwnerDTO("Mika", "Mikic", "mika123@gmail.com");
-        OwnerDTO o3 = new OwnerDTO("Mika", "Mikic", "mika123@gmail.com");
-        OwnerDTO o4 = new OwnerDTO("Mika", "Mikic", "mika123@gmail.com");
-        OwnerDTO o5 = new OwnerDTO("Mika", "Mikic", "mika123@gmail.com");
-        OwnerDTO o6 = new OwnerDTO("Mika", "Mikic", "mika123@gmail.com");
+        OwnerDTO o1 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
+        OwnerDTO o2 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
+        OwnerDTO o3 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
+        OwnerDTO o4 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
+        OwnerDTO o5 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
+        OwnerDTO o6 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
         ArrayList<OwnerDTO> owners = new ArrayList<>();
         owners.add(o1);
         owners.add(o2);
@@ -29,12 +30,12 @@ public class OwnerService implements IOwnerService {
 
     @Override
     public OwnerDTO getOwnerById(Long id) {
-        return new OwnerDTO("Mika", "Mikic", "mika123@gmail.com");
+        return new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
     }
 
     @Override
     public OwnerDTO getOwnerByEmail(String email) {
-        return new OwnerDTO("Mika", "Mikic", "mika123@gmail.com");
+        return new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
     }
 
     @Override
