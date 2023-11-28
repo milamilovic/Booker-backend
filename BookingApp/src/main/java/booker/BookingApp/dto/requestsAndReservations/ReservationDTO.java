@@ -1,6 +1,7 @@
 package booker.BookingApp.dto.requestsAndReservations;
 
 import booker.BookingApp.enums.ReservationRequestStatus;
+import booker.BookingApp.enums.ReservationStatus;
 import booker.BookingApp.model.requestsAndReservations.Reservation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,8 @@ public @Data @AllArgsConstructor @NoArgsConstructor class ReservationDTO {
     private Date fromDate;
     private Date toDate;
     private int numberOfGuests;
-    private ReservationRequestStatus status;
+    private ReservationRequestStatus requestStatus;
+    private ReservationStatus status;
     private boolean deleted;
     private double price;
 
@@ -27,6 +29,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class ReservationDTO {
         reservationDTO.fromDate = reservation.getFromDate();
         reservationDTO.toDate = reservation.getToDate();
         reservationDTO.numberOfGuests = reservation.getNumberOfGuests();
+        reservationDTO.requestStatus = reservation.getRequestStatus();
         reservationDTO.status = reservation.getStatus();
         reservationDTO.deleted = reservation.isDeleted();
         reservationDTO.price = reservation.getPrice();

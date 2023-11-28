@@ -1,6 +1,7 @@
 package booker.BookingApp.controller.requestsAndReservations;
 
 import booker.BookingApp.dto.requestsAndReservations.ReservationDTO;
+import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.service.implementation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,5 +63,19 @@ public class ReservationController {
             reservationService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    @PutMapping(value = "/guest/{guestId}/cancel/{id}")
+    public ResponseEntity<Void> cancel(@PathVariable Long guestId, @PathVariable Long id){
+        reservationService.cancel(guestId, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/owner/{ownerId}/accept/{id}/{accept}")
+    public ResponseEntity<Void> declineAccommodation(@PathVariable Long ownerId,
+                                                     @PathVariable Long id,
+                                                     @PathVariable boolean accept) {
+        reservationService.acceptOrDecline(ownerId, id, accept);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

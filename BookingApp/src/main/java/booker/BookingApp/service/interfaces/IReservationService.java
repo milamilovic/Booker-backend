@@ -11,4 +11,6 @@ public interface IReservationService {
     ReservationDTO getOneById(Long id);
     ReservationDTO create(ReservationDTO reservation);
     void delete(Long id);
+    void cancel(Long guestId, Long reservationId);
+    void acceptOrDecline(Long ownerId, Long reservationId, boolean accept);
 }
