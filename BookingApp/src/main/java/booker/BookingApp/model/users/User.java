@@ -31,8 +31,6 @@ public @Data class User {
     private String phone;
     @Column(name = "role", nullable = false)
     private Role role;
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
 
 
 }

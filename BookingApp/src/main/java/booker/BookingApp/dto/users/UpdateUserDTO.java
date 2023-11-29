@@ -13,16 +13,15 @@ public @Data class UpdateUserDTO {
     private String address;
     private String phone;
     private Role role;
-    private boolean deleted;
 
     public UpdateUserDTO() {
     }
 
     public UpdateUserDTO(User user) {
-        this(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getAddress(), user.getPhone(), user.getRole(), user.isDeleted());
+        this(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getAddress(), user.getPhone(), user.getRole());
     }
 
-    public UpdateUserDTO(Long id, String name, String surname, String email, String password, String address, String phone, Role role, boolean deleted) {
+    public UpdateUserDTO(Long id, String name, String surname, String email, String password, String address, String phone, Role role) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -31,6 +30,5 @@ public @Data class UpdateUserDTO {
         this.address = address;
         this.phone = phone;
         this.role = role;
-        this.deleted = deleted;
     }
 }
