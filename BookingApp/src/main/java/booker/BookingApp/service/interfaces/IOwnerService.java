@@ -13,4 +13,5 @@ public interface IOwnerService {
     OwnerDTO update(OwnerDTO owner);
     void delete(Long ownerId);
     void block(Long ownerId);
+    ArrayList<OwnerDTO> getAllBlocked();
 }
