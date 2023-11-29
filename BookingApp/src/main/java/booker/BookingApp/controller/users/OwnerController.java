@@ -1,6 +1,7 @@
 package booker.BookingApp.controller.users;
 
 
+import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.service.implementation.OwnerService;
@@ -74,6 +75,7 @@ public class OwnerController {
         }
     }
 
+    // admin blocks the owner by id
     @PutMapping(consumes = "application/json", value = "/block/{ownerId}")
     public ResponseEntity<Void> block(@PathVariable Long ownerId) {
         OwnerDTO ownerDTO = ownerService.getOwnerById(ownerId);
@@ -82,6 +84,16 @@ public class OwnerController {
         } else{
             ownerService.block(ownerId);
             return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
+    @PutMapping(consumes ="application/json", value = "/report/{guestEmail}")
+    public ResponseEntity<GuestDTO> reportGuest(@PathVariable String guestEmail) {
+        GuestDTO guestDTO = ownerService.reportGuest(guestEmail);
+        if (guestDTO == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else{
+            return new ResponseEntity<>(guestDTO, HttpStatus.OK);
         }
     }
 

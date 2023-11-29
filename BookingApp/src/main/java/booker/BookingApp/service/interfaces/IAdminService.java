@@ -9,4 +9,5 @@ public interface IAdminService {
     AdminDTO update(AdminDTO admin);
     AdminDTO get();
     ArrayList<UserDTO> getAllBlocked();
+    ArrayList<UserDTO> getAllReported();
 }

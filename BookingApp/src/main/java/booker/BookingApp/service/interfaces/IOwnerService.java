@@ -1,5 +1,6 @@
 package booker.BookingApp.service.interfaces;
 
+import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.model.users.Owner;
 
@@ -13,5 +14,7 @@ public interface IOwnerService {
     OwnerDTO update(OwnerDTO owner);
     void delete(Long ownerId);
     void block(Long ownerId);
+    GuestDTO reportGuest(String guestEmail);
     ArrayList<OwnerDTO> getAllBlocked();
+    ArrayList<OwnerDTO> getAllReported();
 }

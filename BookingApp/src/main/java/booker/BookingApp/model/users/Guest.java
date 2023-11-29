@@ -10,6 +10,7 @@ import java.util.ArrayList;
 @Data
 @AllArgsConstructor
 public class Guest extends User {
+    private boolean reported;
     private boolean blocked;
     private boolean deleted;
     private ArrayList<Long> favouriteAccommodations;
