@@ -17,6 +17,7 @@ public interface IGuestService {
     void block(Long guestId);
     OwnerDTO reportOwner(String ownerEmail);
     ArrayList<GuestDTO> getAllBlocked();
+    ArrayList<GuestDTO> getAllReported();
     ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId);
     ArrayList<Long> removeFromFavouriteAccommodations(GuestDTO guest, Long accommodationId);
     ArrayList<AccommodationListingDTO> findAllFavouriteAccommodations(GuestDTO guest) throws IOException;

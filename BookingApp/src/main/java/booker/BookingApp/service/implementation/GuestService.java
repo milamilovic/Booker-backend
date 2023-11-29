@@ -83,6 +83,18 @@ public class GuestService implements IGuestService {
     }
 
     @Override
+    public ArrayList<GuestDTO> getAllReported() {
+        ArrayList<GuestDTO> all = findAll();
+        ArrayList<GuestDTO> reported = new ArrayList<>();
+        for (GuestDTO g : all){
+            if (g.isReported()){
+                reported.add(g);
+            }
+        }
+        return reported;
+    }
+
+    @Override
     public ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId) {
         GuestDTO guestDTO = getGuestById(guest.getId());
         if (guestDTO == null){

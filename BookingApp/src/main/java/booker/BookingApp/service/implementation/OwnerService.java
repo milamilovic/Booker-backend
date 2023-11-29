@@ -74,5 +74,17 @@ public class OwnerService implements IOwnerService {
         return blocked;
     }
 
+    @Override
+    public ArrayList<OwnerDTO> getAllReported() {
+        ArrayList<OwnerDTO> all = findAll();
+        ArrayList<OwnerDTO> reported = new ArrayList<>();
+        for (OwnerDTO o : all){
+            if(o.isReported()){
+                reported.add(o);
+            }
+        }
+        return reported;
+    }
+
 
 }
