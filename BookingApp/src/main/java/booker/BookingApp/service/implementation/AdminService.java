@@ -32,4 +32,13 @@ public class AdminService implements IAdminService {
         blocked.addAll(ownerService.getAllBlocked());
         return blocked;
     }
+
+    @Override
+    public ArrayList<UserDTO> getAllReported() {
+        GuestService guestService = new GuestService();
+        OwnerService ownerService = new OwnerService();
+        ArrayList<UserDTO> reported = new ArrayList<>(guestService.getAllReported());
+        reported.addAll(ownerService.getAllReported());
+        return reported;
+    }
 }

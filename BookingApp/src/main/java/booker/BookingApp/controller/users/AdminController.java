@@ -56,4 +56,24 @@ public class AdminController {
         ArrayList<OwnerDTO> blocked = ownerService.getAllBlocked();
         return new ResponseEntity<>(blocked, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/reported")
+    public ResponseEntity<ArrayList<UserDTO>> getAllReportedUsers(){
+        ArrayList<UserDTO> reported = adminService.getAllReported();
+        return new ResponseEntity<>(reported, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/reported/guests")
+    public ResponseEntity<ArrayList<GuestDTO>> getAllReportedGuests(){
+        GuestService guestService = new GuestService();
+        ArrayList<GuestDTO> reported = guestService.getAllReported();
+        return new ResponseEntity<>(reported, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/reported/owners")
+    public ResponseEntity<ArrayList<OwnerDTO>> getAllReportedOwners(){
+        OwnerService ownerService = new OwnerService();
+        ArrayList<OwnerDTO> reported = ownerService.getAllReported();
+        return new ResponseEntity<>(reported, HttpStatus.OK);
+    }
 }
