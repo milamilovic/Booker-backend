@@ -1,7 +1,8 @@
 package booker.BookingApp.service.interfaces;
 
-import booker.BookingApp.model.users.Admin;
+import booker.BookingApp.dto.users.AdminDTO;
 
 public interface IAdminService {
-    Admin update(Admin admin);
+    AdminDTO update(AdminDTO admin);
+    AdminDTO get();
 }
