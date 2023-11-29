@@ -103,4 +103,14 @@ public class OwnerRatingController {
         ownerRatingService.update(ownerRatingDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping(value = "/{owner_id}/ratings")
+    public ResponseEntity<List<OwnerRatingDTO>> findAllForOwner(@PathVariable Long owner_id) {
+        List<OwnerRating> ratings = ownerRatingService.getAllForOwner(owner_id);
+        List<OwnerRatingDTO> ratingDTOS = new ArrayList<>();
+        for(OwnerRating rating : ratings) {
+            ratingDTOS.add(new OwnerRatingDTO(rating));
+        }
+        return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
+    }
 }

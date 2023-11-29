@@ -14,4 +14,5 @@ public interface IOwnerRatingService {
     //public OwnerRating save(OwnerRating ownerRating);
     public CreateOwnerRatingDTO create(CreateOwnerRatingDTO ownerRatingDTO);
     public OwnerRatingDTO update(OwnerRatingDTO ownerRatingDTO);
+    public List<OwnerRating> getAllForOwner(Long ownerId);
 }

@@ -48,5 +48,10 @@ public class OwnerRatingService implements IOwnerRatingService {
         return ownerRatingDTO;
     }
 
+    @Override
+    public List<OwnerRating> getAllForOwner(Long ownerId) {
+        return ownerRatingRepository.findAllForOwner(ownerId);
+    }
+
 
 }
