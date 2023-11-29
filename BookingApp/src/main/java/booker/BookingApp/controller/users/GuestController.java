@@ -1,14 +1,17 @@
 package booker.BookingApp.controller.users;
 
+import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.model.users.Guest;
+import booker.BookingApp.service.implementation.AccommodationService;
 import booker.BookingApp.service.implementation.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +92,16 @@ public class GuestController {
     public ResponseEntity<ArrayList<Long>> removeFromFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
                                                                         @PathVariable Long accommodationId) throws Exception {
         ArrayList<Long> favourites = guestService.removeFromFavouriteAccommodations(guestDTO, accommodationId);
+        if (favourites == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(favourites, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{guestId}/favouriteAccommodations/all")
+    public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllFavouriteReservations(@PathVariable Long guestId) throws IOException {
+        GuestDTO guestDTO = guestService.getGuestById(guestId);
+        ArrayList<AccommodationListingDTO> favourites = guestService.findAllFavouriteAccommodations(guestDTO);
         if (favourites == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
