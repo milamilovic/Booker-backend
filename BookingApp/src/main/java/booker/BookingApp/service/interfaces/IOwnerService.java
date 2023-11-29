@@ -12,4 +12,5 @@ public interface IOwnerService {
     OwnerDTO insert(OwnerDTO owner);
     OwnerDTO update(OwnerDTO owner);
     void delete(Long ownerId);
+    void block(Long ownerId);
 }

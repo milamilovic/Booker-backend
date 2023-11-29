@@ -51,4 +51,8 @@ public class OwnerService implements IOwnerService {
     @Override
     public void delete(Long id) {
     }
+
+    @Override
+    public void block(Long id) {
+    }
 }

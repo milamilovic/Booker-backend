@@ -61,6 +61,10 @@ public class GuestService implements IGuestService {
     }
 
     @Override
+    public void block(Long id) {
+    }
+
+    @Override
     public ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId) {
         GuestDTO guestDTO = getGuestById(guest.getId());
         if (guestDTO == null){

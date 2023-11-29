@@ -74,6 +74,17 @@ public class OwnerController {
         }
     }
 
+    @PutMapping(consumes = "application/json", value = "/block/{ownerId}")
+    public ResponseEntity<Void> block(@PathVariable Long ownerId) {
+        OwnerDTO ownerDTO = ownerService.getOwnerById(ownerId);
+        if (ownerDTO == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else{
+            ownerService.block(ownerId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
     // get all owner's guests
     // get all owner's notifications
 
