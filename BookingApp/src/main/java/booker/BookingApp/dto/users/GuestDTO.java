@@ -15,8 +15,8 @@ public class GuestDTO extends UserDTO{
     private ArrayList<Long> favouriteAccommodations;
 
     public GuestDTO(Long id, String name, String surname, String email, String address, String phone,
-                    Role role, boolean blocked, boolean deleted, ArrayList<Long> favouriteAccommodations){
-        super(id, name, surname, email, address, phone, role, deleted);
+                    Role role, boolean blocked, ArrayList<Long> favouriteAccommodations){
+        super(id, name, surname, email, address, phone, role);
         this.blocked = blocked;
         this.favouriteAccommodations = favouriteAccommodations;
     }
