@@ -78,6 +78,17 @@ public class GuestController {
         }
     }
 
+    @PutMapping(consumes = "application/json", value = "/block/{guestId}")
+    public ResponseEntity<Void> block(@PathVariable Long guestId) {
+        GuestDTO guest = guestService.getGuestById(guestId);
+        if (guest == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            guestService.block(guestId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
     @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/add/{accommodationId}")
     public ResponseEntity<ArrayList<Long>> addToFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
                                                                         @PathVariable Long accommodationId) throws Exception {

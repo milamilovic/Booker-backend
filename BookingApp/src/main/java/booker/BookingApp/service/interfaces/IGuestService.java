@@ -13,6 +13,8 @@ public interface IGuestService {
     GuestDTO insert(GuestDTO guest);
     GuestDTO update(GuestDTO guest);
     void delete(Long guestId);
+    void block(Long guestId);
+    ArrayList<GuestDTO> getAllBlocked();
     ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId);
     ArrayList<Long> removeFromFavouriteAccommodations(GuestDTO guest, Long accommodationId);
     ArrayList<AccommodationListingDTO> findAllFavouriteAccommodations(GuestDTO guest) throws IOException;

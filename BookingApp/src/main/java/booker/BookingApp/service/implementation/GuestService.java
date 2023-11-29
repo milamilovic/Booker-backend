@@ -20,7 +20,7 @@ public class GuestService implements IGuestService {
         GuestDTO g1 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
         GuestDTO g2 = new GuestDTO(2L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
         GuestDTO g3 = new GuestDTO(3L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
-        GuestDTO g4 = new GuestDTO(4L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false,  faves);
+        GuestDTO g4 = new GuestDTO(4L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, true, false,  faves);
         GuestDTO g5 = new GuestDTO(5L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
         GuestDTO g6 = new GuestDTO(6L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
         ArrayList<GuestDTO> guests = new ArrayList<>();
@@ -58,6 +58,22 @@ public class GuestService implements IGuestService {
 
     @Override
     public void delete(Long id) {
+    }
+
+    @Override
+    public void block(Long id) {
+    }
+
+    @Override
+    public ArrayList<GuestDTO> getAllBlocked() {
+        ArrayList<GuestDTO> all = findAll();
+        ArrayList<GuestDTO> blocked = new ArrayList<>();
+        for (GuestDTO g : all){
+            if (g.isBlocked()){
+                blocked.add(g);
+            }
+        }
+        return blocked;
     }
 
     @Override

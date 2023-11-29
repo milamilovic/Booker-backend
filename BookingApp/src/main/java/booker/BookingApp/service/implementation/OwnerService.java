@@ -15,9 +15,9 @@ public class OwnerService implements IOwnerService {
         OwnerDTO o1 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
         OwnerDTO o2 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
         OwnerDTO o3 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
-        OwnerDTO o4 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
+        OwnerDTO o4 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, true, false, null, null);
         OwnerDTO o5 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
-        OwnerDTO o6 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, false, false, null, null);
+        OwnerDTO o6 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, true, false, null, null);
         ArrayList<OwnerDTO> owners = new ArrayList<>();
         owners.add(o1);
         owners.add(o2);
@@ -51,4 +51,22 @@ public class OwnerService implements IOwnerService {
     @Override
     public void delete(Long id) {
     }
+
+    @Override
+    public void block(Long id) {
+    }
+
+    @Override
+    public ArrayList<OwnerDTO> getAllBlocked() {
+        ArrayList<OwnerDTO> all = findAll();
+        ArrayList<OwnerDTO> blocked = new ArrayList<>();
+        for (OwnerDTO o : all){
+            if(o.isBlocked()){
+                blocked.add(o);
+            }
+        }
+        return blocked;
+    }
+
+
 }
