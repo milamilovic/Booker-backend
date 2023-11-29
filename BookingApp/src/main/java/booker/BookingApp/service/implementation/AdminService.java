@@ -13,11 +13,11 @@ public class AdminService implements IAdminService {
     @Override
     public AdminDTO update(AdminDTO admin) {
 
-        return new AdminDTO(1L, "Admin", "Admin", "admin123@gmail.com", null, null, Role.ADMIN, false);
+        return new AdminDTO(1L, "Admin", "Admin", "admin123@gmail.com", null, null, Role.ADMIN);
     }
 
     @Override
     public AdminDTO get() {
-        return new AdminDTO(1L, "Admin", "Admin", "admin123@gmail.com", null, null, Role.ADMIN, false);
+        return new AdminDTO(1L, "Admin", "Admin", "admin123@gmail.com", null, null, Role.ADMIN);
     }
 }

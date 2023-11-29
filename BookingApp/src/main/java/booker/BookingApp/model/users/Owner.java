@@ -10,6 +10,8 @@ import java.util.ArrayList;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class Owner extends User {
+    private boolean blocked;
+    private boolean deleted;
     private ArrayList<OwnerRating> ratings;
     private ArrayList<OwnerComment> comments;
 }
