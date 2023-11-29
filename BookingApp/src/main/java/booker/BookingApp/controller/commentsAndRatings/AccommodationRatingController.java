@@ -1,6 +1,8 @@
 package booker.BookingApp.controller.commentsAndRatings;
 
 import booker.BookingApp.dto.accommodation.AccommodationRatingDTO;
+import booker.BookingApp.dto.accommodation.CreateAccommodationCommentDTO;
+import booker.BookingApp.dto.accommodation.CreateAccommodationRatingDTO;
 import booker.BookingApp.model.accommodation.AccommodationRating;
 import booker.BookingApp.service.implementation.AccommodationRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,8 +98,8 @@ public class AccommodationRatingController {
 //    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AccommodationRatingDTO> create(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
-        AccommodationRatingDTO ratingDTO = accommodationRatingService.create(accommodationRatingDTO);
+    public ResponseEntity<CreateAccommodationRatingDTO> create(@RequestBody CreateAccommodationRatingDTO accommodationRatingDTO) {
+        CreateAccommodationRatingDTO ratingDTO = accommodationRatingService.create(accommodationRatingDTO);
         return new ResponseEntity<>(ratingDTO, HttpStatus.CREATED);
     }
 

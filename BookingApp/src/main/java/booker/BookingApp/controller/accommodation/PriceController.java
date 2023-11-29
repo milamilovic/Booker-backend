@@ -94,9 +94,9 @@ public class PriceController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> update(@RequestBody PriceDTO priceDTO) {
+    public ResponseEntity<PriceDTO> update(@RequestBody PriceDTO priceDTO) {
         priceService.update(priceDTO);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(priceDTO, HttpStatus.OK);
     }
 
     @GetMapping(value = "/accommodationId={accommodation_id}")

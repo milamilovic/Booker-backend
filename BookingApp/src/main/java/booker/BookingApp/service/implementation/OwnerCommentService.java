@@ -1,5 +1,6 @@
 package booker.BookingApp.service.implementation;
 
+import booker.BookingApp.dto.commentsAndRatings.CreateOwnerCommentDTO;
 import booker.BookingApp.dto.commentsAndRatings.OwnerCommentDTO;
 import booker.BookingApp.dto.commentsAndRatings.ReportOwnerCommentDTO;
 import booker.BookingApp.model.commentsAndRatings.OwnerComment;
@@ -37,7 +38,7 @@ public class OwnerCommentService implements IOwnerCommentService {
 
 
     @Override
-    public OwnerCommentDTO create(OwnerCommentDTO ownerCommentDTO) {
+    public CreateOwnerCommentDTO create(CreateOwnerCommentDTO ownerCommentDTO) {
         return ownerCommentDTO;
     }
 
