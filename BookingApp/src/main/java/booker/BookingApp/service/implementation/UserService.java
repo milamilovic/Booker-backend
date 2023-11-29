@@ -27,11 +27,6 @@ public class UserService implements IUserService {
         return userRepository.findAll();
     }
 
-    @Override
-    public void remove(Long id) {
-
-        userRepository.deleteById(id);
-    }
 
     @Override
     public User save(User user) {
@@ -59,10 +54,5 @@ public class UserService implements IUserService {
         return user;
     }
 
-
-    @Override
-    public List<User> findAllDeleted() {
-        return userRepository.findAllDeleted();
-    }
 
 }

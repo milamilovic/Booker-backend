@@ -74,22 +74,9 @@ public class UserController {
         user.setAddress(updateUserDTO.getAddress());
         user.setPhone(updateUserDTO.getPhone());
         user.setRole(updateUserDTO.getRole());
-        user.setDeleted(updateUserDTO.isDeleted());
 
         user = userService.save(user);
         return new ResponseEntity<>(new UpdateUserDTO(user), HttpStatus.OK);
-    }
-
-    @DeleteMapping(value = "/remove/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        User user = userService.findOne(id);
-
-        if (user != null) {
-            userService.remove(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
     }
 
     @GetMapping(value = "/by-email={email}")
@@ -113,15 +100,4 @@ public class UserController {
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
     }
 
-    @GetMapping("/deleted")
-    public ResponseEntity<List<UserDTO>> findAllDeleted() {
-        List<User> deleted = userService.findAllDeleted();
-
-        List<UserDTO> deletedDTOS = new ArrayList<>();
-        for(User user : deleted) {
-            deletedDTOS.add(new UserDTO(user));
-        }
-
-        return new ResponseEntity<>(deletedDTOS, HttpStatus.OK);
-    }
 }
