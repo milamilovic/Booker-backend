@@ -26,8 +26,7 @@ public class OwnerRatingService implements IOwnerRatingService {
     }
     @Override
     public List<OwnerRating> findAllReported() {
-        List<OwnerRating> reported = ownerRatingRepository.findAllReported();
-        return reported;
+        return ownerRatingRepository.findAllReported();
     }
     @Override
     public void delete(Long id) {
@@ -51,6 +50,13 @@ public class OwnerRatingService implements IOwnerRatingService {
     @Override
     public List<OwnerRating> getAllForOwner(Long ownerId) {
         return ownerRatingRepository.findAllForOwner(ownerId);
+    }
+
+    @Override
+    public void report(Long id) {
+        OwnerRating rating = ownerRatingRepository.findById(id).orElseGet(null);
+        rating.setReported(true);
+        ownerRatingRepository.save(rating);
     }
 
 

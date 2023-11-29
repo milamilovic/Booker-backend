@@ -124,4 +124,11 @@ public class AccommodationRatingController {
         return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
     }
 
+    @PutMapping(value = "/report/{rating_id}")
+    public ResponseEntity<AccommodationRatingDTO> report(@PathVariable Long rating_id) {
+        accommodationRatingService.report(rating_id);
+        AccommodationRatingDTO ratingDTO = new AccommodationRatingDTO(accommodationRatingService.findOne(rating_id));
+        return new ResponseEntity<>(ratingDTO, HttpStatus.OK);
+    }
+
 }

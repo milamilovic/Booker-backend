@@ -13,17 +13,17 @@ public @Data class Price {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "accommodation_id")
     private Accommodation accommodation;
 
     @Column(name = "cost", nullable = false)
     private double cost;
 
-    @Column(name = "fromDate", nullable = false)
+    @Column(name = "from_date", nullable = false)
     private Date fromDate;
 
-    @Column(name = "toDate", nullable = false)
+    @Column(name = "to_date", nullable = false)
     private Date toDate;
 
     @Column(name = "type", nullable = false)

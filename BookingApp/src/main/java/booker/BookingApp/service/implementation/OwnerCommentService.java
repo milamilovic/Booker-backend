@@ -61,8 +61,10 @@ public class OwnerCommentService implements IOwnerCommentService {
     }
 
     @Override
-    public ReportOwnerCommentDTO report(ReportOwnerCommentDTO reportOwnerCommentDTO) {
-        return reportOwnerCommentDTO;
+    public void report(Long id) {
+        OwnerComment comment = ownerCommentRepository.findById(id).orElseGet(null);
+        comment.setReported(true);
+        ownerCommentRepository.save(comment);
     }
 
 

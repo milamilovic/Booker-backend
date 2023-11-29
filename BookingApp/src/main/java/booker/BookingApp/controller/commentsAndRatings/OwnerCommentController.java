@@ -119,4 +119,11 @@ public class OwnerCommentController {
 
         return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
     }
+
+    @PutMapping(value = "/report/{comment_id}")
+    public ResponseEntity<OwnerCommentDTO> report(@PathVariable Long comment_id) {
+        ownerCommentService.report(comment_id);
+        OwnerCommentDTO reportOwnerCommentDTO = new OwnerCommentDTO(ownerCommentService.findOne(comment_id));
+        return new ResponseEntity<>(reportOwnerCommentDTO, HttpStatus.OK);
+    }
 }

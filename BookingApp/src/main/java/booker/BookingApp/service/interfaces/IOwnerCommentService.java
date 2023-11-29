@@ -15,5 +15,5 @@ public interface IOwnerCommentService {
     public OwnerCommentDTO update(OwnerCommentDTO ownerCommentDTO);
     public void delete(Long id);
     public List<OwnerComment> findAllReported();
-    public ReportOwnerCommentDTO report(ReportOwnerCommentDTO reportOwnerCommentDTO);
+    public void report(Long id);
 }

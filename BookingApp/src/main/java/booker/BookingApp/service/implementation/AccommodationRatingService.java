@@ -35,6 +35,13 @@ public class AccommodationRatingService implements IAccommodationRatingService {
     }
 
     @Override
+    public void report(Long id) {
+        AccommodationRating rating = accommodationRatingRepository.findById(id).orElseGet(null);
+        rating.setReported(true);
+        accommodationRatingRepository.save(rating);
+    }
+
+    @Override
     public AccommodationRating findOne(Long id) {
         return accommodationRatingRepository.findById(id).orElse(null);
     }

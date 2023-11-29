@@ -130,4 +130,11 @@ public class AccommodationCommentController {
 
         return new ResponseEntity<>(reportedCommentsDTO, HttpStatus.OK);
     }
+
+    @PutMapping(value = "/report/{comment_id}")
+    public ResponseEntity<AccommodationCommentDTO> report(@PathVariable Long comment_id) {
+        accommodationCommentService.report(comment_id);
+        AccommodationCommentDTO accommodationCommentDTO = new AccommodationCommentDTO(accommodationCommentService.findOne(comment_id));
+        return new ResponseEntity<>(accommodationCommentDTO, HttpStatus.OK);
+    }
 }
