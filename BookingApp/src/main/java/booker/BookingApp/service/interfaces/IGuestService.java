@@ -2,6 +2,7 @@ package booker.BookingApp.service.interfaces;
 
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
+import booker.BookingApp.dto.users.OwnerDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public interface IGuestService {
     GuestDTO update(GuestDTO guest);
     void delete(Long guestId);
     void block(Long guestId);
+    OwnerDTO reportOwner(String ownerEmail);
     ArrayList<GuestDTO> getAllBlocked();
     ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId);
     ArrayList<Long> removeFromFavouriteAccommodations(GuestDTO guest, Long accommodationId);

@@ -87,7 +87,7 @@ public class OwnerController {
         }
     }
 
-    @PutMapping(consumes ="application/json", value = "/block/{ownerId}")
+    @PutMapping(consumes ="application/json", value = "/report/{guestEmail}")
     public ResponseEntity<GuestDTO> reportGuest(@PathVariable String guestEmail) {
         GuestDTO guestDTO = ownerService.reportGuest(guestEmail);
         if (guestDTO == null){

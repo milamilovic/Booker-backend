@@ -3,6 +3,7 @@ package booker.BookingApp.controller.users;
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
 import booker.BookingApp.dto.users.GuestDTO;
+import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.service.implementation.AccommodationService;
 import booker.BookingApp.service.implementation.GuestService;
@@ -78,6 +79,7 @@ public class GuestController {
         }
     }
 
+    // admin blocks the guest by id
     @PutMapping(consumes = "application/json", value = "/block/{guestId}")
     public ResponseEntity<Void> block(@PathVariable Long guestId) {
         GuestDTO guest = guestService.getGuestById(guestId);
@@ -86,6 +88,16 @@ public class GuestController {
         } else {
             guestService.block(guestId);
             return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
+    @PutMapping(consumes ="application/json", value = "/report/{ownerEmail}")
+    public ResponseEntity<OwnerDTO> reportOwner(@PathVariable String ownerEmail) {
+        OwnerDTO ownerDTO = guestService.reportOwner(ownerEmail);
+        if (ownerDTO == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else{
+            return new ResponseEntity<>(ownerDTO, HttpStatus.OK);
         }
     }
 

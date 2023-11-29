@@ -2,6 +2,7 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.users.GuestDTO;
+import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.service.interfaces.IGuestService;
@@ -62,6 +63,11 @@ public class GuestService implements IGuestService {
 
     @Override
     public void block(Long id) {
+    }
+
+    @Override
+    public OwnerDTO reportOwner(String ownerEmail) {
+        return new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, true, false, false, null, null);
     }
 
     @Override
