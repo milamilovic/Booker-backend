@@ -1,6 +1,7 @@
 package booker.BookingApp.service.interfaces;
 
 import booker.BookingApp.dto.accommodation.AccommodationCommentDTO;
+import booker.BookingApp.dto.accommodation.CreateAccommodationCommentDTO;
 import booker.BookingApp.dto.accommodation.ReportAccommodationCommentDTO;
 import booker.BookingApp.model.accommodation.AccommodationComment;
 
@@ -11,7 +12,7 @@ public interface IAccommodationCommentService {
     public List<AccommodationComment> findAll();
     public List<AccommodationComment> findAllForAccommodation(Long accommodationId);
     public void remove(Long id);
-    public AccommodationCommentDTO create(AccommodationCommentDTO accommodationCommentDTO);
+    public CreateAccommodationCommentDTO create(CreateAccommodationCommentDTO accommodationCommentDTO);
     public AccommodationCommentDTO update(AccommodationCommentDTO accommodationCommentDTO);
     public void delete(Long id);
     public void report(Long id);

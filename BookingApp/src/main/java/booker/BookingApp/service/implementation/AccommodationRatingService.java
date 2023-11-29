@@ -1,6 +1,8 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AccommodationRatingDTO;
+import booker.BookingApp.dto.accommodation.CreateAccommodationCommentDTO;
+import booker.BookingApp.dto.accommodation.CreateAccommodationRatingDTO;
 import booker.BookingApp.dto.accommodation.ReportAccommodationRatingDTO;
 import booker.BookingApp.model.accommodation.AccommodationRating;
 import booker.BookingApp.repository.AccommodationRatingRepository;
@@ -51,7 +53,8 @@ public class AccommodationRatingService implements IAccommodationRatingService {
         accommodationRatingRepository.deleteById(id);
     }
 
-    public AccommodationRatingDTO create(AccommodationRatingDTO ratingDTO) {
+    @Override
+    public CreateAccommodationRatingDTO create(CreateAccommodationRatingDTO ratingDTO) {
         return ratingDTO;
     }
 

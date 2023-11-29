@@ -1,6 +1,7 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AccommodationCommentDTO;
+import booker.BookingApp.dto.accommodation.CreateAccommodationCommentDTO;
 import booker.BookingApp.dto.accommodation.ReportAccommodationCommentDTO;
 import booker.BookingApp.model.accommodation.AccommodationComment;
 import booker.BookingApp.repository.AccommodationCommentRepository;
@@ -40,7 +41,7 @@ public class AccommodationCommentService implements IAccommodationCommentService
 //    }
 
     @Override
-    public AccommodationCommentDTO create(AccommodationCommentDTO accommodationComment) {
+    public CreateAccommodationCommentDTO create(CreateAccommodationCommentDTO accommodationComment) {
         return accommodationComment;
     }
 

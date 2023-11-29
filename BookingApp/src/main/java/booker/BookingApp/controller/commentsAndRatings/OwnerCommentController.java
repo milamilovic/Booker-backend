@@ -1,6 +1,7 @@
 package booker.BookingApp.controller.commentsAndRatings;
 
 import booker.BookingApp.dto.accommodation.AccommodationCommentDTO;
+import booker.BookingApp.dto.commentsAndRatings.CreateOwnerCommentDTO;
 import booker.BookingApp.dto.commentsAndRatings.OwnerCommentDTO;
 import booker.BookingApp.dto.commentsAndRatings.ReportOwnerCommentDTO;
 import booker.BookingApp.model.commentsAndRatings.OwnerComment;
@@ -88,13 +89,13 @@ public class OwnerCommentController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OwnerCommentDTO> create(OwnerCommentDTO commentDTO) {
+    public ResponseEntity<CreateOwnerCommentDTO> create(@RequestBody CreateOwnerCommentDTO commentDTO) {
         ownerCommentService.create(commentDTO);
         return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OwnerCommentDTO> update(OwnerCommentDTO commentDTO) {
+    public ResponseEntity<OwnerCommentDTO> update(@RequestBody OwnerCommentDTO commentDTO) {
         ownerCommentService.update(commentDTO);
         return new ResponseEntity<>(commentDTO, HttpStatus.OK);
     }
