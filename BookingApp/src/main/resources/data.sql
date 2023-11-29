@@ -37,6 +37,24 @@ VALUES (2, 3, 2.5, '2023-04-20', false);
 INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
 VALUES (3, 1, 4.0, '2023-05-05', true);
 
+INSERT INTO Price(accommodation_id, cost, from_date, to_date, type) VALUES (1, 1000.0, '2023-05-01', '2023-12-31', 0);
+INSERT INTO Price(accommodation_id, cost, from_date, to_date, type) VALUES (2, 500.0, '2023-09-01', '2023-12-01', 1);
+-- Example 1
+INSERT INTO Price(accommodation_id, cost, from_date, to_date, type) VALUES (3, 750.0, '2023-06-15', '2023-08-31', 1);
+
+-- Example 2
+INSERT INTO Price(accommodation_id, cost, from_date, to_date, type) VALUES (3, 1200.0, '2023-03-01', '2023-05-31', 0);
+
+-- Example 3
+INSERT INTO Price(accommodation_id, cost, from_date, to_date, type) VALUES (2, 800.0, '2023-10-15', '2023-11-30', 1);
+
+-- Example 4
+INSERT INTO Price(accommodation_id, cost, from_date, to_date, type) VALUES (1, 600.0, '2023-04-01', '2023-06-30', 0);
+
+-- Example 5
+INSERT INTO Price(accommodation_id, cost, from_date, to_date, type) VALUES (2, 900.0, '2023-07-01', '2023-09-30', 0);
+
+
 
 
 

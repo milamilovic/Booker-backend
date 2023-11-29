@@ -14,7 +14,7 @@ public interface IAccommodationCommentService {
     public AccommodationCommentDTO create(AccommodationCommentDTO accommodationCommentDTO);
     public AccommodationCommentDTO update(AccommodationCommentDTO accommodationCommentDTO);
     public void delete(Long id);
-    public ReportAccommodationCommentDTO report(ReportAccommodationCommentDTO reportAccommodationCommentDTO);
+    public void report(Long id);
     public AccommodationComment save(AccommodationComment accommodationComment);
     public List<AccommodationComment> findAllReported();
 }

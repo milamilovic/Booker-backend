@@ -1,6 +1,7 @@
 package booker.BookingApp.controller.commentsAndRatings;
 
 import booker.BookingApp.dto.commentsAndRatings.CreateOwnerRatingDTO;
+import booker.BookingApp.dto.commentsAndRatings.OwnerCommentDTO;
 import booker.BookingApp.dto.commentsAndRatings.OwnerRatingDTO;
 import booker.BookingApp.model.commentsAndRatings.OwnerRating;
 import booker.BookingApp.service.implementation.OwnerRatingService;
@@ -112,5 +113,23 @@ public class OwnerRatingController {
             ratingDTOS.add(new OwnerRatingDTO(rating));
         }
         return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all/reported")
+    public ResponseEntity<List<OwnerRatingDTO>> findAllReported() {
+        List<OwnerRating> reported = ownerRatingService.findAllReported();
+        List<OwnerRatingDTO> reportedDTOS = new ArrayList<>();
+
+        for (OwnerRating rating : reported) {
+            reportedDTOS.add(new OwnerRatingDTO(rating));
+        }
+        return new ResponseEntity<>(reportedDTOS, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/report/{rating_id}")
+    public ResponseEntity<OwnerRatingDTO> report(@PathVariable Long rating_id) {
+        ownerRatingService.report(rating_id);
+        OwnerRatingDTO ratingDTO = new OwnerRatingDTO(ownerRatingService.findOne(rating_id));
+        return new ResponseEntity<>(ratingDTO, HttpStatus.OK);
     }
 }

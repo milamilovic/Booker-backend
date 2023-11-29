@@ -14,4 +14,5 @@ public interface IAccommodationRatingService {
     public AccommodationRatingDTO update(AccommodationRatingDTO ratingDTO);
     public void delete (Long id);
     public List<AccommodationRating> findAllReported();
+    public void report(Long id);
 }
