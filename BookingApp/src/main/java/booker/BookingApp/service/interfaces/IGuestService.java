@@ -1,8 +1,9 @@
 package booker.BookingApp.service.interfaces;
 
 import booker.BookingApp.dto.users.GuestDTO;
-import booker.BookingApp.model.users.Guest;
+import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public interface IGuestService {
@@ -14,4 +15,5 @@ public interface IGuestService {
     void delete(Long guestId);
     ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId);
     ArrayList<Long> removeFromFavouriteAccommodations(GuestDTO guest, Long accommodationId);
+    ArrayList<AccommodationListingDTO> findAllFavouriteAccommodations(GuestDTO guest) throws IOException;
 }

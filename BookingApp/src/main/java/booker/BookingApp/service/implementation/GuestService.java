@@ -1,5 +1,6 @@
 package booker.BookingApp.service.implementation;
 
+import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.users.Guest;
@@ -14,12 +15,14 @@ import java.util.ArrayList;
 public class GuestService implements IGuestService {
     @Override
     public ArrayList<GuestDTO> findAll() {
-        GuestDTO g1 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
-        GuestDTO g2 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
-        GuestDTO g3 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
-        GuestDTO g4 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
-        GuestDTO g5 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
-        GuestDTO g6 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
+        ArrayList<Long> faves = new ArrayList<>();
+        faves.add(1L); faves.add(2L);
+        GuestDTO g1 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
+        GuestDTO g2 = new GuestDTO(2L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
+        GuestDTO g3 = new GuestDTO(3L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
+        GuestDTO g4 = new GuestDTO(4L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
+        GuestDTO g5 = new GuestDTO(5L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
+        GuestDTO g6 = new GuestDTO(6L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
         ArrayList<GuestDTO> guests = new ArrayList<>();
         guests.add(g1);
         guests.add(g2);
@@ -31,12 +34,16 @@ public class GuestService implements IGuestService {
     }
     @Override
     public GuestDTO getGuestById(Long id) {
-        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
+        ArrayList<Long> faves = new ArrayList<>();
+        faves.add(1L); faves.add(2L);
+        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
     }
 
     @Override
     public GuestDTO getGuestByEmail(String email) {
-        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, null);
+        ArrayList<Long> faves = new ArrayList<>();
+        faves.add(1L); faves.add(2L);
+        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, false, false, faves);
     }
 
     @Override
@@ -77,7 +84,19 @@ public class GuestService implements IGuestService {
         return favourites;
     }
 
-
+    @Override
+    public ArrayList<AccommodationListingDTO> findAllFavouriteAccommodations(GuestDTO guest) throws IOException {
+        ArrayList<Long> favouriteIds = guest.getFavouriteAccommodations();
+        ArrayList<AccommodationListingDTO> favourites = new ArrayList<>();
+        AccommodationService accommodationService = new AccommodationService();
+        ArrayList<AccommodationListingDTO> all = accommodationService.findAll();
+        for(AccommodationListingDTO a : all){
+            if(favouriteIds.contains(a.getId())){
+                favourites.add(a);
+            }
+        }
+        return favourites;
+    }
 
 
 }
