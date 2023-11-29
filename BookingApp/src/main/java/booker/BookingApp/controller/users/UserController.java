@@ -119,7 +119,7 @@ public class UserController {
 
         List<UserDTO> deletedDTOS = new ArrayList<>();
         for(User user : deleted) {
-            deletedDTOS.add(new UserDTO());
+            deletedDTOS.add(new UserDTO(user));
         }
 
         return new ResponseEntity<>(deletedDTOS, HttpStatus.OK);
