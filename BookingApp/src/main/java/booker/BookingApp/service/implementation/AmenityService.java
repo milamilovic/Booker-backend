@@ -1,7 +1,9 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AmenityDTO;
+import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.accommodation.Amenity;
+import booker.BookingApp.model.accommodation.Image;
 import booker.BookingApp.service.interfaces.IAmenityService;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,10 @@ public class AmenityService implements IAmenityService {
     @Override
     public ArrayList<AmenityDTO> findAllAmenitiesForAccommodation(Long accommodationId) throws IOException {
         ArrayList<AmenityDTO> amenities = new ArrayList<>();
-        amenities.add(new AmenityDTO(1L, "wifi", null));
-        amenities.add(new AmenityDTO(2L, "good place", null));
-        amenities.add(new AmenityDTO(3L, "AC", null));
-        amenities.add(new AmenityDTO(4L, "parking spot", null));
+        amenities.add(new AmenityDTO(1L, "wifi", new Image(1L, "../../../assets/images/icons8-wifi-30.png", new Accommodation())));
+        amenities.add(new AmenityDTO(2L, "good place", new Image(1L, "../../../assets/images/icons8-location-32.png", new Accommodation())));
+        amenities.add(new AmenityDTO(3L, "AC", new Image(1L, "../../../assets/images/icons8-ac-30.png", new Accommodation())));
+        amenities.add(new AmenityDTO(4L, "free cancellation", new Image(1L, "../../../assets/images/icons8-calendar-32.png", new Accommodation())));
         return amenities;
     }
 

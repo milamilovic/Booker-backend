@@ -20,9 +20,7 @@ class Amenity {
     @JoinColumn(name = "accommodation_id")
     private Accommodation accommodation;
 
-//    public Amenity(Long id, char[] name) {
-//        this.id = id;
-//        this.name = name;
-//    }
-    //private Image image;
+    @OneToOne
+    @JoinColumn(name = "image")
+    private Image image;
 }
