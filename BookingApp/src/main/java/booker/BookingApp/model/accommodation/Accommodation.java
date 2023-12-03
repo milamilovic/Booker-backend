@@ -23,8 +23,8 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private String address;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Amenity> amenities;
-//    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private ArrayList<ImageIO> images;
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private ArrayList<Image> images;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Availability> availabilities;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
