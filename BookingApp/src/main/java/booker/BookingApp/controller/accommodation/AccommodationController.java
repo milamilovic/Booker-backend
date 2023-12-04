@@ -1,8 +1,7 @@
 package booker.BookingApp.controller.accommodation;
 
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
-import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
-import booker.BookingApp.dto.accommodation.WholeAccommodationDTO;
+import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/accommodations")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AccommodationController {
 
     @Autowired
@@ -23,15 +23,15 @@ public class AccommodationController {
 
     //create an accommodation
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WholeAccommodationDTO> insert(@RequestBody WholeAccommodationDTO accommodation) throws Exception {
-        WholeAccommodationDTO dto = service.create(accommodation);
+    public ResponseEntity<AccommodationViewDTO> insert(@RequestBody AccommodationViewDTO accommodation) throws Exception {
+        AccommodationViewDTO dto = service.create(accommodation);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     //get one accommodation
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WholeAccommodationDTO> findAccommodation(@PathVariable Long id) throws IOException {
-        WholeAccommodationDTO accommodation = service.findOne(id);
+    public ResponseEntity<AccommodationViewDTO> findAccommodation(@PathVariable Long id) throws IOException {
+        AccommodationViewDTO accommodation = service.findOne(id);
         return new ResponseEntity<>(accommodation, HttpStatus.OK);
     }
 
@@ -106,7 +106,7 @@ public class AccommodationController {
 
     //update accommodation
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateAccommodation(@RequestBody WholeAccommodationDTO updatedAccommodation) throws Exception {
+    public ResponseEntity<Void> updateAccommodation(@RequestBody AccommodationViewDTO updatedAccommodation) throws Exception {
         service.update(updatedAccommodation);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
