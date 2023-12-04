@@ -3,6 +3,7 @@ package booker.BookingApp.controller.requestsAndReservations;
 import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.model.accommodation.Filter;
 import booker.BookingApp.service.interfaces.IReservationRequestService;
+import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +24,7 @@ public class ReservationRequestController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReservationRequestDTO> insert(@RequestBody ReservationRequestDTO request) throws Exception {
         ReservationRequestDTO requestDTO = service.create(request);
+        System.out.println("hit method post");
         return new ResponseEntity<>(requestDTO, HttpStatus.OK);
     }
 
