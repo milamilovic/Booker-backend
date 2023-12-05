@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 @Entity
 public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
@@ -21,19 +22,35 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private String shortDescription;
     @Column(name = "address", nullable = false)
     private String address;
-    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accommodation")
+    @Column(name = "amenitites", nullable = false)
     private List<Amenity> amenities;
-    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private ArrayList<Image> images;
-    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accommodation")
+    @Column(name = "images", nullable = false)
+    private List<Image> images;
+    @OneToMany(mappedBy = "accommodation")
+    @Column(name = "availabilities", nullable = false)
     private List<Availability> availabilities;
-    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Price> prices;
-    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<AccommodationRating> ratings;
-    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<AccommodationComment> comments;
     @Column(name = "deadline", nullable = false)
     private int deadline;
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Accommodation.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("title='" + title + "'")
+                .add("description='" + description + "'")
+                .add("shortDescription='" + shortDescription + "'")
+                .add("address='" + address + "'")
+                .add("deadline=" + deadline)
+                .toString();
+    }
 
 }

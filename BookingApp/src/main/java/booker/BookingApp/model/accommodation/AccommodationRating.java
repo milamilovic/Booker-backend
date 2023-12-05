@@ -12,7 +12,7 @@ public @Data class AccommodationRating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "accommodation_id")
     private Accommodation accommodation;
 
