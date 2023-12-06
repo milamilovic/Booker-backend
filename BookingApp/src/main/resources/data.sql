@@ -7,6 +7,36 @@ INSERT INTO Accommodation (title, description, short_description, address, deadl
 INSERT INTO Accommodation (title, description, short_description, address, deadline) VALUES  ('Cozy Cabin', 'A charming cabin in the woods.', 'Rustic cabin retreat', '456 Forest Avenue', 15);
 INSERT INTO Accommodation (title, description, short_description, address, deadline) VALUES  ('City Apartment', 'Modern apartment in the heart of the city.', 'Downtown apartment', '789 Urban Street', 20);
 
+
+-- Insert data into Amenity, Image, and Accommodation tables for Accommodation 1
+INSERT INTO Amenity (name, accommodation_id, image_path)
+VALUES
+    ('Amenity 1A', 1, '');
+
+INSERT INTO Amenity (name, accommodation_id, image_path)
+VALUES
+    ('Amenity 1B', 1, '');
+
+
+INSERT INTO Amenity (name, accommodation_id, image_path)
+VALUES
+    ('Amenity 1C', 1, '');
+
+-- Insert data into Amenity, Image, and Accommodation tables for Accommodation 2
+INSERT INTO Amenity (name, accommodation_id, image_path)
+VALUES
+    ('Amenity 2A', 2, '');
+
+INSERT INTO Amenity (name, accommodation_id, image_path)
+VALUES
+    ('Amenity 2B', 2, '');
+
+
+-- Insert data into Amenity, Image, and Accommodation tables for Accommodation 3
+INSERT INTO Amenity (name, accommodation_id, image_path)
+VALUES
+    ('Amenity 3A', 3, '');
+
 INSERT INTO Accommodation_Comment (accommodation_id, guest_id, content, date, reported) VALUES (1, 2, 'Great!', '2023-10-01', false);
 -- Inserting additional data into AccommodationComment table
 INSERT INTO Accommodation_Comment (accommodation_id, guest_id, content, date, reported)

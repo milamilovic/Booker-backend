@@ -13,7 +13,7 @@ public @Data @AllArgsConstructor class AccommodationViewDTO {
     private String description;
     private String address;
     private List<Amenity> amenities;
-    private ArrayList<Image> images;
+    private List<Image> images;
     private List<Availability> availabilities;
     private List<Price> prices;
     private List<AccommodationRating> ratings;

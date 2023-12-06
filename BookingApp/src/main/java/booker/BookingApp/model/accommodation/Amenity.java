@@ -16,11 +16,15 @@ class Amenity {
     @JoinColumn(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "accommodation_id")
     private Accommodation accommodation;
 
-    @OneToOne
-    @JoinColumn(name = "image")
-    private Image image;
+    @JoinColumn(name = "image_path")
+    private String image_path;
+
+    @Override
+    public String toString() {
+        return "Amenity: id=" + id + ", name=" + name;
+    }
 }

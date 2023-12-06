@@ -18,10 +18,11 @@ public @Data @AllArgsConstructor class AccommodationListingDTO {
 
         //TODO make getAverageRating, getTotalPrice and getPricePerDay methods in service
 
+
         return new AccommodationListingDTO(accommodation.getId(),
                 accommodation.getTitle(), accommodation.getShortDescription(),
-                accommodation.getImages().get(0), accommodation.getRatings().get(0).getRate(),
-                accommodation.getPrices().get(0).getCost(), accommodation.getPrices().get(0).getCost());
+                null, 4.3f,
+                12d, 3d);
     }
 
 }

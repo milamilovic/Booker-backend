@@ -12,7 +12,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Availability {
     private Long id;
     private Date startDate;
     private Date endDate;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(name = "accommodation_id")
     private Accommodation accommodation;
 }

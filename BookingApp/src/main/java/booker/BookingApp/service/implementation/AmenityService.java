@@ -12,16 +12,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.lang.Long;
 
 @Service
 public class AmenityService implements IAmenityService {
     @Override
     public ArrayList<AmenityDTO> findAllAmenitiesForAccommodation(Long accommodationId) throws IOException {
         ArrayList<AmenityDTO> amenities = new ArrayList<>();
-        amenities.add(new AmenityDTO(1L, "wifi", new Image(1L, "../../../assets/images/icons8-wifi-30.png", new Accommodation())));
-        amenities.add(new AmenityDTO(2L, "good place", new Image(1L, "../../../assets/images/icons8-location-32.png", new Accommodation())));
-        amenities.add(new AmenityDTO(3L, "AC", new Image(1L, "../../../assets/images/icons8-ac-30.png", new Accommodation())));
-        amenities.add(new AmenityDTO(4L, "free cancellation", new Image(1L, "../../../assets/images/icons8-calendar-32.png", new Accommodation())));
+        amenities.add(new AmenityDTO(1L, "wifi", "../../../assets/images/icons8-wifi-30.png"));
+        amenities.add(new AmenityDTO(2L, "good place", "../../../assets/images/icons8-location-32.png"));
+        amenities.add(new AmenityDTO(3L, "AC", "../../../assets/images/icons8-ac-30.png"));
+        amenities.add(new AmenityDTO(4L, "free cancellation", "../../../assets/images/icons8-calendar-32.png"));
         return amenities;
     }
 
