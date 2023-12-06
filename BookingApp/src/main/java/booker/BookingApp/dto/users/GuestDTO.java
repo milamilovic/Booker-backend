@@ -1,6 +1,7 @@
 package booker.BookingApp.dto.users;
 
 import booker.BookingApp.enums.Role;
+import booker.BookingApp.model.users.ProfilePicture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,8 +18,9 @@ public class GuestDTO extends UserDTO{
     private ArrayList<Long> favouriteAccommodations;
 
     public GuestDTO(Long id, String name, String surname, String email, String address, String phone,
-                    Role role, boolean reported, boolean blocked, boolean deleted, ArrayList<Long> favouriteAccommodations){
-        super(id, name, surname, email, address, phone, role);
+                    Role role, ProfilePicture profilePicture, boolean reported, boolean blocked,
+                    boolean deleted, ArrayList<Long> favouriteAccommodations){
+        super(id, name, surname, email, address, phone, role, profilePicture);
         this.reported = reported;
         this.blocked = blocked;
         this.deleted = deleted;

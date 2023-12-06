@@ -210,6 +210,11 @@ INSERT INTO Price(accommodation_id, cost, from_date, to_date, type) VALUES (1, 6
 -- Example 5
 INSERT INTO Price(accommodation_id, cost, from_date, to_date, type) VALUES (2, 900.0, '2023-07-01', '2023-09-30', 0);
 
+INSERT INTO Profile_Picture (path, user_id)
+VALUES
+    ('../../../images/profile1.png', 1),
+    ('../../../images/profile2.jpg', 2);
+
 
 
 

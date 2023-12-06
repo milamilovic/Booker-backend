@@ -5,9 +5,6 @@ import booker.BookingApp.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 @Entity
 @Table(name = "USERS")
 public @Data class User {
@@ -31,6 +28,8 @@ public @Data class User {
     private String phone;
     @Column(name = "role", nullable = false)
     private Role role;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ProfilePicture profilePicture;
 
 
 }
