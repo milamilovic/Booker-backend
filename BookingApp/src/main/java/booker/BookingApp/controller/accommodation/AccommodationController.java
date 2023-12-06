@@ -2,6 +2,7 @@ package booker.BookingApp.controller.accommodation;
 
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
+import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class AccommodationController {
     IAccommodationService service;
 
     //create an accommodation
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AccommodationViewDTO> insert(@RequestBody AccommodationViewDTO accommodation) throws Exception {
+    @PostMapping(value ="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AccommodationViewDTO> insert(@RequestBody CreateAccommodationDTO accommodation) throws Exception {
         AccommodationViewDTO dto = service.create(accommodation);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -36,7 +37,7 @@ public class AccommodationController {
     }
 
     //get all accommodations
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> getAll() throws IOException {
         ArrayList<AccommodationListingDTO> accommodations = service.findAll();
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
