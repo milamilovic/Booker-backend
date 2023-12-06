@@ -4,6 +4,8 @@ import booker.BookingApp.dto.users.AdminDTO;
 import booker.BookingApp.dto.users.UserDTO;
 import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.users.Admin;
+import booker.BookingApp.model.users.ProfilePicture;
+import booker.BookingApp.model.users.User;
 import booker.BookingApp.service.interfaces.IAdminService;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +17,14 @@ public class AdminService implements IAdminService {
 
     @Override
     public AdminDTO update(AdminDTO admin) {
-
-        return new AdminDTO(1L, "Admin", "Admin", "admin123@gmail.com", null, null, Role.ADMIN);
+        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
+        return new AdminDTO(1L, "Admin", "Admin", "admin123@gmail.com", null, null, Role.ADMIN, profilePicture);
     }
 
     @Override
     public AdminDTO get() {
-        return new AdminDTO(1L, "Admin", "Admin", "admin123@gmail.com", null, null, Role.ADMIN);
+        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
+        return new AdminDTO(1L, "Admin", "Admin", "admin123@gmail.com", null, null, Role.ADMIN, profilePicture);
     }
 
     @Override
