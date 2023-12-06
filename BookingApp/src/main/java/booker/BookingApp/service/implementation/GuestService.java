@@ -40,8 +40,8 @@ public class GuestService implements IGuestService {
     public GuestDTO getGuestById(Long id) {
         ArrayList<Long> faves = new ArrayList<>();
         faves.add(1L); faves.add(2L);
-        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
-        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves);
+        ProfilePicture profilePicture = new ProfilePicture(1L, "../../assets/images/initialProfilePic.png", new User());
+        return new GuestDTO(id, "Pera", "Peric", "pera123@gmail.com", "Adresa 123", "3210087", Role.GUEST, profilePicture, false, false, false, faves);
     }
 
     @Override
