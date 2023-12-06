@@ -25,6 +25,9 @@ public class AccommodationService implements IAccommodationService {
     @Autowired
     AccommodationRepository repository;
 
+    @Autowired
+    AvailabilityService availabilityService;
+
     @Override @Transactional
     public ArrayList<AccommodationListingDTO> findAll() throws IOException {
         List<Accommodation> accommodations = repository.findAll();
@@ -172,11 +175,14 @@ public class AccommodationService implements IAccommodationService {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        //TODO:  search with dates
         List<Accommodation> accommodations = repository.searchAccommodations(location, people);
         ArrayList<AccommodationListingDTO> dtos = new ArrayList<>();
         for(Accommodation a : accommodations) {
-            dtos.add(AccommodationListingDTO.makeFromAccommodation(a));
+            System.out.println("accommodation with id " + a.getId() + "is good by location and people");
+            if(availabilityService.checkForDateRange(a.getId(), start, end)) {
+                System.out.println("accommodation with id " + a.getId() + "is free in date range");
+                dtos.add(AccommodationListingDTO.makeFromAccommodation(a));
+            }
         }
         return dtos;
     }

@@ -10,8 +10,11 @@ import java.util.Date;
 @Entity @JsonIgnoreProperties(value= {"accommodation"})
 public @Data @AllArgsConstructor @NoArgsConstructor class Availability {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JoinColumn(name = "startDate")
     private Date startDate;
+    @JoinColumn(name = "endDate")
     private Date endDate;
     @ManyToOne
     @JoinColumn(name = "accommodation_id")
