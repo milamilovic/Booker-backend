@@ -21,7 +21,7 @@ public @Data @AllArgsConstructor class AccommodationListingDTO {
 
         return new AccommodationListingDTO(accommodation.getId(),
                 accommodation.getTitle(), accommodation.getShortDescription(),
-                null, 4.3f,
+                accommodation.getImages().get(0), 4.3f,
                 12d, 3d);
     }
 

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +24,9 @@ public class AccommodationService implements IAccommodationService {
 
     @Autowired
     AccommodationRepository repository;
+
+    @Autowired
+    AvailabilityService availabilityService;
 
     @Override @Transactional
     public ArrayList<AccommodationListingDTO> findAll() throws IOException {
@@ -50,10 +55,10 @@ public class AccommodationService implements IAccommodationService {
         name[1] = 'f';
         name[1] = 'i';
         ArrayList<Amenity> amenities = new ArrayList<>();
-        amenities.add(new Amenity(1L, "wifi",null, "../../../assets/images/icons8-wifi-30.png"));
-        amenities.add(new Amenity(2L, "good place", null, "../../../assets/images/icons8-location-32.png"));
-        amenities.add(new Amenity(3L, "AC", null,"../../../assets/images/icons8-ac-30.png"));
-        amenities.add(new Amenity(4L, "free cancellation", null, "../../../assets/images/icons8-calendar-32.png"));
+        amenities.add(new Amenity(1L, "wifi",null, "../../assets/images/icons8-wifi-30.png"));
+        amenities.add(new Amenity(2L, "good place", null, "../../assets/images/icons8-location-32.png"));
+        amenities.add(new Amenity(3L, "AC", null,"../../assets/images/icons8-ac-30.png"));
+        amenities.add(new Amenity(4L, "free cancellation", null, "../../assets/images/icons8-calendar-32.png"));
 //        amenities.add(new Amenity(2L, "good place", ImageIO.read(new File("src/main/resources/london_image.jpg"))));
 //        amenities.add(new Amenity(3L, "AC", ImageIO.read(new File("src/main/resources/madrid_image.jpg"))));
 //        amenities.add(new Amenity(4L, "parking spot", ImageIO.read(new File("src/main/resources/paris_image.jpg"))));
@@ -161,7 +166,25 @@ public class AccommodationService implements IAccommodationService {
 
     @Override
     public ArrayList<AccommodationListingDTO> search(String startDate, String endDate, String location, int people) {
-        return findOwnersActiveAccommodations(2L);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date start;
+        Date end;
+        try {
+            start = dateFormat.parse(startDate);
+            end = dateFormat.parse(endDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        List<Accommodation> accommodations = repository.searchAccommodations(location, people);
+        ArrayList<AccommodationListingDTO> dtos = new ArrayList<>();
+        for(Accommodation a : accommodations) {
+            System.out.println("accommodation with id " + a.getId() + "is good by location and people");
+            if(availabilityService.checkForDateRange(a.getId(), start, end)) {
+                System.out.println("accommodation with id " + a.getId() + "is free in date range");
+                dtos.add(AccommodationListingDTO.makeFromAccommodation(a));
+            }
+        }
+        return dtos;
     }
 
     @Override

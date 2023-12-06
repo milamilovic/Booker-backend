@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,13 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private String shortDescription;
     @Column(name = "address", nullable = false)
     private String address;
-    @OneToMany(mappedBy = "accommodation")
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.EAGER)
     @Column(name = "amenitites", nullable = false)
     private List<Amenity> amenities;
-    @OneToMany(mappedBy = "accommodation")
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.EAGER)
     @Column(name = "images", nullable = false)
     private List<Image> images;
-    @OneToMany(mappedBy = "accommodation")
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.EAGER)
     @Column(name = "availabilities", nullable = false)
     private List<Availability> availabilities;
 
@@ -40,17 +41,8 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private List<AccommodationComment> comments;
     @Column(name = "deadline", nullable = false)
     private int deadline;
+    @Column(name = "people", nullable = false)
+    private int people;
 
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", Accommodation.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("title='" + title + "'")
-                .add("description='" + description + "'")
-                .add("shortDescription='" + shortDescription + "'")
-                .add("address='" + address + "'")
-                .add("deadline=" + deadline)
-                .toString();
-    }
 
 }

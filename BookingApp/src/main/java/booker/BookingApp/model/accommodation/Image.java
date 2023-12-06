@@ -1,11 +1,12 @@
 package booker.BookingApp.model.accommodation;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity @JsonIgnoreProperties(value= {"accommodation"})
 public @Data @AllArgsConstructor
 @NoArgsConstructor class Image {
     @Id
