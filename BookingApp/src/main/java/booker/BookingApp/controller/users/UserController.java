@@ -73,7 +73,7 @@ public class UserController {
         user.setPassword(updateUserDTO.getPassword());
         user.setAddress(updateUserDTO.getAddress());
         user.setPhone(updateUserDTO.getPhone());
-        user.setRole(updateUserDTO.getRole());
+        user.setProfilePicture(updateUserDTO.getProfilePicture());
 
         user = userService.save(user);
         return new ResponseEntity<>(new UpdateUserDTO(user), HttpStatus.OK);

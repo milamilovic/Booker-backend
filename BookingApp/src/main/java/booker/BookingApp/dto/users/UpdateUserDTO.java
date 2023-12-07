@@ -1,10 +1,12 @@
 package booker.BookingApp.dto.users;
 
-import booker.BookingApp.enums.Role;
+import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public @Data class UpdateUserDTO {
+public @Data @AllArgsConstructor @NoArgsConstructor class UpdateUserDTO {
     private Long id;
     private String name;
     private String surname;
@@ -12,23 +14,8 @@ public @Data class UpdateUserDTO {
     private String password;
     private String address;
     private String phone;
-    private Role role;
-
-    public UpdateUserDTO() {
-    }
+    private ProfilePicture profilePicture;
 
     public UpdateUserDTO(User user) {
-        this(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getAddress(), user.getPhone(), user.getRole());
-    }
-
-    public UpdateUserDTO(Long id, String name, String surname, String email, String password, String address, String phone, Role role) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.address = address;
-        this.phone = phone;
-        this.role = role;
     }
 }

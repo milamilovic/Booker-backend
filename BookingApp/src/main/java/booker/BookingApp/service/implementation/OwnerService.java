@@ -65,7 +65,7 @@ public class OwnerService implements IOwnerService {
     @Override
     public GuestDTO reportGuest(String guestEmail) {
         ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
-        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, true, false, false, null);
+        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, true, false, false, null, "aaaa");
     }
 
     @Override
