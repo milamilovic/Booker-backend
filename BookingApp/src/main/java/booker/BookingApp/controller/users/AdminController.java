@@ -20,6 +20,10 @@ import java.util.ArrayList;
 @CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
     private final AdminService adminService;
+    @Autowired
+    GuestService guestService;
+    @Autowired
+    OwnerService ownerService;
 
     @Autowired
     public AdminController(AdminService adminService) {
@@ -46,14 +50,12 @@ public class AdminController {
 
     @GetMapping(value = "/blocked/guests")
     public ResponseEntity<ArrayList<GuestDTO>> getAllBlockedGuests(){
-        GuestService guestService = new GuestService();
         ArrayList<GuestDTO> blocked = guestService.getAllBlocked();
         return new ResponseEntity<>(blocked, HttpStatus.OK);
     }
 
     @GetMapping(value = "/blocked/owners")
     public ResponseEntity<ArrayList<OwnerDTO>> getAllBlockedOwners(){
-        OwnerService ownerService = new OwnerService();
         ArrayList<OwnerDTO> blocked = ownerService.getAllBlocked();
         return new ResponseEntity<>(blocked, HttpStatus.OK);
     }
@@ -66,14 +68,12 @@ public class AdminController {
 
     @GetMapping(value = "/reported/guests")
     public ResponseEntity<ArrayList<GuestDTO>> getAllReportedGuests(){
-        GuestService guestService = new GuestService();
         ArrayList<GuestDTO> reported = guestService.getAllReported();
         return new ResponseEntity<>(reported, HttpStatus.OK);
     }
 
     @GetMapping(value = "/reported/owners")
     public ResponseEntity<ArrayList<OwnerDTO>> getAllReportedOwners(){
-        OwnerService ownerService = new OwnerService();
         ArrayList<OwnerDTO> reported = ownerService.getAllReported();
         return new ResponseEntity<>(reported, HttpStatus.OK);
     }

@@ -7,13 +7,19 @@ import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
+import booker.BookingApp.repository.UserRepository;
 import booker.BookingApp.service.interfaces.IGuestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 @Service
 public class GuestService implements IGuestService {
+
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public ArrayList<GuestDTO> findAll() {
         ArrayList<Long> faves = new ArrayList<>();
@@ -64,6 +70,7 @@ public class GuestService implements IGuestService {
         guest.setPhone(updateUser.getPhone());
         guest.setProfilePicture(updateUser.getProfilePicture());
         guest.setPassword(updateUser.getPassword());
+
         // TODO add connection with repository
         return guest;
     }
