@@ -3,30 +3,34 @@ package booker.BookingApp.service.implementation;
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
+import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.enums.Role;
-import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
+import booker.BookingApp.repository.UserRepository;
 import booker.BookingApp.service.interfaces.IGuestService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 @Service
 public class GuestService implements IGuestService {
+
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public ArrayList<GuestDTO> findAll() {
         ArrayList<Long> faves = new ArrayList<>();
         faves.add(1L); faves.add(2L);
         ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
-        GuestDTO g1 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves);
-        GuestDTO g2 = new GuestDTO(2L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves);
-        GuestDTO g3 = new GuestDTO(3L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves);
-        GuestDTO g4 = new GuestDTO(4L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, true, true, false,  faves);
-        GuestDTO g5 = new GuestDTO(5L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves);
-        GuestDTO g6 = new GuestDTO(6L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves);
+        GuestDTO g1 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
+        GuestDTO g2 = new GuestDTO(2L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
+        GuestDTO g3 = new GuestDTO(3L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
+        GuestDTO g4 = new GuestDTO(4L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, true, true, false,  faves, "aaaa");
+        GuestDTO g5 = new GuestDTO(5L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
+        GuestDTO g6 = new GuestDTO(6L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
         ArrayList<GuestDTO> guests = new ArrayList<>();
         guests.add(g1);
         guests.add(g2);
@@ -41,7 +45,7 @@ public class GuestService implements IGuestService {
         ArrayList<Long> faves = new ArrayList<>();
         faves.add(1L); faves.add(2L);
         ProfilePicture profilePicture = new ProfilePicture(1L, "../../assets/images/initialProfilePic.png", new User());
-        return new GuestDTO(id, "Pera", "Peric", "pera123@gmail.com", "Adresa 123", "3210087", Role.GUEST, profilePicture, false, false, false, faves);
+        return new GuestDTO(id, "Pera", "Peric", "pera123@gmail.com", "Adresa 123", "3210087", Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
     }
 
     @Override
@@ -49,7 +53,7 @@ public class GuestService implements IGuestService {
         ArrayList<Long> faves = new ArrayList<>();
         faves.add(1L); faves.add(2L);
         ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
-        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves);
+        return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
     }
 
     @Override
@@ -58,7 +62,16 @@ public class GuestService implements IGuestService {
     }
 
     @Override
-    public GuestDTO update(GuestDTO guest) {
+    public GuestDTO update(GuestDTO guest, UpdateUserDTO updateUser) {
+        guest.setName(updateUser.getName());
+        guest.setSurname(updateUser.getSurname());
+        guest.setEmail(updateUser.getEmail());
+        guest.setAddress(updateUser.getAddress());
+        guest.setPhone(updateUser.getPhone());
+        guest.setProfilePicture(updateUser.getProfilePicture());
+        guest.setPassword(updateUser.getPassword());
+
+        // TODO add connection with repository
         return guest;
     }
 

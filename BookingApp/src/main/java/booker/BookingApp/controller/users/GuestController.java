@@ -4,6 +4,7 @@ import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
+import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.service.implementation.AccommodationService;
 import booker.BookingApp.service.implementation.GuestService;
@@ -60,13 +61,19 @@ public class GuestController {
     }
 
     @PutMapping(consumes = "application/json")
-    public ResponseEntity<GuestDTO> update(@RequestBody GuestDTO guestDTO) throws Exception {
-        GuestDTO guest = guestService.getGuestById(guestDTO.getId());
-        if (guest == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<GuestDTO> update(@RequestBody UpdateUserDTO updateUserDTO) {
+        try{
+            GuestDTO existingGuest = guestService.getGuestById(updateUserDTO.getId());
+            if (existingGuest == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            GuestDTO updatedGuest = guestService.update(existingGuest, updateUserDTO);
+            return new ResponseEntity<>(updatedGuest, HttpStatus.OK);
         }
-        GuestDTO updatedGuest = guestService.update(guest);
-        return new ResponseEntity<>(updatedGuest, HttpStatus.OK);
+        catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping(value = "/{guestId}")
