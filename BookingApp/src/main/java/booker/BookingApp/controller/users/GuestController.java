@@ -63,13 +63,11 @@ public class GuestController {
     @PutMapping(consumes = "application/json")
     public ResponseEntity<GuestDTO> update(@RequestBody UpdateUserDTO updateUserDTO) {
         try{
-            System.out.println(updateUserDTO.getAddress());
             GuestDTO existingGuest = guestService.getGuestById(updateUserDTO.getId());
             if (existingGuest == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             GuestDTO updatedGuest = guestService.update(existingGuest, updateUserDTO);
-            System.out.println(updatedGuest.getAddress());
             return new ResponseEntity<>(updatedGuest, HttpStatus.OK);
         }
         catch (Exception e) {

@@ -64,6 +64,7 @@ public class GuestService implements IGuestService {
         guest.setPhone(updateUser.getPhone());
         guest.setProfilePicture(updateUser.getProfilePicture());
         guest.setPassword(updateUser.getPassword());
+        // TODO add connection with repository
         return guest;
     }
 
