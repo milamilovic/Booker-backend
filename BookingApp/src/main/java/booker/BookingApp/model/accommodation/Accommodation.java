@@ -19,7 +19,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private String title;
     @Column(name = "description", nullable = false)
     private String description;
-    @Column(name = "short_description", nullable = false)
+    @Column(name = "short_description")
     private String shortDescription;
     @Column(name = "address", nullable = false)
     private String address;
@@ -39,7 +39,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private List<AccommodationRating> ratings;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<AccommodationComment> comments;
-    @Column(name = "deadline", nullable = false)
+    @Column(name = "deadline")
     private int deadline;
     @Column(name = "people", nullable = false)
     private int people;

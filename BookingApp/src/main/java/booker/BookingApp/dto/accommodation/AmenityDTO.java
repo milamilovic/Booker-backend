@@ -1,6 +1,8 @@
 package booker.BookingApp.dto.accommodation;
 
+import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.model.accommodation.Accommodation;
+import booker.BookingApp.model.accommodation.Amenity;
 import booker.BookingApp.model.accommodation.Image;
 import lombok.Data;
 
@@ -16,5 +18,12 @@ public @Data class AmenityDTO {
         this.id = id;
         this.name = name;
         this.image_path = image;
+    }
+
+    public Amenity toAmenity(Accommodation accommodation){
+        Amenity amenity = new Amenity();
+        amenity.setName(name);
+        amenity.setAccommodation(accommodation);
+        return amenity;
     }
 }

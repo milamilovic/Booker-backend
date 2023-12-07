@@ -1,6 +1,7 @@
 package booker.BookingApp.service.interfaces;
 
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
+import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
 import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
 import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
 import booker.BookingApp.model.accommodation.Filter;
@@ -14,7 +15,7 @@ public interface IAccommodationService {
 
     AccommodationViewDTO findOne(Long id) throws IOException;
 
-    AccommodationViewDTO create(AccommodationViewDTO accommodation) throws Exception;
+    AccommodationViewDTO create(CreateAccommodationDTO accommodation) throws Exception;
 
     AccommodationViewDTO update(AccommodationViewDTO accommodation) throws Exception;
 

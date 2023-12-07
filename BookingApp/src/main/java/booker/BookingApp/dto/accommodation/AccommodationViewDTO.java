@@ -3,11 +3,12 @@ package booker.BookingApp.dto.accommodation;
 import booker.BookingApp.model.accommodation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public @Data @AllArgsConstructor class AccommodationViewDTO {
+public @Data @AllArgsConstructor @NoArgsConstructor class AccommodationViewDTO {
     private Long id;
     private String title;
     private String description;

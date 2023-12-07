@@ -1,9 +1,6 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
-import booker.BookingApp.dto.accommodation.AmenityDTO;
-import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
-import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
+import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.repository.AccommodationRepository;
 import booker.BookingApp.service.interfaces.IAccommodationService;
@@ -112,8 +109,49 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public AccommodationViewDTO create(AccommodationViewDTO accommodation) throws Exception {
-        return accommodation;
+    public AccommodationViewDTO create(CreateAccommodationDTO accommodationDto) throws Exception {
+        Accommodation accommodation = new Accommodation();
+        accommodation.setTitle(accommodationDto.getTitle());
+        accommodation.setDescription(accommodationDto.getDescription());
+        accommodation.setAddress(accommodationDto.getAddress());
+
+        ArrayList<Amenity> amenities = new ArrayList<Amenity>();
+        for(AmenityDTO amenityDTO : accommodationDto.getAmenities()){
+            Amenity amenity = amenityDTO.toAmenity(accommodation);
+            amenities.add(amenity);
+        }
+        accommodation.setAmenities(amenities);
+
+        ArrayList<Image> images = new ArrayList<Image>();
+        for(ImageDTO imageDTO : accommodationDto.getImages()) {
+            Image image = imageDTO.toImage(accommodation);
+            images.add(image);
+        }
+        accommodation.setImages(images);
+
+
+        Availability availability = new Availability();
+        availability.setStartDate(accommodationDto.getStartDate());
+        availability.setEndDate(accommodationDto.getEndDate());
+        availability.setAccommodation(accommodation);
+        ArrayList<Availability> availabilities = new ArrayList<Availability>();
+        availabilities.add(availability);
+        accommodation.setAvailabilities(availabilities);
+
+        Price price = new Price();
+        price.setCost(accommodationDto.getPrice().getCost());
+        price.setFromDate(accommodationDto.getPrice().getFromDate());
+        price.setToDate(accommodationDto.getPrice().getToDate());
+        price.setType(accommodationDto.getPrice().getType());
+        price.setAccommodation(accommodation);
+        ArrayList<Price> prices = new ArrayList<Price>();
+        prices.add(price);
+        accommodation.setPrices(prices);
+
+        repository.save(accommodation);
+
+        AccommodationViewDTO accommodationViewDTO = AccommodationViewDTO.makeFromAccommodation(accommodation);
+        return accommodationViewDTO;
     }
 
     @Override
