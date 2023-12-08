@@ -33,6 +33,7 @@ public class AccommodationController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccommodationViewDTO> findAccommodation(@PathVariable Long id) throws IOException {
         AccommodationViewDTO accommodation = service.findOne(id);
+        System.out.println(accommodation.toString());
         return new ResponseEntity<>(accommodation, HttpStatus.OK);
     }
 
