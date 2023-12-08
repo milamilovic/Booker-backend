@@ -3,7 +3,7 @@ package booker.BookingApp.controller.users;
 
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
-import booker.BookingApp.model.users.Owner;
+import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.service.implementation.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,13 +56,18 @@ public class OwnerController {
     }
 
     @PutMapping(consumes = "application/json")
-    public ResponseEntity<OwnerDTO> update(@RequestBody OwnerDTO owner) throws Exception {
-        OwnerDTO ownerDTO = ownerService.getOwnerById(owner.getId());
-        if (ownerDTO == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<OwnerDTO> update(@RequestBody UpdateUserDTO updateUserDTO) {
+        try{
+            OwnerDTO existingOwner = ownerService.getOwnerById(updateUserDTO.getId());
+            if(existingOwner == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            OwnerDTO updatedOwner = ownerService.update(existingOwner, updateUserDTO);
+            return new ResponseEntity<>(updatedOwner, HttpStatus.OK);
+        }catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        OwnerDTO updatedOwner = ownerService.update(owner);
-        return new ResponseEntity<>(updatedOwner, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{ownerId}")
