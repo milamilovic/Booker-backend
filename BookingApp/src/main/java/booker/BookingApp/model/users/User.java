@@ -2,11 +2,14 @@ package booker.BookingApp.model.users;
 
 
 import booker.BookingApp.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "USERS")
+@ToString(exclude = {"profilePicture"})
 public @Data class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +32,7 @@ public @Data class User {
     @Column(name = "role", nullable = false)
     private Role role;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private ProfilePicture profilePicture;
 
 

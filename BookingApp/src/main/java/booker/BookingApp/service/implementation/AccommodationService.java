@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccommodationService implements IAccommodationService {
@@ -37,75 +38,9 @@ public class AccommodationService implements IAccommodationService {
 
     @Override
     public AccommodationViewDTO findOne(Long id) throws IOException {
-        ArrayList<Image> images = new ArrayList<>();
-        images.add(new Image(1L, "../../assets/images/kitchen-2165756_640.jpg", new Accommodation()));
-        images.add(new Image(1L, "../../assets/images/living-room.jpg", new Accommodation()));
-        images.add(new Image(1L, "../../assets/images/kitchen-2165756_640.jpg", new Accommodation()));
-        images.add(new Image(1L, "../../assets/images/living-room.jpg", new Accommodation()));
-        images.add(new Image(1L, "../../assets/images/kitchen-2165756_640.jpg", new Accommodation()));
-        images.add(new Image(1L, "../../assets/images/kitchen-2165756_640.jpg", new Accommodation()));
-        images.add(new Image(1L, "../../assets/images/living-room.jpg", new Accommodation()));
-        //TODO: FIX!!!
-        char[] name = new char[4];
-        name[1] = 'w';
-        name[1] = 'i';
-        name[1] = 'f';
-        name[1] = 'i';
-        ArrayList<Amenity> amenities = new ArrayList<>();
-        amenities.add(new Amenity(1L, "wifi",null, "../../assets/images/icons8-wifi-30.png"));
-        amenities.add(new Amenity(2L, "good place", null, "../../assets/images/icons8-location-32.png"));
-        amenities.add(new Amenity(3L, "AC", null,"../../assets/images/icons8-ac-30.png"));
-        amenities.add(new Amenity(4L, "free cancellation", null, "../../assets/images/icons8-calendar-32.png"));
-//        amenities.add(new Amenity(2L, "good place", ImageIO.read(new File("src/main/resources/london_image.jpg"))));
-//        amenities.add(new Amenity(3L, "AC", ImageIO.read(new File("src/main/resources/madrid_image.jpg"))));
-//        amenities.add(new Amenity(4L, "parking spot", ImageIO.read(new File("src/main/resources/paris_image.jpg"))));
-        ArrayList<Availability> availabilities = new ArrayList<>();
-        availabilities.add(new Availability(1L, new Date(), new Date(), new Accommodation()));
-        availabilities.add(new Availability(2L, new Date(), new Date(), new Accommodation()));
-        availabilities.add(new Availability(3L, new Date(), new Date(), new Accommodation()));
-        availabilities.add(new Availability(4L, new Date(), new Date(), new Accommodation()));
-        ArrayList<Price> prices = new ArrayList<>();
-        prices.add(new Price());
-        prices.add(new Price());
-        prices.add(new Price());
-        prices.add(new Price());
-        ArrayList<AccommodationRating> ratings = new ArrayList<>();
-        ratings.add(new AccommodationRating());
-        ratings.add(new AccommodationRating());
-        ratings.add(new AccommodationRating());
-        ratings.add(new AccommodationRating());
-        ArrayList<AccommodationComment> comments = new ArrayList<>();
-        comments.add(new AccommodationComment());
-        comments.add(new AccommodationComment());
-        comments.add(new AccommodationComment());
-        comments.add(new AccommodationComment());
-        String description = "The units come with parquet floors and feature a fully equipped\n" +
-                "        kitchen with a microwave, a dining area, a flat-screen TV with\n" +
-                "        streaming services, and a private bathroom with walk-in shower and a\n" +
-                "        hair dryer. A toaster, a fridge and stovetop are also available, as\n" +
-                "        well as a coffee machine and a kettle.\n" +
-                "        The units come with parquet floors and feature a fully equipped\n" +
-                "        kitchen with a microwave, a dining area, a flat-screen TV with\n" +
-                "        streaming services, and a private bathroom with walk-in shower and a\n" +
-                "        hair dryer. A toaster, a fridge and stovetop are also available, as\n" +
-                "        well as a coffee machine and a kettle.\n" +
-                "        \n" +
-                "        Eventim Apollo is 2.4 km from the apartment, while South Kensington\n" +
-                "        Underground Station is 3 km from the property. The nearest airport\n" +
-                "        is London Heathrow Airport, 21 km from Central London Luxury Studios\n" +
-                "        Fulham Close to Underground Newly Refurbished.\n" +
-                "        The units come with parquet floors and feature a fully equipped\n" +
-                "        kitchen with a microwave, a dining area, a flat-screen TV with\n" +
-                "        streaming services, and a private bathroom with walk-in shower and a\n" +
-                "        hair dryer. A toaster, a fridge and stovetop are also available, as\n" +
-                "        well as a coffee machine and a kettle.The units come with parquet floors and feature a fully equipped\n" +
-                "        kitchen with a microwave, a dining area, a flat-screen TV with\n" +
-                "        streaming services, and a private bathroom with walk-in shower and a\n" +
-                "        hair dryer. A toaster, a fridge and stovetop are also available, as\n" +
-                "        well as a coffee machine and a kettle.";
-        //TODO: images
-        AccommodationViewDTO accommodation = new AccommodationViewDTO(id, "Example accommodation", description, "Example address 12bb", amenities, images, availabilities, prices, ratings, comments);
-        return accommodation;
+        Optional<Accommodation> accommodation = repository.findById(id);
+        if(accommodation.isEmpty()) {return null;}
+        return AccommodationViewDTO.makeFromAccommodation(accommodation.get());
     }
 
     @Override

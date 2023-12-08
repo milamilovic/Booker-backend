@@ -1,10 +1,12 @@
 package booker.BookingApp.model.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity
+@Entity @JsonIgnoreProperties(value= {"user"})
 public @Data @AllArgsConstructor class ProfilePicture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
