@@ -1,6 +1,7 @@
 package booker.BookingApp.dto.accommodation;
 
 import booker.BookingApp.model.accommodation.Accommodation;
+import booker.BookingApp.model.accommodation.Address;
 import booker.BookingApp.model.accommodation.Image;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,7 @@ class FavouriteAccommodationDTO {
     Image image;
     Double avgPrice;
     float avgRating;
-    String address;
+    Address address;
 
     public static FavouriteAccommodationDTO makeFromAccommodation(Accommodation accommodation) {
 

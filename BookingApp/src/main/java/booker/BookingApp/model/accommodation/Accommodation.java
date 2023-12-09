@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-@Entity @ToString(exclude = {"amenities", "images", "availabilities", "prices", "ratings", "comments"})
+@Entity @ToString(exclude = {"amenities", "images", "availabilities", "prices", "ratings", "comments", "address"})
 public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,8 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private String description;
     @Column(name = "short_description")
     private String shortDescription;
-    @Column(name = "address", nullable = false)
-    private String address;
+    @Column(name = "owner_id", nullable = false)
+    private Long owner_id;
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.EAGER)
     @Column(name = "amenities", nullable = false)
     @JsonIgnore
@@ -36,6 +36,9 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     @Column(name = "availabilities", nullable = false)
     @JsonIgnore
     private List<Availability> availabilities;
+    @OneToOne(mappedBy = "accommodation", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Address address;
 
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
@@ -48,8 +51,10 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private List<AccommodationComment> comments;
     @Column(name = "deadline")
     private int deadline;
-    @Column(name = "people", nullable = false)
-    private int people;
+    @Column(name = "min_capacity", nullable = false)
+    private int min_capacity;
+    @Column(name = "max_capacity", nullable = false)
+    private int max_capacity;
 
 
 }

@@ -12,19 +12,21 @@ public @Data @AllArgsConstructor @NoArgsConstructor class AccommodationViewDTO {
     private Long id;
     private String title;
     private String description;
-    private String address;
+    private Address address;
     private List<Amenity> amenities;
     private List<Image> images;
     private List<Availability> availabilities;
     private List<Price> prices;
     private List<AccommodationRating> ratings;
     private List<AccommodationComment> comments;
+    private Long owner_id;
 
     public static AccommodationViewDTO makeFromAccommodation(Accommodation accommodation) {
         return new AccommodationViewDTO(accommodation.getId(),
                 accommodation.getTitle(), accommodation.getDescription(),
                 accommodation.getAddress(), accommodation.getAmenities(),
                 accommodation.getImages(), accommodation.getAvailabilities(),
-                accommodation.getPrices(), accommodation.getRatings(),accommodation.getComments());
+                accommodation.getPrices(), accommodation.getRatings(),
+                accommodation.getComments(), accommodation.getOwner_id());
     }
 }
