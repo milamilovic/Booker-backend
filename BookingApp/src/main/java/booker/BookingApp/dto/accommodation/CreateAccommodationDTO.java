@@ -3,6 +3,7 @@ package booker.BookingApp.dto.accommodation;
 import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.Accommodation;
+import booker.BookingApp.model.accommodation.Address;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ public @Data class CreateAccommodationDTO {
     private Long id;
     private String title;
     private String description;
-    private String address;
+    private Address address;
     private List<AmenityDTO> amenities;
     private List<ImageDTO> images;
     private AccommodationType type;

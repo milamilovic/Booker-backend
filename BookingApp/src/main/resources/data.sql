@@ -3,21 +3,21 @@ insert into users (name, surname, email, password, address, phone, role) values 
 insert into users (name, surname, email, password, address, phone, role) values ('Adam', 'Adamović', 'email3', '12345', 'adresa3', '060000002', 0);
 
 -- Inserting data into Accommodation table
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES ('Luxury Villa', 'A luxurious villa with stunning views.', 'Luxury villa with pool', '123 Main Street', 30, 3);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES  ('Cozy Cabin', 'A charming cabin in the woods.', 'Rustic cabin retreat', '456 Forest Avenue', 15, 4);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES  ('City Apartment', 'Modern apartment in the heart of the city.', 'Downtown apartment', '789 Urban Street', 20, 4);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES ('Example apartment 1', 'A luxurious villa with stunning views.', 'Luxury villa with pool', '123 Main Street', 3, 5);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES  ('Example apartment 2', 'A charming cabin in the woods.', 'Rustic cabin retreat', '456 Forest Avenue', 5, 7);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES  ('Example apartment 3', 'Modern apartment in the heart of the city.', 'Downtown apartment', '789 Urban Street', 2, 5);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES ('Hotel enjoy', 'A luxurious villa with stunning views.', 'Luxury villa with pool', '123 Main Street', 1, 2);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES  ('Villa Relaxation', 'A charming cabin in the woods.', 'Rustic cabin retreat', '456 Forest Avenue', 10, 15);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES  ('Flower Apartment', 'Modern apartment in the heart of the city.', 'Downtown apartment', '789 Urban Street', 7, 2);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES ('The prettiest house', 'A luxurious villa with stunning views.', 'Luxury villa with pool', '123 Main Street', 14, 3);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES  ('Charming Room', 'A charming cabin in the woods.', 'Rustic cabin retreat', '456 Forest Avenue', 3, 2);
-INSERT INTO Accommodation (title, description, short_description, address, deadline, people) VALUES  ('Lovely villa', 'Modern apartment in the heart of the city.', 'Downtown apartment', '789 Urban Street', 10, 6);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES  ('Cozy Cabin', 'A charming cabin in the woods.', 'Rustic cabin retreat', 15, 1, 4, 2);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES ('Luxury Villa', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 30, 1, 3, 1);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES  ('City Apartment', 'Modern apartment in the heart of the city.', 'Downtown apartment', 20, 1, 4, 3);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES ('Example apartment 1', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 3, 1, 5, 2);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES  ('Example apartment 2', 'A charming cabin in the woods.', 'Rustic cabin retreat', 5, 3, 7, 1);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES  ('Example apartment 3', 'Modern apartment in the heart of the city.', 'Downtown apartment', 2, 1, 5, 1);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES ('Hotel enjoy', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 1, 1, 2, 3);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES  ('Villa Relaxation', 'A charming cabin in the woods.', 'Rustic cabin retreat', 10, 5, 15, 2);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES  ('Flower Apartment', 'Modern apartment in the heart of the city.', 'Downtown apartment', 7, 1, 2, 3);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES ('The prettiest house', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 14, 1, 3, 1);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES  ('Charming Room', 'A charming cabin in the woods.', 'Rustic cabin retreat', 3, 1, 2, 2);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES  ('Lovely villa', 'Modern apartment in the heart of the city.', 'Downtown apartment', 10, 2, 6, 3);
 
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 1
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 1
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('wifi', 1, '../../../assets/images/icons8-wifi-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -31,8 +31,9 @@ INSERT INTO Image(accommodation_id, path) VALUES (1, '../../assets/images/kitche
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2023-10-03', '2023-01-10', 1);
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2023-02-15', '2023-02-28', 1);
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2023-03-20', '2023-04-05', 1);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('London', '456 Forest Avenue', 22.15, 32.15, 1);
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 2
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 2
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('free cancellation', 2, '../../../assets/images/icons8-calendar-32.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -42,9 +43,10 @@ INSERT INTO Image(accommodation_id, path) VALUES (2, '../../assets/images/living
 INSERT INTO Image(accommodation_id, path) VALUES (2, '../../assets/images/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2023-01-01', '2023-01-10', 2), ('2023-02-15', '2023-02-28', 2),('2023-03-20', '2023-04-05', 2);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('New York', '123 Main Street', 17.36, 71.18, 2);
 
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 3
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 3
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 3,'../../../assets/images/icons8-ac-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -55,8 +57,9 @@ INSERT INTO Image(accommodation_id, path) VALUES (3, '../../assets/images/living
 INSERT INTO Image(accommodation_id, path) VALUES (3, '../../assets/images/living-room.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2023-05-01', '2023-05-10', 3),('2023-06-15', '2023-06-28', 3),('2023-07-20', '2023-08-05', 3);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Belgrade', '123 Main Street', 52.21, 21.38, 3);
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 4
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 4
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('good location', 4, '../../../assets/images/icons8-location-32.png');
 INSERT INTO Image(accommodation_id, path) VALUES (4, '../../assets/images/kitchen-2165756_640.jpg');
@@ -65,8 +68,9 @@ INSERT INTO Image(accommodation_id, path) VALUES (4, '../../assets/images/living
 INSERT INTO Image(accommodation_id, path) VALUES (4, '../../assets/images/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2023-09-01', '2023-09-10', 4),('2023-10-15', '2023-10-28', 4),('2023-11-20', '2023-12-05', 4);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Budapest', '123 Sziostok Street', 17.36, 71.18, 4);
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 5
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 5
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 5,'../../../assets/images/icons8-ac-30.png');
 INSERT INTO Image(accommodation_id, path) VALUES (5, '../../assets/images/living-room.jpg');
@@ -75,8 +79,9 @@ INSERT INTO Image(accommodation_id, path) VALUES (5, '../../assets/images/kitche
 INSERT INTO Image(accommodation_id, path) VALUES (5, '../../assets/images/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2023-01-01', '2023-01-10', 5),('2023-02-15', '2023-02-28', 5),('2023-03-20', '2023-04-05', 5);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Madrid', '123 Example Address', 36.36, 52.18, 5);
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 6
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 6
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 6,'../../../assets/images/icons8-ac-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -87,8 +92,9 @@ INSERT INTO Image(accommodation_id, path) VALUES (6, '../../assets/images/living
 INSERT INTO Image(accommodation_id, path) VALUES (6, '../../assets/images/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2023-05-01', '2023-05-10', 6),('2023-06-15', '2023-06-28', 6),('2023-07-20', '2023-08-05', 6);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Copehnagen', '123 My Address', 55.18, 42.00, 6);
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 7
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 7
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('wifi', 7, '../../../assets/images/icons8-wifi-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -103,8 +109,9 @@ INSERT INTO Image(accommodation_id, path) VALUES (7, '../../assets/images/living
 INSERT INTO Image(accommodation_id, path) VALUES (7, '../../assets/images/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2023-09-01', '2023-09-10', 7),('2023-10-15', '2023-10-28', 7),('2023-11-20', '2023-12-05', 7);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Madrid', '123 Lovely Street', 5.17, 2.18, 7);
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 8
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 8
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('good location', 8, '../../../assets/images/icons8-location-32.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -117,8 +124,9 @@ INSERT INTO Image(accommodation_id, path) VALUES (8, '../../assets/images/kitche
 INSERT INTO Image(accommodation_id, path) VALUES (8, '../../assets/images/living-room.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-01-01', '2024-01-10', 8),('2024-02-15', '2024-02-28', 8),('2024-03-20', '2024-04-05', 8);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Lisbon', '123 Main Adress', 37.36, 10.18, 8);
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 9
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 9
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('good location', 9, '../../../assets/images/icons8-location-32.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -127,8 +135,9 @@ INSERT INTO Image(accommodation_id, path) VALUES (9, '../../assets/images/kitche
 INSERT INTO Image(accommodation_id, path) VALUES (9, '../../assets/images/living-room.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-05-01', '2024-05-10', 9),('2024-06-15', '2024-06-28', 9),('2024-07-20', '2024-08-05', 9);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Peking', '123 China street', 10.36, 7.77, 9);
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 10
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 10
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 10,'../../../assets/images/icons8-ac-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -139,9 +148,10 @@ INSERT INTO Image(accommodation_id, path) VALUES (10, '../../assets/images/kitch
 INSERT INTO Image(accommodation_id, path) VALUES (10, '../../assets/images/living-room.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-09-01', '2024-09-10', 10),('2024-10-15', '2024-10-28', 10),('2024-11-20', '2024-12-05', 10);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('New York', '123 Amazing Avenue', 57.36, 51.18, 10);
 
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 11
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 11
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('wifi', 11, '../../../assets/images/icons8-wifi-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -152,8 +162,9 @@ INSERT INTO Image(accommodation_id, path) VALUES (11, '../../assets/images/livin
 INSERT INTO Image(accommodation_id, path) VALUES (11, '../../assets/images/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2025-01-01', '2025-01-10', 11),('2025-02-15', '2025-02-28', 11),('2025-03-20', '2025-04-05', 11);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('New Jersey', '123 Fantastic Park', 17.36, 1.18, 11);
 
--- Insert data into Amenity, Image and Availability tables for Accommodation 12
+-- Insert data into Amenity, Image, Availability and Address tables for Accommodation 12
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('wifi', 12, '../../../assets/images/icons8-wifi-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -162,6 +173,7 @@ INSERT INTO Image(accommodation_id, path) VALUES (12, '../../assets/images/livin
 INSERT INTO Image(accommodation_id, path) VALUES (12, '../../assets/images/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2025-05-01', '2025-05-10', 12),('2025-06-15', '2025-06-28', 12), ('2025-07-20', '2025-08-05', 12);
+INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Brazil', '456 Festival Boulevard', 23.15, 6.18, 12);
 
 INSERT INTO Accommodation_Comment (accommodation_id, guest_id, content, date, reported) VALUES (1, 2, 'Great!', '2023-10-01', false);
 -- Inserting additional data into AccommodationComment table

@@ -126,9 +126,9 @@ public class AccommodationService implements IAccommodationService {
         Image image1 = new Image(1L, "src/main/resources/lisbon_image.jpg", new Accommodation());
         Image image2 = new Image(2L, "src/main/resources/london_image.jpg", new Accommodation());
         Image image3 = new Image(3L, "src/main/resources/madrid_image.jpg", new Accommodation());
-        FavouriteAccommodationDTO accommodation1 = new FavouriteAccommodationDTO(1L, "Example accommodation 1", "Description 1", image1, 80.00, 4,"Example address 1");
-        FavouriteAccommodationDTO accommodation2 = new FavouriteAccommodationDTO(2L, "Example accommodation 2", "Description 2", image2, 100.00, 5,"Example address 2");
-        FavouriteAccommodationDTO accommodation3 = new FavouriteAccommodationDTO(3L, "Example accommodation 3", "Description 3", image3, 85.50, 3.2F,"Example address 3");
+        FavouriteAccommodationDTO accommodation1 = new FavouriteAccommodationDTO(1L, "Example accommodation 1", "Description 1", image1, 80.00, 4,new Address());
+        FavouriteAccommodationDTO accommodation2 = new FavouriteAccommodationDTO(2L, "Example accommodation 2", "Description 2", image2, 100.00, 5,new Address());
+        FavouriteAccommodationDTO accommodation3 = new FavouriteAccommodationDTO(3L, "Example accommodation 3", "Description 3", image3, 85.50, 3.2F,new Address());
         ArrayList<FavouriteAccommodationDTO> accommodations = new ArrayList<>();
         accommodations.add(accommodation1);
         accommodations.add(accommodation2);
