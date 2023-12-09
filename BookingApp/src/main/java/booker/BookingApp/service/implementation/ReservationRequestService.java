@@ -3,7 +3,10 @@ package booker.BookingApp.service.implementation;
 import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.enums.ReservationRequestStatus;
 import booker.BookingApp.model.accommodation.Filter;
+import booker.BookingApp.model.requestsAndReservations.ReservationRequest;
+import booker.BookingApp.repository.ReservationRequestRepository;
 import booker.BookingApp.service.interfaces.IReservationRequestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,9 +14,16 @@ import java.util.Date;
 
 @Service
 public class ReservationRequestService implements IReservationRequestService {
+    @Autowired
+    ReservationRequestRepository repository;
+
     @Override
-    public ReservationRequestDTO create(ReservationRequestDTO request) {
-        return request;
+    public ReservationRequestDTO create(ReservationRequestDTO requestDto) {
+        ReservationRequest request = new ReservationRequest(-1L, requestDto.getGuestId(), requestDto.getAccommodationId(),
+                requestDto.getFromDate(), requestDto.getToDate(), requestDto.getNumberOfGuests(),
+                requestDto.getStatus(), requestDto.isDeleted(), requestDto.getPrice());
+        this.repository.save(request);
+        return ReservationRequestDTO.makeFromRequest(request);
     }
 
     @Override

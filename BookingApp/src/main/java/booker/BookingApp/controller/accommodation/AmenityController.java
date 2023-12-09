@@ -23,7 +23,7 @@ public class AmenityController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AmenityDTO> insert(@RequestBody AmenityDTO amenity) throws Exception {
         AmenityDTO dto = service.create(amenity);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
     //get amenities of accommodation
