@@ -1,6 +1,7 @@
-insert into users (name, surname, email, password, address, phone, role) values ('Marko', 'Marković', 'email1', '123', 'adresa1', '060000000', 0);
-insert into users (name, surname, email, password, address, phone, role) values ('Petar', 'Petrović', 'email2', '1234', 'adresa2', '060000001', 1);
-insert into users (name, surname, email, password, address, phone, role) values ('Adam', 'Adamović', 'email3', '12345', 'adresa3', '060000002', 0);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Marko', 'Marković', 'email1', '123', 'adresa1', '060000000', 'GUEST', false, false, false, ARRAY[1, 2]);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Petar', 'Petrović', 'email2', '1234', 'adresa2', '060000001', 'OWNER', false, false, false, null);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Adam', 'Adamović', 'email3', '12345', 'adresa3', '060000002', 'GUEST', false, false, false, ARRAY[1, 2]);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Pera', 'Peric', 'pera123@gmail.com', 'aaaaa', 'Adresa 123', '3210087', 'GUEST', false, false, false, ARRAY[1, 2]);
 
 -- Inserting data into Accommodation table
 INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES  ('Cozy Cabin', 'A charming cabin in the woods.', 'Rustic cabin retreat', 15, 1, 4, 2);
