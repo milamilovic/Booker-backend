@@ -3,6 +3,7 @@ package booker.BookingApp.controller.accommodation;
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
 import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
+import booker.BookingApp.dto.accommodation.ImageDTO;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/accommodations")
@@ -23,9 +26,10 @@ public class AccommodationController {
     IAccommodationService service;
 
     //create an accommodation
-    @PostMapping(value ="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AccommodationViewDTO> insert(@RequestBody CreateAccommodationDTO accommodation) throws Exception {
-        AccommodationViewDTO dto = service.create(accommodation);
+    @PostMapping(value ="/add", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AccommodationViewDTO> insert(@RequestPart("accommodation") CreateAccommodationDTO accommodation,
+                                                       @RequestPart("images") List<MultipartFile> imageFiles) throws Exception {
+        AccommodationViewDTO dto = service.create(accommodation, imageFiles);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -112,4 +116,6 @@ public class AccommodationController {
         service.update(updatedAccommodation);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
 }

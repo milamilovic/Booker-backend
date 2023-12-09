@@ -3,13 +3,15 @@ package booker.BookingApp.service.implementation;
 import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.repository.AccommodationRepository;
+import booker.BookingApp.repository.ImageRepository;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import jakarta.transaction.Transactional;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,11 +22,16 @@ import java.util.Optional;
 @Service
 public class AccommodationService implements IAccommodationService {
 
+    private static final String UPLOAD_DIR = "../../../images/accommodation_images/";
+
     @Autowired
     AccommodationRepository repository;
 
     @Autowired
     AvailabilityService availabilityService;
+
+    @Autowired
+    ImageRepository imageRepository;
 
     @Override @Transactional
     public ArrayList<AccommodationListingDTO> findAll() throws IOException {
@@ -44,7 +51,7 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public AccommodationViewDTO create(CreateAccommodationDTO accommodationDto) throws Exception {
+    public AccommodationViewDTO create(CreateAccommodationDTO accommodationDto, List<MultipartFile> imagesFiles) throws Exception {
         Accommodation accommodation = new Accommodation();
         accommodation.setTitle(accommodationDto.getTitle());
         accommodation.setDescription(accommodationDto.getDescription());
@@ -57,12 +64,14 @@ public class AccommodationService implements IAccommodationService {
         }
         accommodation.setAmenities(amenities);
 
-        ArrayList<Image> images = new ArrayList<Image>();
-        for(ImageDTO imageDTO : accommodationDto.getImages()) {
-            Image image = imageDTO.toImage(accommodation);
-            images.add(image);
-        }
-        accommodation.setImages(images);
+//        ArrayList<Image> images = new ArrayList<Image>();
+//        for(ImageDTO imageDTO : accommodationDto.getImages()) {
+//            Image image = imageDTO.toImage(accommodation);
+//            images.add(image);
+//        }
+//        accommodation.setImages(images);
+
+
 
 
         Availability availability = new Availability();
@@ -84,6 +93,10 @@ public class AccommodationService implements IAccommodationService {
         accommodation.setPrices(prices);
 
         repository.save(accommodation);
+
+        ArrayList<Image> images = new ArrayList<Image>();
+        handleImageUpload(imagesFiles, accommodation);
+        accommodation.setImages(images);
 
         AccommodationViewDTO accommodationViewDTO = AccommodationViewDTO.makeFromAccommodation(accommodation);
         return accommodationViewDTO;
@@ -169,4 +182,27 @@ public class AccommodationService implements IAccommodationService {
     public ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter) {
         return findOwnersActiveAccommodations(2L);
     }
+
+    @Override
+    public ArrayList<Image> handleImageUpload(List<MultipartFile> imageFiles, Accommodation accommodation) throws IOException {
+        ArrayList<Image> images = new ArrayList<>();
+
+        for (MultipartFile imageFile : imageFiles) {
+            String fileName = System.currentTimeMillis() + "-" + imageFile.getOriginalFilename();
+            Path imagePath = Paths.get(UPLOAD_DIR + fileName);
+
+            Files.copy(imageFile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
+
+            ImageDTO imageDTO = new ImageDTO();
+            imageDTO.setPath(fileName);
+
+
+            Image image = imageDTO.toImage(accommodation);
+
+            imageRepository.save(image);
+            images.add(image);
+        }
+        return images;
+    }
+
 }
