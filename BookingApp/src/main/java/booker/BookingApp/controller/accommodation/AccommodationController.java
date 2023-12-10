@@ -83,15 +83,12 @@ public class AccommodationController {
                                                                                             @PathVariable int people,
                                                                                             @RequestBody ArrayList<Filter> filters)
     {
-        System.out.println("searching with filters");
         ArrayList<AccommodationListingDTO> accommodations = service.search(startDate, endDate, location, people);
         //TODO: make actual filter methods that service.applyFilter redirects to!!!
         System.out.println(filters.size());
         for(Filter filter : filters) {
-            System.out.println(filter.getName());
             accommodations = service.applyFilters(accommodations, filter);
         }
-        System.out.println(filters.size());
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 

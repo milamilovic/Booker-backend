@@ -168,6 +168,6 @@ public class AccommodationService implements IAccommodationService {
     @Override
     public ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter) {
         System.out.println(filter.getName() + "   ->   inside filtering service");
-        return findOwnersActiveAccommodations(2L);
+        return accommodations;
     }
 }

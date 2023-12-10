@@ -4,7 +4,9 @@ import booker.BookingApp.dto.accommodation.AmenityDTO;
 import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.accommodation.Amenity;
 import booker.BookingApp.model.accommodation.Image;
+import booker.BookingApp.repository.AmenityRepository;
 import booker.BookingApp.service.interfaces.IAmenityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -16,14 +18,17 @@ import java.lang.Long;
 
 @Service
 public class AmenityService implements IAmenityService {
+    @Autowired
+    AmenityRepository repository;
+
     @Override
     public ArrayList<AmenityDTO> findAllAmenitiesForAccommodation(Long accommodationId) throws IOException {
-        ArrayList<AmenityDTO> amenities = new ArrayList<>();
-        amenities.add(new AmenityDTO(1L, "wifi", "../../../assets/images/icons8-wifi-30.png"));
-        amenities.add(new AmenityDTO(2L, "good place", "../../../assets/images/icons8-location-32.png"));
-        amenities.add(new AmenityDTO(3L, "AC", "../../../assets/images/icons8-ac-30.png"));
-        amenities.add(new AmenityDTO(4L, "free cancellation", "../../../assets/images/icons8-calendar-32.png"));
-        return amenities;
+        ArrayList<Amenity> amenities = (ArrayList<Amenity>) repository.getAmenitiesByAccommodation_Id(accommodationId);
+        ArrayList<AmenityDTO> dtos = new ArrayList<>();
+        for(Amenity a: amenities) {
+            dtos.add(AmenityDTO.makeFromAmenity(a));
+        }
+        return dtos;
     }
 
     @Override
@@ -43,11 +48,16 @@ public class AmenityService implements IAmenityService {
 
     @Override
     public ArrayList<AmenityDTO> findAll() throws IOException {
-        return findAllAmenitiesForAccommodation(1L);
+        ArrayList<Amenity> amenities = (ArrayList<Amenity>) repository.findAllDistinct();
+        ArrayList<AmenityDTO> dtos = new ArrayList<>();
+        for(Amenity a: amenities) {
+            dtos.add(AmenityDTO.makeFromAmenity(a));
+        }
+        return dtos;
     }
 
     @Override
     public ArrayList<String> getAllNames() {
-        return new ArrayList<>(Arrays.asList("wi-fi", "ac", "coffee machine"));
+        return (ArrayList<String>) this.repository.getDistinctNames();
     }
 }
