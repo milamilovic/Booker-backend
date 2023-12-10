@@ -60,10 +60,10 @@ public class GuestController {
         return new ResponseEntity<>(guestDTO, HttpStatus.OK);
     }
 
-    @PutMapping(consumes = "application/json")
-    public ResponseEntity<GuestDTO> update(@RequestBody UpdateUserDTO updateUserDTO) {
+    @PutMapping(value = "/{guestId}")
+    public ResponseEntity<GuestDTO> update(@PathVariable("guestId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         try{
-            GuestDTO existingGuest = guestService.getGuestById(updateUserDTO.getId());
+            GuestDTO existingGuest = guestService.getGuestById(id);
             if (existingGuest == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

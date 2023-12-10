@@ -4,10 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 
@@ -16,6 +13,7 @@ import java.util.ArrayList;
 @ToString
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @DiscriminatorValue("GUEST")
 public class Guest extends User {
@@ -27,4 +25,8 @@ public class Guest extends User {
     private boolean deleted;
     @Column(name = "favourite_accommodations")
     private ArrayList<Long> favouriteAccommodations;
+
+    public void setProfilePicturePath(String path){
+        this.getProfilePicture().setPath(path);
+    }
 }

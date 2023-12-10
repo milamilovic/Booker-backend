@@ -227,7 +227,11 @@ INSERT INTO Price(accommodation_id, cost, from_date, to_date, type) VALUES (2, 9
 INSERT INTO Profile_Picture (path, user_id)
 VALUES
     ('../../../images/profile1.png', 1),
-    ('../../../images/profile2.jpg', 2);
+    ('../../../images/profile2.jpg', 2),
+    ('../../../images/profile_pic.jpg', 3),
+    ('../../../images/profile1.jpg', 4),
+    ('../../../images/profile_pic.jpg', 5);
+
 
 
 
