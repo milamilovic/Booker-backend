@@ -2,6 +2,7 @@ insert into users (name, surname, email, password, address, phone, role, reporte
 insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Petar', 'Petrović', 'email2', '1234', 'adresa2', '060000001', 'OWNER', false, false, false, null);
 insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Adam', 'Adamović', 'email3', '12345', 'adresa3', '060000002', 'GUEST', false, false, false, ARRAY[1, 2]);
 insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Pera', 'Peric', 'pera123@gmail.com', 'aaaaa', 'Adresa 123', '3210087', 'GUEST', false, false, false, ARRAY[1, 2]);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Admin', 'Admin', 'admin123@gmail.com', 'bbbb', 'Adresa admin', '3210087', 'ADMIN', null, null, null, null);
 
 -- Inserting data into Accommodation table
 INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id) VALUES  ('Cozy Cabin', 'A charming cabin in the woods.', 'Rustic cabin retreat', 15, 1, 4, 2);
