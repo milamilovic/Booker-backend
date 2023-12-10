@@ -68,25 +68,30 @@ public class AccommodationController {
                                                                                    @PathVariable String location,
                                                                                    @PathVariable int people)
     {
+        System.out.println("searching without filters");
         ArrayList<AccommodationListingDTO> accommodations = service.search(startDate, endDate, location, people);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
     //   searching accommodations with filters, path looks like
-    //   /api/accommodations/search?startDate=12.12.2023.&endDate=15.12.2023.&location=Paris&people=2
+    //   /api/accommodations/search/12.12.2023./15.12.2023./Paris/2
     //   and request body contains json with filter array
-    @GetMapping(value = "/search/{startDate}/{endDate}/{location}/{people}/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/search/{startDate}/{endDate}/{location}/{people}/filter", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> searchAndFilterAccommodations(@PathVariable String startDate,
                                                                                             @PathVariable String endDate,
                                                                                             @PathVariable String location,
                                                                                             @PathVariable int people,
                                                                                             @RequestBody ArrayList<Filter> filters)
     {
+        System.out.println("searching with filters");
         ArrayList<AccommodationListingDTO> accommodations = service.search(startDate, endDate, location, people);
         //TODO: make actual filter methods that service.applyFilter redirects to!!!
+        System.out.println(filters.size());
         for(Filter filter : filters) {
+            System.out.println(filter.getName());
             accommodations = service.applyFilters(accommodations, filter);
         }
+        System.out.println(filters.size());
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
