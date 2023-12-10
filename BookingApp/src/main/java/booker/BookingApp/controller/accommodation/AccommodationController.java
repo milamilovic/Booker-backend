@@ -3,6 +3,7 @@ package booker.BookingApp.controller.accommodation;
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
 import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
+import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api/accommodations")
@@ -81,14 +83,32 @@ public class AccommodationController {
                                                                                             @PathVariable String endDate,
                                                                                             @PathVariable String location,
                                                                                             @PathVariable int people,
-                                                                                            @RequestBody ArrayList<Filter> filters)
-    {
+                                                                                            @RequestBody ArrayList<Filter> filters) throws IOException {
         ArrayList<AccommodationListingDTO> accommodations = service.search(startDate, endDate, location, people);
-        //TODO: make actual filter methods that service.applyFilter redirects to!!!
         System.out.println(filters.size());
+        ArrayList<String> types = new ArrayList<>(Arrays.asList("room", "hotel", "villa", "studio"));
+        ArrayList<AccommodationType> adequateTypes = new ArrayList<>();
         for(Filter filter : filters) {
-            accommodations = service.applyFilters(accommodations, filter);
+            if(!types.contains(filter.getName())) {
+                accommodations = service.applyFilters(accommodations, filter);
+            } else {
+                //else it's filtering by accommodation type
+                //it's different because we're not excluding an accommodation if it's not that because
+                //if it's not a room it doesn't mean it's not a hotel
+                if(filter.getName().equals("room")) {
+                    adequateTypes.add(AccommodationType.ROOM);
+                } else if(filter.getName().equals("hotel")) {
+                    adequateTypes.add(AccommodationType.HOTEL);
+                } else if(filter.getName().equals("studio")) {
+                    adequateTypes.add(AccommodationType.STUDIO);
+                } else if(filter.getName().equals("villa")) {
+                    adequateTypes.add(AccommodationType.VILLA);
+                }
+            }
         }
+        //now, we filter by accommodation type
+        //we know that not all are needed - we wouldn't have this type of filter than (thanks to frontend)
+        accommodations = service.filterTypes(accommodations, adequateTypes);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
