@@ -4,6 +4,7 @@ import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
 import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
 import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
+import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.model.accommodation.Filter;
 
 import java.io.IOException;
@@ -33,5 +34,7 @@ public interface IAccommodationService {
 
     ArrayList<AccommodationListingDTO> findAllOwnersAccommodations(Long ownerId);
 
-    ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter);
+    ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter) throws IOException;
+
+    ArrayList<AccommodationListingDTO> filterTypes(ArrayList<AccommodationListingDTO> accommodations, ArrayList<AccommodationType> adequateTypes);
 }

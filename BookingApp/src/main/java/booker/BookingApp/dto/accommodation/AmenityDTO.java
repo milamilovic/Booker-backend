@@ -20,6 +20,10 @@ public @Data class AmenityDTO {
         this.image_path = image;
     }
 
+    public static AmenityDTO makeFromAmenity(Amenity amenity) {
+        return new AmenityDTO(amenity.getId(), amenity.getName(), amenity.getImage_path());
+    }
+
     public Amenity toAmenity(Accommodation accommodation){
         Amenity amenity = new Amenity();
         amenity.setName(name);
