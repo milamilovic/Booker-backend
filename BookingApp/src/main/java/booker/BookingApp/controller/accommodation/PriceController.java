@@ -11,11 +11,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/prices")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PriceController {
     @Autowired
     private PriceService priceService;
@@ -130,5 +134,22 @@ public class PriceController {
         return new ResponseEntity<>(pricesDTOS, HttpStatus.OK);
     }
 
-
+    @GetMapping(value = "/{accId}/{fromDate}/{toDate}/{people}")
+    public ResponseEntity<Double> getPriceForDateRange(@PathVariable Long accId, @PathVariable String fromDate, @PathVariable String toDate, @PathVariable int people) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date start;
+        Date end;
+        try {
+            start = dateFormat.parse(fromDate);
+            end = dateFormat.parse(toDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        double cost = priceService.findUnitPriceForDateRange(accId, start, end);
+        if(priceService.getAccommodationPriceType(accId) == PriceType.PER_GUEST) {
+            //if the price is per gust we multiply the price by number of guests
+            cost *= people;
+        }
+        return new ResponseEntity<>(cost, HttpStatus.OK);
+    }
 }

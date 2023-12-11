@@ -4,6 +4,7 @@ import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
 import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
 import booker.BookingApp.enums.AccommodationType;
+import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/accommodations")
@@ -43,6 +49,9 @@ public class AccommodationController {
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> getAll() throws IOException {
         ArrayList<AccommodationListingDTO> accommodations = service.findAll();
+        for(AccommodationListingDTO a : accommodations) {
+            //TODO: add rating
+        }
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
@@ -72,6 +81,24 @@ public class AccommodationController {
     {
         System.out.println("searching without filters");
         ArrayList<AccommodationListingDTO> accommodations = service.search(startDate, endDate, location, people);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date start;
+        Date end;
+        try {
+            start = dateFormat.parse(startDate);
+            end = dateFormat.parse(endDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        for(AccommodationListingDTO a : accommodations) {
+            //TODO: add rating
+            a.setTotalPrice(service.findPriceForDateRange(a.getId(), start, end, people));
+            Instant day1 = start.toInstant();
+            Instant day2 = end.toInstant();
+            Duration duration = Duration.between(day1, day2);
+            long days = duration.toDays();
+            a.setPricePerDay(service.findUnitPrice(a.getId(), start, end, people)/ days);
+        }
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
@@ -109,6 +136,24 @@ public class AccommodationController {
         //now, we filter by accommodation type
         //we know that not all are needed - we wouldn't have this type of filter than (thanks to frontend)
         accommodations = service.filterTypes(accommodations, adequateTypes);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date start;
+        Date end;
+        try {
+            start = dateFormat.parse(startDate);
+            end = dateFormat.parse(endDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        for(AccommodationListingDTO a : accommodations) {
+            //TODO: add rating
+            a.setTotalPrice(service.findPriceForDateRange(a.getId(), start, end, people));
+            Instant day1 = start.toInstant();
+            Instant day2 = end.toInstant();
+            Duration duration = Duration.between(day1, day2);
+            long days = duration.toDays();
+            a.setPricePerDay(service.findUnitPrice(a.getId(), start, end, people)/ days);
+        }
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
@@ -133,5 +178,11 @@ public class AccommodationController {
     public ResponseEntity<Void> updateAccommodation(@RequestBody AccommodationViewDTO updatedAccommodation) throws Exception {
         service.update(updatedAccommodation);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping(value = "/priceType/{id}")
+    public ResponseEntity<PriceType> getAccommodationPriceType(@PathVariable Long id) {
+        PriceType type = service.getAccommodationPriceType(id);
+        return new ResponseEntity<>(type, HttpStatus.OK);
     }
 }

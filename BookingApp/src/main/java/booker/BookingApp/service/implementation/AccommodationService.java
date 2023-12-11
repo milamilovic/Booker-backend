@@ -2,11 +2,11 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.enums.AccommodationType;
+import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.repository.AccommodationRepository;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import jakarta.transaction.Transactional;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +26,9 @@ public class AccommodationService implements IAccommodationService {
 
     @Autowired
     AmenityService amenityService;
+
+    @Autowired
+    PriceService priceService;
 
     @Override @Transactional
     public ArrayList<AccommodationListingDTO> findAll() throws IOException {
@@ -224,5 +227,26 @@ public class AccommodationService implements IAccommodationService {
             }
         }
         return accommodations;
+    }
+
+    @Override
+    public double findPriceForDateRange(Long id, Date startDate, Date endDate, int numOfGuests) {
+        double cost = priceService.findUnitPriceForDateRange(id, startDate, endDate);
+        if(priceService.getAccommodationPriceType(id) == PriceType.PER_GUEST) {
+            //if the price is per gust we multiply the price by number of guests
+            cost *= numOfGuests;
+        }
+        return cost;
+    }
+
+    @Override
+    public double findUnitPrice(Long id, Date startDate, Date endDate, int numOfGuests) {
+        double cost = priceService.findUnitPriceForDateRange(id, startDate, endDate);
+        return cost;
+    }
+
+    @Override
+    public PriceType getAccommodationPriceType(Long accommodationId) {
+        return priceService.getAccommodationPriceType(accommodationId);
     }
 }
