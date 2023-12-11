@@ -1,9 +1,6 @@
 package booker.BookingApp.controller.users;
 
-import booker.BookingApp.dto.users.AdminDTO;
-import booker.BookingApp.dto.users.GuestDTO;
-import booker.BookingApp.dto.users.OwnerDTO;
-import booker.BookingApp.dto.users.UserDTO;
+import booker.BookingApp.dto.users.*;
 import booker.BookingApp.model.users.Admin;
 import booker.BookingApp.service.implementation.AdminService;
 import booker.BookingApp.service.implementation.GuestService;
@@ -30,15 +27,25 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @PutMapping(consumes = "application/json")
-    public ResponseEntity<AdminDTO> update(@RequestBody AdminDTO admin) throws Exception {
-        AdminDTO adminDTO = adminService.update(admin);
-        return new ResponseEntity<>(adminDTO, HttpStatus.OK);
+    @PutMapping(value = "/{adminId}")
+    public ResponseEntity<AdminDTO> update(@PathVariable("guestId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
+        try{
+            AdminDTO existingAdmin = adminService.get(id);
+            if (existingAdmin == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            AdminDTO updatedAdmin = adminService.update(existingAdmin, updateUserDTO);
+            return new ResponseEntity<>(updatedAdmin, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @GetMapping(value = "/get")
-    public ResponseEntity<AdminDTO> get(){
-        AdminDTO adminDTO = adminService.get();
+    @GetMapping(value = "/{adminId}")
+    public ResponseEntity<AdminDTO> get(@PathVariable Long id){
+        AdminDTO adminDTO = adminService.get(id);
         return new ResponseEntity<>(adminDTO, HttpStatus.OK);
     }
 

@@ -10,4 +10,8 @@ import lombok.EqualsAndHashCode;
 @Entity
 @DiscriminatorValue("ADMIN")
 public class Admin extends User {
+
+    public void setProfilePicturePath(String path){
+        this.getProfilePicture().setPath(path);
+    }
 }
