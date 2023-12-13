@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AdminDTO extends UserDTO {
 
-    public AdminDTO(Long id, String name, String surname, String email, String address, String phone, Role role, ProfilePicture profilePicture){
-        super(id, name, surname, email, address, phone, role, profilePicture);
+    public AdminDTO(Long id, String name, String surname, String email, String password, String address, String phone, Role role, ProfilePicture profilePicture){
+        super(id, name, surname, email, password, address, phone, role, profilePicture);
     }
 
     public static AdminDTO makeFromAdmin(Admin a){
-        return new AdminDTO(a.getId(), a.getName(), a.getSurname(), a.getEmail(),
+        return new AdminDTO(a.getId(), a.getName(), a.getSurname(), a.getEmail(), a.getPassword(),
                 a.getAddress(), a.getPhone(), a.getRole(), a.getProfilePicture());
     }
 }
