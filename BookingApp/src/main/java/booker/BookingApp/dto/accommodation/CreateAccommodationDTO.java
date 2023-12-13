@@ -14,16 +14,16 @@ public @Data class CreateAccommodationDTO {
     private Long id;
     private String title;
     private String description;
-    private Address address;
-    private List<AmenityDTO> amenities;
+    private AddressDTO address;
+    private String[] amenities;
 //    private List<ImageDTO> images;
-    private List<MultipartFile> images;
+    private MultipartFile[] images;
     private AccommodationType type;
     private Date startDate;
     private Date endDate;
     private CreatePriceDTO price;
-    private int minCapacity;
-    private int maxCapacity;
+    private int min_capacity;
+    private int max_capacity;
 
 
     public CreateAccommodationDTO() {

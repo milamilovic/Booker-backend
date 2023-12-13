@@ -1,21 +1,20 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AmenityDTO;
-import booker.BookingApp.model.accommodation.Accommodation;
-import booker.BookingApp.model.accommodation.Amenity;
-import booker.BookingApp.model.accommodation.Image;
+import booker.BookingApp.repository.AmenityRepository;
 import booker.BookingApp.service.interfaces.IAmenityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.lang.Long;
+import java.util.List;
 
 @Service
 public class AmenityService implements IAmenityService {
+    @Autowired
+    AmenityRepository amenityRepository;
     @Override
     public ArrayList<AmenityDTO> findAllAmenitiesForAccommodation(Long accommodationId) throws IOException {
         ArrayList<AmenityDTO> amenities = new ArrayList<>();
@@ -47,7 +46,8 @@ public class AmenityService implements IAmenityService {
     }
 
     @Override
-    public ArrayList<String> getAllNames() {
-        return new ArrayList<>(Arrays.asList("wi-fi", "ac", "coffee machine"));
+    public List<String> getAllNames() {
+        return amenityRepository.findDistinctAmenityNames();
+        //return new ArrayList<>(Arrays.asList("wi-fi", "ac", "coffee machine"));
     }
 }

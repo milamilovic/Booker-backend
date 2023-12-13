@@ -19,7 +19,7 @@ public interface IAccommodationService {
 
     AccommodationViewDTO findOne(Long id) throws IOException;
 
-    AccommodationViewDTO create(CreateAccommodationDTO accommodation, List<MultipartFile> imagesFiles) throws Exception;
+    AccommodationViewDTO create(CreateAccommodationDTO accommodation) throws Exception;
 
     AccommodationViewDTO update(AccommodationViewDTO accommodation) throws Exception;
 
@@ -39,6 +39,6 @@ public interface IAccommodationService {
 
     ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter);
 
+    void uploadAccommodationPictures(Long accommodationId, MultipartFile image) throws IOException;
 
-    ArrayList<Image> handleImageUpload(List<MultipartFile> imageFiles, Accommodation accommodation) throws IOException;
 }

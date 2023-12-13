@@ -3,13 +3,19 @@ package booker.BookingApp.service.implementation;
 import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.repository.AccommodationRepository;
+import booker.BookingApp.repository.AddressRepository;
+import booker.BookingApp.repository.AmenityRepository;
 import booker.BookingApp.repository.ImageRepository;
 import booker.BookingApp.service.interfaces.IAccommodationService;
+import booker.BookingApp.util.ImageUploadUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.text.ParseException;
@@ -22,7 +28,8 @@ import java.util.Optional;
 @Service
 public class AccommodationService implements IAccommodationService {
 
-    private static final String UPLOAD_DIR = "../../../images/accommodation_images/";
+    @Value("src/main/resources/images/accommodations")
+    private String imagesDirPath;
 
     @Autowired
     AccommodationRepository repository;
@@ -32,6 +39,12 @@ public class AccommodationService implements IAccommodationService {
 
     @Autowired
     ImageRepository imageRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    AmenityRepository amenityRepository;
 
     @Override @Transactional
     public ArrayList<AccommodationListingDTO> findAll() throws IOException {
@@ -51,18 +64,32 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public AccommodationViewDTO create(CreateAccommodationDTO accommodationDto, List<MultipartFile> imagesFiles) throws Exception {
+    public AccommodationViewDTO create(CreateAccommodationDTO accommodationDto) throws Exception {
         Accommodation accommodation = new Accommodation();
         accommodation.setTitle(accommodationDto.getTitle());
         accommodation.setDescription(accommodationDto.getDescription());
-        accommodation.setAddress(accommodationDto.getAddress());
+        accommodation.setMin_capacity(accommodationDto.getMin_capacity());
+        accommodation.setMax_capacity(accommodationDto.getMax_capacity());
+        Address address = new Address();
+        address.setStreet(accommodationDto.getAddress().getStreet());
+        address.setCity(accommodationDto.getAddress().getCity());
+        address.setLatitude(accommodationDto.getAddress().getLatitude());
+        address.setLongitude(accommodationDto.getAddress().getLongitude());
+
+        addressRepository.save(address);
+        accommodation.setAddress(address);
+
+        accommodation.setOwner_id(2L);
 
         ArrayList<Amenity> amenities = new ArrayList<Amenity>();
-        for(AmenityDTO amenityDTO : accommodationDto.getAmenities()){
-            Amenity amenity = amenityDTO.toAmenity(accommodation);
+        for(String amenityName : accommodationDto.getAmenities()){
+            Amenity amenity = new Amenity();
+            amenity.setName(amenityName);
+            amenity.setImage_path("");
             amenities.add(amenity);
         }
         accommodation.setAmenities(amenities);
+
 
 //        ArrayList<Image> images = new ArrayList<Image>();
 //        for(ImageDTO imageDTO : accommodationDto.getImages()) {
@@ -70,7 +97,6 @@ public class AccommodationService implements IAccommodationService {
 //            images.add(image);
 //        }
 //        accommodation.setImages(images);
-
 
 
 
@@ -82,6 +108,8 @@ public class AccommodationService implements IAccommodationService {
         availabilities.add(availability);
         accommodation.setAvailabilities(availabilities);
 
+
+
         Price price = new Price();
         price.setCost(accommodationDto.getPrice().getCost());
         price.setFromDate(accommodationDto.getPrice().getFromDate());
@@ -92,11 +120,18 @@ public class AccommodationService implements IAccommodationService {
         prices.add(price);
         accommodation.setPrices(prices);
 
+
+
         repository.save(accommodation);
 
-        ArrayList<Image> images = new ArrayList<Image>();
-        handleImageUpload(imagesFiles, accommodation);
-        accommodation.setImages(images);
+//        ArrayList<Image> images = new ArrayList<Image>();
+//        for(MultipartFile file : accommodationDto.getImages()) {
+//            uploadAccommodationPictures(accommodation.getId() , file);
+//        }
+//        accommodation.setImages(images);
+//        repository.save(accommodation);
+
+
 
         AccommodationViewDTO accommodationViewDTO = AccommodationViewDTO.makeFromAccommodation(accommodation);
         return accommodationViewDTO;
@@ -184,25 +219,49 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public ArrayList<Image> handleImageUpload(List<MultipartFile> imageFiles, Accommodation accommodation) throws IOException {
-        ArrayList<Image> images = new ArrayList<>();
-
-        for (MultipartFile imageFile : imageFiles) {
-            String fileName = System.currentTimeMillis() + "-" + imageFile.getOriginalFilename();
-            Path imagePath = Paths.get(UPLOAD_DIR + fileName);
-
-            Files.copy(imageFile.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
-
-            ImageDTO imageDTO = new ImageDTO();
-            imageDTO.setPath(fileName);
+    public void uploadAccommodationPictures(Long accommodationId, MultipartFile image) throws IOException {
+        Accommodation accommodation = repository.findById(accommodationId).orElse(null);
 
 
-            Image image = imageDTO.toImage(accommodation);
+        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+        String uploadDir = StringUtils.cleanPath(imagesDirPath + accommodation.getId());
+        System.out.println(uploadDir);
 
-            imageRepository.save(image);
-            images.add(image);
-        }
-        return images;
+        ImageUploadUtil.saveImage(uploadDir, fileName, image);
+
+
+
+        repository.save(accommodation);
+
+
     }
+
+
+    public Image convertMultipartFileToImage(MultipartFile file) throws IOException {
+        Image image = new Image();
+        image.setPath(saveFile(file));
+
+        return image;
+    }
+
+    private String saveFile(MultipartFile file) throws IOException {
+        String fileName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
+        String uploadDir = "images";
+
+        // Create the directory if it doesn't exist
+        File directory = new File(uploadDir);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        // Use File.separator to ensure correct file path on different operating systems
+        String filePath = uploadDir + File.separator;
+
+        file.transferTo(new File(filePath));
+
+        return filePath;
+    }
+
+
 
 }

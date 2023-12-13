@@ -4,6 +4,7 @@ import booker.BookingApp.dto.accommodation.AmenityDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IAmenityService {
     ArrayList<AmenityDTO> findAllAmenitiesForAccommodation(Long accommodationId) throws IOException;
@@ -16,5 +17,5 @@ public interface IAmenityService {
 
     ArrayList<AmenityDTO> findAll() throws IOException;
 
-    ArrayList<String> getAllNames();
+    List<String> getAllNames();
 }
