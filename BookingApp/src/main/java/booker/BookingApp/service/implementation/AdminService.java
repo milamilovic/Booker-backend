@@ -24,6 +24,18 @@ public class AdminService implements IAdminService {
 
     @Override
     public AdminDTO update(AdminDTO admin, UpdateUserDTO updateUser) {
+        Admin a = userRepository.getAdmin();
+        if(a != null){
+            a.setName(updateUser.getName());
+            a.setSurname(updateUser.getSurname());
+            a.setEmail(updateUser.getEmail());
+            a.setAddress(updateUser.getAddress());
+            a.setPhone(updateUser.getPhone());
+            a.setProfilePicturePath(updateUser.getProfilePicture().getPath());
+            a.setPassword(updateUser.getPassword());
+            userRepository.save(a);
+            return AdminDTO.makeFromAdmin(a);
+        }
         return admin;
     }
 

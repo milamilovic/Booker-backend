@@ -21,24 +21,22 @@ public class OwnerDTO extends UserDTO {
     private boolean deleted;
     private List<OwnerRating> ratings;
     private List<OwnerComment> comments;
-    private String password;
 
-    public OwnerDTO(Long id, String name, String surname, String email, String address,
+    public OwnerDTO(Long id, String name, String surname, String email, String password, String address,
                     String phone, Role role, ProfilePicture profilePicture, boolean reported, boolean blocked,
-                    boolean deleted, List<OwnerRating> ratings, List<OwnerComment> comments, String password){
-        super(id, name, surname, email, address, phone, role, profilePicture);
+                    boolean deleted, List<OwnerRating> ratings, List<OwnerComment> comments){
+        super(id, name, surname, email, password, address, phone, role, profilePicture);
         this.reported = reported;
         this.blocked = blocked;
         this.deleted = deleted;
         this.ratings = ratings;
         this.comments = comments;
-        this.password = password;
     }
 
     public static OwnerDTO makeFromOwner(Owner owner){
-        return new OwnerDTO(owner.getId(), owner.getName(), owner.getSurname(), owner.getEmail(),
+        return new OwnerDTO(owner.getId(), owner.getName(), owner.getSurname(), owner.getEmail(), owner.getPassword(),
                 owner.getAddress(), owner.getPhone(), owner.getRole(), owner.getProfilePicture(),
                 owner.isReported(), owner.isBlocked(), owner.isDeleted(), owner.getRatings(),
-                owner.getComments(), owner.getPassword());
+                owner.getComments());
     }
 }

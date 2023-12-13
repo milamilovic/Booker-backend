@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.Long;
+import java.util.List;
 
 @Service
 public class AmenityService implements IAmenityService {

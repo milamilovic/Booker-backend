@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/amenities")
@@ -34,8 +35,9 @@ public class AmenityController {
         return new ResponseEntity<>(accommodation, HttpStatus.OK);
     }
 
-    //get all distinct amenities
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    //get all amenities
+    @GetMapping(value ="/all", produces = MediaType.APPLICATION_JSON_VALUE)
+
     public ResponseEntity<ArrayList<AmenityDTO>> getAll() throws IOException {
         ArrayList<AmenityDTO> accommodations = service.findAll();
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
@@ -57,8 +59,8 @@ public class AmenityController {
 
     //get names of all amenities
     @GetMapping(value = "/names", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<String>> getNames() throws IOException {
-        ArrayList<String> names = service.getAllNames();
-        return new ResponseEntity<ArrayList<String>>(names, HttpStatus.OK);
+    public ResponseEntity<List<String>> getNames() throws IOException {
+        List<String> names = service.getAllNames();
+        return new ResponseEntity<List<String>>(names, HttpStatus.OK);
     }
 }

@@ -13,6 +13,10 @@ public @Data class ImageDTO {
 
     }
 
+    public ImageDTO() {
+
+    }
+
     public Image toImage(Accommodation accommodation){
         Image image = new Image();
         image.setPath(path);

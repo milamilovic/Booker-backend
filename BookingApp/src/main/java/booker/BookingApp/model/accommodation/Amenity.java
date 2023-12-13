@@ -14,7 +14,7 @@ class Amenity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "name")
+    @JoinColumn(name = "name", unique = true)
     private String name;
 
     @ManyToOne

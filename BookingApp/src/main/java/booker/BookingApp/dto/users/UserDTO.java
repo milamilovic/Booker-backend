@@ -13,6 +13,7 @@ public @Data class UserDTO {
     private String surname;
 
     private String email;
+    private String password;
 
     private String address;
 
@@ -24,15 +25,16 @@ public @Data class UserDTO {
     }
 
     public UserDTO(User user) {
-        this(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getAddress(), user.getPhone(), user.getRole(), user.getProfilePicture());
+        this(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getAddress(), user.getPhone(), user.getRole(), user.getProfilePicture());
 
     }
 
-    public UserDTO(Long id, String name, String surname, String email, String address, String phone, Role role, ProfilePicture profilePicture) {
+    public UserDTO(Long id, String name, String surname, String email, String password, String address, String phone, Role role, ProfilePicture profilePicture) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.password = password;
         this.address = address;
         this.phone = phone;
         this.role = role;
