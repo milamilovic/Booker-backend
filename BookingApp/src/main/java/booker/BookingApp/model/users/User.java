@@ -10,6 +10,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "USERS")
 @ToString(exclude = {"profilePicture"})
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 public @Data class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +31,15 @@ public @Data class User {
     private String address;
     @Column(name = "phone", nullable = false)
     private String phone;
-    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", insertable = false, updatable = false)
     private Role role;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private ProfilePicture profilePicture;
 
+    public void setProfilePicturePath(String path){
+        this.getProfilePicture().setPath(path);
+    }
 
 }

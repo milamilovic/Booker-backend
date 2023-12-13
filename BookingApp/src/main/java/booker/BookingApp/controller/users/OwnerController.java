@@ -55,10 +55,10 @@ public class OwnerController {
         return new ResponseEntity<>(ownerDTO, HttpStatus.OK);
     }
 
-    @PutMapping(consumes = "application/json")
-    public ResponseEntity<OwnerDTO> update(@RequestBody UpdateUserDTO updateUserDTO) {
+    @PutMapping(value = "/{ownerId}")
+    public ResponseEntity<OwnerDTO> update(@PathVariable("ownerId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         try{
-            OwnerDTO existingOwner = ownerService.getOwnerById(updateUserDTO.getId());
+            OwnerDTO existingOwner = ownerService.getOwnerById(id);
             if(existingOwner == null){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

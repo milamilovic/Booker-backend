@@ -1,6 +1,8 @@
-insert into users (name, surname, email, password, address, phone, role) values ('Marko', 'Marković', 'email1', '123', 'adresa1', '060000000', 0);
-insert into users (name, surname, email, password, address, phone, role) values ('Petar', 'Petrović', 'email2', '1234', 'adresa2', '060000001', 1);
-insert into users (name, surname, email, password, address, phone, role) values ('Adam', 'Adamović', 'email3', '12345', 'adresa3', '060000002', 0);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Marko', 'Marković', 'email1', '123', 'adresa1', '060000000', 'GUEST', false, false, false, ARRAY[1, 2]);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Petar', 'Petrović', 'email2', '1234', 'adresa2', '060000001', 'OWNER', false, false, false, null);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Adam', 'Adamović', 'email3', '12345', 'adresa3', '060000002', 'GUEST', false, false, false, ARRAY[1, 2]);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Pera', 'Peric', 'pera123@gmail.com', 'aaaaa', 'Adresa 123', '3210087', 'GUEST', false, false, false, ARRAY[1, 2]);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Admin', 'Admin', 'admin123@gmail.com', 'bbbb', 'Adresa admin', '3210087', 'ADMIN', null, null, null, null);
 
 -- Inserting data into Accommodation table
 INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('Cozy Cabin', 'A charming cabin in the woods.', 'Rustic cabin retreat', 15, 1, 4, 2, 0);
@@ -252,7 +254,11 @@ VALUES (3, 1, 4.0, '2023-05-05', true);
 INSERT INTO Profile_Picture (path, user_id)
 VALUES
     ('../../../images/profile1.png', 1),
-    ('../../../images/profile2.jpg', 2);
+    ('../../../images/profile2.jpg', 2),
+    ('../../../images/profile_pic.jpg', 3),
+    ('../../../images/profile1.jpg', 4),
+    ('../../../images/profile_pic.jpg', 5);
+
 
 
 

@@ -1,5 +1,6 @@
 package booker.BookingApp.model.commentsAndRatings;
 
+import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.model.users.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -18,7 +19,7 @@ public @Data class OwnerComment {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
-    private User owner;
+    private Owner owner;
 
     @Column(name = "content", nullable = false)
     private String content;

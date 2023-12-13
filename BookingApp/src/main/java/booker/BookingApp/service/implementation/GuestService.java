@@ -5,6 +5,7 @@ import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.enums.Role;
+import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
 import booker.BookingApp.repository.UserRepository;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class GuestService implements IGuestService {
 
@@ -22,30 +25,18 @@ public class GuestService implements IGuestService {
 
     @Override
     public ArrayList<GuestDTO> findAll() {
-        ArrayList<Long> faves = new ArrayList<>();
-        faves.add(1L); faves.add(2L);
-        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
-        GuestDTO g1 = new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
-        GuestDTO g2 = new GuestDTO(2L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
-        GuestDTO g3 = new GuestDTO(3L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
-        GuestDTO g4 = new GuestDTO(4L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, true, true, false,  faves, "aaaa");
-        GuestDTO g5 = new GuestDTO(5L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
-        GuestDTO g6 = new GuestDTO(6L, "Pera", "Peric", "pera123@gmail.com", null, null, Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
-        ArrayList<GuestDTO> guests = new ArrayList<>();
-        guests.add(g1);
-        guests.add(g2);
-        guests.add(g3);
-        guests.add(g4);
-        guests.add(g5);
-        guests.add(g6);
-        return guests;
+        List<Guest> guests = userRepository.getAllGuests();
+        ArrayList<GuestDTO> dtos = new ArrayList<>();
+        for (Guest g : guests){
+            dtos.add(GuestDTO.makeFromGuest(g));
+        }
+        return dtos;
     }
+
     @Override
     public GuestDTO getGuestById(Long id) {
-        ArrayList<Long> faves = new ArrayList<>();
-        faves.add(1L); faves.add(2L);
-        ProfilePicture profilePicture = new ProfilePicture(1L, "../../assets/images/initialProfilePic.png", new User());
-        return new GuestDTO(id, "Pera", "Peric", "pera123@gmail.com", "Adresa 123", "3210087", Role.GUEST, profilePicture, false, false, false, faves, "aaaa");
+        Guest g = (Guest) userRepository.getOne(id);
+        return GuestDTO.makeFromGuest(g);
     }
 
     @Override
@@ -63,15 +54,19 @@ public class GuestService implements IGuestService {
 
     @Override
     public GuestDTO update(GuestDTO guest, UpdateUserDTO updateUser) {
-        guest.setName(updateUser.getName());
-        guest.setSurname(updateUser.getSurname());
-        guest.setEmail(updateUser.getEmail());
-        guest.setAddress(updateUser.getAddress());
-        guest.setPhone(updateUser.getPhone());
-        guest.setProfilePicture(updateUser.getProfilePicture());
-        guest.setPassword(updateUser.getPassword());
+        Guest g = (Guest) userRepository.getOne(guest.getId());
+        if (g != null){
+            g.setName(updateUser.getName());
+            g.setSurname(updateUser.getSurname());
+            g.setEmail(updateUser.getEmail());
+            g.setAddress(updateUser.getAddress());
+            g.setPhone(updateUser.getPhone());
+            g.setProfilePicturePath(updateUser.getProfilePicture().getPath());
+            g.setPassword(updateUser.getPassword());
+            userRepository.save(g);
+            return GuestDTO.makeFromGuest(g);
+        }
 
-        // TODO add connection with repository
         return guest;
     }
 
