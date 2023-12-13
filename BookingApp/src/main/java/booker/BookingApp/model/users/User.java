@@ -18,6 +18,9 @@ import java.util.List;
 @Table(name = "USERS")
 @ToString(exclude = {"profilePicture"})
 public @Data class User implements UserDetails {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
+public @Data class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,7 +39,8 @@ public @Data class User implements UserDetails {
     private String address;
     @Column(name = "phone", nullable = false)
     private String phone;
-    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", insertable = false, updatable = false)
     private Role role;
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
@@ -44,6 +48,9 @@ public @Data class User implements UserDetails {
     @JsonIgnore
     private ProfilePicture profilePicture;
 
+    public void setProfilePicturePath(String path){
+        this.getProfilePicture().setPath(path);
+    }
 
 
     @Override

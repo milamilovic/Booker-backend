@@ -1,6 +1,7 @@
 package booker.BookingApp.dto.users;
 
 import booker.BookingApp.enums.Role;
+import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.model.users.ProfilePicture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,4 +29,13 @@ public class GuestDTO extends UserDTO{
         this.favouriteAccommodations = favouriteAccommodations;
         this.password = password;
     }
+
+    public static GuestDTO makeFromGuest(Guest guest){
+        return new GuestDTO(guest.getId(), guest.getName(), guest.getSurname(),
+                guest.getEmail(), guest.getAddress(), guest.getPhone(),
+                guest.getRole(), guest.getProfilePicture(), guest.isReported(), guest.isBlocked(),
+                guest.isDeleted(), guest.getFavouriteAccommodations(), guest.getPassword());
+    }
+
+
 }

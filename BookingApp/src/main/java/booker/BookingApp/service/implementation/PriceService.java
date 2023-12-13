@@ -10,6 +10,8 @@ import booker.BookingApp.service.interfaces.IPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -54,6 +56,26 @@ public class PriceService implements IPriceService {
         return priceRepository.findAllForTypeGuest();
     }
 
+
+    @Override
+    public double findUnitPriceForDateRange(Long accommodationId, Date fromDate, Date toDate) {
+        double cost = 0;
+        Date currentDate = fromDate;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        while(currentDate.before(toDate)) {
+            cost += priceRepository.findPriceForDate(accommodationId, currentDate);
+            //increment date by one -> get the next day
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            currentDate = calendar.getTime();
+        }
+        return cost;
+    }
+
+    @Override
+    public PriceType getAccommodationPriceType(Long accommodationId) {
+        return priceRepository.getAccommodationPriceType(accommodationId);
+    }
 
     //@Override
     //public Price save(Price price) {

@@ -25,7 +25,7 @@ public class ReservationRequestController {
     public ResponseEntity<ReservationRequestDTO> insert(@RequestBody ReservationRequestDTO request) throws Exception {
         ReservationRequestDTO requestDTO = service.create(request);
         System.out.println("hit method post");
-        return new ResponseEntity<>(requestDTO, HttpStatus.OK);
+        return new ResponseEntity<>(requestDTO, HttpStatus.CREATED);
     }
 
     //find all requests for owner

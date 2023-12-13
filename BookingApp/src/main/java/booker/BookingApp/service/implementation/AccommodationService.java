@@ -1,6 +1,8 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.*;
+import booker.BookingApp.enums.AccommodationType;
+import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.repository.AccommodationRepository;
 import booker.BookingApp.repository.AddressRepository;
@@ -20,10 +22,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AccommodationService implements IAccommodationService {
@@ -45,6 +44,11 @@ public class AccommodationService implements IAccommodationService {
 
     @Autowired
     AmenityRepository amenityRepository;
+    @Autowired
+    AmenityService amenityService;
+
+    @Autowired
+    PriceService priceService;
 
     @Override @Transactional
     public ArrayList<AccommodationListingDTO> findAll() throws IOException {
@@ -214,8 +218,84 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter) {
-        return findOwnersActiveAccommodations(2L);
+    public ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter) throws IOException {
+        //filtering amenities
+        ArrayList<String> amenityNames = amenityService.getAllNames();
+        if(amenityNames.contains(filter.getName())) {
+            Iterator<AccommodationListingDTO> iterator = accommodations.iterator();
+            while (iterator.hasNext()) {
+                AccommodationListingDTO currentElement = iterator.next();
+                ArrayList<String> amenities = amenityService.getAllAmenityNamesForAccommodation(currentElement.getId());
+                if (amenities.contains(filter.getName())) {
+                    iterator.remove();
+                }
+            }
+        }
+
+        //filtering accommodation types is not done here
+
+        //filtering prices
+        class AccPrice {
+            double price;
+        }
+        if(filter.getName().equals("minPrice")) {
+            Iterator<AccommodationListingDTO> iterator1 = accommodations.iterator();
+            while (iterator1.hasNext()) {
+                AccommodationListingDTO currentElement = iterator1.next();
+                AccPrice price = (AccPrice) filter.getValue();
+                if (currentElement.getTotalPrice() < price.price) {
+                    iterator1.remove();
+                }
+            }
+        }
+        if(filter.getName().equals("maxPrice")) {
+            Iterator<AccommodationListingDTO> iterator = accommodations.iterator();
+            while (iterator.hasNext()) {
+                AccommodationListingDTO currentElement = iterator.next();
+                AccPrice price = (AccPrice) filter.getValue();
+                if (currentElement.getTotalPrice() > price.price) {
+                    iterator.remove();
+                }
+            }
+        }
+        return accommodations;
+    }
+
+    @Override
+    public ArrayList<AccommodationListingDTO> filterTypes(ArrayList<AccommodationListingDTO> accommodations, ArrayList<AccommodationType> adequateTypes) {
+        Iterator<AccommodationListingDTO> iterator = accommodations.iterator();
+        while (iterator.hasNext()) {
+            AccommodationListingDTO currentElement = iterator.next();
+            Optional<Accommodation> accommodation = repository.findById(currentElement.getId());
+            if(!accommodation.isEmpty()) {
+                //if type of accommodation is not one of checked types, we remove it
+                if (!adequateTypes.contains(accommodation.get().getType())) {
+                    iterator.remove();
+                }
+            }
+        }
+        return accommodations;
+    }
+
+    @Override
+    public double findPriceForDateRange(Long id, Date startDate, Date endDate, int numOfGuests) {
+        double cost = priceService.findUnitPriceForDateRange(id, startDate, endDate);
+        if(priceService.getAccommodationPriceType(id) == PriceType.PER_GUEST) {
+            //if the price is per gust we multiply the price by number of guests
+            cost *= numOfGuests;
+        }
+        return cost;
+    }
+
+    @Override
+    public double findUnitPrice(Long id, Date startDate, Date endDate, int numOfGuests) {
+        double cost = priceService.findUnitPriceForDateRange(id, startDate, endDate);
+        return cost;
+    }
+
+    @Override
+    public PriceType getAccommodationPriceType(Long accommodationId) {
+        return priceService.getAccommodationPriceType(accommodationId);
     }
 
     @Override

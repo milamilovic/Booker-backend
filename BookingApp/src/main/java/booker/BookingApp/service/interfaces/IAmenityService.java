@@ -15,7 +15,11 @@ public interface IAmenityService {
 
     void delete(Long id);
 
+    void removeAmenityFromAcc(String amenity_name, Long accId);
+
     ArrayList<AmenityDTO> findAll() throws IOException;
 
-    List<String> getAllNames();
+    ArrayList<String> getAllNames();
+
+    ArrayList<String> getAllAmenityNamesForAccommodation(Long accommodationId);
 }

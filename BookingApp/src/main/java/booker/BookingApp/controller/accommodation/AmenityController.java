@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/amenities")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AmenityController {
     @Autowired
     IAmenityService service;
@@ -24,7 +25,7 @@ public class AmenityController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AmenityDTO> insert(@RequestBody AmenityDTO amenity) throws Exception {
         AmenityDTO dto = service.create(amenity);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
     //get amenities of accommodation
@@ -36,9 +37,10 @@ public class AmenityController {
 
     //get all amenities
     @GetMapping(value ="/all", produces = MediaType.APPLICATION_JSON_VALUE)
+
     public ResponseEntity<ArrayList<AmenityDTO>> getAll() throws IOException {
         ArrayList<AmenityDTO> accommodations = service.findAll();
-        return new ResponseEntity<ArrayList<AmenityDTO>>(accommodations, HttpStatus.OK);
+        return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
     //delete amenity
     @DeleteMapping(value = "/{id}")

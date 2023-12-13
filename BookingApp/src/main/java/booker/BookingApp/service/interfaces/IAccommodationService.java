@@ -5,6 +5,8 @@ import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
 import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
 import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
 import booker.BookingApp.model.accommodation.Accommodation;
+import booker.BookingApp.enums.AccommodationType;
+import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.Filter;
 import booker.BookingApp.model.accommodation.Image;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public interface IAccommodationService {
 
@@ -37,8 +40,16 @@ public interface IAccommodationService {
 
     ArrayList<AccommodationListingDTO> findAllOwnersAccommodations(Long ownerId);
 
-    ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter);
 
     void uploadAccommodationPictures(Long accommodationId, MultipartFile image) throws IOException;
 
+    ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter) throws IOException;
+
+    ArrayList<AccommodationListingDTO> filterTypes(ArrayList<AccommodationListingDTO> accommodations, ArrayList<AccommodationType> adequateTypes);
+
+    double findPriceForDateRange(Long id, Date startDate, Date endDate, int numOfGuests);
+
+    double findUnitPrice(Long id, Date startDate, Date endDate, int numOfGuests);
+
+    PriceType getAccommodationPriceType(Long accommodationId);
 }

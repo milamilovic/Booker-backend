@@ -1,5 +1,6 @@
 package booker.BookingApp.model.accommodation;
 
+import booker.BookingApp.enums.AccommodationType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -55,6 +56,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private int min_capacity;
     @Column(name = "max_capacity", nullable = false)
     private int max_capacity;
-
+    @Column(name="type", nullable = false)
+    private AccommodationType type;
 
 }
