@@ -38,5 +38,8 @@ public @Data class User {
     @JsonIgnore
     private ProfilePicture profilePicture;
 
+    public void setProfilePicturePath(String path){
+        this.getProfilePicture().setPath(path);
+    }
 
 }

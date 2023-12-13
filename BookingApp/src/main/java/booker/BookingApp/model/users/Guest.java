@@ -26,7 +26,4 @@ public class Guest extends User {
     @Column(name = "favourite_accommodations")
     private ArrayList<Long> favouriteAccommodations;
 
-    public void setProfilePicturePath(String path){
-        this.getProfilePicture().setPath(path);
-    }
 }

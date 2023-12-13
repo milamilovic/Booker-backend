@@ -7,36 +7,34 @@ import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
+import booker.BookingApp.repository.UserRepository;
 import booker.BookingApp.service.interfaces.IOwnerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class OwnerService implements IOwnerService {
+
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public ArrayList<OwnerDTO> findAll() {
-        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
-        OwnerDTO o1 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, profilePicture, false, false, false, null, null, "bbbb");
-        OwnerDTO o2 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, profilePicture,  false, false, false, null, null, "bbbb");
-        OwnerDTO o3 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, profilePicture, false, false, false, null, null, "bbbb");
-        OwnerDTO o4 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, profilePicture, true, true, false, null, null, "bbbb");
-        OwnerDTO o5 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, profilePicture, false, false, false, null, null, "bbbb");
-        OwnerDTO o6 = new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", null, null, Role.OWNER, profilePicture, true, true, false, null, null, "bbbb");
-        ArrayList<OwnerDTO> owners = new ArrayList<>();
-        owners.add(o1);
-        owners.add(o2);
-        owners.add(o3);
-        owners.add(o4);
-        owners.add(o5);
-        owners.add(o6);
-        return owners;
+        List<Owner> owners = userRepository.getAllOwners();
+        ArrayList<OwnerDTO> dtos = new ArrayList<>();
+        for(Owner o : owners){
+            dtos.add(OwnerDTO.makeFromOwner(o));
+        }
+        return dtos;
     }
 
     @Override
     public OwnerDTO getOwnerById(Long id) {
-        ProfilePicture profilePicture = new ProfilePicture(1L, "../../assets/images/initialProfilePic.png", new User());
-        return new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", "Adresica 123, Novi Sad", "0601234567", Role.OWNER, profilePicture, false, false, false, null, null, "bbbb");
+        Owner o = (Owner) userRepository.getOne(id);
+        return OwnerDTO.makeFromOwner(o);
     }
 
     @Override
@@ -52,14 +50,18 @@ public class OwnerService implements IOwnerService {
 
     @Override
     public OwnerDTO update(OwnerDTO owner, UpdateUserDTO updateUser) {
-        owner.setName(updateUser.getName());
-        owner.setSurname(updateUser.getSurname());
-        owner.setEmail(updateUser.getEmail());
-        owner.setAddress(updateUser.getAddress());
-        owner.setPhone(updateUser.getPhone());
-        owner.setProfilePicture(updateUser.getProfilePicture());
-        owner.setPassword(updateUser.getPassword());
-        // TODO add connection with repository
+        Owner o = (Owner) userRepository.getOne(owner.getId());
+        if(o != null){
+            o.setName(updateUser.getName());
+            o.setSurname(updateUser.getSurname());
+            o.setEmail(updateUser.getEmail());
+            o.setAddress(updateUser.getAddress());
+            o.setPhone(updateUser.getPhone());
+            o.setProfilePicturePath(updateUser.getProfilePicture().getPath());
+            o.setPassword(updateUser.getPassword());
+            userRepository.save(o);
+            return OwnerDTO.makeFromOwner(o);
+        }
         return owner;
     }
 
