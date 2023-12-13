@@ -28,7 +28,7 @@ public class AdminController {
     }
 
     @PutMapping(value = "/{adminId}")
-    public ResponseEntity<AdminDTO> update(@PathVariable("guestId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<AdminDTO> update(@PathVariable("adminId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         try{
             AdminDTO existingAdmin = adminService.get(id);
             if (existingAdmin == null){
@@ -44,8 +44,8 @@ public class AdminController {
     }
 
     @GetMapping(value = "/{adminId}")
-    public ResponseEntity<AdminDTO> get(@PathVariable Long id){
-        AdminDTO adminDTO = adminService.get(id);
+    public ResponseEntity<AdminDTO> getAdmin(@PathVariable Long adminId){
+        AdminDTO adminDTO = adminService.get(adminId);
         return new ResponseEntity<>(adminDTO, HttpStatus.OK);
     }
 
