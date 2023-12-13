@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -18,13 +19,13 @@ public class OwnerDTO extends UserDTO {
     private boolean reported;
     private boolean blocked;
     private boolean deleted;
-    private ArrayList<OwnerRating> ratings;
-    private ArrayList<OwnerComment> comments;
+    private List<OwnerRating> ratings;
+    private List<OwnerComment> comments;
     private String password;
 
     public OwnerDTO(Long id, String name, String surname, String email, String address,
                     String phone, Role role, ProfilePicture profilePicture, boolean reported, boolean blocked,
-                    boolean deleted, ArrayList<OwnerRating> ratings, ArrayList<OwnerComment> comments, String password){
+                    boolean deleted, List<OwnerRating> ratings, List<OwnerComment> comments, String password){
         super(id, name, surname, email, address, phone, role, profilePicture);
         this.reported = reported;
         this.blocked = blocked;

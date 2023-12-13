@@ -2,7 +2,8 @@ insert into users (name, surname, email, password, address, phone, role, reporte
 insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Petar', 'Petrović', 'email2', '1234', 'adresa2', '060000001', 'OWNER', false, false, false, null);
 insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Adam', 'Adamović', 'email3', '12345', 'adresa3', '060000002', 'GUEST', false, false, false, ARRAY[1, 2]);
 insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Pera', 'Peric', 'pera123@gmail.com', 'aaaaa', 'Adresa 123', '3210087', 'GUEST', false, false, false, ARRAY[1, 2]);
-insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Admin', 'Admin', 'admin123@gmail.com', 'bbbb', 'Adresa admin', '3210087', 'ADMIN', null, null, null, null);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Admin', 'Admin', 'admin123@gmail.com', 'bbbb', 'Adresa admin', '3210088', 'ADMIN', null, null, null, null);
+insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Mika', 'Mikic', 'mika123@gmail.com', '1234', 'Mikina adresa', '3210089', 'OWNER', false, false, false, null);
 
 -- Inserting data into Accommodation table
 INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('Cozy Cabin', 'A charming cabin in the woods.', 'Rustic cabin retreat', 15, 1, 4, 2, 0);
@@ -241,15 +242,15 @@ VALUES
     (3, 2, 3.8, '2023-10-05', true);
 
 INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
-VALUES (1, 2, 4.5, '2023-01-01', false);
+VALUES (2, 1, 4.5, '2023-01-01', false);
 INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
-VALUES (3, 1, 3.8, '2023-02-15', false);
+VALUES (2, 3, 3.8, '2023-02-15', false);
 INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
-VALUES (2, 1, 4.9, '2023-03-10', true);
+VALUES (2, 4, 4.9, '2023-03-10', true);
 INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
-VALUES (2, 3, 2.5, '2023-04-20', false);
+VALUES (6, 3, 2.5, '2023-04-20', false);
 INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
-VALUES (3, 1, 4.0, '2023-05-05', true);
+VALUES (6, 1, 4.0, '2023-05-05', true);
 
 INSERT INTO Profile_Picture (path, user_id)
 VALUES

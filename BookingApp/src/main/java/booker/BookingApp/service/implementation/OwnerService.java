@@ -33,6 +33,7 @@ public class OwnerService implements IOwnerService {
 
     @Override
     public OwnerDTO getOwnerById(Long id) {
+        System.out.println(id);
         Owner o = (Owner) userRepository.getOne(id);
         return OwnerDTO.makeFromOwner(o);
     }
