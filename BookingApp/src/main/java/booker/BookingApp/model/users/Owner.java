@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -24,8 +25,8 @@ public class Owner extends User {
     private boolean deleted;
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
-    private ArrayList<OwnerRating> ratings;
+    private List<OwnerRating> ratings;
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
-    private ArrayList<OwnerComment> comments;
+    private List<OwnerComment> comments;
 }

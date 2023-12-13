@@ -17,10 +17,10 @@ import java.util.List;
 @Entity
 @Table(name = "USERS")
 @ToString(exclude = {"profilePicture"})
-public @Data class User implements UserDetails {
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
-public @Data class User {
+public @Data class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
