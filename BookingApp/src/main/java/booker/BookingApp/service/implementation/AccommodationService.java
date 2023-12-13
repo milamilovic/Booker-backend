@@ -5,12 +5,21 @@ import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.repository.AccommodationRepository;
+import booker.BookingApp.repository.AddressRepository;
+import booker.BookingApp.repository.AmenityRepository;
+import booker.BookingApp.repository.ImageRepository;
 import booker.BookingApp.service.interfaces.IAccommodationService;
+import booker.BookingApp.util.ImageUploadUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -18,12 +27,23 @@ import java.util.*;
 @Service
 public class AccommodationService implements IAccommodationService {
 
+    @Value("src/main/resources/images/accommodations")
+    private String imagesDirPath;
+
     @Autowired
     AccommodationRepository repository;
 
     @Autowired
     AvailabilityService availabilityService;
 
+    @Autowired
+    ImageRepository imageRepository;
+
+    @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    AmenityRepository amenityRepository;
     @Autowired
     AmenityService amenityService;
 
@@ -52,21 +72,36 @@ public class AccommodationService implements IAccommodationService {
         Accommodation accommodation = new Accommodation();
         accommodation.setTitle(accommodationDto.getTitle());
         accommodation.setDescription(accommodationDto.getDescription());
-        accommodation.setAddress(accommodationDto.getAddress());
+        accommodation.setMin_capacity(accommodationDto.getMin_capacity());
+        accommodation.setMax_capacity(accommodationDto.getMax_capacity());
+        Address address = new Address();
+        address.setStreet(accommodationDto.getAddress().getStreet());
+        address.setCity(accommodationDto.getAddress().getCity());
+        address.setLatitude(accommodationDto.getAddress().getLatitude());
+        address.setLongitude(accommodationDto.getAddress().getLongitude());
+
+        addressRepository.save(address);
+        accommodation.setAddress(address);
+
+        accommodation.setOwner_id(2L);
 
         ArrayList<Amenity> amenities = new ArrayList<Amenity>();
-        for(AmenityDTO amenityDTO : accommodationDto.getAmenities()){
-            Amenity amenity = amenityDTO.toAmenity(accommodation);
+        for(String amenityName : accommodationDto.getAmenities()){
+            Amenity amenity = new Amenity();
+            amenity.setName(amenityName);
+            amenity.setImage_path("");
             amenities.add(amenity);
         }
         accommodation.setAmenities(amenities);
 
-        ArrayList<Image> images = new ArrayList<Image>();
-        for(ImageDTO imageDTO : accommodationDto.getImages()) {
-            Image image = imageDTO.toImage(accommodation);
-            images.add(image);
-        }
-        accommodation.setImages(images);
+
+//        ArrayList<Image> images = new ArrayList<Image>();
+//        for(ImageDTO imageDTO : accommodationDto.getImages()) {
+//            Image image = imageDTO.toImage(accommodation);
+//            images.add(image);
+//        }
+//        accommodation.setImages(images);
+
 
 
         Availability availability = new Availability();
@@ -76,6 +111,8 @@ public class AccommodationService implements IAccommodationService {
         ArrayList<Availability> availabilities = new ArrayList<Availability>();
         availabilities.add(availability);
         accommodation.setAvailabilities(availabilities);
+
+
 
         Price price = new Price();
         price.setCost(accommodationDto.getPrice().getCost());
@@ -87,7 +124,18 @@ public class AccommodationService implements IAccommodationService {
         prices.add(price);
         accommodation.setPrices(prices);
 
+
+
         repository.save(accommodation);
+
+//        ArrayList<Image> images = new ArrayList<Image>();
+//        for(MultipartFile file : accommodationDto.getImages()) {
+//            uploadAccommodationPictures(accommodation.getId() , file);
+//        }
+//        accommodation.setImages(images);
+//        repository.save(accommodation);
+
+
 
         AccommodationViewDTO accommodationViewDTO = AccommodationViewDTO.makeFromAccommodation(accommodation);
         return accommodationViewDTO;
@@ -249,4 +297,51 @@ public class AccommodationService implements IAccommodationService {
     public PriceType getAccommodationPriceType(Long accommodationId) {
         return priceService.getAccommodationPriceType(accommodationId);
     }
+
+    @Override
+    public void uploadAccommodationPictures(Long accommodationId, MultipartFile image) throws IOException {
+        Accommodation accommodation = repository.findById(accommodationId).orElse(null);
+
+
+        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+        String uploadDir = StringUtils.cleanPath(imagesDirPath + accommodation.getId());
+        System.out.println(uploadDir);
+
+        ImageUploadUtil.saveImage(uploadDir, fileName, image);
+
+
+
+        repository.save(accommodation);
+
+
+    }
+
+
+    public Image convertMultipartFileToImage(MultipartFile file) throws IOException {
+        Image image = new Image();
+        image.setPath(saveFile(file));
+
+        return image;
+    }
+
+    private String saveFile(MultipartFile file) throws IOException {
+        String fileName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
+        String uploadDir = "images";
+
+        // Create the directory if it doesn't exist
+        File directory = new File(uploadDir);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        // Use File.separator to ensure correct file path on different operating systems
+        String filePath = uploadDir + File.separator;
+
+        file.transferTo(new File(filePath));
+
+        return filePath;
+    }
+
+
+
 }

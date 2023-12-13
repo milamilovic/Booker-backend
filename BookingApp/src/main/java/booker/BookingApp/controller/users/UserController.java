@@ -6,19 +6,30 @@ import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.dto.users.UserDTO;
 import booker.BookingApp.model.users.User;
 import booker.BookingApp.service.implementation.UserService;
+import booker.BookingApp.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private TokenUtils tokenUtils;
+
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -90,14 +101,19 @@ public class UserController {
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
     }
 
-    @GetMapping(consumes = "application/json")
-    public ResponseEntity<UserDTO> findByEmailAndPassword(@RequestBody LoginUserDTO loginUserDTO) {
-        User user = userService.findByEmailAndPassword(loginUserDTO.getEmail(), loginUserDTO.getPassword());
+    @PostMapping(value="/login", consumes = "application/json")
+    public ResponseEntity<String> findByEmailAndPassword(@RequestBody LoginUserDTO loginUserDTO) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginUserDTO.getEmail(), loginUserDTO.getPassword()));
 
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        User user = (User) authentication.getPrincipal();
+        String jwt = tokenUtils.generateToken(user.getUsername());
+        return ResponseEntity.ok(jwt);
     }
+
+
 
 }
