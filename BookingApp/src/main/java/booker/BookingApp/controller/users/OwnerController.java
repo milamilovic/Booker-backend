@@ -76,7 +76,7 @@ public class OwnerController {
         if (ownerDTO == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else{
-            Boolean deleted = ownerService.delete(ownerId);
+            Boolean deleted = ownerService.delete(ownerDTO);
             return new ResponseEntity<>(deleted, HttpStatus.OK);
         }
     }

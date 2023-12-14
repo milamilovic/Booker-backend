@@ -67,7 +67,27 @@ public class OwnerService implements IOwnerService {
     }
 
     @Override
-    public void delete(Long id) {
+    public Boolean delete(OwnerDTO owner) {
+        if (checkForDeletion(owner.getId())){
+            Owner deletedOwner = (Owner) userRepository.delete(owner.getId());
+            // TODO log out owner
+            deleteAllAccommodation(owner.getId());
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void deleteAllAccommodation(Long ownerId) {
+
+    }
+
+    @Override
+    public boolean checkForDeletion(Long ownerId) {
+        // TODO get all active reservations for all owners accommodation
+        // TODO if reservations.length == 0 return true
+        // TODO else
+        return false;
     }
 
     @Override
