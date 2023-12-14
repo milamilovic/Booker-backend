@@ -76,14 +76,14 @@ public class GuestController {
         }
     }
 
-    @DeleteMapping(value = "/{guestId}")
-    public ResponseEntity<Void> delete(@PathVariable Long guestId) {
+    @PutMapping(value = "/{guestId}")
+    public ResponseEntity<Boolean> delete(@PathVariable Long guestId) {
         GuestDTO guest = guestService.getGuestById(guestId);
         if (guest == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            guestService.delete(guestId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            Boolean deleted = guestService.delete(guest);
+            return new ResponseEntity<>(deleted, HttpStatus.OK);
         }
     }
 

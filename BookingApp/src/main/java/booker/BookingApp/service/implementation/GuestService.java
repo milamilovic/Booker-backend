@@ -71,7 +71,21 @@ public class GuestService implements IGuestService {
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean checkForDeletion(Long guestId){
+        // get all active reservations for guest
+        // if reservations.length == 0 return true
+        // else
+        return false;
+    }
+
+    @Override
+    public Boolean delete(GuestDTO guest) {
+        if(checkForDeletion(guest.getId())){
+            Guest deletedGuest = (Guest) userRepository.delete(guest.getId());
+            // TODO log out user
+            return true;
+        }
+        return false;
     }
 
     @Override
