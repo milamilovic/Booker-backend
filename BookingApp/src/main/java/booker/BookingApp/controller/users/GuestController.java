@@ -76,7 +76,7 @@ public class GuestController {
         }
     }
 
-    @PutMapping(value = "/{guestId}")
+    @PutMapping(value = "/delete/{guestId}")
     public ResponseEntity<Boolean> delete(@PathVariable Long guestId) {
         GuestDTO guest = guestService.getGuestById(guestId);
         if (guest == null){
