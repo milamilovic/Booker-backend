@@ -70,7 +70,7 @@ public class OwnerController {
         }
     }
 
-    @PutMapping(value = "/{ownerId}")
+    @PutMapping(value = "/delete/{ownerId}")
     public ResponseEntity<Boolean> delete(@PathVariable Long ownerId) {
         OwnerDTO ownerDTO = ownerService.getOwnerById(ownerId);
         if (ownerDTO == null){
