@@ -70,14 +70,14 @@ public class OwnerController {
         }
     }
 
-    @DeleteMapping(value = "/{ownerId}")
-    public ResponseEntity<Void> delete(@PathVariable Long ownerId) {
+    @PutMapping(value = "/{ownerId}")
+    public ResponseEntity<Boolean> delete(@PathVariable Long ownerId) {
         OwnerDTO ownerDTO = ownerService.getOwnerById(ownerId);
         if (ownerDTO == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else{
-            ownerService.delete(ownerId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            Boolean deleted = ownerService.delete(ownerId);
+            return new ResponseEntity<>(deleted, HttpStatus.OK);
         }
     }
 
