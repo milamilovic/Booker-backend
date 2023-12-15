@@ -1,9 +1,6 @@
 package booker.BookingApp.controller.users;
 
-import booker.BookingApp.dto.users.CreateUserDTO;
-import booker.BookingApp.dto.users.LoginUserDTO;
-import booker.BookingApp.dto.users.UpdateUserDTO;
-import booker.BookingApp.dto.users.UserDTO;
+import booker.BookingApp.dto.users.*;
 import booker.BookingApp.model.users.User;
 import booker.BookingApp.service.implementation.UserService;
 import booker.BookingApp.util.TokenUtils;
@@ -55,7 +52,7 @@ public class UserController {
 
 
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping(value = "/signup", consumes = "application/json")
     public ResponseEntity<CreateUserDTO> saveUser(@RequestBody CreateUserDTO createUserDTO) {
         User user = new User();
 
@@ -102,7 +99,7 @@ public class UserController {
     }
 
     @PostMapping(value="/login", consumes = "application/json")
-    public ResponseEntity<String> findByEmailAndPassword(@RequestBody LoginUserDTO loginUserDTO) {
+    public ResponseEntity<Token> findByEmailAndPassword(@RequestBody LoginUserDTO loginUserDTO) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginUserDTO.getEmail(), loginUserDTO.getPassword()));
 
@@ -111,7 +108,8 @@ public class UserController {
 
         User user = (User) authentication.getPrincipal();
         String jwt = tokenUtils.generateToken(user.getUsername());
-        return ResponseEntity.ok(jwt);
+        Token token = new Token(user.getId(), jwt);
+        return ResponseEntity.ok(token);
     }
 
 
