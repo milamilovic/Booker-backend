@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -15,11 +16,13 @@ import java.util.Date;
 @RestController
 @RequestMapping("/api/availability")
 @CrossOrigin(origins = "http://localhost:4200")
+//all of these methods are open to all users
 public class AvailabilityController {
     @Autowired
     IAvailabilityService service;
 
     //create an availability
+    @PreAuthorize("hasRole('OWNER')")
     @PostMapping(value = "/{accommodationId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AvailabilityDTO> insert(@RequestBody AvailabilityDTO availability, @PathVariable Long accommodationId)  {
         AvailabilityDTO dto = service.create(accommodationId, availability);
