@@ -16,6 +16,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/report")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ReportController {
     @Autowired
     IReportService service;

@@ -14,6 +14,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/availability")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AvailabilityController {
     @Autowired
     IAvailabilityService service;
