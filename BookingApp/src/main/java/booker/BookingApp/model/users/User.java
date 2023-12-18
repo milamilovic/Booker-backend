@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -44,9 +45,18 @@ public @Data class User implements UserDetails {
     private Role role;
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
+    @Column(name = "activation_link")
+    private String activationLink;
+    @Column(name = "activated", nullable = false)
+    private boolean activated;
+    @Column(name = "activation_expired")
+    private boolean activationExpired;
+    @Column(name = "activation_timestamp")
+    private Date activationTimestamp;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private ProfilePicture profilePicture;
+
 
     public void setProfilePicturePath(String path){
         this.getProfilePicture().setPath(path);

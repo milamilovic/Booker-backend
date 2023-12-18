@@ -4,23 +4,31 @@ import booker.BookingApp.model.users.User;
 //import booker.BookingApp.repository.UserRepository;
 import booker.BookingApp.repository.UserRepository;
 import booker.BookingApp.service.interfaces.IUserService;
+import booker.BookingApp.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class UserService implements IUserService {
 
-   @Autowired
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-   @Override
+    @Autowired
+    private EmailService emailService;
+
+    @Override
     public User findOne(Long id){
         return userRepository.findById(id).orElseGet(null);
     }
@@ -33,11 +41,46 @@ public class UserService implements IUserService {
 
 
     @Override
-    public User save(User user) {
-       user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public User save(User user) throws InterruptedException {
+        user.setActivationLink(StringUtil.generateRandomStr(10));
+        System.out.println(user.getActivationLink());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setActivated(false);
+        user.setActivationTimestamp(new Date());
+        emailService.sendNotificaitionAsync(user);
+        userRepository.save(user);
+
+        return user;
+    }
+    @Override
+    public User activateProfile(String activationLink) {
+        User user =  userRepository.findByActivationLink(activationLink);
+        if (user == null) {
+            return null;
+        }
+        if(user.isActivationExpired()) {
+            return null;
+        }
+
+        if (isActivationLinkExpired(user.getActivationTimestamp())) {
+            user.setActivationExpired(true);
+            System.out.println("Activation link expired!");
+            return null;
+        }
+
+
+        user.setActivated(true);
+        user.setActivationTimestamp(new Date());
+        userRepository.save(user);
+        return user;
     }
 
+    private boolean isActivationLinkExpired(Date activationTimestamp) {
+        //long expirationTimeMillis = 24 * 60 * 60 * 1000;
+        long expirationTimeMillis = 60 * 1000;
+        long currentTimeMillis = System.currentTimeMillis();
+        return (currentTimeMillis - activationTimestamp.getTime()) > expirationTimeMillis;
+    }
     @Override
     public User findByEmail(String email) {
         User user = userRepository.findByEmail(email);
@@ -58,6 +101,10 @@ public class UserService implements IUserService {
 
         return user;
     }
+
+
+
+
 
 
 }
