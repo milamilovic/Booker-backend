@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,12 +29,14 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/accommodations")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AccommodationController {
 
     @Autowired
     IAccommodationService service;
 
     //create an accommodation
+    @PreAuthorize("hasRole('OWNER')")
     @PostMapping(value ="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccommodationViewDTO> insert(@RequestBody CreateAccommodationDTO accommodation) throws Exception {
         AccommodationViewDTO dto = service.create(accommodation);
@@ -48,17 +51,8 @@ public class AccommodationController {
         return new ResponseEntity<>(accommodation, HttpStatus.OK);
     }
 
-    //get all accommodations
-    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<AccommodationListingDTO>> getAll() throws IOException {
-        ArrayList<AccommodationListingDTO> accommodations = service.findAll();
-        for(AccommodationListingDTO a : accommodations) {
-            //TODO: add rating
-        }
-        return new ResponseEntity<>(accommodations, HttpStatus.OK);
-    }
-
     //find accepted accommodations for owner
+    @PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = "/owner/{ownerId}/active", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findOwnersAcceptedAccommodations(@PathVariable Long ownerId)
     {
@@ -67,6 +61,7 @@ public class AccommodationController {
     }
 
     //find all accommodations for owner
+    @PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = "/owner/{ownerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllOwnersAccommodations(@PathVariable Long ownerId)
     {
@@ -161,6 +156,7 @@ public class AccommodationController {
     }
 
     //admin - get all unapproved accommodations
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/admin/unapproved", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findUnapprovedAccommodations()
     {
@@ -169,6 +165,7 @@ public class AccommodationController {
     }
 
     //admin - decline accommodation
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/admin/remove/{accommodationId}")
     public ResponseEntity<Void> declineAccommodation(@PathVariable Long accommodationId) {
         service.delete(accommodationId);
@@ -177,6 +174,7 @@ public class AccommodationController {
     }
 
     //update accommodation
+    @PreAuthorize("hasRole('OWNER')")
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateAccommodation(@RequestBody AccommodationViewDTO updatedAccommodation) throws Exception {
         service.update(updatedAccommodation);
@@ -184,6 +182,7 @@ public class AccommodationController {
     }
 
     @PostMapping(value = "/{accommodationId}/upload_photos")
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<String> uploadPhotos(@PathVariable Long accommodationId, @RequestParam("images") MultipartFile[] multipartFiles) throws IOException {
         for (MultipartFile file : multipartFiles) {
             service.uploadAccommodationPictures(accommodationId, file);
@@ -191,10 +190,6 @@ public class AccommodationController {
 
         return new ResponseEntity<>("Accommodation's photos successfully uploaded.", HttpStatus.OK);
     }
-
-
-
-
     @GetMapping(value = "/priceType/{id}")
     public ResponseEntity<PriceType> getAccommodationPriceType(@PathVariable Long id) {
         PriceType type = service.getAccommodationPriceType(id);

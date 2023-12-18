@@ -110,6 +110,12 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/users/login")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/signup")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/activate_profile/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/search/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/*")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/priceType/*")).permitAll();
+                            auth.requestMatchers(antMatcher("/owners/*")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/amenities/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/availability/**")).permitAll();
                             auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();
 
                             auth.anyRequest().authenticated();

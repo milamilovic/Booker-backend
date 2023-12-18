@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class ReservationRequestController {
 
     //create a request
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('GUEST')")
     public ResponseEntity<ReservationRequestDTO> insert(@RequestBody ReservationRequestDTO request) throws Exception {
         ReservationRequestDTO requestDTO = service.create(request);
         System.out.println("hit method post");
@@ -30,6 +32,7 @@ public class ReservationRequestController {
 
     //find all requests for owner
     @GetMapping(value = "/owner/{ownerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<ArrayList<ReservationRequestDTO>> findOwnersRequests(@PathVariable Long ownerId)
     {
         ArrayList<ReservationRequestDTO> requests = service.findOwnersRequests(ownerId);
@@ -38,6 +41,7 @@ public class ReservationRequestController {
 
     //find all requests for owner, filter by status
     @GetMapping(value = "/owner/{ownerId}/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<ArrayList<ReservationRequestDTO>> findOwnersRequestsByStatus(@PathVariable Long ownerId,
                                                                                        @RequestBody ArrayList<Filter> filters)
     {
@@ -51,6 +55,7 @@ public class ReservationRequestController {
     //   find all requests for owner, search
     //   /api/requests/owner/5/search/12.12.2023./Modern
     @GetMapping(value = "/owner/{ownerId}/search/{date}/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<ArrayList<ReservationRequestDTO>> searchOwnersRequests(@PathVariable Long ownerId,
                                                                                  @PathVariable String date,
                                                                                  @PathVariable String name)
@@ -64,6 +69,7 @@ public class ReservationRequestController {
     //   /api/requests/owner/5/search/12.12.2023/Modern/filter
     //   and request body contains json with filter array
     @GetMapping(value = "/owner/{ownerId}/search/{date}/{name}/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<ArrayList<ReservationRequestDTO>> searchAndFilterOwnersRequests(@PathVariable Long ownerId,
                                                                                           @PathVariable String date,
                                                                                           @PathVariable String name,
@@ -80,6 +86,7 @@ public class ReservationRequestController {
 
     //find all requests for guest
     @GetMapping(value = "/guest/{guestId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('GUEST')")
     public ResponseEntity<ArrayList<ReservationRequestDTO>> findGuestsRequests(@PathVariable Long guestId)
     {
         ArrayList<ReservationRequestDTO> requests = service.findGuestsRequests(guestId);
@@ -88,6 +95,7 @@ public class ReservationRequestController {
 
     //find all requests for guest, filter by status
     @GetMapping(value = "/guest/{guestId}/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('GUEST')")
     public ResponseEntity<ArrayList<ReservationRequestDTO>> findGuestsRequestsByStatus(@PathVariable Long guestId,
                                                                                        @RequestBody ArrayList<Filter> filters)
     {
@@ -101,6 +109,7 @@ public class ReservationRequestController {
     //   find all requests for guest, search
     //   /api/requests/guest/5/search?date=12.12.2023.&name=Modern
     @GetMapping(value = "/guest/{guestId}/search/{date}/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('GUEST')")
     public ResponseEntity<ArrayList<ReservationRequestDTO>> searchGuestsRequests(@PathVariable Long guestId,
                                                                                  @PathVariable String date,
                                                                                  @PathVariable String name)
@@ -114,6 +123,7 @@ public class ReservationRequestController {
     //   /api/requests/guest/5/search?date=12.12.2023.&name=Modern?status=WAITING
     //   and request body contains json with filter array
     @GetMapping(value = "/guest/{guestId}/search/{date}/{name}/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('GUEST')")
     public ResponseEntity<ArrayList<ReservationRequestDTO>> searchAndFilterGuestsRequests(@PathVariable Long guestId,
                                                                                           @PathVariable String date,
                                                                                           @PathVariable String name,
@@ -130,11 +140,13 @@ public class ReservationRequestController {
 
     //cancel request for guest
     @DeleteMapping(value = "/guest/{guestId}/cancel-request/{requestId}")
+    @PreAuthorize("hasRole('GUEST')")
     public ResponseEntity<Void> cancelRequest(@PathVariable Long guestId, @PathVariable Long requestId) {
         service.cancelRequest(guestId, requestId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //accept or decline request for owner
+    @PreAuthorize("hasRole('OWNER')")
     @PutMapping(value = "/owner/{ownerId}/{requestId}/{accept}")
     public ResponseEntity<Void> declineAccommodation(@PathVariable Long ownerId,
                                                      @PathVariable Long requestId,
