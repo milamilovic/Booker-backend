@@ -14,7 +14,8 @@ public interface IGuestService {
     GuestDTO getGuestByEmail(String email);
     GuestDTO insert(GuestDTO guest);
     GuestDTO update(GuestDTO guest, UpdateUserDTO updateUserDTO);
-    void delete(Long guestId);
+    public boolean checkForDeletion(Long guestId);
+    Boolean delete(GuestDTO guest);
     void block(Long guestId);
     OwnerDTO reportOwner(String ownerEmail);
     ArrayList<GuestDTO> getAllBlocked();

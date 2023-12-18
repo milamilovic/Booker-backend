@@ -37,4 +37,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public User save(User user);
 
+    @Query(value = "UPDATE User u SET u.deleted = true WHERE u.id = :id")
+    public User delete(@Param("id") Long id);
+
 }

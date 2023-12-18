@@ -13,7 +13,9 @@ public interface IOwnerService {
     OwnerDTO getOwnerByEmail(String email);
     OwnerDTO insert(OwnerDTO owner);
     OwnerDTO update(OwnerDTO owner, UpdateUserDTO updateUser);
-    void delete(Long ownerId);
+    Boolean delete(OwnerDTO owner);
+    void deleteAllAccommodation(Long ownerId);
+    boolean checkForDeletion(Long ownerId);
     void block(Long ownerId);
     GuestDTO reportGuest(String guestEmail);
     ArrayList<OwnerDTO> getAllBlocked();
