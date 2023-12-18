@@ -116,6 +116,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/owners/*")).permitAll();
                             auth.requestMatchers(antMatcher("/api/amenities/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/availability/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodation_ratings/all/*/ratings")).permitAll();
                             auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();
 
                             auth.anyRequest().authenticated();
