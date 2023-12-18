@@ -109,7 +109,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->{
                             auth.requestMatchers(antMatcher("/api/users/login")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/signup")).permitAll();
-                            auth.requestMatchers(antMatcher("api/users/activate_profile/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/users/activate_profile/**")).permitAll();
                             auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();
 
                             auth.anyRequest().authenticated();
