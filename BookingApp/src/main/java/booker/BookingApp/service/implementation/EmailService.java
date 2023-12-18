@@ -34,7 +34,8 @@ public class EmailService {
         mail.setTo(user.getEmail());
         mail.setFrom(env.getProperty("spring.mail.username"));
         mail.setSubject("Primer slanja emaila pomoću asinhronog Spring taska");
-        mail.setText("Pozdrav " + user.getName() + ",\n\nhvala što pratiš ISA.");
+        mail.setText("Pozdrav " + user.getName() + ",\n\n Activation Link: 'http://localhost:4200/activate_profile?activationString=" + user.getActivationLink() + "'");
+        System.setProperty("mail.debug", "true");
         javaMailSender.send(mail);
 
         System.out.println("Email poslat!");
@@ -43,7 +44,7 @@ public class EmailService {
     public void sendNotificaitionSync(User user) throws MailException, InterruptedException {
         System.out.println("Sync metoda se izvrsava u istom Threadu koji je i prihvatio zahtev. Thread id: " + Thread.currentThread().getId());
         //Simulacija duze aktivnosti da bi se uocila razlika
-        Thread.sleep(10000);
+        Thread.sleep(50000);
         System.out.println("Slanje emaila...");
 
         SimpleMailMessage mail = new SimpleMailMessage();

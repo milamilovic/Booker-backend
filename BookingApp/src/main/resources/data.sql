@@ -1,9 +1,22 @@
-insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Marko', 'Marković', 'email1@gmail.com', '$2a$12$k1vdJAgwlLoYFDid2OlqzOD0KvHmMS936DbLJZjaC3UgITjiM8gBe', 'adresa1', '060000000', 'GUEST', false, false, false, ARRAY[1, 2]);
-insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Petar', 'Petrović', 'email2@gmail.com', '$2a$12$80PJwk0RVWpOhHpRKCuAc.gItzmXkzXavaDr8XIijSCUC1HToFqmu', 'adresa2', '060000001', 'OWNER', false, false, false, null);
-insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Adam', 'Adamović', 'email3@gmail.com', '$2a$12$aySsOdaOaMgVD9Xmvn5grOQQZ9I9241OMnZ3tCC1nS7QNKYONujma', 'adresa3', '060000002', 'GUEST', false, false, false, ARRAY[1, 2]);
-insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Pera', 'Peric', 'pera123@gmail.com', '$2a$12$KPDq5lv78CgJhvjqDPuLi.puSQKA2yep7pet6LQXsDPdwjg2XtACW', 'Adresa 123', '3210087', 'GUEST', false, false, false, ARRAY[1, 2]);
-insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Admin', 'Admin', 'admin123@gmail.com', '$2a$12$6sazakg0M.OTYFwsIIc3LeKxyzvmQPrQzDX5u9tRV0CMB7iEXN0Gq', 'Adresa admin', '3210088', 'ADMIN', null, null, null, null);
-insert into users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations) values ('Mika', 'Mikic', 'mika123@gmail.com', '$2a$12$Ql13A0ld2AejrnsGU0f4Uu.Fyo4fbNSUHg0dUf8G64piP2txZ6mnm', 'Mikina adresa', '3210089', 'OWNER', false, false, false, null);
+-- Inserting data with activation_link and activated fields
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated)
+VALUES ('Marko', 'Marković', 'email1@gmail.com', '$2a$12$k1vdJAgwlLoYFDid2OlqzOD0KvHmMS936DbLJZjaC3UgITjiM8gBe', 'adresa1', '060000000', 'GUEST', false, false, false, ARRAY[1, 2], 'activation_link1', true);
+
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated)
+VALUES ('Petar', 'Petrović', 'email2@gmail.com', '$2a$12$80PJwk0RVWpOhHpRKCuAc.gItzmXkzXavaDr8XIijSCUC1HToFqmu', 'adresa2', '060000001', 'OWNER', false, false, false, null, 'activation_link2', true);
+
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated)
+VALUES ('Adam', 'Adamović', 'email3@gmail.com', '$2a$12$aySsOdaOaMgVD9Xmvn5grOQQZ9I9241OMnZ3tCC1nS7QNKYONujma', 'adresa3', '060000002', 'GUEST', false, false, false, ARRAY[1, 2], 'activation_link3', true);
+
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated)
+VALUES ('Pera', 'Peric', 'pera123@gmail.com', '$2a$12$KPDq5lv78CgJhvjqDPuLi.puSQKA2yep7pet6LQXsDPdwjg2XtACW', 'Adresa 123', '3210087', 'GUEST', false, false, false, ARRAY[1, 2], 'activation_link4', true);
+
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated)
+VALUES ('Admin', 'Admin', 'admin123@gmail.com', '$2a$12$6sazakg0M.OTYFwsIIc3LeKxyzvmQPrQzDX5u9tRV0CMB7iEXN0Gq', 'Adresa admin', '3210088', 'ADMIN', null, null, null, null, 'activation_link5', true);
+
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated)
+VALUES ('Mika', 'Mikic', 'mika123@gmail.com', '$2a$12$Ql13A0ld2AejrnsGU0f4Uu.Fyo4fbNSUHg0dUf8G64piP2txZ6mnm', 'Mikina adresa', '3210089', 'OWNER', false, false, false, null, 'activation_link6', true);
+
 
 -- Inserting data into Accommodation table
 INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('Cozy Cabin', 'A charming cabin in the woods.', 'Rustic cabin retreat', 15, 1, 4, 2, 0);

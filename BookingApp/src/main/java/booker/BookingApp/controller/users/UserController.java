@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -53,7 +54,7 @@ public class UserController {
 
 
     @PostMapping(value = "/signup", consumes = "application/json")
-    public ResponseEntity<CreateUserDTO> saveUser(@RequestBody CreateUserDTO createUserDTO) {
+    public ResponseEntity<CreateUserDTO> saveUser(@RequestBody CreateUserDTO createUserDTO) throws InterruptedException {
         User user = new User();
 
         user.setName(createUserDTO.getName());
@@ -68,7 +69,7 @@ public class UserController {
     }
 
     @PutMapping(consumes = "application/json")
-    public ResponseEntity<UpdateUserDTO> updateUser(@RequestBody UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<UpdateUserDTO> updateUser(@RequestBody UpdateUserDTO updateUserDTO) throws InterruptedException {
         User user = userService.findOne(updateUserDTO.getId());
 
         if (user == null) {
@@ -82,6 +83,7 @@ public class UserController {
         user.setAddress(updateUserDTO.getAddress());
         user.setPhone(updateUserDTO.getPhone());
         user.setProfilePicture(updateUserDTO.getProfilePicture());
+
 
         user = userService.save(user);
         return new ResponseEntity<>(new UpdateUserDTO(user), HttpStatus.OK);
@@ -111,6 +113,19 @@ public class UserController {
         Token token = new Token(user.getId(), jwt);
         return ResponseEntity.ok(token);
     }
+
+    @PutMapping(value = "/activate_profile/{activationLink}", consumes = "application/json")
+    public ResponseEntity<UserDTO> activateProfile(@PathVariable String activationLink) {
+        User user = userService.activateProfile(activationLink);
+        if (user == null) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+
+        UserDTO dto = new UserDTO(user);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
 
 
 
