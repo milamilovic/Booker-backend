@@ -8,12 +8,13 @@ import booker.BookingApp.service.implementation.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/admins")
+@RequestMapping("/api/admin")
 @CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
     private final AdminService adminService;
@@ -27,6 +28,7 @@ public class AdminController {
         this.adminService = adminService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/{adminId}")
     public ResponseEntity<AdminDTO> update(@PathVariable("adminId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         try{

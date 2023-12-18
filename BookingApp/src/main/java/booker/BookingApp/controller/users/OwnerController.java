@@ -8,12 +8,13 @@ import booker.BookingApp.service.implementation.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/owners")
+@RequestMapping("/api/owners")
 @CrossOrigin(origins = "http://localhost:4200")
 public class OwnerController {
     private final OwnerService ownerService;
@@ -55,6 +56,7 @@ public class OwnerController {
         return new ResponseEntity<>(ownerDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('OWNER')")
     @PutMapping(value = "/{ownerId}")
     public ResponseEntity<OwnerDTO> update(@PathVariable("ownerId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         try{
@@ -70,6 +72,7 @@ public class OwnerController {
         }
     }
 
+    @PreAuthorize("hasRole('OWNER')")
     @PutMapping(value = "/delete/{ownerId}")
     public ResponseEntity<Boolean> delete(@PathVariable Long ownerId) {
         OwnerDTO ownerDTO = ownerService.getOwnerById(ownerId);
@@ -82,6 +85,7 @@ public class OwnerController {
     }
 
     // admin blocks the owner by id
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(consumes = "application/json", value = "/block/{ownerId}")
     public ResponseEntity<Void> block(@PathVariable Long ownerId) {
         OwnerDTO ownerDTO = ownerService.getOwnerById(ownerId);
@@ -93,6 +97,7 @@ public class OwnerController {
         }
     }
 
+    @PreAuthorize("hasRole('OWNER')")
     @PutMapping(consumes ="application/json", value = "/report/{guestEmail}")
     public ResponseEntity<GuestDTO> reportGuest(@PathVariable String guestEmail) {
         GuestDTO guestDTO = ownerService.reportGuest(guestEmail);
