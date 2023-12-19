@@ -35,7 +35,6 @@ public class AccommodationRatingController {
     }
 
     @GetMapping(value = "/all/{accommodation_id}/ratings")
-    @PreAuthorize("hasRole('GUEST')")
     public ResponseEntity<List<AccommodationRatingDTO>> findAllForAccommodation(@PathVariable Long accommodation_id) {
         List<AccommodationRating> ratings = accommodationRatingService.findAllForAccommodation(accommodation_id);
         List<AccommodationRatingDTO> ratingDTOS = new ArrayList<>();
