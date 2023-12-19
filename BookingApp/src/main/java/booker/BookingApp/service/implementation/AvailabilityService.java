@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -40,8 +42,13 @@ public class AvailabilityService implements IAvailabilityService {
     }
 
     @Override
-    public boolean checkForDate(Long accommodationId, String date) {
-        return true;
+    public boolean checkForDate(Long accommodationId, String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+        Date date1 = sdf.parse(date);
+        boolean freeForRange = repository.checkForDate(accommodationId, date1) != null;
+        System.out.println(date + " is " + freeForRange);
+        //if it finds something than it's free for that day and should return true
+        return freeForRange;
     }
 
     @Override

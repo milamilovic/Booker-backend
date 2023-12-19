@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/guests")
+@RequestMapping("/api/guests")
 @CrossOrigin(origins = "http://localhost:4200")
 public class GuestController {
     private final GuestService guestService;

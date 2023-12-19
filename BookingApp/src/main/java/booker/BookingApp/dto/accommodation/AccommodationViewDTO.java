@@ -15,17 +15,21 @@ public @Data @AllArgsConstructor @NoArgsConstructor class AccommodationViewDTO {
     private Address address;
     private List<Amenity> amenities;
     private List<Image> images;
-    private List<Availability> availabilities;
+    private List<AvailabilityDTO> availabilities;
     private List<Price> prices;
     private List<AccommodationRating> ratings;
     private List<AccommodationComment> comments;
     private Long owner_id;
 
     public static AccommodationViewDTO makeFromAccommodation(Accommodation accommodation) {
+        List<AvailabilityDTO> availabilityDTOS = new ArrayList<>();
+        for(Availability a : accommodation.getAvailabilities()) {
+            availabilityDTOS.add(new AvailabilityDTO(a.getStartDate(), a.getEndDate()));
+        }
         return new AccommodationViewDTO(accommodation.getId(),
                 accommodation.getTitle(), accommodation.getDescription(),
                 accommodation.getAddress(), accommodation.getAmenities(),
-                accommodation.getImages(), accommodation.getAvailabilities(),
+                accommodation.getImages(), availabilityDTOS,
                 accommodation.getPrices(), accommodation.getRatings(),
                 accommodation.getComments(), accommodation.getOwner_id());
     }
