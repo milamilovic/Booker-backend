@@ -136,7 +136,6 @@ public class PriceController {
     }
 
     @GetMapping(value = "/{accId}/{fromDate}/{toDate}/{people}")
-    @PreAuthorize("hasRole('GUEST')")
     public ResponseEntity<Double> getPriceForDateRange(@PathVariable Long accId, @PathVariable String fromDate, @PathVariable String toDate, @PathVariable int people) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date start;

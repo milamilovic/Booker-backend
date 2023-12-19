@@ -23,7 +23,6 @@ public class ReservationRequestController {
 
     //create a request
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('GUEST')")
     public ResponseEntity<ReservationRequestDTO> insert(@RequestBody ReservationRequestDTO request) throws Exception {
         ReservationRequestDTO requestDTO = service.create(request);
         System.out.println("hit method post");
