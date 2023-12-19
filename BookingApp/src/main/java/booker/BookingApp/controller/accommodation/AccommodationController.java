@@ -1,9 +1,6 @@
 package booker.BookingApp.controller.accommodation;
 
-import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
-import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
-import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
-import booker.BookingApp.dto.accommodation.ImageDTO;
+import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
@@ -27,6 +24,8 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.Date;
 
+import static booker.BookingApp.dto.accommodation.AccommodationViewDTO.makeFromAccommodation;
+
 @RestController
 @RequestMapping("/api/accommodations")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -37,7 +36,7 @@ public class AccommodationController {
 
     //create an accommodation
     @PreAuthorize("hasRole('OWNER')")
-    @PostMapping(value ="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value ="/create_accommodation", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccommodationViewDTO> insert(@RequestBody CreateAccommodationDTO accommodation) throws Exception {
         AccommodationViewDTO dto = service.create(accommodation);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
@@ -194,5 +193,16 @@ public class AccommodationController {
     public ResponseEntity<PriceType> getAccommodationPriceType(@PathVariable Long id) {
         PriceType type = service.getAccommodationPriceType(id);
         return new ResponseEntity<>(type, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('OWNER')")
+    @PutMapping(value = "/update_availability/{id}", consumes = "application/json")
+    public ResponseEntity<AccommodationViewDTO> updateAvailability(@PathVariable Long id, @RequestBody UpdateAvailabilityDTO updateAvailabilityDTO) {
+        Accommodation accommodation = service.updateAvailability(id, updateAvailabilityDTO);
+        if (accommodation == null) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        AccommodationViewDTO dto = makeFromAccommodation(accommodation);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

@@ -1,9 +1,6 @@
 package booker.BookingApp.service.interfaces;
 
-import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
-import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
-import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
-import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
+import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
@@ -52,4 +49,6 @@ public interface IAccommodationService {
     double findUnitPrice(Long id, Date startDate, Date endDate, int numOfGuests);
 
     PriceType getAccommodationPriceType(Long accommodationId);
+
+    public Accommodation updateAvailability(Long accommodationId, UpdateAvailabilityDTO updateAvailabilityDTO);
 }

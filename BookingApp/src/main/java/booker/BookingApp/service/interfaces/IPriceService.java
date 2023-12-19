@@ -13,7 +13,7 @@ public interface IPriceService {
     public Price findOne(Long id);
     public void delete(Long id);
     //public Price save(Price price);
-    public CreatePriceDTO create(CreatePriceDTO createPriceDTO);
+    public Price create(CreatePriceDTO createPriceDTO);
     public PriceDTO update(PriceDTO priceDTO);
     public List<Price> findAllForAccommodation(Long id);
     public List<Price> findAllForTypeAccommodation();

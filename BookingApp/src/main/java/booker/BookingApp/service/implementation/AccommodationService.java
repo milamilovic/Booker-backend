@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -299,6 +300,34 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
+    public Accommodation updateAvailability(Long accommodationId, UpdateAvailabilityDTO updateAvailabilityDTO) {
+        Accommodation accommodation = repository.findById(accommodationId).orElseGet(null);
+        if (accommodation == null) {
+            return null;
+        }
+
+        AvailabilityDTO availabilityDTO = new AvailabilityDTO(updateAvailabilityDTO.getStartDate(), updateAvailabilityDTO.getEndDate());
+        Availability availability = new Availability();
+        availability.setStartDate(updateAvailabilityDTO.getStartDate());
+        availability.setEndDate(updateAvailabilityDTO.getEndDate());
+        availability.setAccommodation(accommodation);
+        availabilityService.create(accommodationId, availabilityDTO);
+        CreatePriceDTO createPriceDTO = new CreatePriceDTO();
+        createPriceDTO.setCost(updateAvailabilityDTO.getAmount());
+        createPriceDTO.setFromDate(updateAvailabilityDTO.getStartDate());
+        createPriceDTO.setToDate(updateAvailabilityDTO.getEndDate());
+        createPriceDTO.setType(updateAvailabilityDTO.getPrice_type());
+        Price price = priceService.create(createPriceDTO);
+        List<Availability> availabilities = accommodation.getAvailabilities();
+        availabilities.add(availability);
+        List<Price> prices = accommodation.getPrices();
+        prices.add(price);
+        accommodation.setDeadline(updateAvailabilityDTO.getDeadline());
+        repository.save(accommodation);
+        return accommodation;
+    }
+
+    @Override
     public void uploadAccommodationPictures(Long accommodationId, MultipartFile image) throws IOException {
         Accommodation accommodation = repository.findById(accommodationId).orElse(null);
 
@@ -341,6 +370,8 @@ public class AccommodationService implements IAccommodationService {
 
         return filePath;
     }
+
+
 
 
 

@@ -116,7 +116,11 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/owners/*")).permitAll();
                             auth.requestMatchers(antMatcher("/api/amenities/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/availability/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/create_accommodation")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/accommodations/update_availability/**")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/accommodations/search/**")).permitAll();
                             auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();
+
 
                             auth.anyRequest().authenticated();
                         }
@@ -134,7 +138,13 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers
-                (antMatcher(HttpMethod.POST, "/api/users/signup"), antMatcher(HttpMethod.POST, "/api/users/login"),antMatcher(HttpMethod.PUT, "api/users/activate_profile/**"), antMatcher("/h2-console/**"));
+                (antMatcher(HttpMethod.POST, "/api/users/signup"),
+                        antMatcher(HttpMethod.POST, "/api/users/login"),
+                        antMatcher(HttpMethod.POST, "/api/accommodations/create_accommodation"),
+                        antMatcher(HttpMethod.PUT, "/api/users/activate_profile/**"),
+                        antMatcher(HttpMethod.PUT, "/api/accommodations/update_availability/**"),
+                        antMatcher(HttpMethod.GET, "api/accommodations/search/**"),
+                        antMatcher("/h2-console/**"));
     }
     @Bean
     public WebMvcConfigurer corsConfigurer() {

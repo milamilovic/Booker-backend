@@ -1,6 +1,9 @@
 package booker.BookingApp.controller.users;
 
 import booker.BookingApp.dto.users.*;
+import booker.BookingApp.enums.Role;
+import booker.BookingApp.model.users.Guest;
+import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.model.users.User;
 import booker.BookingApp.service.implementation.UserService;
 import booker.BookingApp.util.TokenUtils;
@@ -19,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -55,7 +59,14 @@ public class UserController {
 
     @PostMapping(value = "/signup", consumes = "application/json")
     public ResponseEntity<CreateUserDTO> saveUser(@RequestBody CreateUserDTO createUserDTO) throws InterruptedException {
-        User user = new User();
+
+        User user = null;
+        if(createUserDTO.getRole() == Role.GUEST) {
+            user = new Guest();
+        }
+        else if(createUserDTO.getRole() == Role.OWNER) {
+            user = new Owner();
+        }
 
         user.setName(createUserDTO.getName());
         user.setSurname(createUserDTO.getSurname());
@@ -109,6 +120,9 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         User user = (User) authentication.getPrincipal();
+        if(!user.isActivated()){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
         String jwt = tokenUtils.generateToken(user.getUsername());
         Token token = new Token(user.getId(), jwt);
         return ResponseEntity.ok(token);
