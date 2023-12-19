@@ -61,7 +61,6 @@ public class GuestController {
         return new ResponseEntity<>(guestDTO, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
     @PutMapping(value = "/{guestId}")
     public ResponseEntity<GuestDTO> update(@PathVariable("guestId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         try{
@@ -78,7 +77,6 @@ public class GuestController {
         }
     }
 
-    @PreAuthorize("hasRole('GUEST')")
     @PutMapping(value = "/delete/{guestId}")
     public ResponseEntity<Boolean> delete(@PathVariable Long guestId) {
         GuestDTO guest = guestService.getGuestById(guestId);

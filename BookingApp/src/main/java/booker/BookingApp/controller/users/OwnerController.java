@@ -56,7 +56,6 @@ public class OwnerController {
         return new ResponseEntity<>(ownerDTO, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('OWNER')")
     @PutMapping(value = "/{ownerId}")
     public ResponseEntity<OwnerDTO> update(@PathVariable("ownerId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         try{
@@ -72,7 +71,6 @@ public class OwnerController {
         }
     }
 
-    @PreAuthorize("hasRole('OWNER')")
     @PutMapping(value = "/delete/{ownerId}")
     public ResponseEntity<Boolean> delete(@PathVariable Long ownerId) {
         OwnerDTO ownerDTO = ownerService.getOwnerById(ownerId);

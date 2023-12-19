@@ -28,7 +28,6 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/{adminId}")
     public ResponseEntity<AdminDTO> update(@PathVariable("adminId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         try{

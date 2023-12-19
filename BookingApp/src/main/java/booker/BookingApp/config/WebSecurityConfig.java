@@ -116,6 +116,11 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/owners/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/guests/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/admin/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/guests/{guestId}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/guests/delete/{guestId}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/owners/{ownerId}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/owners/delete/{ownerId}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/admin/{adminId}")).permitAll();
                             auth.requestMatchers(antMatcher("/api/amenities/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/availability/**")).permitAll();
                             auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();
