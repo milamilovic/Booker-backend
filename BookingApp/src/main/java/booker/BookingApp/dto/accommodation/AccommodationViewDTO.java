@@ -20,6 +20,8 @@ public @Data @AllArgsConstructor @NoArgsConstructor class AccommodationViewDTO {
     private List<AccommodationRating> ratings;
     private List<AccommodationComment> comments;
     private Long owner_id;
+    private int min_capacity;
+    private int max_capacity;
 
     public static AccommodationViewDTO makeFromAccommodation(Accommodation accommodation) {
         List<AvailabilityDTO> availabilityDTOS = new ArrayList<>();
@@ -31,6 +33,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class AccommodationViewDTO {
                 accommodation.getAddress(), accommodation.getAmenities(),
                 accommodation.getImages(), availabilityDTOS,
                 accommodation.getPrices(), accommodation.getRatings(),
-                accommodation.getComments(), accommodation.getOwner_id());
+                accommodation.getComments(), accommodation.getOwner_id(),
+                accommodation.getMin_capacity(), accommodation.getMax_capacity());
     }
 }

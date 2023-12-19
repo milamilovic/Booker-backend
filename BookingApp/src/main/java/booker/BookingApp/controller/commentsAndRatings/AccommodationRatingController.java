@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/accommodation_ratings")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AccommodationRatingController {
     @Autowired
     private AccommodationRatingService accommodationRatingService;
@@ -33,6 +35,7 @@ public class AccommodationRatingController {
     }
 
     @GetMapping(value = "/all/{accommodation_id}/ratings")
+    @PreAuthorize("hasRole('GUEST')")
     public ResponseEntity<List<AccommodationRatingDTO>> findAllForAccommodation(@PathVariable Long accommodation_id) {
         List<AccommodationRating> ratings = accommodationRatingService.findAllForAccommodation(accommodation_id);
         List<AccommodationRatingDTO> ratingDTOS = new ArrayList<>();
