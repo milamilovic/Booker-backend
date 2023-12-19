@@ -11,6 +11,7 @@ import booker.BookingApp.service.implementation.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/guests")
+@RequestMapping("/api/guests")
 @CrossOrigin(origins = "http://localhost:4200")
 public class GuestController {
     private final GuestService guestService;
@@ -88,6 +89,7 @@ public class GuestController {
     }
 
     // admin blocks the guest by id
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(consumes = "application/json", value = "/block/{guestId}")
     public ResponseEntity<Void> block(@PathVariable Long guestId) {
         GuestDTO guest = guestService.getGuestById(guestId);
@@ -99,6 +101,7 @@ public class GuestController {
         }
     }
 
+    @PreAuthorize("hasRole('GUEST')")
     @PutMapping(consumes ="application/json", value = "/report/{ownerEmail}")
     public ResponseEntity<OwnerDTO> reportOwner(@PathVariable String ownerEmail) {
         OwnerDTO ownerDTO = guestService.reportOwner(ownerEmail);
@@ -109,6 +112,7 @@ public class GuestController {
         }
     }
 
+    @PreAuthorize("hasRole('GUEST')")
     @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/add/{accommodationId}")
     public ResponseEntity<ArrayList<Long>> addToFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
                                                                         @PathVariable Long accommodationId) throws Exception {
@@ -119,6 +123,7 @@ public class GuestController {
         return new ResponseEntity<>(favourites, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('GUEST')")
     @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/remove/{accommodationId}")
     public ResponseEntity<ArrayList<Long>> removeFromFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
                                                                         @PathVariable Long accommodationId) throws Exception {
@@ -129,6 +134,7 @@ public class GuestController {
         return new ResponseEntity<>(favourites, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/{guestId}/favouriteAccommodations/all")
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllFavouriteReservations(@PathVariable Long guestId) throws IOException {
         GuestDTO guestDTO = guestService.getGuestById(guestId);
