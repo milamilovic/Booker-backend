@@ -22,7 +22,7 @@ public interface AmenityRepository extends JpaRepository<Amenity, Long> {
 
     public List<Amenity> getAmenitiesByAccommodation_Id(Long accommodation_id);
 
-    @Query(value="select distinct a.name, a.image_path from Amenity a")
+    @Query(value="select distinct a from Amenity a")
     public List<Amenity> findAllDistinct();
 
     @Query(value="select distinct a.name from Amenity a where :id=a.id")

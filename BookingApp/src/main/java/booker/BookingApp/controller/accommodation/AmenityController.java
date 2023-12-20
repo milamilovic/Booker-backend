@@ -35,6 +35,7 @@ public class AmenityController {
 
     public ResponseEntity<ArrayList<AmenityDTO>> getAll() throws IOException {
         ArrayList<AmenityDTO> accommodations = service.findAll();
+        System.out.println(accommodations);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 

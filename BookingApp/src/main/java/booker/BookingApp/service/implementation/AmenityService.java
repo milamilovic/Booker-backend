@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.Long;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -51,8 +52,12 @@ public class AmenityService implements IAmenityService {
     public ArrayList<AmenityDTO> findAll() throws IOException {
         ArrayList<Amenity> amenities = (ArrayList<Amenity>) repository.findAllDistinct();
         ArrayList<AmenityDTO> dtos = new ArrayList<>();
+        HashMap<String, Amenity> map = new HashMap<String, Amenity>();
         for(Amenity a: amenities) {
-            dtos.add(AmenityDTO.makeFromAmenity(a));
+            if (!map.containsKey(a.getName())){
+                map.put(a.getName(), a);
+                dtos.add(AmenityDTO.makeFromAmenity(a));
+            }
         }
         return dtos;
     }
