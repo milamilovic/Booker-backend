@@ -5,6 +5,7 @@ import booker.BookingApp.model.accommodation.AccommodationRating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,12 @@ import java.util.List;
 public interface AccommodationRepository  extends JpaRepository<Accommodation, Long> {
     @Query(value="select a from Accommodation a WHERE a.address.city like %:location% and :people >= a.min_capacity and :people <= a.max_capacity")
     public List<Accommodation> searchAccommodations(@Param("location") String location, @Param("people") int people);
+
+    @Query(value = "SELECT a FROM Accommodation a WHERE a.owner_id = :ownerId")
+    public List<Accommodation>findAllForOwner(@Param("ownerId") Long ownerId);
+
+    @Query(value = "SELECT a FROM Accommodation a WHERE a.owner_id = :ownerId and a.accepted = :accepted")
+    public List<Accommodation>findSpecifiedForOwner(@Param("ownerId") Long ownerId, @Param("accepted") Boolean accepted);
 
     @Query(value = "DELETE FROM Accommodation WHERE owner_id = :ownerId")
     public void deleteForOwner(@Param("ownerId") Long ownerId);

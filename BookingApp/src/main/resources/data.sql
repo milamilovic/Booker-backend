@@ -20,18 +20,18 @@ VALUES ('Mika', 'Mikic', 'mika123@gmail.com', '$2a$12$Ql13A0ld2AejrnsGU0f4Uu.Fyo
 
 -- Inserting data into Accommodation table
 -- Inserting data into Accommodation table
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('Cozy Cabin', 'A charming cabin in the woods.', 'Rustic cabin retreat', 15, 1, 4, 2, 0);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES ('Luxury Villa', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 30, 1, 3, 6, 2);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('City Apartment', 'Modern apartment in the heart of the city.', 'Downtown apartment', 20, 1, 4, 6, 1);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES ('Example apartment 1', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 3, 1, 5, 2, 2);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('Example apartment 2', 'A charming cabin in the woods.', 'Rustic cabin retreat', 5, 1, 7, 2, 3);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('Example apartment 3', 'Modern apartment in the heart of the city.', 'Downtown apartment', 2, 1, 5, 6, 3);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES ('Hotel enjoy', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 1, 1, 2, 6, 1);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('Villa Relaxation', 'A charming cabin in the woods.', 'Rustic cabin retreat', 10, 2, 15, 2, 0);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('Flower Apartment', 'Modern apartment in the heart of the city.', 'Downtown apartment', 7, 1, 2, 2, 1);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES ('The prettiest house', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 14, 1, 3, 2, 2);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('Charming Room', 'A charming cabin in the woods.', 'Rustic cabin retreat', 3, 1, 2, 6, 0);
-INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type) VALUES  ('Lovely villa', 'Modern apartment in the heart of the city.', 'Downtown apartment', 10, 2, 6, 2, 2);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES  ('Cozy Cabin', 'A charming cabin in the woods.', 'Rustic cabin retreat', 15, 1, 4, 2, 0, true);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES ('Luxury Villa', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 30, 1, 3, 6, 2, true);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES  ('City Apartment', 'Modern apartment in the heart of the city.', 'Downtown apartment', 20, 1, 4, 6, 1, true);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES ('Example apartment 1', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 3, 1, 5, 2, 2, false);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES  ('Example apartment 2', 'A charming cabin in the woods.', 'Rustic cabin retreat', 5, 1, 7, 2, 3, true);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES  ('Example apartment 3', 'Modern apartment in the heart of the city.', 'Downtown apartment', 2, 1, 5, 6, 3, false);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES ('Hotel enjoy', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 1, 1, 2, 6, 1, true);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES  ('Villa Relaxation', 'A charming cabin in the woods.', 'Rustic cabin retreat', 10, 2, 15, 2, 0, true);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES  ('Flower Apartment', 'Modern apartment in the heart of the city.', 'Downtown apartment', 7, 1, 2, 2, 1, true);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES ('The prettiest house', 'A luxurious villa with stunning views.', 'Luxury villa with pool', 14, 1, 3, 2, 2, false);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES  ('Charming Room', 'A charming cabin in the woods.', 'Rustic cabin retreat', 3, 1, 2, 6, 0, true);
+INSERT INTO Accommodation (title, description, short_description, deadline, min_capacity, max_capacity, owner_id, type, accepted) VALUES  ('Lovely villa', 'Modern apartment in the heart of the city.', 'Downtown apartment', 10, 2, 6, 2, 2, false);
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 1
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('wifi', 1, '../../../assets/images/icons8-wifi-30.png');

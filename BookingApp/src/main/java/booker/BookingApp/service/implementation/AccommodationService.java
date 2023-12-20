@@ -153,12 +153,12 @@ public class AccommodationService implements IAccommodationService {
 
     @Override
     public ArrayList<AccommodationListingDTO> findOwnersActiveAccommodations(Long ownerId) {
-        try {
-            //TODO: this should return accommodation listing dto
-            return findAll();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        List<Accommodation> accommodations = repository.findSpecifiedForOwner(ownerId, true);
+        ArrayList<AccommodationListingDTO> dtos = new ArrayList<>();
+        for(Accommodation a : accommodations) {
+            dtos.add(AccommodationListingDTO.makeFromAccommodation(a));
         }
+        return dtos;
     }
 
     @Override
@@ -167,7 +167,7 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public ArrayList<AccommodationListingDTO> findUnapprovedAccommodations() {
+    public ArrayList<AccommodationListingDTO> findAllUnapprovedAccommodations() {
         return findOwnersActiveAccommodations(2L);
     }
 
@@ -214,7 +214,12 @@ public class AccommodationService implements IAccommodationService {
 
     @Override
     public ArrayList<AccommodationListingDTO> findAllOwnersAccommodations(Long ownerId) {
-        return findOwnersActiveAccommodations(2L);
+        List<Accommodation> accommodations = repository.findAllForOwner(ownerId);
+        ArrayList<AccommodationListingDTO> dtos = new ArrayList<>();
+        for(Accommodation a : accommodations) {
+            dtos.add(AccommodationListingDTO.makeFromAccommodation(a));
+        }
+        return dtos;
     }
 
     @Override
