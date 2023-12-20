@@ -7,6 +7,7 @@ import booker.BookingApp.model.accommodation.Amenity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,4 +31,7 @@ public interface AmenityRepository extends JpaRepository<Amenity, Long> {
 
     @Query(value = "delete from Amenity a where :name=a.name and :id=a.accommodation")
     public void removeAmenityFromAcc(@Param("name") String amenity, @Param("id") Long accId);
+
+    @Transactional
+    void deleteByAccommodationId(Long accommodationId);
 }

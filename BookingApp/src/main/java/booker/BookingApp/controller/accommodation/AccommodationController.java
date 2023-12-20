@@ -189,10 +189,7 @@ public class AccommodationController {
                                                     @RequestBody AddressDTO addressDTO) {
         try{
             AccommodationViewDTO existingAcc = service.findOne(accommodationId);
-            System.out.println("dunja1");
-            System.out.println(existingAcc);
             Address existingAddress = existingAcc.getAddress();
-            System.out.println("dunja2");
             if(existingAddress == null){
                 return new ResponseEntity<>("Not Found",HttpStatus.NOT_FOUND);
             }
