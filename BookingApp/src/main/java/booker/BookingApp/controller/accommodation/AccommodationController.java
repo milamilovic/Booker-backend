@@ -1,9 +1,6 @@
 package booker.BookingApp.controller.accommodation;
 
-import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
-import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
-import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
-import booker.BookingApp.dto.accommodation.ImageDTO;
+import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
@@ -171,11 +168,40 @@ public class AccommodationController {
     }
 
     //update accommodation
-    @PreAuthorize("hasRole('OWNER')")
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateAccommodation(@RequestBody AccommodationViewDTO updatedAccommodation) throws Exception {
-        service.update(updatedAccommodation);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PutMapping(value = "update/{accommodationId}" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateAccommodation(@PathVariable("accommodationId")Long accommodationId,
+            @RequestBody UpdateAccommodationDTO updatedAccommodation) {
+        try{
+            AccommodationViewDTO existingAcc = service.findOne(accommodationId);
+            if(existingAcc == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            service.update(existingAcc, updatedAccommodation);
+            return new ResponseEntity<>("Successful", HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>("Bad accommodation update", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "update/{accommodationId}/address" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateAccommodationAddress(@PathVariable("accommodationId")Long accommodationId,
+                                                    @RequestBody AddressDTO addressDTO) {
+        try{
+            AccommodationViewDTO existingAcc = service.findOne(accommodationId);
+            System.out.println("dunja1");
+            System.out.println(existingAcc);
+            Address existingAddress = existingAcc.getAddress();
+            System.out.println("dunja2");
+            if(existingAddress == null){
+                return new ResponseEntity<>("Not Found",HttpStatus.NOT_FOUND);
+            }
+            service.updateAddress(existingAddress, addressDTO);
+            return new ResponseEntity<>("Successful", HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>("Bad address update",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping(value = "/{accommodationId}/upload_photos")

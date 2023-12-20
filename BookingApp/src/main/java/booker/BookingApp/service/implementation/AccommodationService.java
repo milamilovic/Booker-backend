@@ -145,8 +145,27 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public AccommodationViewDTO update(AccommodationViewDTO accommodation) throws Exception {
-        return accommodation;
+    public void update(AccommodationViewDTO accommodation, UpdateAccommodationDTO updateAccommodation) throws Exception {
+        Accommodation a = repository.findById(accommodation.getId()).get();
+        if (a!=null){
+            a.setTitle(updateAccommodation.getTitle());
+            a.setDescription(updateAccommodation.getDescription());
+            a.setImages(updateAccommodation.getImages());
+            repository.save(a);
+        }
+    }
+
+    @Override
+    public void updateAddress(Address existingAddr, AddressDTO addressDTO){
+        Address a = addressRepository.findById(existingAddr.getId()).get();
+        System.out.println(a);
+        if (a!=null){
+            a.setCity(addressDTO.getCity());
+            a.setStreet(addressDTO.getStreet());
+            a.setLongitude(addressDTO.getLongitude());
+            a.setLatitude(addressDTO.getLatitude());
+            addressRepository.save(a);
+        }
     }
 
     @Override
