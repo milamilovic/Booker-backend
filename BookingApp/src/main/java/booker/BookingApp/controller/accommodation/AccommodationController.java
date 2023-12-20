@@ -35,7 +35,7 @@ public class AccommodationController {
     IAccommodationService service;
 
     //create an accommodation
-    @PreAuthorize("hasRole('OWNER')")
+    //@PreAuthorize("hasAuthority('OWNER')")
     @PostMapping(value ="/create_accommodation", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccommodationViewDTO> insert(@RequestBody CreateAccommodationDTO accommodation) throws Exception {
         AccommodationViewDTO dto = service.create(accommodation);

@@ -75,6 +75,7 @@ public class AccommodationService implements IAccommodationService {
         accommodation.setDescription(accommodationDto.getDescription());
         accommodation.setMin_capacity(accommodationDto.getMin_capacity());
         accommodation.setMax_capacity(accommodationDto.getMax_capacity());
+        accommodation.setType(accommodationDto.getType());
         Address address = new Address();
         address.setStreet(accommodationDto.getAddress().getStreet());
         address.setCity(accommodationDto.getAddress().getCity());

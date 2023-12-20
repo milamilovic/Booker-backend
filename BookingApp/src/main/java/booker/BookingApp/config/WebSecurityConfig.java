@@ -127,6 +127,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/accommodations/update_availability/**")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/accommodations/search/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodation_ratings/all/*/ratings")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/images/upload-multiple")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();
 
 
@@ -152,6 +153,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.PUT, "/api/users/activate_profile/**"),
                         antMatcher(HttpMethod.PUT, "/api/accommodations/update_availability/**"),
                         antMatcher(HttpMethod.GET, "api/accommodations/search/**"),
+                        antMatcher(HttpMethod.POST, "api/images/upload-multiple"),
                         antMatcher("/h2-console/**"));
     }
     @Bean
