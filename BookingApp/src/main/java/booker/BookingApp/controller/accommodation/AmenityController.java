@@ -1,6 +1,10 @@
 package booker.BookingApp.controller.accommodation;
 
+import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
+import booker.BookingApp.dto.accommodation.AddressDTO;
 import booker.BookingApp.dto.accommodation.AmenityDTO;
+import booker.BookingApp.model.accommodation.Address;
+import booker.BookingApp.model.accommodation.Amenity;
 import booker.BookingApp.model.accommodation.Filter;
 import booker.BookingApp.service.implementation.AccommodationService;
 import booker.BookingApp.service.interfaces.IAccommodationService;
@@ -35,6 +39,7 @@ public class AmenityController {
 
     public ResponseEntity<ArrayList<AmenityDTO>> getAll() throws IOException {
         ArrayList<AmenityDTO> accommodations = service.findAll();
+        System.out.println(accommodations);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
@@ -44,4 +49,17 @@ public class AmenityController {
         List<String> names = service.getAllNames();
         return new ResponseEntity<List<String>>(names, HttpStatus.OK);
     }
+
+    @PutMapping(value = "update/{accommodationId}/amenities" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateAmenities(@PathVariable("accommodationId")Long accommodationId,
+                                                             @RequestBody Amenity[] amenities) {
+        try{
+            service.updateAmenities(amenities, accommodationId);
+            return new ResponseEntity<>("Successful", HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>("Bad address update",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

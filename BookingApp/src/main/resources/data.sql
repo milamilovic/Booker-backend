@@ -266,11 +266,12 @@ VALUES (6, 1, 4.0, '2024-05-05', true);
 
 INSERT INTO Profile_Picture (path, user_id)
 VALUES
-    ('../../../images/profile1.png', 1),
-    ('../../../images/profile2.jpg', 2),
-    ('../../../images/profile_pic.jpg', 3),
-    ('../../../images/profile1.jpg', 4),
-    ('../../../images/profile_pic.jpg', 5);
+    ('../../assets/images/profile_pic.jpg', 1),
+    ('../../assets/images/profile_pic.jpg', 2),
+    ('../../assets/images/profile_pic.jpg', 3),
+    ('../../assets/images/profile_pic.jpg', 4),
+    ('../../assets/images/profile_pic.jpg', 5),
+    ('../../assets/images/profile_pic.jpg', 6);
 
 
 

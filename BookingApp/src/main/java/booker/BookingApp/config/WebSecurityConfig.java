@@ -112,8 +112,13 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/users/activate_profile/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/search/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/*")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/{accommodationId}/remove_image/{imageId}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/{accommodationId}/upload_images")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}/active")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/update/{accommodationId}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/update/{accommodationId}/address")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/amenities/update/{accommodationId}/amenities")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/priceType/*")).permitAll();
                             auth.requestMatchers(antMatcher("/api/prices/*/*/*/*")).permitAll();
                             auth.requestMatchers(antMatcher("/api/owners/**")).permitAll();
@@ -125,6 +130,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/owners/delete/{ownerId}")).permitAll();
                             auth.requestMatchers(antMatcher("/api/admin/{adminId}")).permitAll();
                             auth.requestMatchers(antMatcher("/api/amenities/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/amenities/all")).permitAll();
                             auth.requestMatchers(antMatcher("/api/availability/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodation_ratings/all/*/ratings")).permitAll();
                             auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();
