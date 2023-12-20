@@ -110,24 +110,38 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/users/login")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/signup")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/activate_profile/**")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/accommodations/search/**")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/accommodations/*")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}/active")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/accommodations/priceType/*")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/prices/*/*/*/*")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/owners/**")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/guests/**")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/admin/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/search/**")).permitAll();  //searching for everyone
+                            auth.requestMatchers(antMatcher("/api/accommodations")).hasAnyAuthority("OWNER", "ADMIN");          //viewing acc for everyone
+                            auth.requestMatchers(antMatcher("/api/accommodations/add")).hasAuthority("OWNER");          //viewing acc for everyone
+                            auth.requestMatchers(antMatcher("/api/accommodations/*")).permitAll();          //viewing acc for everyone
+                            auth.requestMatchers(antMatcher("/api/accommodations/owner/*")).hasAuthority("OWNER");    //for owner
+                            auth.requestMatchers(antMatcher("/api/accommodations/guest/**")).hasAuthority("GUEST");    //for owner
+                            auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}/active")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/accommodations/admin/unapproved")).hasAuthority("ADMIN");    //for admin
+                            auth.requestMatchers(antMatcher("/api/accommodations/admin/remove/*")).hasAuthority("ADMIN");
+                            auth.requestMatchers(antMatcher("/api/requests/owner/**")).hasAuthority("OWNER");      //for owner
+                            auth.requestMatchers(antMatcher("/api/requests/guest/**")).hasAuthority("GUEST");      //for guest
+                            auth.requestMatchers(antMatcher("/api/reservations/*")).hasAnyAuthority("GUEST", "OWNER");
+                            auth.requestMatchers(antMatcher("/api/reservations/owner/**")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/reservations/accommodation/**")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/reservations/guest/**")).hasAuthority("GUEST");
+                            auth.requestMatchers(antMatcher("/api/report/owner/*/**")).permitAll();      //for owner
+                            auth.requestMatchers(antMatcher("/api/notifications/*")).hasAnyAuthority("GUEST", "OWNER");      //they have notif
+                            auth.requestMatchers(antMatcher("/api/accommodations/priceType/*")).permitAll();    //used in search - everyone
+                            auth.requestMatchers(antMatcher("/api/prices/{accId}/{fromDate}/{toDate}/{people}")).permitAll();        //for guest - making reservation reqest
                             auth.requestMatchers(antMatcher("/api/guests/{guestId}")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/guests/delete/{guestId}")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/owners/{ownerId}")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/owners/delete/{ownerId}")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/admin/{adminId}")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/amenities/**")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/availability/**")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/accommodation_ratings/all/*/ratings")).permitAll();
-                            auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/guests/delete/{guestId}")).hasAuthority("GUEST");
+                            auth.requestMatchers(antMatcher("/api/owners/*")).permitAll();      //used in acc view - for everyone
+                            auth.requestMatchers(antMatcher("/api/owners")).hasAuthority("OWNER");      //used in acc view - for everyone
+                            auth.requestMatchers(antMatcher("/api/owners/delete/{ownerId}")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/admin/**")).hasAuthority("ADMIN");
+                            auth.requestMatchers(antMatcher("/api/guests/**")).hasAuthority("GUEST");
+                            auth.requestMatchers(antMatcher("/api/guests")).hasAuthority("GUEST");
+                            auth.requestMatchers(antMatcher("/api/amenities/**")).permitAll();      //used in search - for everyone
+                            auth.requestMatchers(antMatcher("/api/availability/**")).permitAll();   //used in search - for everyone
+                            auth.requestMatchers(antMatcher("/api/availability/*/**")).permitAll();   //used in search - for everyone
+                            auth.requestMatchers(antMatcher("/api/accommodation_ratings/all/*/ratings")).permitAll();   //used in search - for everyone
+                            auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();     //for everyone
 
                             auth.anyRequest().authenticated();
                         }
@@ -145,7 +159,37 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers
-                (antMatcher(HttpMethod.POST, "/api/users/signup"), antMatcher(HttpMethod.POST, "/api/users/login"),antMatcher(HttpMethod.PUT, "api/users/activate_profile/**"), antMatcher("/h2-console/**"));
+                (
+                        antMatcher(HttpMethod.POST, "/api/users/signup"),
+                        antMatcher(HttpMethod.POST, "/api/users/login"),
+                        antMatcher(HttpMethod.PUT, "api/users/activate_profile/**"),
+                        antMatcher(HttpMethod.PUT, "/api/accommodations"),
+                        antMatcher(HttpMethod.GET, "/api/accommodations/**"),
+                        antMatcher(HttpMethod.POST, "/api/accommodations/add"),
+                        antMatcher(HttpMethod.PUT, "/api/requests/owner/**"),
+                        antMatcher(HttpMethod.GET, "/api/requests/owner/**"),
+                        antMatcher(HttpMethod.POST, "/api/requests"),
+                        antMatcher(HttpMethod.GET, "/api/requests/**"),
+                        antMatcher(HttpMethod.GET, "/api/notifications/**"),
+                        antMatcher(HttpMethod.DELETE, "/api/requests/guest/**"),
+                        antMatcher(HttpMethod.POST, "/api/reservations/**"),
+                        antMatcher(HttpMethod.PUT, "/api/reservations/**"),
+                        antMatcher(HttpMethod.GET, "/api/reservations/**"),
+                        antMatcher(HttpMethod.DELETE, "/api/reservations/**"),
+                        antMatcher(HttpMethod.DELETE, "/api/owners/**"),
+                        antMatcher(HttpMethod.DELETE, "/api/guests/**"),
+                        antMatcher(HttpMethod.GET, "/api/guests/**"),
+                        antMatcher(HttpMethod.PUT, "/api/owners/**"),
+                        antMatcher(HttpMethod.GET, "/api/owners/**"),
+                        antMatcher(HttpMethod.PUT, "/api/guests"),
+                        antMatcher(HttpMethod.PUT, "/api/guests/**"),
+                        antMatcher(HttpMethod.PUT, "/api/owners"),
+                        antMatcher(HttpMethod.POST, "/api/owners/**"),
+                        antMatcher(HttpMethod.POST, "/api/guests/**"),
+                        antMatcher(HttpMethod.POST, "/api/guests"),
+                        antMatcher(HttpMethod.POST, "/api/availability/*"),
+                        antMatcher("/h2-console/**")
+                );
     }
     @Bean
     public WebMvcConfigurer corsConfigurer() {

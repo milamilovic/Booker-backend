@@ -32,7 +32,6 @@ public class AmenityController {
 
     //get all amenities
     @GetMapping(value ="/all", produces = MediaType.APPLICATION_JSON_VALUE)
-
     public ResponseEntity<ArrayList<AmenityDTO>> getAll() throws IOException {
         ArrayList<AmenityDTO> accommodations = service.findAll();
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
