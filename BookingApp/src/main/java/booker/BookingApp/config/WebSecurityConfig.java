@@ -163,9 +163,8 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers
-
                 (
-                        antMatcher(HttpMethod.GET, "/src/app/resources/images"));
+                        antMatcher(HttpMethod.GET, "/src/app/resources/images"),
                         antMatcher(HttpMethod.POST, "/api/users/signup"),
                         antMatcher(HttpMethod.POST, "/api/users/login"),
                         antMatcher(HttpMethod.PUT, "api/users/activate_profile/**"),
@@ -195,7 +194,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.POST, "/api/guests"),
                         antMatcher(HttpMethod.POST, "/api/availability/*"),
                         antMatcher("/h2-console/**")
-                );
+        );
     }
 
     @Bean
