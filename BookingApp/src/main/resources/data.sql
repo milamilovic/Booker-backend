@@ -270,8 +270,8 @@ VALUES
     ('../../assets/images/profile_pic.jpg', 2),
     ('../../assets/images/profile_pic.jpg', 3),
     ('../../assets/images/profile_pic.jpg', 4),
-    ('../../assets/images/profile_pic.jpg', 5);
-    ('../../assets/images/profile_pic.jpg', 5);
+    ('../../assets/images/profile_pic.jpg', 5),
+    ('../../assets/images/profile_pic.jpg', 6);
 
 
 
