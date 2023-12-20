@@ -143,6 +143,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/accommodation_ratings/all/*/ratings")).permitAll();   //used in search - for everyone
                             auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();     //for everyone
 
+
                             auth.anyRequest().authenticated();
                         }
                 )

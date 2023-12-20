@@ -1,9 +1,6 @@
 package booker.BookingApp.controller.accommodation;
 
-import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
-import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
-import booker.BookingApp.dto.accommodation.CreateAccommodationDTO;
-import booker.BookingApp.dto.accommodation.ImageDTO;
+import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
@@ -22,10 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/accommodations")
@@ -169,10 +163,37 @@ public class AccommodationController {
     }
 
     //update accommodation
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateAccommodation(@RequestBody AccommodationViewDTO updatedAccommodation) throws Exception {
-        service.update(updatedAccommodation);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PutMapping(value = "update/{accommodationId}" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateAccommodation(@PathVariable("accommodationId")Long accommodationId,
+            @RequestBody UpdateAccommodationDTO updatedAccommodation) {
+        try{
+            AccommodationViewDTO existingAcc = service.findOne(accommodationId);
+            if(existingAcc == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            service.update(existingAcc, updatedAccommodation);
+            return new ResponseEntity<>("Successful", HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>("Bad accommodation update", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "update/{accommodationId}/address" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateAccommodationAddress(@PathVariable("accommodationId")Long accommodationId,
+                                                    @RequestBody AddressDTO addressDTO) {
+        try{
+            AccommodationViewDTO existingAcc = service.findOne(accommodationId);
+            Address existingAddress = existingAcc.getAddress();
+            if(existingAddress == null){
+                return new ResponseEntity<>("Not Found",HttpStatus.NOT_FOUND);
+            }
+            service.updateAddress(existingAddress, addressDTO);
+            return new ResponseEntity<>("Successful", HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>("Bad address update",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping(value = "/{accommodationId}/upload_photos")
@@ -189,4 +210,23 @@ public class AccommodationController {
         PriceType type = service.getAccommodationPriceType(id);
         return new ResponseEntity<>(type, HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/{accommodationId}/remove_image/{imageId}")
+    public ResponseEntity<Void> removeFromImages(@PathVariable("accommodationId") Long accommodationId,
+                                                 @PathVariable("imageId") Long imageId) {
+        System.out.println("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
+        System.out.println(imageId);
+        service.deleteImage(accommodationId, imageId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/{accommodationId}/upload_images")
+    public ResponseEntity<String> uploadImages(@PathVariable("accommodationId")Long accommodationId,
+                                                @RequestParam("images") Collection<MultipartFile> imageFiles) throws IOException{
+        for(MultipartFile image : imageFiles){
+            service.uploadImage(accommodationId, image);
+        }
+        return new ResponseEntity<>("Images uploaded successfully!", HttpStatus.OK);
+    }
+
 }
