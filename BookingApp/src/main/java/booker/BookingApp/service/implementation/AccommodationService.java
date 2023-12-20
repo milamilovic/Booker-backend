@@ -4,15 +4,16 @@ import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
-import booker.BookingApp.repository.AccommodationRepository;
-import booker.BookingApp.repository.AddressRepository;
-import booker.BookingApp.repository.AmenityRepository;
-import booker.BookingApp.repository.ImageRepository;
+import booker.BookingApp.model.users.Owner;
+import booker.BookingApp.model.users.User;
+import booker.BookingApp.repository.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import booker.BookingApp.util.ImageUploadUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,8 +32,15 @@ public class AccommodationService implements IAccommodationService {
     @Value("src/main/resources/images/accommodations")
     private String imagesDirPath;
 
+    @Value("../../Booker-frontend/booker/src/assets/images/accommodation")
+    private String imagesDirPathFront;
+
     @Autowired
     AccommodationRepository repository;
+
+    @Autowired
+
+    AvailabilityRepository availabilityRepository;
 
     @Autowired
     AvailabilityService availabilityService;
@@ -50,6 +58,10 @@ public class AccommodationService implements IAccommodationService {
 
     @Autowired
     PriceService priceService;
+    @Autowired
+    PriceRepository priceRepository;
+
+
 
     @Override @Transactional
     public ArrayList<AccommodationListingDTO> findAll() throws IOException {
@@ -73,27 +85,50 @@ public class AccommodationService implements IAccommodationService {
         Accommodation accommodation = new Accommodation();
         accommodation.setTitle(accommodationDto.getTitle());
         accommodation.setDescription(accommodationDto.getDescription());
+        accommodation.setShortDescription(accommodationDto.getShortDescription());
         accommodation.setMin_capacity(accommodationDto.getMin_capacity());
         accommodation.setMax_capacity(accommodationDto.getMax_capacity());
         accommodation.setType(accommodationDto.getType());
+
+
         Address address = new Address();
         address.setStreet(accommodationDto.getAddress().getStreet());
         address.setCity(accommodationDto.getAddress().getCity());
         address.setLatitude(accommodationDto.getAddress().getLatitude());
-        address.setLongitude(accommodationDto.getAddress().getLongitude());
-
+        address.setLongitude(accommodationDto.getAddress().getLongitude());;
         addressRepository.save(address);
+
+        //addressRepository.save(address);
         accommodation.setAddress(address);
 
-        accommodation.setOwner_id(2L);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof Owner) {
+                Owner user = (Owner) principal;
+                accommodation.setOwner_id(user.getId());
+            } else {
+                // Handle the case where the principal is not an instance of User
+                throw new RuntimeException("Unexpected principal type: " + principal.getClass());
+            }
+        } else {
+            // Handle the case where there is no authentication
+            throw new RuntimeException("User not authenticated");
+        }
+
+        repository.save(accommodation);
 
         ArrayList<Amenity> amenities = new ArrayList<Amenity>();
         for(String amenityName : accommodationDto.getAmenities()){
             Amenity amenity = new Amenity();
             amenity.setName(amenityName);
             amenity.setImage_path("");
+            amenity.setAccommodation(accommodation);
             amenities.add(amenity);
         }
+        amenityRepository.saveAll(amenities);
         accommodation.setAmenities(amenities);
 
 
@@ -104,16 +139,14 @@ public class AccommodationService implements IAccommodationService {
 //        }
 //        accommodation.setImages(images);
 
-
-
         Availability availability = new Availability();
         availability.setStartDate(accommodationDto.getStartDate());
         availability.setEndDate(accommodationDto.getEndDate());
         availability.setAccommodation(accommodation);
         ArrayList<Availability> availabilities = new ArrayList<Availability>();
         availabilities.add(availability);
+        availabilityRepository.saveAll(availabilities);
         accommodation.setAvailabilities(availabilities);
-
 
 
         Price price = new Price();
@@ -124,20 +157,22 @@ public class AccommodationService implements IAccommodationService {
         price.setAccommodation(accommodation);
         ArrayList<Price> prices = new ArrayList<Price>();
         prices.add(price);
+        priceRepository.saveAll(prices);
         accommodation.setPrices(prices);
 
 
+        //repository.save(accommodation);
+        //availabilityService.create(accommodation.getId(), availabilityDTO);
 
-        repository.save(accommodation);
+        ArrayList<Image> images = new ArrayList<Image>();
+        for(String fileName : accommodationDto.getImages()) {
+            Image image = new Image(null,"../../assets/images/accommodation" + fileName, accommodation);
+            images.add(image);
+        }
 
-//        ArrayList<Image> images = new ArrayList<Image>();
-//        for(MultipartFile file : accommodationDto.getImages()) {
-//            uploadAccommodationPictures(accommodation.getId() , file);
-//        }
-//        accommodation.setImages(images);
-//        repository.save(accommodation);
-
-
+        accommodation.setImages(images);
+        imageRepository.saveAll(images);
+        //repository.save(accommodation);
 
         AccommodationViewDTO accommodationViewDTO = AccommodationViewDTO.makeFromAccommodation(accommodation);
         return accommodationViewDTO;
@@ -337,18 +372,13 @@ public class AccommodationService implements IAccommodationService {
     public void uploadAccommodationPictures(Long accommodationId, MultipartFile image) throws IOException {
         Accommodation accommodation = repository.findById(accommodationId).orElse(null);
 
-
         String fileName = StringUtils.cleanPath(image.getOriginalFilename());
         String uploadDir = StringUtils.cleanPath(imagesDirPath + accommodation.getId());
         System.out.println(uploadDir);
 
         ImageUploadUtil.saveImage(uploadDir, fileName, image);
 
-
-
         repository.save(accommodation);
-
-
     }
 
 

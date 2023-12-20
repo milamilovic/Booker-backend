@@ -22,7 +22,7 @@ public class ImageController {
 
         // Example: Save the files to a directory
          for (MultipartFile file : files) {
-             Path filePath = Paths.get("src/main/resources/images/" + file.getOriginalFilename());
+             Path filePath = Paths.get("../../Booker-frontend/booker/src/assets/images/accommodation" + file.getOriginalFilename());
              Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
          }
 

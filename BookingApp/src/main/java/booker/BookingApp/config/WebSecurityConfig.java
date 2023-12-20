@@ -111,8 +111,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/users/signup")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/activate_profile/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/search/**")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/accommodations/*")).permitAll();
-                            auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}/active")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/priceType/*")).permitAll();
                             auth.requestMatchers(antMatcher("/api/prices/*/*/*/*")).permitAll();
@@ -152,13 +151,12 @@ public class WebSecurityConfig {
         return (web) -> web.ignoring().requestMatchers
                 (antMatcher(HttpMethod.POST, "/api/users/signup"),
                         antMatcher(HttpMethod.POST, "/api/users/login"),
-                        antMatcher(HttpMethod.POST, "/api/accommodations/create_accommodation"),
                         antMatcher(HttpMethod.PUT, "/api/users/activate_profile/**"),
-                        antMatcher(HttpMethod.PUT, "/api/accommodations/update_availability/**"),
                         antMatcher(HttpMethod.GET, "api/accommodations/search/**"),
-                        antMatcher(HttpMethod.POST, "api/images/upload-multiple"),
-                        antMatcher("/h2-console/**"));
+                        antMatcher("/h2-console/**"),
+                        antMatcher(HttpMethod.GET, "/src/app/resources/images"));
     }
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

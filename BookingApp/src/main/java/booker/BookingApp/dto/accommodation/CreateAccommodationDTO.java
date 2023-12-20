@@ -14,10 +14,11 @@ public @Data class CreateAccommodationDTO {
     private Long id;
     private String title;
     private String description;
+    private String shortDescription;
     private AddressDTO address;
     private String[] amenities;
 //    private List<ImageDTO> images;
-    private MultipartFile[] images;
+    private String[] images;
     private AccommodationType type;
     private Date startDate;
     private Date endDate;

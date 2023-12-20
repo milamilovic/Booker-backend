@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity  @AllArgsConstructor
+@Entity
+@AllArgsConstructor
 @NoArgsConstructor
 public @Data class Address {
     @Id
@@ -24,7 +25,5 @@ public @Data class Address {
     @JoinColumn(name = "longitude")
     private double longitude;
 
-    @OneToOne
-    @JoinColumn(name = "accommodation_id")
-    private Accommodation accommodation;
+
 }

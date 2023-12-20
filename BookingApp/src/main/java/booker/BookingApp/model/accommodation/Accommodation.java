@@ -37,7 +37,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     @Column(name = "availabilities", nullable = false)
     @JsonIgnore
     private List<Availability> availabilities;
-    @OneToOne(mappedBy = "accommodation", fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private Address address;
 

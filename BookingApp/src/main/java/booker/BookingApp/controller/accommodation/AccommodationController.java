@@ -60,7 +60,7 @@ public class AccommodationController {
     }
 
     //find all accommodations for owner
-    //@PreAuthorize("hasRole('OWNER')")
+    //@PreAuthorize("hasAuthority('OWNER')")
     @GetMapping(value = "/owner/{ownerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllOwnersAccommodations(@PathVariable Long ownerId)
     {
@@ -195,7 +195,7 @@ public class AccommodationController {
         return new ResponseEntity<>(type, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('OWNER')")
+    //@PreAuthorize("hasAuthority('OWNER')")
     @PutMapping(value = "/update_availability/{id}", consumes = "application/json")
     public ResponseEntity<AccommodationViewDTO> updateAvailability(@PathVariable Long id, @RequestBody UpdateAvailabilityDTO updateAvailabilityDTO) {
         Accommodation accommodation = service.updateAvailability(id, updateAvailabilityDTO);
