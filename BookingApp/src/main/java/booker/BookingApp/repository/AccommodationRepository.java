@@ -22,4 +22,7 @@ public interface AccommodationRepository  extends JpaRepository<Accommodation, L
 
     @Query(value = "DELETE FROM Accommodation WHERE owner_id = :ownerId")
     public void deleteForOwner(@Param("ownerId") Long ownerId);
+
+    @Query(value = "SELECT a FROM Accommodation a WHERE a.accepted = :accepted")
+    public List<Accommodation>findUnapproved(@Param("accepted") Boolean accepted);
 }
