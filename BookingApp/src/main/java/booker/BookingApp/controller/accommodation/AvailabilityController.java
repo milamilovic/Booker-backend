@@ -23,7 +23,6 @@ public class AvailabilityController {
     IAvailabilityService service;
 
     //create an availability
-    @PreAuthorize("hasRole('OWNER')")
     @PostMapping(value = "/{accommodationId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AvailabilityDTO> insert(@RequestBody AvailabilityDTO availability, @PathVariable Long accommodationId)  {
 //        AvailabilityDTO dto = new AvailabilityDTO(availability);

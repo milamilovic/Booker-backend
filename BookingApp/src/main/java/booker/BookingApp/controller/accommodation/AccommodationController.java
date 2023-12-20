@@ -19,10 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
 import static booker.BookingApp.dto.accommodation.AccommodationViewDTO.makeFromAccommodation;
 
@@ -35,7 +32,6 @@ public class AccommodationController {
     IAccommodationService service;
 
     //create an accommodation
-    //@PreAuthorize("hasAuthority('OWNER')")
     @PostMapping(value ="/create_accommodation", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccommodationViewDTO> insert(@RequestBody CreateAccommodationDTO accommodation) throws Exception {
         AccommodationViewDTO dto = service.create(accommodation);
@@ -51,7 +47,6 @@ public class AccommodationController {
     }
 
     //find accepted accommodations for owner
-    //@PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = "/owner/{ownerId}/active", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findOwnersAcceptedAccommodations(@PathVariable Long ownerId)
     {
@@ -60,7 +55,6 @@ public class AccommodationController {
     }
 
     //find all accommodations for owner
-    //@PreAuthorize("hasAuthority('OWNER')")
     @GetMapping(value = "/owner/{ownerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllOwnersAccommodations(@PathVariable Long ownerId)
     {
@@ -102,7 +96,7 @@ public class AccommodationController {
     //   searching accommodations with filters, path looks like
     //   /api/accommodations/search/12.12.2023./15.12.2023./Paris/2
     //   and request body contains json with filter array
-    @PostMapping(value = "/search/{startDate}/{endDate}/{location}/{people}/filter", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/{startDate}/{endDate}/{location}/{people}/filter", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> searchAndFilterAccommodations(@PathVariable String startDate,
                                                                                             @PathVariable String endDate,
                                                                                             @PathVariable String location,
@@ -155,7 +149,6 @@ public class AccommodationController {
     }
 
     //admin - get all unapproved accommodations
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/admin/unapproved", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findUnapprovedAccommodations()
     {
@@ -164,7 +157,6 @@ public class AccommodationController {
     }
 
     //admin - decline accommodation
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/admin/remove/{accommodationId}")
     public ResponseEntity<Void> declineAccommodation(@PathVariable Long accommodationId) {
         service.delete(accommodationId);
@@ -173,11 +165,37 @@ public class AccommodationController {
     }
 
     //update accommodation
-    @PreAuthorize("hasRole('OWNER')")
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateAccommodation(@RequestBody AccommodationViewDTO updatedAccommodation) throws Exception {
-        service.update(updatedAccommodation);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PutMapping(value = "update/{accommodationId}" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateAccommodation(@PathVariable("accommodationId")Long accommodationId,
+            @RequestBody UpdateAccommodationDTO updatedAccommodation) {
+        try{
+            AccommodationViewDTO existingAcc = service.findOne(accommodationId);
+            if(existingAcc == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            service.update(existingAcc, updatedAccommodation);
+            return new ResponseEntity<>("Successful", HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>("Bad accommodation update", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "update/{accommodationId}/address" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateAccommodationAddress(@PathVariable("accommodationId")Long accommodationId,
+                                                    @RequestBody AddressDTO addressDTO) {
+        try{
+            AccommodationViewDTO existingAcc = service.findOne(accommodationId);
+            Address existingAddress = existingAcc.getAddress();
+            if(existingAddress == null){
+                return new ResponseEntity<>("Not Found",HttpStatus.NOT_FOUND);
+            }
+            service.updateAddress(existingAddress, addressDTO);
+            return new ResponseEntity<>("Successful", HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>("Bad address update",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping(value = "/{accommodationId}/upload_photos")
@@ -205,4 +223,21 @@ public class AccommodationController {
         AccommodationViewDTO dto = makeFromAccommodation(accommodation);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+    @DeleteMapping(value = "/{accommodationId}/remove_image/{imageId}")
+    public ResponseEntity<Void> removeFromImages(@PathVariable("accommodationId") Long accommodationId,
+                                                 @PathVariable("imageId") Long imageId) {
+        System.out.println(imageId);
+        service.deleteImage(accommodationId, imageId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/{accommodationId}/upload_images")
+    public ResponseEntity<String> uploadImages(@PathVariable("accommodationId")Long accommodationId,
+                                                @RequestParam("images") Collection<MultipartFile> imageFiles) throws IOException{
+        for(MultipartFile image : imageFiles){
+            service.uploadImage(accommodationId, image);
+        }
+        return new ResponseEntity<>("Images uploaded successfully!", HttpStatus.OK);
+    }
+
 }

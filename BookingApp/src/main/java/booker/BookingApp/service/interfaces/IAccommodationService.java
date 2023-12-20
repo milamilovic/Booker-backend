@@ -4,6 +4,7 @@ import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
+import booker.BookingApp.model.accommodation.Address;
 import booker.BookingApp.model.accommodation.Filter;
 import booker.BookingApp.model.accommodation.Image;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,9 @@ public interface IAccommodationService {
 
     AccommodationViewDTO create(CreateAccommodationDTO accommodation) throws Exception;
 
-    AccommodationViewDTO update(AccommodationViewDTO accommodation) throws Exception;
+    void update(AccommodationViewDTO accommodation, UpdateAccommodationDTO updateAccommodation) throws Exception;
+
+    void updateAddress(Address existingAddr, AddressDTO updatedAddressDTO);
 
     void delete(Long id);
 
@@ -51,4 +54,7 @@ public interface IAccommodationService {
     PriceType getAccommodationPriceType(Long accommodationId);
 
     public Accommodation updateAvailability(Long accommodationId, UpdateAvailabilityDTO updateAvailabilityDTO);
+    void deleteImage(Long accommodationId, Long imageId);
+
+    void uploadImage(Long accommodationId, MultipartFile image) throws IOException;
 }
