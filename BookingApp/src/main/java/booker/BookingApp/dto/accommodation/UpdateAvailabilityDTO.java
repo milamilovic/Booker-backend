@@ -11,8 +11,9 @@ import java.util.Date;
 public class UpdateAvailabilityDTO {
     public Date startDate;
     public Date endDate;
-    public double amount;
-    public PriceType price_type;
+    public CreatePriceDTO price;
     public int deadline;
 
+    public UpdateAvailabilityDTO() {
+    }
 }

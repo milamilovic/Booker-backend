@@ -346,23 +346,26 @@ public class AccommodationService implements IAccommodationService {
         if (accommodation == null) {
             return null;
         }
+        repository.save(accommodation);
 
-        AvailabilityDTO availabilityDTO = new AvailabilityDTO(updateAvailabilityDTO.getStartDate(), updateAvailabilityDTO.getEndDate());
         Availability availability = new Availability();
         availability.setStartDate(updateAvailabilityDTO.getStartDate());
         availability.setEndDate(updateAvailabilityDTO.getEndDate());
         availability.setAccommodation(accommodation);
-        availabilityService.create(accommodationId, availabilityDTO);
-        CreatePriceDTO createPriceDTO = new CreatePriceDTO();
-        createPriceDTO.setCost(updateAvailabilityDTO.getAmount());
-        createPriceDTO.setFromDate(updateAvailabilityDTO.getStartDate());
-        createPriceDTO.setToDate(updateAvailabilityDTO.getEndDate());
-        createPriceDTO.setType(updateAvailabilityDTO.getPrice_type());
-        Price price = priceService.create(createPriceDTO);
-        List<Availability> availabilities = accommodation.getAvailabilities();
+        ArrayList<Availability> availabilities = new ArrayList<Availability>();
         availabilities.add(availability);
-        List<Price> prices = accommodation.getPrices();
+        availabilityRepository.saveAll(availabilities);
+        accommodation.setAvailabilities(availabilities);
+        Price price = new Price();
+        price.setCost(updateAvailabilityDTO.getPrice().getCost());
+        price.setFromDate(updateAvailabilityDTO.getPrice().getFromDate());
+        price.setToDate(updateAvailabilityDTO.getPrice().getToDate());
+        price.setType(updateAvailabilityDTO.getPrice().getType());
+        price.setAccommodation(accommodation);
+        ArrayList<Price> prices = new ArrayList<Price>();
         prices.add(price);
+        priceRepository.saveAll(prices);
+        accommodation.setPrices(prices);
         accommodation.setDeadline(updateAvailabilityDTO.getDeadline());
         repository.save(accommodation);
         return accommodation;
