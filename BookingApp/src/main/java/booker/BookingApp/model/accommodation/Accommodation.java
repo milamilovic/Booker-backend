@@ -58,5 +58,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private int max_capacity;
     @Column(name="type", nullable = false)
     private AccommodationType type;
+    @Column(name = "accepted", nullable = false)
+    private boolean accepted;
 
 }
