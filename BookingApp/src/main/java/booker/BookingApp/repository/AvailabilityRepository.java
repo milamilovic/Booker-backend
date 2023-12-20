@@ -17,4 +17,10 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Long
             @Param("endDate") Date endDate
     );
 
+    @Query(value = "SELECT a from Availability AS a WHERE a.accommodation.id=:accommodationId AND :date >= a.startDate AND :date <=a.endDate")
+    Availability checkForDate(
+            @Param("accommodationId") Long accommodationId,
+            @Param("date") Date date
+    );
+
 }

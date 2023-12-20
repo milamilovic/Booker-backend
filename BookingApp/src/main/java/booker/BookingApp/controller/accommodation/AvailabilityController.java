@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -52,7 +53,7 @@ public class AvailabilityController {
 
     //check if accommodation is available for date
     @GetMapping(value = "/{id}/{date}")
-    public ResponseEntity<Boolean> checkForDate(@PathVariable Long id, @PathVariable String date) {
+    public ResponseEntity<Boolean> checkForDate(@PathVariable Long id, @PathVariable String date) throws ParseException {
         boolean available = service.checkForDate(id, date);
         return new ResponseEntity<>(available, HttpStatus.OK);
     }

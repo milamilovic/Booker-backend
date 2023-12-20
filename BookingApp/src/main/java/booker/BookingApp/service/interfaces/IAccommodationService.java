@@ -29,7 +29,7 @@ public interface IAccommodationService {
 
     void removeFavoriteAccommodation(Long userId, Long accommodationId);
 
-    ArrayList<AccommodationListingDTO> findUnapprovedAccommodations();
+    ArrayList<AccommodationListingDTO> findAllUnapprovedAccommodations();
 
     ArrayList<FavouriteAccommodationDTO> findGuestsFavouriteAccommodations(Long guestId) throws IOException;
 

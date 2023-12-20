@@ -112,7 +112,10 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/users/activate_profile/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/search/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/*")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}/active")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/priceType/*")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/prices/*/*/*/*")).permitAll();
                             auth.requestMatchers(antMatcher("/api/owners/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/guests/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/admin/**")).permitAll();

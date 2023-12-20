@@ -51,7 +51,7 @@ public class AccommodationController {
     }
 
     //find accepted accommodations for owner
-    @PreAuthorize("hasRole('OWNER')")
+    //@PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = "/owner/{ownerId}/active", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findOwnersAcceptedAccommodations(@PathVariable Long ownerId)
     {
@@ -60,7 +60,7 @@ public class AccommodationController {
     }
 
     //find all accommodations for owner
-    @PreAuthorize("hasRole('OWNER')")
+    //@PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = "/owner/{ownerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllOwnersAccommodations(@PathVariable Long ownerId)
     {
@@ -159,7 +159,7 @@ public class AccommodationController {
     @GetMapping(value = "/admin/unapproved", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findUnapprovedAccommodations()
     {
-        ArrayList<AccommodationListingDTO> accommodations = service.findUnapprovedAccommodations();
+        ArrayList<AccommodationListingDTO> accommodations = service.findAllUnapprovedAccommodations();
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
