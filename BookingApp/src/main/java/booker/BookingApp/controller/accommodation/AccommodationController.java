@@ -22,10 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/accommodations")
@@ -195,4 +192,23 @@ public class AccommodationController {
         PriceType type = service.getAccommodationPriceType(id);
         return new ResponseEntity<>(type, HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/{accommodationId}/remove_image/{imageId}")
+    public ResponseEntity<Void> removeFromImages(@PathVariable("accommodationId") Long accommodationId,
+                                                 @PathVariable("imageId") Long imageId) {
+        System.out.println("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
+        System.out.println(imageId);
+        service.deleteImage(accommodationId, imageId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/{accommodationId}/upload_images")
+    public ResponseEntity<String> uploadImages(@PathVariable("accommodationId")Long accommodationId,
+                                                @RequestParam("images") Collection<MultipartFile> imageFiles) throws IOException{
+        for(MultipartFile image : imageFiles){
+            service.uploadImage(accommodationId, image);
+        }
+        return new ResponseEntity<>("Images uploaded successfully!", HttpStatus.OK);
+    }
+
 }

@@ -52,4 +52,8 @@ public interface IAccommodationService {
     double findUnitPrice(Long id, Date startDate, Date endDate, int numOfGuests);
 
     PriceType getAccommodationPriceType(Long accommodationId);
+
+    void deleteImage(Long accommodationId, Long imageId);
+
+    void uploadImage(Long accommodationId, MultipartFile image) throws IOException;
 }
