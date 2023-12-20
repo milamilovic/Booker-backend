@@ -83,7 +83,6 @@ public class OwnerController {
     }
 
     // admin blocks the owner by id
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(consumes = "application/json", value = "/block/{ownerId}")
     public ResponseEntity<Void> block(@PathVariable Long ownerId) {
         OwnerDTO ownerDTO = ownerService.getOwnerById(ownerId);
@@ -95,7 +94,6 @@ public class OwnerController {
         }
     }
 
-    @PreAuthorize("hasRole('OWNER')")
     @PutMapping(consumes ="application/json", value = "/report/{guestEmail}")
     public ResponseEntity<GuestDTO> reportGuest(@PathVariable String guestEmail) {
         GuestDTO guestDTO = ownerService.reportGuest(guestEmail);

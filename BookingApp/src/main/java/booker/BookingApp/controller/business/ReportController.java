@@ -24,7 +24,6 @@ public class ReportController {
 
     //get report for owner for date interval
     @GetMapping(value = "/owner/{ownerId}/interval/{from}/{to}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<IntervalReportDTO> getIntervalReport(@PathVariable Long ownerId ,
                                                                @PathVariable String from,
                                                                @PathVariable String to){
@@ -34,7 +33,6 @@ public class ReportController {
 
     //get report for owners accommodation
     @GetMapping(value = "/owner/{ownerId}/accommodation/{accommodationId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<AccommodationReportDTO> getAccommodationReport(@PathVariable Long ownerId ,
                                                                          @PathVariable Long accommodationId) throws IOException {
         AccommodationReportDTO report = service.getAccommodationReport(ownerId, accommodationId);

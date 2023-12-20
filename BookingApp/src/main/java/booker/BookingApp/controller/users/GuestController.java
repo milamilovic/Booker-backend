@@ -89,7 +89,6 @@ public class GuestController {
     }
 
     // admin blocks the guest by id
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(consumes = "application/json", value = "/block/{guestId}")
     public ResponseEntity<Void> block(@PathVariable Long guestId) {
         GuestDTO guest = guestService.getGuestById(guestId);
@@ -101,7 +100,6 @@ public class GuestController {
         }
     }
 
-    @PreAuthorize("hasRole('GUEST')")
     @PutMapping(consumes ="application/json", value = "/report/{ownerEmail}")
     public ResponseEntity<OwnerDTO> reportOwner(@PathVariable String ownerEmail) {
         OwnerDTO ownerDTO = guestService.reportOwner(ownerEmail);
@@ -112,7 +110,6 @@ public class GuestController {
         }
     }
 
-    @PreAuthorize("hasRole('GUEST')")
     @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/add/{accommodationId}")
     public ResponseEntity<ArrayList<Long>> addToFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
                                                                         @PathVariable Long accommodationId) throws Exception {
@@ -123,7 +120,6 @@ public class GuestController {
         return new ResponseEntity<>(favourites, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
     @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/remove/{accommodationId}")
     public ResponseEntity<ArrayList<Long>> removeFromFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
                                                                         @PathVariable Long accommodationId) throws Exception {
@@ -134,7 +130,6 @@ public class GuestController {
         return new ResponseEntity<>(favourites, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/{guestId}/favouriteAccommodations/all")
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllFavouriteReservations(@PathVariable Long guestId) throws IOException {
         GuestDTO guestDTO = guestService.getGuestById(guestId);

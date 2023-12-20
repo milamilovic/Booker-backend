@@ -30,7 +30,6 @@ public class AccommodationController {
     IAccommodationService service;
 
     //create an accommodation
-    @PreAuthorize("hasRole('OWNER')")
     @PostMapping(value ="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccommodationViewDTO> insert(@RequestBody CreateAccommodationDTO accommodation) throws Exception {
         AccommodationViewDTO dto = service.create(accommodation);
@@ -46,7 +45,6 @@ public class AccommodationController {
     }
 
     //find accepted accommodations for owner
-    //@PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = "/owner/{ownerId}/active", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findOwnersAcceptedAccommodations(@PathVariable Long ownerId)
     {
@@ -55,7 +53,6 @@ public class AccommodationController {
     }
 
     //find all accommodations for owner
-    //@PreAuthorize("hasRole('OWNER')")
     @GetMapping(value = "/owner/{ownerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllOwnersAccommodations(@PathVariable Long ownerId)
     {
@@ -97,7 +94,7 @@ public class AccommodationController {
     //   searching accommodations with filters, path looks like
     //   /api/accommodations/search/12.12.2023./15.12.2023./Paris/2
     //   and request body contains json with filter array
-    @PostMapping(value = "/search/{startDate}/{endDate}/{location}/{people}/filter", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/search/{startDate}/{endDate}/{location}/{people}/filter", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> searchAndFilterAccommodations(@PathVariable String startDate,
                                                                                             @PathVariable String endDate,
                                                                                             @PathVariable String location,
@@ -150,7 +147,6 @@ public class AccommodationController {
     }
 
     //admin - get all unapproved accommodations
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/admin/unapproved", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> findUnapprovedAccommodations()
     {
@@ -159,7 +155,6 @@ public class AccommodationController {
     }
 
     //admin - decline accommodation
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/admin/remove/{accommodationId}")
     public ResponseEntity<Void> declineAccommodation(@PathVariable Long accommodationId) {
         service.delete(accommodationId);

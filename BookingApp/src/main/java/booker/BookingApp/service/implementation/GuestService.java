@@ -150,13 +150,13 @@ public class GuestService implements IGuestService {
     public ArrayList<AccommodationListingDTO> findAllFavouriteAccommodations(GuestDTO guest) throws IOException {
         ArrayList<Long> favouriteIds = guest.getFavouriteAccommodations();
         ArrayList<AccommodationListingDTO> favourites = new ArrayList<>();
-        AccommodationService accommodationService = new AccommodationService();
-        ArrayList<AccommodationListingDTO> all = accommodationService.findAll();
-        for(AccommodationListingDTO a : all){
-            if(favouriteIds.contains(a.getId())){
-                favourites.add(a);
-            }
-        }
+//        AccommodationService accommodationService = new AccommodationService();
+//        ArrayList<AccommodationListingDTO> all = accommodationService.findAll();
+//        for(AccommodationListingDTO a : all){
+//            if(favouriteIds.contains(a.getId())){
+//                favourites.add(a);
+//            }
+//        }
         return favourites;
     }
 
