@@ -5,6 +5,7 @@ import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.accommodation.Amenity;
 import booker.BookingApp.model.accommodation.Image;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.swing.*;
 

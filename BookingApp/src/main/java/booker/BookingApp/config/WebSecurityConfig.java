@@ -110,6 +110,9 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/users/login")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/signup")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/activate_profile/**")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/create_accommodation")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/accommodations/update_availability/**")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/images/upload-multiple")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/accommodations/search/**")).permitAll();  //searching for everyone
                             auth.requestMatchers(antMatcher("/api/accommodations")).hasAnyAuthority("OWNER", "ADMIN");          //viewing acc for everyone
                             auth.requestMatchers(antMatcher("/api/accommodations/add")).hasAuthority("OWNER");          //viewing acc for everyone
@@ -161,6 +164,7 @@ public class WebSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers
                 (
+                        antMatcher(HttpMethod.GET, "/src/app/resources/images"),
                         antMatcher(HttpMethod.POST, "/api/users/signup"),
                         antMatcher(HttpMethod.POST, "/api/users/login"),
                         antMatcher(HttpMethod.PUT, "api/users/activate_profile/**"),
@@ -190,8 +194,9 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.POST, "/api/guests"),
                         antMatcher(HttpMethod.POST, "/api/availability/*"),
                         antMatcher("/h2-console/**")
-                );
+        );
     }
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

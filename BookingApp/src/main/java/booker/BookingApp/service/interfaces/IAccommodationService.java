@@ -53,6 +53,7 @@ public interface IAccommodationService {
 
     PriceType getAccommodationPriceType(Long accommodationId);
 
+    public Accommodation updateAvailability(Long accommodationId, UpdateAvailabilityDTO updateAvailabilityDTO);
     void deleteImage(Long accommodationId, Long imageId);
 
     void uploadImage(Long accommodationId, MultipartFile image) throws IOException;

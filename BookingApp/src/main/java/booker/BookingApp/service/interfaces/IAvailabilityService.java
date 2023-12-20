@@ -1,7 +1,7 @@
 package booker.BookingApp.service.interfaces;
 
-import booker.BookingApp.dto.accommodation.AmenityDTO;
 import booker.BookingApp.dto.accommodation.AvailabilityDTO;
+import booker.BookingApp.model.accommodation.Availability;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public interface IAvailabilityService {
-    AvailabilityDTO create(Long accommodationId, AvailabilityDTO availabilityDTO);
+    Availability create(Long accommodationId, AvailabilityDTO availabilityDTO);
 
     AvailabilityDTO update(Long accommodationId, AvailabilityDTO availabilityDTO);
 

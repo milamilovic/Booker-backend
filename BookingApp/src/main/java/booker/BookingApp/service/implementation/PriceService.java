@@ -32,8 +32,13 @@ public class PriceService implements IPriceService {
     }
 
     @Override
-    public CreatePriceDTO create(CreatePriceDTO createPriceDTO) {
-        return createPriceDTO;
+    public Price create(CreatePriceDTO createPriceDTO) {
+        Price price = new Price();
+        price.setFromDate(createPriceDTO.getFromDate());
+        price.setToDate(createPriceDTO.getToDate());
+        price.setCost(createPriceDTO.getCost());
+        priceRepository.save(price);
+        return price;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AvailabilityDTO;
+import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.accommodation.Availability;
+import booker.BookingApp.repository.AccommodationRepository;
 import booker.BookingApp.repository.AvailabilityRepository;
 import booker.BookingApp.service.interfaces.IAvailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,20 @@ public class AvailabilityService implements IAvailabilityService {
 
     @Autowired
     AvailabilityRepository repository;
+    @Autowired
+    AccommodationRepository accommodationRepository;
     @Override
-    public AvailabilityDTO create(Long accommodationId, AvailabilityDTO availabilityDTO) {
-        return availabilityDTO;
+    public Availability create(Long accommodationId, AvailabilityDTO availabilityDTO) {
+        Availability availability = new Availability();
+        Accommodation accommodation = accommodationRepository.findById(accommodationId).orElseGet(null);
+        if (accommodation == null) {
+            return null;
+        }
+        availability.setAccommodation(accommodation);
+        availability.setStartDate(availabilityDTO.getStartDate());
+        availability.setEndDate(availabilityDTO.getStartDate());
+        repository.save(availability);
+        return availability;
     }
 
     @Override

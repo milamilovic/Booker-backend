@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -47,6 +48,7 @@ public class UserService implements IUserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActivated(false);
         user.setActivationTimestamp(new Date());
+        user.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
         emailService.sendNotificaitionAsync(user);
         userRepository.save(user);
 
@@ -77,7 +79,7 @@ public class UserService implements IUserService {
 
     private boolean isActivationLinkExpired(Date activationTimestamp) {
         //long expirationTimeMillis = 24 * 60 * 60 * 1000;
-        long expirationTimeMillis = 60 * 1000;
+        long expirationTimeMillis = 5 * 60 * 1000;
         long currentTimeMillis = System.currentTimeMillis();
         return (currentTimeMillis - activationTimestamp.getTime()) > expirationTimeMillis;
     }

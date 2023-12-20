@@ -1,21 +1,22 @@
 -- Inserting data with activation_link and activated fields
-INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired)
-VALUES ('Marko', 'Marković', 'email1@gmail.com', '$2a$12$k1vdJAgwlLoYFDid2OlqzOD0KvHmMS936DbLJZjaC3UgITjiM8gBe', 'adresa1', '060000000', 'GUEST', false, false, false, ARRAY[1, 2], 'activation_link1', true, false);
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired, activation_timestamp)
+VALUES ('Marko', 'Marković', 'email1@gmail.com', '$2a$12$k1vdJAgwlLoYFDid2OlqzOD0KvHmMS936DbLJZjaC3UgITjiM8gBe', 'adresa1', '060000000', 'GUEST', false, false, false, ARRAY[1, 2], 'activation_link1', true, false, null);
 
-INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired)
-VALUES ('Petar', 'Petrović', 'email2@gmail.com', '$2a$12$80PJwk0RVWpOhHpRKCuAc.gItzmXkzXavaDr8XIijSCUC1HToFqmu', 'adresa2', '060000001', 'OWNER', false, false, false, null, 'activation_link2', true, false);
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired, activation_timestamp)
+VALUES ('Petar', 'Petrović', 'email2@gmail.com', '$2a$12$80PJwk0RVWpOhHpRKCuAc.gItzmXkzXavaDr8XIijSCUC1HToFqmu', 'adresa2', '060000001', 'OWNER', false, false, false, null, 'activation_link2', true, false, null);
 
-INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired)
-VALUES ('Adam', 'Adamović', 'email3@gmail.com', '$2a$12$aySsOdaOaMgVD9Xmvn5grOQQZ9I9241OMnZ3tCC1nS7QNKYONujma', 'adresa3', '060000002', 'GUEST', false, false, false, ARRAY[1, 2], 'activation_link3', true, false);
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired, activation_timestamp)
+VALUES ('Adam', 'Adamović', 'email3@gmail.com', '$2a$12$aySsOdaOaMgVD9Xmvn5grOQQZ9I9241OMnZ3tCC1nS7QNKYONujma', 'adresa3', '060000002', 'GUEST', false, false, false, ARRAY[1, 2], 'activation_link3', true, false, null);
 
-INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired)
-VALUES ('Pera', 'Peric', 'pera123@gmail.com', '$2a$12$KPDq5lv78CgJhvjqDPuLi.puSQKA2yep7pet6LQXsDPdwjg2XtACW', 'Adresa 123', '3210087', 'GUEST', false, false, false, ARRAY[1, 2], 'activation_link4', true, false);
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired, activation_timestamp)
+VALUES ('Pera', 'Peric', 'pera123@gmail.com', '$2a$12$KPDq5lv78CgJhvjqDPuLi.puSQKA2yep7pet6LQXsDPdwjg2XtACW', 'Adresa 123', '3210087', 'GUEST', false, false, false, ARRAY[1, 2], 'activation_link4', true, false, null);
 
-INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired)
-VALUES ('Admin', 'Admin', 'admin123@gmail.com', '$2a$12$6sazakg0M.OTYFwsIIc3LeKxyzvmQPrQzDX5u9tRV0CMB7iEXN0Gq', 'Adresa admin', '3210088', 'ADMIN', null, null, null, null, 'activation_link5', true, false);
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired, activation_timestamp)
+VALUES ('Admin', 'Admin', 'admin123@gmail.com', '$2a$12$6sazakg0M.OTYFwsIIc3LeKxyzvmQPrQzDX5u9tRV0CMB7iEXN0Gq', 'Adresa admin', '3210088', 'ADMIN', null, null, null, null, 'activation_link5', true, false, null);
 
-INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired)
-VALUES ('Mika', 'Mikic', 'mika123@gmail.com', '$2a$12$Ql13A0ld2AejrnsGU0f4Uu.Fyo4fbNSUHg0dUf8G64piP2txZ6mnm', 'Mikina adresa', '3210089', 'OWNER', false, false, false, null, 'activation_link6', true, false);
+INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired, activation_timestamp)
+VALUES ('Mika', 'Mikic', 'mika123@gmail.com', '$2a$12$Ql13A0ld2AejrnsGU0f4Uu.Fyo4fbNSUHg0dUf8G64piP2txZ6mnm', 'Mikina adresa', '3210089', 'OWNER', false, false, false, null, 'activation_link6', true, false, null);
+
 
 
 -- Inserting data into Accommodation table
@@ -49,7 +50,7 @@ INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2024-
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 100.0, '2024-10-03', '2024-01-10', 0);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 120.0, '2024-02-15', '2024-02-28', 0);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 90.0, '2024-03-20', '2024-04-05', 0);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('London', '456 Forest Avenue', 22.15, 32.15, 1);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('London', '456 Forest Avenue', 22.15, 32.15);
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 2
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -64,7 +65,7 @@ INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (2, 125.0, '2024-01-01', '2024-01-10', 1);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (2, 120.0, '2024-02-15', '2024-02-28', 1);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (2, 125.0, '2024-03-20', '2024-04-05', 1);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('New York', '123 Main Street', 17.36, 71.18, 2);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('New York', '123 Main Street', 17.36, 71.18);
 
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 3
@@ -80,7 +81,7 @@ INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-05-01', '2024-05-10', 3),('2024-06-15', '2024-06-28', 3),('2024-07-20', '2024-08-05', 3);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
 (3, 50.0, '2024-05-01', '2024-05-10', 1), (3, 45.0, '2024-06-15', '2024-06-28', 1),(3, 55.0, '2024-07-20', '2024-08-05', 1);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Belgrade', '123 Main Street', 52.21, 21.38, 3);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('Belgrade', '123 Main Street', 52.21, 21.38);
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 4
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -95,7 +96,7 @@ INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
 (4, 60.0, '2024-09-01', '2024-09-10', 0),
 (4, 65.0, '2024-10-15', '2024-10-28', 0),
 (4, 55.0, '2024-11-20', '2024-12-05', 0);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Belgrade', '123 Sziostok Street', 17.36, 71.18, 4);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('Belgrade', '123 Sziostok Street', 17.36, 71.18);
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 5
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -110,7 +111,7 @@ INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
 (5, 100.0, '2024-01-01', '2024-01-10', 0),
 (5, 90.0, '2024-02-15', '2024-02-28', 0),
 (5, 95.0, '2024-03-20', '2024-04-05', 0);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('London', '123 Example Address', 36.36, 52.18, 5);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('London', '123 Example Address', 36.36, 52.18);
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 6
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -127,7 +128,7 @@ INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
 (6, 15.0, '2024-05-01', '2024-05-10', 1),
 (6, 10.0, '2024-06-15', '2024-06-28', 1),
 (6, 25.0, '2024-07-20', '2024-08-05', 1);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('New York', '123 My Address', 55.18, 42.00, 6);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('New York', '123 My Address', 55.18, 42.00);
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 7
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -148,7 +149,7 @@ INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
 (7, 82.0, '2024-09-01', '2024-09-10', 0),
 (7, 80.0, '2024-10-15', '2024-10-28', 0),
 (7, 82.0, '2024-11-20', '2024-12-05', 0);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Belgrade', '123 Lovely Street', 5.17, 2.18, 7);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('Belgrade', '123 Lovely Street', 5.17, 2.18);
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 8
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -167,7 +168,7 @@ INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
 (8, 250.0, '2024-01-01', '2024-01-10', 1),
 (8, 130.0, '2024-02-15', '2024-02-28', 1),
 (8, 200.0, '2024-03-20', '2024-04-05', 1);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('London', '123 Main Adress', 37.36, 10.18, 8);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('London', '123 Main Adress', 37.36, 10.18);
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 9
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -182,7 +183,7 @@ INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
 (9, 50.0, '2024-05-01', '2024-05-10', 1),
 (9, 55.0, '2024-06-15', '2024-06-28', 1),
 (9, 57.0, '2024-07-20', '2024-08-05', 1);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('London', '123 China street', 10.36, 7.77, 9);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('London', '123 China street', 10.36, 7.77);
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 10
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -199,7 +200,7 @@ INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
 (10, 67.0, '2024-09-01', '2024-09-10', 1),
 (10, 66.0, '2024-10-15', '2024-10-28', 1),
 (10, 67.0, '2024-11-20', '2024-12-05', 1);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('New York', '123 Amazing Avenue', 57.36, 51.18, 10);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('New York', '123 Amazing Avenue', 57.36, 51.18);
 
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 11
@@ -217,7 +218,7 @@ INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
 (11, 112.0, '2024-01-01', '2024-01-10', 0),
 (11, 113.0, '2024-02-15', '2024-02-28', 0),
 (11, 120.0, '2024-03-20', '2024-04-05', 0);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('Belgrade', '123 Fantastic Park', 17.36, 1.18, 11);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('Belgrade', '123 Fantastic Park', 17.36, 1.18);
 
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 12
 INSERT INTO Amenity (name, accommodation_id, image_path)
@@ -232,7 +233,7 @@ INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
 (12, 80.0, '2024-05-01', '2024-05-10', 1),
 (12, 82.0, '2024-06-15', '2024-06-28', 1),
 (12, 75.0, '2024-07-20', '2024-08-05', 1);
-INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('London', '456 Festival Boulevard', 23.15, 6.18, 12);
+INSERT INTO Address (city, street, latitude, longitude) VALUES ('London', '456 Festival Boulevard', 23.15, 6.18);
 
 INSERT INTO Accommodation_Comment (accommodation_id, guest_id, content, date, reported) VALUES (1, 2, 'Great!', '2024-10-01', false);
 -- Inserting additional data into AccommodationComment table
