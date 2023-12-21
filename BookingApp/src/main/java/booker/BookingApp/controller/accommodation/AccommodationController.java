@@ -96,7 +96,7 @@ public class AccommodationController {
     //   searching accommodations with filters, path looks like
     //   /api/accommodations/search/12.12.2023./15.12.2023./Paris/2
     //   and request body contains json with filter array
-    @GetMapping(value = "/search/{startDate}/{endDate}/{location}/{people}/filter", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/search/{startDate}/{endDate}/{location}/{people}/filter", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AccommodationListingDTO>> searchAndFilterAccommodations(@PathVariable String startDate,
                                                                                             @PathVariable String endDate,
                                                                                             @PathVariable String location,
