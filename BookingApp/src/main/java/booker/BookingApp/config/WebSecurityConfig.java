@@ -200,6 +200,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.POST, "/api/users/login"),
                         antMatcher(HttpMethod.PUT, "api/users/activate_profile/**"),
                         antMatcher(HttpMethod.PUT, "/api/accommodations"),
+                        antMatcher(HttpMethod.PUT, "/api/accommodations/**"),
                         antMatcher(HttpMethod.GET, "/api/accommodations/**"),
                         antMatcher(HttpMethod.POST, "/api/accommodations/search/**"),
                         antMatcher(HttpMethod.GET, "/api/accommodations/search/**"),
