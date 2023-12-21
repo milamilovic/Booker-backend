@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/accommodation_comments")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AccommodationCommentController {
     @Autowired
     private AccommodationCommentService accommodationCommentService;
@@ -102,22 +103,22 @@ public class AccommodationCommentController {
 //        }
 //    }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "add_comment",  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CreateAccommodationCommentDTO> create(@RequestBody CreateAccommodationCommentDTO accommodationCommentDTO) {
         CreateAccommodationCommentDTO commentDTO = accommodationCommentService.create(accommodationCommentDTO);
         return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update",  consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> update(@RequestBody AccommodationCommentDTO accommodationCommentDTO) {
         accommodationCommentService.update(accommodationCommentDTO);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/remove/{accommodation_comment_id}")
     public ResponseEntity<Void> delete(@PathVariable Long accommodation_comment_id) {
         accommodationCommentService.delete(accommodation_comment_id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/all/reported")

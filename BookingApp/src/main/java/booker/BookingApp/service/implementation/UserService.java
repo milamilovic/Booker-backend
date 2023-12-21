@@ -77,6 +77,7 @@ public class UserService implements IUserService {
         return user;
     }
 
+
     private boolean isActivationLinkExpired(Date activationTimestamp) {
         //long expirationTimeMillis = 24 * 60 * 60 * 1000;
         long expirationTimeMillis = 5 * 60 * 1000;
@@ -103,6 +104,7 @@ public class UserService implements IUserService {
 
         return user;
     }
+
 
 
 

@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/owner_comments")
+@CrossOrigin(origins = "http://localhost:4200")
 public class OwnerCommentController {
 
     @Autowired
@@ -33,7 +34,7 @@ public class OwnerCommentController {
         return new ResponseEntity<>(ownerCommentsDTO, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}/comment")
     public ResponseEntity<OwnerCommentDTO> getOwnerComment(@PathVariable Long id) {
         OwnerComment ownerComment = ownerCommentService.findOne(id);
 
@@ -88,13 +89,13 @@ public class OwnerCommentController {
         }
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/add_comment", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CreateOwnerCommentDTO> create(@RequestBody CreateOwnerCommentDTO commentDTO) {
         ownerCommentService.create(commentDTO);
         return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update" ,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OwnerCommentDTO> update(@RequestBody OwnerCommentDTO commentDTO) {
         ownerCommentService.update(commentDTO);
         return new ResponseEntity<>(commentDTO, HttpStatus.OK);
