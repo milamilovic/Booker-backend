@@ -25,5 +25,9 @@ public @Data class Address {
     @JoinColumn(name = "longitude")
     private double longitude;
 
+    @OneToOne
+    @JoinColumn(name = "accommodation_id")
+    private Accommodation accommodation;
+
 
 }
