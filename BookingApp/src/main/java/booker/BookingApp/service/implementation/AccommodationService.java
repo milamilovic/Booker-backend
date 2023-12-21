@@ -224,7 +224,24 @@ public class AccommodationService implements IAccommodationService {
 
     @Override
     public ArrayList<AccommodationListingDTO> findAllUnapprovedAccommodations() {
-        return findOwnersActiveAccommodations(2L);
+        List<Accommodation> accommodations = repository.findUnapproved(false);
+        ArrayList<AccommodationListingDTO> dtos = new ArrayList<>();
+        for(Accommodation a : accommodations) {
+            dtos.add(AccommodationListingDTO.makeFromAccommodation(a));
+        }
+        return dtos;
+    }
+
+    @Override
+    public void approve(Long accommodationId) {
+        System.out.println("dunja1");
+        Accommodation accommodation = repository.findById(accommodationId).orElse(null);
+
+        if (accommodation != null) {
+            accommodation.setAccepted(true);
+            repository.save(accommodation);
+        }
+        System.out.println("dunja2");
     }
 
     @Override
