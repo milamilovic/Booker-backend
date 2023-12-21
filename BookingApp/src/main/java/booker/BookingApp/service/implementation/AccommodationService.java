@@ -90,16 +90,8 @@ public class AccommodationService implements IAccommodationService {
         accommodation.setMax_capacity(accommodationDto.getMax_capacity());
         accommodation.setType(accommodationDto.getType());
 
-
-        Address address = new Address();
-        address.setStreet(accommodationDto.getAddress().getStreet());
-        address.setCity(accommodationDto.getAddress().getCity());
-        address.setLatitude(accommodationDto.getAddress().getLatitude());
-        address.setLongitude(accommodationDto.getAddress().getLongitude());;
-        addressRepository.save(address);
-
         //addressRepository.save(address);
-        accommodation.setAddress(address);
+        //accommodation.setAddress(address);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -119,6 +111,14 @@ public class AccommodationService implements IAccommodationService {
         }
 
         repository.save(accommodation);
+
+        Address address = new Address();
+        address.setStreet(accommodationDto.getAddress().getStreet());
+        address.setCity(accommodationDto.getAddress().getCity());
+        address.setLatitude(accommodationDto.getAddress().getLatitude());
+        address.setLongitude(accommodationDto.getAddress().getLongitude());
+        address.setAccommodation(accommodation);
+        addressRepository.save(address);
 
         ArrayList<Amenity> amenities = new ArrayList<Amenity>();
         for(String amenityName : accommodationDto.getAmenities()){
