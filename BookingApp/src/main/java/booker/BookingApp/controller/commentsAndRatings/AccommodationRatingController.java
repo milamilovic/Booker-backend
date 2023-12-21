@@ -44,7 +44,7 @@ public class AccommodationRatingController {
         return new ResponseEntity<>(ratingDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}/rating")
     public ResponseEntity<AccommodationRatingDTO> findOne(@PathVariable Long id) {
         AccommodationRating accommodationRating = accommodationRatingService.findOne(id);
 
@@ -99,13 +99,13 @@ public class AccommodationRatingController {
 //        }
 //    }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/add_rating", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CreateAccommodationRatingDTO> create(@RequestBody CreateAccommodationRatingDTO accommodationRatingDTO) {
         CreateAccommodationRatingDTO ratingDTO = accommodationRatingService.create(accommodationRatingDTO);
         return new ResponseEntity<>(ratingDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> update(@RequestBody AccommodationRatingDTO accommodationRatingDTO) {
         accommodationRatingService.update(accommodationRatingDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

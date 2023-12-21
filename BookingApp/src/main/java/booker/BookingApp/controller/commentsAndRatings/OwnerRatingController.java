@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/owner_ratings")
+@CrossOrigin(origins = "http://localhost:4200")
 public class OwnerRatingController {
     @Autowired
     private OwnerRatingService ownerRatingService;
@@ -36,7 +37,7 @@ public class OwnerRatingController {
 
 
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}/rating")
     public ResponseEntity<OwnerRatingDTO> getRating(@PathVariable Long id) {
         OwnerRating ownerRating = ownerRatingService.findOne(id);
 
@@ -93,16 +94,16 @@ public class OwnerRatingController {
         }
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/add_rating", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CreateOwnerRatingDTO> create(@RequestBody CreateOwnerRatingDTO ownerRatingDTO) {
         ownerRatingService.create(ownerRatingDTO);
         return new ResponseEntity<>(ownerRatingDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> update(@RequestBody OwnerRatingDTO ownerRatingDTO) {
         ownerRatingService.update(ownerRatingDTO);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/{owner_id}/ratings")
