@@ -247,7 +247,7 @@ public class AccommodationService implements IAccommodationService {
 
     @Override
     public ArrayList<AccommodationListingDTO> search(String startDate, String endDate, String location, int people) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         Date start;
         Date end;
         try {

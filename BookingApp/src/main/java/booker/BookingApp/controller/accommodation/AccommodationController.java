@@ -72,7 +72,7 @@ public class AccommodationController {
     {
         System.out.println("searching without filters");
         ArrayList<AccommodationListingDTO> accommodations = service.search(startDate, endDate, location, people);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         Date start;
         Date end;
         try {
