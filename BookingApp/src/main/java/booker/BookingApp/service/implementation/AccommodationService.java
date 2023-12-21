@@ -199,6 +199,18 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
+    public void approve(Long accommodationId) {
+        System.out.println("dunja1");
+        Accommodation accommodation = repository.findById(accommodationId).orElse(null);
+
+        if (accommodation != null) {
+            accommodation.setAccepted(true);
+            repository.save(accommodation);
+        }
+        System.out.println("dunja2");
+    }
+
+    @Override
     public ArrayList<FavouriteAccommodationDTO> findGuestsFavouriteAccommodations(Long guestId) throws IOException {
         AccommodationViewDTO accommodation = findOne(1L);
 

@@ -154,6 +154,18 @@ public class AccommodationController {
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
+    @PutMapping(value = "/approve/{accommodationId}")
+    public ResponseEntity<String> approveAccommodation(@PathVariable("accommodationId")Long accommodationId){
+        try{
+            System.out.println("dunja000");
+            service.approve(accommodationId);
+            return new ResponseEntity<>("Successful", HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>("Bad error while approving accommodation", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     //admin - decline accommodation
     @DeleteMapping(value = "/admin/remove/{accommodationId}")
     public ResponseEntity<Void> declineAccommodation(@PathVariable Long accommodationId) {
