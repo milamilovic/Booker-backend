@@ -72,7 +72,7 @@ public class AccommodationController {
     {
         System.out.println("searching without filters");
         ArrayList<AccommodationListingDTO> accommodations = service.search(startDate, endDate, location, people);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date start;
         Date end;
         try {
@@ -82,7 +82,6 @@ public class AccommodationController {
             throw new RuntimeException(e);
         }
         for(AccommodationListingDTO a : accommodations) {
-            //TODO: add rating
             a.setTotalPrice(service.findPriceForDateRange(a.getId(), start, end, people));
             Instant day1 = start.toInstant();
             Instant day2 = end.toInstant();
@@ -103,7 +102,19 @@ public class AccommodationController {
                                                                                             @PathVariable int people,
                                                                                             @RequestBody ArrayList<Filter> filters) throws IOException {
         ArrayList<AccommodationListingDTO> accommodations = service.search(startDate, endDate, location, people);
-        System.out.println(filters.size());
+        System.out.println(accommodations.size());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date start;
+        Date end;
+        try {
+            start = dateFormat.parse(startDate);
+            end = dateFormat.parse(endDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        for(AccommodationListingDTO a : accommodations) {
+            a.setTotalPrice(service.findPriceForDateRange(a.getId(), start, end, people));
+        }
         ArrayList<String> types = new ArrayList<>(Arrays.asList("room", "hotel", "villa", "studio"));
         ArrayList<AccommodationType> adequateTypes = new ArrayList<>();
         for(Filter filter : filters) {
@@ -126,18 +137,10 @@ public class AccommodationController {
         }
         //now, we filter by accommodation type
         //we know that not all are needed - we wouldn't have this type of filter than (thanks to frontend)
-        accommodations = service.filterTypes(accommodations, adequateTypes);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date start;
-        Date end;
-        try {
-            start = dateFormat.parse(startDate);
-            end = dateFormat.parse(endDate);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+        if(adequateTypes.size()!=0) {
+            accommodations = service.filterTypes(accommodations, adequateTypes);
         }
         for(AccommodationListingDTO a : accommodations) {
-            //TODO: add rating
             a.setTotalPrice(service.findPriceForDateRange(a.getId(), start, end, people));
             Instant day1 = start.toInstant();
             Instant day2 = end.toInstant();
