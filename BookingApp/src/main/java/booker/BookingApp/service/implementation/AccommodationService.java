@@ -9,7 +9,10 @@ import booker.BookingApp.model.users.User;
 import booker.BookingApp.repository.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import booker.BookingApp.util.ImageUploadUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.transaction.Transactional;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -19,12 +22,15 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.beans.JavaBean;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class AccommodationService implements IAccommodationService {
@@ -264,7 +270,7 @@ public class AccommodationService implements IAccommodationService {
 
     @Override
     public ArrayList<AccommodationListingDTO> search(String startDate, String endDate, String location, int people) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date start;
         Date end;
         try {
@@ -298,44 +304,50 @@ public class AccommodationService implements IAccommodationService {
     @Override
     public ArrayList<AccommodationListingDTO> applyFilters(ArrayList<AccommodationListingDTO> accommodations, Filter filter) throws IOException {
         //filtering amenities
+        System.out.println(filter.getName());
         ArrayList<String> amenityNames = amenityService.getAllNames();
+        System.out.println(accommodations.size() + " accommodations");
         if(amenityNames.contains(filter.getName())) {
             Iterator<AccommodationListingDTO> iterator = accommodations.iterator();
             while (iterator.hasNext()) {
                 AccommodationListingDTO currentElement = iterator.next();
                 ArrayList<String> amenities = amenityService.getAllAmenityNamesForAccommodation(currentElement.getId());
-                if (amenities.contains(filter.getName())) {
+                if (!amenities.contains(filter.getName())) {
+                    System.out.println("Amenity with id " + currentElement.getId() + " does not have " + filter.getName());
                     iterator.remove();
                 }
             }
         }
+        System.out.println("after filtering amenities: " + accommodations.size());
 
         //filtering accommodation types is not done here
 
         //filtering prices
-        class AccPrice {
-            double price;
-        }
         if(filter.getName().equals("minPrice")) {
+            System.out.println("Price filtering - min");
+            ObjectMapper mapper = new ObjectMapper();
             Iterator<AccommodationListingDTO> iterator1 = accommodations.iterator();
             while (iterator1.hasNext()) {
                 AccommodationListingDTO currentElement = iterator1.next();
-                AccPrice price = (AccPrice) filter.getValue();
+                PriceFilter price = (PriceFilter) mapper.convertValue(filter.getValue(), new TypeReference<PriceFilter>() { });
                 if (currentElement.getTotalPrice() < price.price) {
                     iterator1.remove();
                 }
             }
         }
         if(filter.getName().equals("maxPrice")) {
+            System.out.println("Price filtering - max");
+            ObjectMapper mapper = new ObjectMapper();
             Iterator<AccommodationListingDTO> iterator = accommodations.iterator();
             while (iterator.hasNext()) {
                 AccommodationListingDTO currentElement = iterator.next();
-                AccPrice price = (AccPrice) filter.getValue();
+                PriceFilter price =(PriceFilter) mapper.convertValue(filter.getValue(), new TypeReference<PriceFilter>() { });
                 if (currentElement.getTotalPrice() > price.price) {
                     iterator.remove();
                 }
             }
         }
+        System.out.println("AFter filters: " + accommodations.size());
         return accommodations;
     }
 
