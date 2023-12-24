@@ -43,7 +43,7 @@ public class GuestService implements IGuestService {
     public GuestDTO getGuestByEmail(String email) {
         ArrayList<Long> faves = new ArrayList<>();
         faves.add(1L); faves.add(2L);
-        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
+        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", "", new User());
         return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", "aaaa", null, null, Role.GUEST, profilePicture, false, false, false, faves);
     }
 
@@ -94,7 +94,7 @@ public class GuestService implements IGuestService {
 
     @Override
     public OwnerDTO reportOwner(String ownerEmail) {
-        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
+        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", "", new User());
         return new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", "bbbb", null, null, Role.OWNER, profilePicture, true, false, false, null, null);
     }
 

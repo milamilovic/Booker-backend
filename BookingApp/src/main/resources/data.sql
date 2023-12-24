@@ -40,10 +40,10 @@ INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('good location', 1, '../../../assets/images/icons8-location-32.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 1,'../../../assets/images/icons8-ac-30.png');
-INSERT INTO Image(accommodation_id, path) VALUES (1, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (1, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (1, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (1, '../../assets/images/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (1, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (1, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (1, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (1, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2024-10-03', '2024-01-10', 1);
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2024-02-15', '2024-02-28', 1);
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2024-03-20', '2024-04-05', 1);
@@ -57,9 +57,9 @@ INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('free cancellation', 2, '../../../assets/images/icons8-calendar-32.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('wifi', 2, '../../../assets/images/icons8-wifi-30.png');
-INSERT INTO Image(accommodation_id, path) VALUES (2, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (2, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (2, '../../assets/images/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (2, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (2, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (2, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-01-01', '2024-01-10', 2), ('2024-02-15', '2024-02-28', 2),('2024-03-20', '2024-04-05', 2);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (2, 125.0, '2024-01-01', '2024-01-10', 1);
@@ -73,10 +73,10 @@ INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 3,'../../../assets/images/icons8-ac-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('good location', 3, '../../../assets/images/icons8-location-32.png');
-INSERT INTO Image(accommodation_id, path) VALUES (3, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (3, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (3, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (3, '../../assets/images/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (3, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (3, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (3, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (3, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-05-01', '2024-05-10', 3),('2024-06-15', '2024-06-28', 3),('2024-07-20', '2024-08-05', 3);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
@@ -87,10 +87,10 @@ INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 4
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('good location', 4, '../../../assets/images/icons8-location-32.png');
-INSERT INTO Image(accommodation_id, path) VALUES (4, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (4, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (4, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (4, '../../assets/images/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (4, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (4, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (4, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (4, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-09-01', '2024-09-10', 4),('2024-10-15', '2024-10-28', 4),('2024-11-20', '2024-12-05', 4);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
@@ -102,10 +102,10 @@ INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES
 -- Insert data into Amenity, Image, Availability, Price and Address tables for Accommodation 5
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 5,'../../../assets/images/icons8-ac-30.png');
-INSERT INTO Image(accommodation_id, path) VALUES (5, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (5, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (5, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (5, '../../assets/images/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (5, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (5, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (5, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (5, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-01-01', '2024-01-10', 5),('2024-02-15', '2024-02-28', 5),('2024-03-20', '2024-04-05', 5);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
@@ -119,10 +119,10 @@ INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 6,'../../../assets/images/icons8-ac-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('wifi', 6, '../../../assets/images/icons8-wifi-30.png');
-INSERT INTO Image(accommodation_id, path) VALUES (6, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (6, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (6, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (6, '../../assets/images/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (6, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (6, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (6, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (6, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-05-01', '2024-05-10', 6),('2024-06-15', '2024-06-28', 6),('2024-07-20', '2024-08-05', 6);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
@@ -140,10 +140,10 @@ INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 7,'../../../assets/images/icons8-ac-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('free cancellation', 7, '../../../assets/images/icons8-calendar-32.png');
-INSERT INTO Image(accommodation_id, path) VALUES (7, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (7, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (7, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (7, '../../assets/images/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (7, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (7, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (7, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (7, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-09-01', '2024-09-10', 7),('2024-10-15', '2024-10-28', 7),('2024-11-20', '2024-12-05', 7);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
@@ -159,10 +159,10 @@ INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 8,'../../../assets/images/icons8-ac-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('free cancellation', 8, '../../../assets/images/icons8-calendar-32.png');
-INSERT INTO Image(accommodation_id, path) VALUES (8, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (8, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (8, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (8, '../../assets/images/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (8, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (8, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (8, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (8, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-01-01', '2024-01-10', 8),('2024-02-15', '2024-02-28', 8),('2024-03-20', '2024-04-05', 8);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
@@ -176,8 +176,8 @@ INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('good location', 9, '../../../assets/images/icons8-location-32.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('free cancellation', 9, '../../../assets/images/icons8-calendar-32.png');
-INSERT INTO Image(accommodation_id, path) VALUES (9, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (9, '../../assets/images/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (9, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (9, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-05-01', '2024-05-10', 9),('2024-06-15', '2024-06-28', 9),('2024-07-20', '2024-08-05', 9);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
@@ -191,10 +191,10 @@ INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('AC', 10,'../../../assets/images/icons8-ac-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('free cancellation', 10, '../../../assets/images/icons8-calendar-32.png');
-INSERT INTO Image(accommodation_id, path) VALUES (10, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (10, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (10, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (10, '../../assets/images/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (10, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (10, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (10, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (10, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-09-01', '2024-09-10', 10),('2024-10-15', '2024-10-28', 10),('2024-11-20', '2024-12-05', 10);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
@@ -209,10 +209,10 @@ INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('wifi', 11, '../../../assets/images/icons8-wifi-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('good location', 11, '../../../assets/images/icons8-location-32.png');
-INSERT INTO Image(accommodation_id, path) VALUES (11, '../../assets/images/kitchen-2165756_640.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (11, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (11, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (11, '../../assets/images/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (11, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (11, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (11, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (11, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-01-01', '2024-01-10', 11),('2024-02-15', '2024-02-28', 11),('2024-03-20', '2024-04-05', 11);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
@@ -226,8 +226,8 @@ INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('wifi', 12, '../../../assets/images/icons8-wifi-30.png');
 INSERT INTO Amenity (name, accommodation_id, image_path)
 VALUES ('free cancellation', 12, '../../../assets/images/icons8-calendar-32.png');
-INSERT INTO Image(accommodation_id, path) VALUES (12, '../../assets/images/living-room.jpg');
-INSERT INTO Image(accommodation_id, path) VALUES (12, '../../assets/images/kitchen-2165756_640.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (12, '../../assets/images/living-room.jpg', '../../../../../res/drawable/living-room.jpg');
+INSERT INTO Image(accommodation_id, path_front, path_mobile) VALUES (12, '../../assets/images/kitchen-2165756_640.jpg', '../../../../../res/drawable/kitchen-2165756_640.jpg');
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES
 ('2024-05-01', '2024-05-10', 12),('2024-06-15', '2024-06-28', 12), ('2024-07-20', '2024-08-05', 12);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES
@@ -266,14 +266,14 @@ VALUES (6, 3, 2.5, '2024-04-20', false);
 INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
 VALUES (6, 1, 4.0, '2024-05-05', true);
 
-INSERT INTO Profile_Picture (path, user_id)
+INSERT INTO Profile_Picture (path_front, path_mobile,  user_id)
 VALUES
-    ('../../assets/images/profile_pic.jpg', 1),
-    ('../../assets/images/profile_pic.jpg', 2),
-    ('../../assets/images/profile_pic.jpg', 3),
-    ('../../assets/images/profile_pic.jpg', 4),
-    ('../../assets/images/profile_pic.jpg', 5),
-    ('../../assets/images/profile_pic.jpg', 6);
+    ('../../assets/images/profile_pic.jpg', '../../../../../res/drawable/profile_pic.jpg', 1),
+    ('../../assets/images/profile_pic.jpg', '../../../../../res/drawable/profile_pic.jpg', 2),
+    ('../../assets/images/profile_pic.jpg', '../../../../../res/drawable/profile_pic.jpg', 3),
+    ('../../assets/images/profile_pic.jpg', '../../../../../res/drawable/profile_pic.jpg', 4),
+    ('../../assets/images/profile_pic.jpg', '../../../../../res/drawable/profile_pic.jpg', 5),
+    ('../../assets/images/profile_pic.jpg', '../../../../../res/drawable/profile_pic.jpg', 6);
 
 
 
