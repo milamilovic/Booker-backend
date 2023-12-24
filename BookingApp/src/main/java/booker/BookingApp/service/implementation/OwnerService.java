@@ -44,7 +44,7 @@ public class OwnerService implements IOwnerService {
 
     @Override
     public OwnerDTO getOwnerByEmail(String email) {
-        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
+        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", "", new User());
         return new OwnerDTO(1L, "Mika", "Mikic", "mika123@gmail.com", "bbbb", null, null, Role.OWNER, profilePicture, false, false, false, null, null);
     }
 
@@ -100,7 +100,7 @@ public class OwnerService implements IOwnerService {
 
     @Override
     public GuestDTO reportGuest(String guestEmail) {
-        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", new User());
+        ProfilePicture profilePicture = new ProfilePicture(1L, "src/main/resources/images/profile1.png", "", new User());
         return new GuestDTO(1L, "Pera", "Peric", "pera123@gmail.com", "aaaa", null, null, Role.GUEST, profilePicture, true, false, false, null);
     }
 

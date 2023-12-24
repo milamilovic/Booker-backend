@@ -9,7 +9,7 @@ public @Data class ImageDTO {
     private String path;
 
     public ImageDTO(Image image) {
-        this(image.getId(), image.getPath());
+        this(image.getId(), image.getPath_front());
 
     }
 
@@ -19,7 +19,7 @@ public @Data class ImageDTO {
 
     public Image toImage(Accommodation accommodation){
         Image image = new Image();
-        image.setPath(path);
+        image.setPath_front(path);
         image.setAccommodation(accommodation);
         return image;
     }

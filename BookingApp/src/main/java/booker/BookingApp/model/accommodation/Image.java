@@ -13,8 +13,11 @@ public @Data @AllArgsConstructor
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @JoinColumn(name = "path")
-    String path;
+    @JoinColumn(name = "path_front")
+    String path_front;
+
+    @JoinColumn(name = "path_mobile")
+    String path_mobile;
 
     @ManyToOne
     @JoinColumn(name = "accommodation_id")

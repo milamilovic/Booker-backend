@@ -41,6 +41,9 @@ public class AccommodationService implements IAccommodationService {
     @Value("../../Booker-frontend/booker/src/assets/images/accommodation")
     private String imagesDirPathFront;
 
+    @Value("../../../../../res/drawable")
+    private String imagesDirPathMobile;
+
     @Autowired
     AccommodationRepository repository;
 
@@ -172,7 +175,8 @@ public class AccommodationService implements IAccommodationService {
 
         ArrayList<Image> images = new ArrayList<Image>();
         for(String fileName : accommodationDto.getImages()) {
-            Image image = new Image(null,"../../assets/images/accommodation" + fileName, accommodation);
+            Image image = new Image(null,"../../assets/images/accommodation" + fileName,
+                    "../../../../../res/drawable" + fileName, accommodation);
             images.add(image);
         }
 
@@ -254,9 +258,9 @@ public class AccommodationService implements IAccommodationService {
     public ArrayList<FavouriteAccommodationDTO> findGuestsFavouriteAccommodations(Long guestId) throws IOException {
         AccommodationViewDTO accommodation = findOne(1L);
 
-        Image image1 = new Image(1L, "src/main/resources/lisbon_image.jpg", new Accommodation());
-        Image image2 = new Image(2L, "src/main/resources/london_image.jpg", new Accommodation());
-        Image image3 = new Image(3L, "src/main/resources/madrid_image.jpg", new Accommodation());
+        Image image1 = new Image(1L, "src/main/resources/lisbon_image.jpg", "", new Accommodation());
+        Image image2 = new Image(2L, "src/main/resources/london_image.jpg", "", new Accommodation());
+        Image image3 = new Image(3L, "src/main/resources/madrid_image.jpg", "", new Accommodation());
         FavouriteAccommodationDTO accommodation1 = new FavouriteAccommodationDTO(1L, "Example accommodation 1", "Description 1", image1, 80.00, 4,new Address());
         FavouriteAccommodationDTO accommodation2 = new FavouriteAccommodationDTO(2L, "Example accommodation 2", "Description 2", image2, 100.00, 5,new Address());
         FavouriteAccommodationDTO accommodation3 = new FavouriteAccommodationDTO(3L, "Example accommodation 3", "Description 3", image3, 85.50, 3.2F,new Address());
@@ -424,10 +428,13 @@ public class AccommodationService implements IAccommodationService {
         Accommodation accommodation = repository.findById(accommodationId).orElse(null);
 
         String fileName = StringUtils.cleanPath(image.getOriginalFilename());
-        String uploadDir = StringUtils.cleanPath(imagesDirPath + accommodation.getId());
+        String uploadDir = StringUtils.cleanPath(imagesDirPathFront + accommodation.getId());
         System.out.println(uploadDir);
 
+        // save to frontend folder
         ImageUploadUtil.saveImage(uploadDir, fileName, image);
+        // save to mobile app folder
+        ImageUploadUtil.saveImage(imagesDirPathMobile, fileName, image);
 
         repository.save(accommodation);
     }
@@ -435,7 +442,7 @@ public class AccommodationService implements IAccommodationService {
 
     public Image convertMultipartFileToImage(MultipartFile file) throws IOException {
         Image image = new Image();
-        image.setPath(saveFile(file));
+        image.setPath_front(saveFile(file));
 
         return image;
     }
@@ -469,9 +476,13 @@ public class AccommodationService implements IAccommodationService {
         AccommodationViewDTO accommodation = findOne(accommodationId);
         String fileName = StringUtils.cleanPath(image.getOriginalFilename());
         String uploadDir = StringUtils.cleanPath(imagesDirPathFront + accommodation.getId());
+        // save to frontend folder
         ImageUploadUtil.saveImage(uploadDir, fileName, image);
+        // save to mobile app folder
+        ImageUploadUtil.saveImage(imagesDirPathMobile, fileName, image);
         Image newImage = new Image();
-        newImage.setPath("../../assets/images/accommodation" + accommodationId + "/" + fileName);
+        newImage.setPath_front("../../assets/images/accommodation" + accommodationId + "/" + fileName);
+        newImage.setPath_mobile("../../../../../res/drawable/" + fileName);
         Optional<Accommodation> a = repository.findById(accommodationId);
         newImage.setAccommodation(a.get());
         imageRepository.save(newImage);

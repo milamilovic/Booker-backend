@@ -11,8 +11,10 @@ public @Data @AllArgsConstructor class ProfilePicture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(name = "path", nullable = false)
+    @Column(name = "path_front", nullable = false)
     String path;
+    @Column(name = "path_mobile", nullable = false)
+    String path_mobile;
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
