@@ -95,8 +95,8 @@ public class OwnerRatingController {
     }
 
     @PostMapping(value = "/add_rating", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CreateOwnerRatingDTO> create(@RequestBody CreateOwnerRatingDTO ownerRatingDTO) {
-        ownerRatingService.create(ownerRatingDTO);
+    public ResponseEntity<OwnerRatingDTO> create(@RequestBody CreateOwnerRatingDTO createOwnerRatingDTO) {
+         OwnerRatingDTO ownerRatingDTO =  ownerRatingService.create(createOwnerRatingDTO);
         return new ResponseEntity<>(ownerRatingDTO, HttpStatus.CREATED);
     }
 

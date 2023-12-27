@@ -8,6 +8,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Objects;
+
 @Service
 public class EmailService {
     @Autowired
@@ -29,12 +34,18 @@ public class EmailService {
         //Simulacija duze aktivnosti da bi se uocila razlika
         Thread.sleep(10000);
         System.out.println("Slanje emaila...");
-
+        String ipAddress = getIpAddress();
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
         mail.setFrom(env.getProperty("spring.mail.username"));
         mail.setSubject("Primer slanja emaila pomoću asinhronog Spring taska");
         mail.setText("Pozdrav " + user.getName() + ",\n\n Activation Link: http://localhost:4200/activate_profile/" + user.getActivationLink());
+//        if (ipAddress.equals("")) {
+//            mail.setText("Pozdrav " + user.getName() + ",\n\n Activation Link: http://localhost:4200/activate_profile/" + user.getActivationLink());
+//        } else {
+//            mail.setText("Pozdrav " + user.getName() + ",\n\n Activation Link: http://"+ipAddress+":8080/activate_profile/" + user.getActivationLink());
+//        }
+
         System.setProperty("mail.debug", "true");
         javaMailSender.send(mail);
 
@@ -51,9 +62,21 @@ public class EmailService {
         mail.setTo(user.getEmail());
         mail.setFrom(env.getProperty("spring.mail.username"));
         mail.setSubject("Primer slanja emaila pomocu asinhronog Spring taska");
-        mail.setText("Pozdrav " + user.getName() + ",\n\nhvala što pratiš ISA.");
+        mail.setText("Pozdrav " + user.getName() + ",\n\n.");
         javaMailSender.send(mail);
 
         System.out.println("Email poslat!");
+    }
+
+    public static String getIpAddress() {
+        String ipAddress = "";
+        try {
+            InetAddress localhost = InetAddress.getLocalHost();
+            ipAddress = localhost.getHostAddress();
+            System.out.println("Local IP Address: " + localhost.getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return ipAddress;
     }
 }

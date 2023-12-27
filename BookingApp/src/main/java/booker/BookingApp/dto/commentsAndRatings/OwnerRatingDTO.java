@@ -28,4 +28,13 @@ public @Data class OwnerRatingDTO {
         this.date = date;
         this.reported = reported;
     }
+
+    public static OwnerRatingDTO makeFromOwnerRating(OwnerRating ownerRating) {
+        return new OwnerRatingDTO(ownerRating.getId(),
+                ownerRating.getOwner().getId(),
+                ownerRating.getGuest().getId(),
+                ownerRating.getRate(),
+                ownerRating.getDate(),
+                ownerRating.isReported());
+    }
 }

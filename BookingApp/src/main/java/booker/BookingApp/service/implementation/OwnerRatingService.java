@@ -3,18 +3,29 @@ package booker.BookingApp.service.implementation;
 import booker.BookingApp.dto.commentsAndRatings.CreateOwnerRatingDTO;
 import booker.BookingApp.dto.commentsAndRatings.OwnerRatingDTO;
 import booker.BookingApp.model.commentsAndRatings.OwnerRating;
+import booker.BookingApp.model.users.Guest;
+import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.repository.OwnerRatingRepository;
+import booker.BookingApp.repository.ReservationRepository;
+import booker.BookingApp.repository.UserRepository;
 import booker.BookingApp.service.interfaces.IOwnerRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class OwnerRatingService implements IOwnerRatingService {
     @Autowired
     private OwnerRatingRepository ownerRatingRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public OwnerRating findOne(Long id) {
         return ownerRatingRepository.findById(id).orElse(null);
@@ -34,7 +45,37 @@ public class OwnerRatingService implements IOwnerRatingService {
     }
 
     @Override
-    public CreateOwnerRatingDTO create(CreateOwnerRatingDTO ownerRatingDTO) {
+    public OwnerRatingDTO create(CreateOwnerRatingDTO createOwnerRatingDTO) {
+        OwnerRating rating = new OwnerRating();
+        rating.setRate(createOwnerRatingDTO.getRate());
+        rating.setReported(false);
+        rating.setDate(new Date());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof Guest) {
+                Guest user = (Guest) principal;
+                if (reservationRepository.findAllForGuest(user.getId(), createOwnerRatingDTO.getOwnerId()).isEmpty()) {
+                    throw new RuntimeException("The guest has no uncancelled reservations. Rating is not allowed.");
+                }
+
+                rating.setGuest(user);
+            } else {
+                // Handle the case where the principal is not an instance of User
+                throw new RuntimeException("Unexpected principal type: " + principal.getClass());
+            }
+        } else {
+            // Handle the case where there is no authentication
+            throw new RuntimeException("User not authenticated");
+        }
+
+        Owner owner = (Owner) userRepository.findById(createOwnerRatingDTO.getOwnerId()).orElseGet(null);
+        rating.setOwner(owner);
+        ownerRatingRepository.save(rating);
+        OwnerRatingDTO ownerRatingDTO = OwnerRatingDTO.makeFromOwnerRating(rating);
         return ownerRatingDTO;
     }
 //    @Override

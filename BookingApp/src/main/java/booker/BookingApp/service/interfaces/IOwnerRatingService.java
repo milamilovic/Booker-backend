@@ -12,7 +12,7 @@ public interface IOwnerRatingService {
     public List<OwnerRating> findAllReported();
     public void delete(Long id);
     //public OwnerRating save(OwnerRating ownerRating);
-    public CreateOwnerRatingDTO create(CreateOwnerRatingDTO ownerRatingDTO);
+    public OwnerRatingDTO create(CreateOwnerRatingDTO ownerRatingDTO);
     public OwnerRatingDTO update(OwnerRatingDTO ownerRatingDTO);
     public List<OwnerRating> getAllForOwner(Long ownerId);
     public void report(Long id);
