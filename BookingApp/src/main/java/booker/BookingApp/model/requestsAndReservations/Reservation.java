@@ -17,17 +17,15 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "guest_id")
-    private User guest;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "accommodation_id")
-    private Accommodation accommodation;
+    @Column(name = "guest_id")
+    private Long guestId;
+    @Column(name = "accommodation_id")
+    private Long accommodationId;
     @Column(name = "from_date", nullable = false)
-    private Date fromDate;
+    private String fromDate;
     @Column(name = "to_date", nullable = false)
-    private Date toDate;
-    @Column(name = "guests_number", nullable = false)
+    private String toDate;
+    @Column(name = "number_of_guests", nullable = false)
     private int numberOfGuests;
     @Enumerated(EnumType.STRING)
     @Column(name = "request_status", nullable = false)

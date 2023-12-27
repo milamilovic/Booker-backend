@@ -1,6 +1,7 @@
 package booker.BookingApp.controller.requestsAndReservations;
 
 import booker.BookingApp.dto.requestsAndReservations.ReservationDTO;
+import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.service.implementation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +46,9 @@ public class ReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<ReservationDTO> insert(@RequestBody ReservationDTO reservation) {
-        // TODO fix endpoint
-        //ReservationDTO reservationDTO = reservationService.create(reservation);
+    @PostMapping(value = "/create", consumes = "application/json")
+    public ResponseEntity<ReservationDTO> insert(@RequestBody ReservationRequestDTO reservationRequest) {
+        reservationService.create(reservationRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

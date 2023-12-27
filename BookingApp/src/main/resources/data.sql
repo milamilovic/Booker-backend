@@ -275,11 +275,11 @@ VALUES
     ('../../assets/images/profile_pic.jpg', '../../../../../res/drawable/profile_pic.jpg', 5),
     ('../../assets/images/profile_pic.jpg', '../../../../../res/drawable/profile_pic.jpg', 6);
 
-INSERT INTO Reservation (guest_id, accommodation_id, from_date, to_date, guests_number, request_status, reservation_status, deleted, price)
+INSERT INTO Reservation (guest_id, accommodation_id, from_date, to_date, number_of_guests, request_status, reservation_status, deleted, price)
 VALUES
     (1, 1, '2023-01-01', '2023-01-05', 1, 'ACCEPTED', 'ACCEPTED', false, 150.0),
     (1, 2, '2023-02-10', '2023-02-15', 1, 'ACCEPTED', 'CANCELED', false, 120.0),
-    (3, 3, '2023-03-20', '2023-03-25', 4, 'DENIED', 'DENIED', false, 200.0),
+    (3, 3, '2023-03-20', '2023-03-25', 4, 'DENIED', 'ACCEPTED', false, 200.0),
     (4, 4, '2023-03-20', '2023-03-25', 4, 'ACCEPTED', 'CANCELED', false, 200.0);
 
 
