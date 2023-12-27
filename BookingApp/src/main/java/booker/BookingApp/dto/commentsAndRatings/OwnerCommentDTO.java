@@ -28,4 +28,13 @@ public @Data class OwnerCommentDTO {
         this.date = date;
         this.reported = reported;
     }
+
+    public static OwnerCommentDTO createFromOwnerComment(OwnerComment ownerComment) {
+        return new OwnerCommentDTO(ownerComment.getId(),
+                ownerComment.getOwner().getId(),
+                ownerComment.getGuest().getId(),
+                ownerComment.getContent(),
+                ownerComment.getDate(),
+                ownerComment.isReported());
+    }
 }

@@ -9,19 +9,18 @@ public @Data class CreateOwnerCommentDTO {
     private Long ownerId;
     private Long guestId;
     private String content;
-    private Date date;
+//    private Date date;
 
     public CreateOwnerCommentDTO() {
     }
 
     public CreateOwnerCommentDTO(OwnerComment ownerComment) {
-        this(ownerComment.getOwner().getId(), ownerComment.getGuest().getId(), ownerComment.getContent(), ownerComment.getDate());
+        this(ownerComment.getOwner().getId(), ownerComment.getGuest().getId(), ownerComment.getContent());
     }
 
-    public CreateOwnerCommentDTO(Long ownerId, Long guestId, String content, Date date) {
+    public CreateOwnerCommentDTO(Long ownerId, Long guestId, String content) {
         this.ownerId = ownerId;
         this.guestId = guestId;
         this.content = content;
-        this.date = date;
     }
 }

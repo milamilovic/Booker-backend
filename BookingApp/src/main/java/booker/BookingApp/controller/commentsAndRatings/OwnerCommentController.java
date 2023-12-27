@@ -90,9 +90,9 @@ public class OwnerCommentController {
     }
 
     @PostMapping(value = "/add_comment", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CreateOwnerCommentDTO> create(@RequestBody CreateOwnerCommentDTO commentDTO) {
-        ownerCommentService.create(commentDTO);
-        return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
+    public ResponseEntity<OwnerCommentDTO> create(@RequestBody CreateOwnerCommentDTO commentDTO) {
+        OwnerCommentDTO ownerCommentDTO = ownerCommentService.create(commentDTO);
+        return new ResponseEntity<>(ownerCommentDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/update" ,consumes = MediaType.APPLICATION_JSON_VALUE)
