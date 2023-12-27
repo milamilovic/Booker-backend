@@ -98,6 +98,7 @@ public class AccommodationService implements IAccommodationService {
         accommodation.setMin_capacity(accommodationDto.getMin_capacity());
         accommodation.setMax_capacity(accommodationDto.getMax_capacity());
         accommodation.setType(accommodationDto.getType());
+        accommodation.setManual_accepting(true);
 
         //addressRepository.save(address);
         //accommodation.setAddress(address);
@@ -195,6 +196,7 @@ public class AccommodationService implements IAccommodationService {
             a.setTitle(updateAccommodation.getTitle());
             a.setDescription(updateAccommodation.getDescription());
             a.setImages(updateAccommodation.getImages());
+            a.setManual_accepting(updateAccommodation.isManual_accepting());
             repository.save(a);
         }
     }

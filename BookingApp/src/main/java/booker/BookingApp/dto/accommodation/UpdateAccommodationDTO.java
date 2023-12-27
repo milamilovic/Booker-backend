@@ -15,6 +15,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class UpdateAccommodationDTO
     private String title;
     private String description;
     private List<Image> images;
+    private boolean manual_accepting;
 
     public UpdateAccommodationDTO(Accommodation accommodation){
 

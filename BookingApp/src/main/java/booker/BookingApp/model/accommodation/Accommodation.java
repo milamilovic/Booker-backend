@@ -60,5 +60,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Accommodation {
     private AccommodationType type;
     @Column(name = "accepted", nullable = false)
     private boolean accepted;
+    @Column(name = "manual_accepting", nullable = false)
+    private boolean manual_accepting;
 
 }
