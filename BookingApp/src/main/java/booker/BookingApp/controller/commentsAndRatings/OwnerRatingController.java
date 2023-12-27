@@ -82,7 +82,7 @@ public class OwnerRatingController {
 //        return new ResponseEntity<>(new OwnerRatingDTO(ownerRating), HttpStatus.OK);
 //    }
 
-    @DeleteMapping(value = "/remove/{id}")
+    @PutMapping(value = "/remove/{id}")
     public ResponseEntity<Void> deleteOwnerRating(@PathVariable Long id) {
         OwnerRating ownerRating = ownerRatingService.findOne(id);
 

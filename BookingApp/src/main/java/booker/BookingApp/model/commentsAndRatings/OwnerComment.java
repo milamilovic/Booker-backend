@@ -29,4 +29,7 @@ public @Data class OwnerComment {
 
     @Column(name = "reported", nullable = false)
     private boolean reported;
+
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
 }

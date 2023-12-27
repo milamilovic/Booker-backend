@@ -255,16 +255,16 @@ VALUES
     (2, 1, 4.5, '2024-09-25', false),
     (3, 2, 3.8, '2024-10-05', true);
 
-INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
-VALUES (2, 1, 4.5, '2024-01-01', false);
-INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
-VALUES (2, 3, 3.8, '2024-02-15', false);
-INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
-VALUES (2, 4, 4.9, '2024-03-10', true);
-INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
-VALUES (6, 3, 2.5, '2024-04-20', false);
-INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported)
-VALUES (6, 1, 4.0, '2024-05-05', true);
+INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported, deleted)
+VALUES (2, 1, 4.5, '2024-01-01', false, false);
+INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported, deleted)
+VALUES (2, 3, 3.8, '2024-02-15', false, false);
+INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported, deleted)
+VALUES (2, 4, 4.9, '2024-03-10', true, false);
+INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported, deleted)
+VALUES (6, 3, 2.5, '2024-04-20', false, false);
+INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported, deleted)
+VALUES (6, 1, 4.0, '2024-05-05', true, true);
 
 INSERT INTO Profile_Picture (path_front, path_mobile,  user_id)
 VALUES
@@ -295,12 +295,12 @@ VALUES
 
 
 -- Example 1: Inserting a new OwnerComment with reported set to false
-INSERT INTO Owner_Comment (guest_id, owner_id, content, date, reported)
-VALUES (1, 2, 'This is a comment.', '2024-01-01', false);
+INSERT INTO Owner_Comment (guest_id, owner_id, content, date, reported, deleted)
+VALUES (1, 2, 'This is a comment.', '2024-01-01', false, false);
 
 -- Example 2: Inserting another OwnerComment with reported set to true
-INSERT INTO Owner_Comment (guest_id, owner_id, content, date, reported)
-VALUES (3, 2, 'Another comment.', '2024-02-15', true);
+INSERT INTO Owner_Comment (guest_id, owner_id, content, date, reported, deleted)
+VALUES (3, 2, 'Another comment.', '2024-02-15', true, true);
 
 
 
