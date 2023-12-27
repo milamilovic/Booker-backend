@@ -1,6 +1,7 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.requestsAndReservations.ReservationDTO;
+import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.enums.ReservationRequestStatus;
 import booker.BookingApp.enums.ReservationStatus;
 import booker.BookingApp.service.interfaces.IReservationService;
@@ -77,8 +78,7 @@ public class ReservationService implements IReservationService {
         return null;
     }
 
-    public ReservationDTO create(ReservationDTO reservation) {
-        return reservation;
+    public void create(ReservationRequestDTO reservationRequest) {
     }
 
     @Override

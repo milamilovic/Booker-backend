@@ -1,6 +1,7 @@
 package booker.BookingApp.service.interfaces;
 
 import booker.BookingApp.dto.requestsAndReservations.ReservationDTO;
+import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ public interface IReservationService {
     ArrayList<ReservationDTO> getAllForGuest(Long guestId);
     ArrayList<ReservationDTO> getAllForAccommodation(Long accommodationId);
     ReservationDTO getOneById(Long id);
-    ReservationDTO create(ReservationDTO reservation);
+    void create(ReservationRequestDTO reservationRequest);
     void delete(Long id);
     void cancel(Long guestId, Long reservationId);
     void acceptOrDecline(Long ownerId, Long reservationId, boolean accept);

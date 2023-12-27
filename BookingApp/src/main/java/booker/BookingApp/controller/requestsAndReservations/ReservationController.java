@@ -14,11 +14,8 @@ import java.util.ArrayList;
 @RequestMapping("/api/reservations")
 public class ReservationController {
     @Autowired
-    private final ReservationService reservationService;
+    ReservationService reservationService;
 
-    public ReservationController(ReservationService reservationService) {
-        this.reservationService = reservationService;
-    }
 
     @GetMapping(value = "/all")
     public ResponseEntity<ArrayList<ReservationDTO>> getAll() {
@@ -50,8 +47,9 @@ public class ReservationController {
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<ReservationDTO> insert(@RequestBody ReservationDTO reservation) {
-        ReservationDTO reservationDTO = reservationService.create(reservation);
-        return new ResponseEntity<>(reservationDTO, HttpStatus.OK);
+        // TODO fix endpoint
+        //ReservationDTO reservationDTO = reservationService.create(reservation);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")

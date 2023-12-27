@@ -9,6 +9,8 @@ public interface IReservationRequestService {
 
     ReservationRequestDTO create(ReservationRequestDTO request);
 
+    boolean checkReservationAcceptingType(Long accommodationId);
+
     ReservationRequestDTO findOne(Long id);
 
     ArrayList<ReservationRequestDTO> findOwnersRequests(Long ownerId);

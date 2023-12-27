@@ -1,5 +1,6 @@
 package booker.BookingApp.service.implementation;
 
+import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
 import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.enums.ReservationRequestStatus;
 import booker.BookingApp.model.accommodation.Filter;
@@ -9,6 +10,7 @@ import booker.BookingApp.service.interfaces.IReservationRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,13 +19,39 @@ public class ReservationRequestService implements IReservationRequestService {
     @Autowired
     ReservationRequestRepository repository;
 
+    @Autowired
+    AccommodationService accommodationService;
+
+    @Autowired
+    ReservationService reservationService;
+
     @Override
     public ReservationRequestDTO create(ReservationRequestDTO requestDto) {
         ReservationRequest request = new ReservationRequest(-1L, requestDto.getGuestId(), requestDto.getAccommodationId(),
                 requestDto.getFromDate(), requestDto.getToDate(), requestDto.getNumberOfGuests(),
                 requestDto.getStatus(), requestDto.isDeleted(), requestDto.getPrice());
+        // if accommodation has automatically accepting reservation requests option, then
+        // create reservation and change reservation request status
+        if (!checkReservationAcceptingType(request.getAccommodationId())){
+            reservationService.create(requestDto);
+            request.setStatus(ReservationRequestStatus.ACCEPTED);
+        }
         this.repository.save(request);
         return ReservationRequestDTO.makeFromRequest(request);
+    }
+
+    @Override
+    public boolean checkReservationAcceptingType(Long accommodationId) {
+        try{
+            AccommodationViewDTO accommodation = accommodationService.findOne(accommodationId);
+            if (accommodation.isManual_accepting()){
+                return true;
+            }
+        }
+        catch (IOException e){
+            System.out.println(e);
+        }
+        return false;
     }
 
     @Override
