@@ -60,7 +60,7 @@ public class OwnerCommentService implements IOwnerCommentService {
             if (principal instanceof Guest) {
                 Guest user = (Guest) principal;
                 if (reservationRepository.findAllForGuest(user.getId(), createOwnerCommentDTO.getOwnerId()).isEmpty()) {
-                    throw new RuntimeException("Guest has no reservations. Commenting is not allowed.");
+                    throw new RuntimeException("The guest has no uncancelled reservations. Commenting is not allowed.");
                 }
 
                 ownerComment.setGuest(user);
