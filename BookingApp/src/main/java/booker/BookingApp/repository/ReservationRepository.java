@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    @Query("SELECT r FROM Reservation r WHERE r.guest.id = ?1 AND r.accommodation.owner_id = ?2 AND r.status != 'CANCELED'")
+    @Query("SELECT r FROM Reservation r WHERE r.guest.id = ?1 AND r.accommodation.owner_id = ?2 AND r.status != 'CANCELED' AND r.toDate < CURRENT DATE")
     public List<Reservation> findAllForGuest(Long guestId, Long ownerId);
 }
