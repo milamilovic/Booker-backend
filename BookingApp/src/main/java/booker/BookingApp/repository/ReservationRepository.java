@@ -9,6 +9,8 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     // TODO change accommodation_id
-    @Query("SELECT r FROM Reservation r WHERE r.guestId = ?1 AND r.accommodationId = ?2 AND r.status != 'CANCELED'")
+
+    @Query("SELECT r FROM Reservation r WHERE r.guest.id = ?1 AND r.accommodation.owner_id = ?2 AND r.status != 'CANCELED' AND r.toDate < CURRENT DATE")
+
     public List<Reservation> findAllForGuest(Long guestId, Long ownerId);
 }

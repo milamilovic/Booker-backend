@@ -52,7 +52,7 @@ public class AccommodationCommentService implements IAccommodationCommentService
 
     @Override
     public void delete(Long id) {
-
+        accommodationCommentRepository.deleteById(id);
     }
 
     @Override
