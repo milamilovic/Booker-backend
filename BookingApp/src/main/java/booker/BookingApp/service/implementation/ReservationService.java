@@ -19,6 +19,9 @@ public class ReservationService implements IReservationService {
     @Autowired
     ReservationRepository reservationRepository;
 
+    @Autowired
+    AccommodationService accommodationService;
+
     @Override
     public ArrayList<ReservationDTO> findAll() {
         ArrayList<ReservationDTO> reservations = new ArrayList<>();
@@ -92,6 +95,10 @@ public class ReservationService implements IReservationService {
         reservation.setDeleted(false);
         reservation.setPrice(reservationRequest.getPrice());
         reservationRepository.save(reservation);
+        System.out.println(reservation);
+        accommodationService.updateAvailabilitiesForAccommodation(reservation.getAccommodationId(),
+                reservation.getFromDate(), reservation.getToDate());
+
     }
 
     @Override

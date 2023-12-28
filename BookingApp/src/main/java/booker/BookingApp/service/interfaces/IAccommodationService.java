@@ -59,4 +59,6 @@ public interface IAccommodationService {
     void deleteImage(Long accommodationId, Long imageId);
 
     void uploadImage(Long accommodationId, MultipartFile image) throws IOException;
+
+    void updateAvailabilitiesForAccommodation(Long accommodationId, String startDate, String endDate);
 }

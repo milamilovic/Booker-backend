@@ -20,4 +20,6 @@ public interface IAvailabilityService {
     boolean checkForDateRange(Long accommodationId, Date startDate, Date endDate);
 
     void markAsNotAvailable(Long accommodationId, String startDate, String endDate);
+
+    void refactorAvailability(Availability availability, Date fromDate, Date toDate);
 }

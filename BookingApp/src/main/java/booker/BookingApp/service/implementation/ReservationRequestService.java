@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -25,6 +27,9 @@ public class ReservationRequestService implements IReservationRequestService {
     @Autowired
     ReservationService reservationService;
 
+    @Autowired
+    AvailabilityService availabilityService;
+
     @Override
     public ReservationRequestDTO create(ReservationRequestDTO requestDto) {
         ReservationRequest request = new ReservationRequest(-1L, requestDto.getGuestId(), requestDto.getAccommodationId(),
@@ -32,12 +37,26 @@ public class ReservationRequestService implements IReservationRequestService {
                 requestDto.getStatus(), requestDto.isDeleted(), requestDto.getPrice());
         // if accommodation has automatically accepting reservation requests option, then
         // create reservation and change reservation request status
-        if (!checkReservationAcceptingType(request.getAccommodationId())){
-            reservationService.create(requestDto);
+        if (!checkReservationAcceptingType(request.getAccommodationId()) &&
+                !checkAvailability(request.getAccommodationId(), request.getFromDate(), request.getToDate())){
             request.setStatus(ReservationRequestStatus.ACCEPTED);
+            requestDto.setStatus(ReservationRequestStatus.ACCEPTED);
+            reservationService.create(requestDto);
         }
         this.repository.save(request);
         return ReservationRequestDTO.makeFromRequest(request);
+    }
+
+    public boolean checkAvailability(Long accommodationId, String fromDate, String toDate){
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+            Date from = sdf.parse(fromDate);
+            Date to = sdf.parse(toDate);
+            return availabilityService.checkForDateRange(accommodationId, from, to);
+        } catch (ParseException e){
+            System.out.println("Can not parse date");
+        }
+        return false;
     }
 
     @Override
