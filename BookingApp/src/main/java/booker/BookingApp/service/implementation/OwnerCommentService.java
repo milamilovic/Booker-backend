@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -40,9 +41,29 @@ public class OwnerCommentService implements IOwnerCommentService {
         return ownerCommentRepository.findAllForOwner(ownerId);
     }
 
+    @Transactional
     @Override
     public void remove(Long id) {
-        ownerCommentRepository.deleteById(id);
+        OwnerComment ownerComment = ownerCommentRepository.findById(id).orElseGet(null);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof Guest) {
+                Guest user = (Guest) principal;
+                if (ownerComment != null) {
+                    ownerComment.setDeleted(true);
+                    ownerCommentRepository.save(ownerComment);
+                }
+            } else {
+                // Handle the case where the principal is not an instance of User
+                throw new RuntimeException("Unexpected principal type: " + principal.getClass());
+            }
+        } else {
+            // Handle the case where there is no authentication
+            throw new RuntimeException("User not authenticated");
+        }
     }
 
 
@@ -52,6 +73,7 @@ public class OwnerCommentService implements IOwnerCommentService {
         ownerComment.setContent(createOwnerCommentDTO.getContent());
         ownerComment.setReported(false);
         ownerComment.setDate(new Date());
+        ownerComment.setDeleted(false);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null) {

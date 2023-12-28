@@ -77,7 +77,7 @@ public class OwnerCommentController {
 //         return new ResponseEntity<>(new OwnerCommentDTO(ownerComment), HttpStatus.OK);
 //     }
 
-    @DeleteMapping(value = "/remove/{id}")
+    @PutMapping(value = "/remove/{id}")
     public ResponseEntity<Void> deleteOwnerComment(@PathVariable Long id) {
         OwnerComment ownerComment = ownerCommentService.findOne(id);
 

@@ -41,7 +41,26 @@ public class OwnerRatingService implements IOwnerRatingService {
     }
     @Override
     public void delete(Long id) {
-        ownerRatingRepository.deleteById(id);
+        OwnerRating rating = ownerRatingRepository.findById(id).orElseGet(null);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof Guest) {
+                Guest user = (Guest) principal;
+
+                rating.setDeleted(true);
+                ownerRatingRepository.save(rating);
+            } else {
+                // Handle the case where the principal is not an instance of User
+                throw new RuntimeException("Unexpected principal type: " + principal.getClass());
+            }
+        } else {
+            // Handle the case where there is no authentication
+            throw new RuntimeException("User not authenticated");
+        }
+
     }
 
     @Override

@@ -12,21 +12,23 @@ public @Data class OwnerCommentDTO {
     private String content;
     private Date date;
     private boolean reported;
+    private boolean deleted;
 
     public OwnerCommentDTO() {
     }
 
     public OwnerCommentDTO(OwnerComment ownerComment) {
-        this(ownerComment.getId(), ownerComment.getOwner().getId(), ownerComment.getGuest().getId(), ownerComment.getContent(), ownerComment.getDate(), ownerComment.isReported());
+        this(ownerComment.getId(), ownerComment.getOwner().getId(), ownerComment.getGuest().getId(), ownerComment.getContent(), ownerComment.getDate(), ownerComment.isReported(), ownerComment.isDeleted());
     }
 
-    public OwnerCommentDTO(Long id, Long ownerId, Long guestId, String content, Date date, boolean reported) {
+    public OwnerCommentDTO(Long id, Long ownerId, Long guestId, String content, Date date, boolean reported, boolean deleted) {
         this.id = id;
         this.ownerId = ownerId;
         this.guestId = guestId;
         this.content = content;
         this.date = date;
         this.reported = reported;
+        this.deleted = deleted;
     }
 
     public static OwnerCommentDTO createFromOwnerComment(OwnerComment ownerComment) {
@@ -35,6 +37,7 @@ public @Data class OwnerCommentDTO {
                 ownerComment.getGuest().getId(),
                 ownerComment.getContent(),
                 ownerComment.getDate(),
-                ownerComment.isReported());
+                ownerComment.isReported(),
+                ownerComment.isDeleted());
     }
 }
