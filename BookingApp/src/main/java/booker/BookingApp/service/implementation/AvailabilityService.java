@@ -2,6 +2,7 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
 import booker.BookingApp.dto.accommodation.AvailabilityDTO;
+import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.accommodation.Availability;
 import booker.BookingApp.repository.AccommodationRepository;
@@ -118,6 +119,22 @@ public class AvailabilityService implements IAvailabilityService {
             repository.save(newAvailability);
         }
 
+    }
+
+    @Override
+    public boolean checkForOverlaps(ReservationRequestDTO requestDTO, ReservationRequestDTO acceptedRequest) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date startA = sdf.parse(requestDTO.getFromDate());
+            Date endA = sdf.parse(requestDTO.getToDate());
+            Date startB = sdf.parse(acceptedRequest.getFromDate());
+            Date endB = sdf.parse(acceptedRequest.getToDate());
+            // return true if overlap
+            return (endA.after(startB) && endA.before(endB)) || (startA.after(startB) && startA.before(endB));
+        } catch (ParseException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
 }

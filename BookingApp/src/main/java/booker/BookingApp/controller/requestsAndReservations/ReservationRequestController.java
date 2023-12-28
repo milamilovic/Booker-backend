@@ -136,11 +136,10 @@ public class ReservationRequestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //accept or decline request for owner
-    @PutMapping(value = "/owner/{ownerId}/{requestId}/{accept}")
-    public ResponseEntity<Void> declineAccommodation(@PathVariable Long ownerId,
-                                                     @PathVariable Long requestId,
-                                                     @PathVariable boolean accept) {
-        service.acceptOrDeclineRequest(ownerId, requestId, accept);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PutMapping(value = "/owner/accept_reservation/{accept}", consumes = "application/json")
+    public ResponseEntity<Void> acceptOrDeclineReservationRequest(@PathVariable("accept") boolean accept,
+                                                                  @RequestBody ReservationRequestDTO reservationRequestDTO) {
+        service.acceptOrDecline(accept, reservationRequestDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

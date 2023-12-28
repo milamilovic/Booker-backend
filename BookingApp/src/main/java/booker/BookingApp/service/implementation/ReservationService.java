@@ -116,8 +116,4 @@ public class ReservationService implements IReservationService {
 
     }
 
-    @Override
-    public void acceptOrDecline(Long ownerId, Long reservationId, boolean accept) {
-
-    }
 }
