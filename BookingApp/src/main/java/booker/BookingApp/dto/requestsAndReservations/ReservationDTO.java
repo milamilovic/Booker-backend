@@ -13,8 +13,8 @@ public @Data @AllArgsConstructor @NoArgsConstructor class ReservationDTO {
     private Long guestId;
     private Long accommodationId;
     private Long id;
-    private Date fromDate;
-    private Date toDate;
+    private String fromDate;
+    private String toDate;
     private int numberOfGuests;
     private ReservationRequestStatus requestStatus;
     private ReservationStatus status;
@@ -23,8 +23,8 @@ public @Data @AllArgsConstructor @NoArgsConstructor class ReservationDTO {
 
     public ReservationDTO makeFromReservation(Reservation reservation){
         ReservationDTO reservationDTO = new ReservationDTO();
-        reservationDTO.guestId = reservation.getGuest().getId();
-        reservationDTO.accommodationId = reservation.getAccommodation().getId();
+        reservationDTO.guestId = reservation.getGuestId();
+        reservationDTO.accommodationId = reservation.getAccommodationId();
         reservationDTO.id = reservation.getId();
         reservationDTO.fromDate = reservation.getFromDate();
         reservationDTO.toDate = reservation.getToDate();

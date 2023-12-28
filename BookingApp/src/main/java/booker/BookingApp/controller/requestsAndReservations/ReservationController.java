@@ -1,6 +1,7 @@
 package booker.BookingApp.controller.requestsAndReservations;
 
 import booker.BookingApp.dto.requestsAndReservations.ReservationDTO;
+import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.service.implementation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,8 @@ import java.util.ArrayList;
 @RequestMapping("/api/reservations")
 public class ReservationController {
     @Autowired
-    private final ReservationService reservationService;
+    ReservationService reservationService;
 
-    public ReservationController(ReservationService reservationService) {
-        this.reservationService = reservationService;
-    }
 
     @GetMapping(value = "/all")
     public ResponseEntity<ArrayList<ReservationDTO>> getAll() {
@@ -48,10 +46,10 @@ public class ReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<ReservationDTO> insert(@RequestBody ReservationDTO reservation) {
-        ReservationDTO reservationDTO = reservationService.create(reservation);
-        return new ResponseEntity<>(reservationDTO, HttpStatus.OK);
+    @PostMapping(value = "/create", consumes = "application/json")
+    public ResponseEntity<ReservationDTO> insert(@RequestBody ReservationRequestDTO reservationRequest) {
+        reservationService.create(reservationRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -69,13 +67,5 @@ public class ReservationController {
     public ResponseEntity<Void> cancel(@PathVariable Long guestId, @PathVariable Long id){
         reservationService.cancel(guestId, id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/owner/{ownerId}/accept/{id}/{accept}")
-    public ResponseEntity<Void> declineAccommodation(@PathVariable Long ownerId,
-                                                     @PathVariable Long id,
-                                                     @PathVariable boolean accept) {
-        reservationService.acceptOrDecline(ownerId, id, accept);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -490,7 +490,22 @@ public class AccommodationService implements IAccommodationService {
         imageRepository.save(newImage);
     }
 
+    @Override
+    public void updateAvailabilitiesForAccommodation(Long accommodationId, String startDate, String endDate) {
+        try {
+            Accommodation accommodation = repository.findById(accommodationId).get();
+            List<Availability> availabilities = accommodation.getAvailabilities();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date from = sdf.parse(startDate);
+            Date to = sdf.parse(endDate);
+            for (Availability availability : availabilities){
+                availabilityService.refactorAvailability(availability, from, to);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
+    }
 
 
 }

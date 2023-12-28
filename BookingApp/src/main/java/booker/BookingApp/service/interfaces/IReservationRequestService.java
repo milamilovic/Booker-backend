@@ -9,9 +9,13 @@ public interface IReservationRequestService {
 
     ReservationRequestDTO create(ReservationRequestDTO request);
 
+    boolean checkReservationAcceptingType(Long accommodationId);
+
     ReservationRequestDTO findOne(Long id);
 
     ArrayList<ReservationRequestDTO> findOwnersRequests(Long ownerId);
+
+    ArrayList<ReservationRequestDTO> findAccommodationRequests(Long accommodationId);
 
     ArrayList<ReservationRequestDTO> search(String date, String name);
 
@@ -21,5 +25,7 @@ public interface IReservationRequestService {
 
     void cancelRequest(Long userId, Long requestId);
 
-    void acceptOrDeclineRequest(Long ownerId, Long requestId, boolean accept);
+    void acceptOrDecline(boolean accept, ReservationRequestDTO reservationRequestDTO);
+
+    void declineOthers(ReservationRequestDTO acceptedRequest);
 }

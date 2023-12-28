@@ -1,9 +1,13 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.requestsAndReservations.ReservationDTO;
+import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.enums.ReservationRequestStatus;
 import booker.BookingApp.enums.ReservationStatus;
+import booker.BookingApp.model.requestsAndReservations.Reservation;
+import booker.BookingApp.repository.ReservationRepository;
 import booker.BookingApp.service.interfaces.IReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,6 +15,12 @@ import java.util.Objects;
 
 @Service
 public class ReservationService implements IReservationService {
+
+    @Autowired
+    ReservationRepository reservationRepository;
+
+    @Autowired
+    AccommodationService accommodationService;
 
     @Override
     public ArrayList<ReservationDTO> findAll() {
@@ -22,11 +32,9 @@ public class ReservationService implements IReservationService {
         ReservationDTO r5 = new ReservationDTO(6L, 1L, 5L, null, null, 2, ReservationRequestStatus.ACCEPTED, ReservationStatus.ACCEPTED, false, 300.0);
         ReservationDTO r6 = new ReservationDTO(12L, 1L, 6L, null, null, 2, ReservationRequestStatus.ACCEPTED, ReservationStatus.CANCELED, false, 300.0);
         ReservationDTO r7 = new ReservationDTO(8L, 1L, 7L, null, null, 2, ReservationRequestStatus.WAITING, null, false, 300.0);
-        ReservationDTO r8 = new ReservationDTO(12L, 1L, 8L, null, null, 2, ReservationRequestStatus.ACCEPTED, ReservationStatus.DENIED, false, 300.0);
         ReservationDTO r9 = new ReservationDTO(2L, 1L, 9L, null, null, 2, ReservationRequestStatus.ACCEPTED, ReservationStatus.CANCELED, false, 300.0);
         ReservationDTO r10 = new ReservationDTO(3L, 1L, 10L, null, null, 2, ReservationRequestStatus.ACCEPTED,ReservationStatus.ACCEPTED, false, 300.0);
         ReservationDTO r11 = new ReservationDTO(4L, 1L, 11L, null, null, 2, ReservationRequestStatus.DENIED, null, false, 300.0);
-        ReservationDTO r12 = new ReservationDTO(4L, 1L, 12L, null, null, 2, ReservationRequestStatus.ACCEPTED,ReservationStatus.DENIED, false, 300.0);
         reservations.add(r1);
         reservations.add(r2);
         reservations.add(r3);
@@ -34,11 +42,9 @@ public class ReservationService implements IReservationService {
         reservations.add(r5);
         reservations.add(r6);
         reservations.add(r7);
-        reservations.add(r8);
         reservations.add(r9);
         reservations.add(r10);
         reservations.add(r11);
-        reservations.add(r12);
         return reservations;
     }
 
@@ -77,8 +83,22 @@ public class ReservationService implements IReservationService {
         return null;
     }
 
-    public ReservationDTO create(ReservationDTO reservation) {
-        return reservation;
+    public void create(ReservationRequestDTO reservationRequest) {
+        Reservation reservation = new Reservation();
+        reservation.setGuestId(reservationRequest.getGuestId());
+        reservation.setAccommodationId(reservationRequest.getAccommodationId());
+        reservation.setFromDate(reservationRequest.getFromDate());
+        reservation.setToDate(reservationRequest.getToDate());
+        reservation.setNumberOfGuests(reservationRequest.getNumberOfGuests());
+        reservation.setRequestStatus(reservationRequest.getStatus());
+        reservation.setStatus(ReservationStatus.ACCEPTED);
+        reservation.setDeleted(false);
+        reservation.setPrice(reservationRequest.getPrice());
+        reservationRepository.save(reservation);
+        System.out.println(reservation);
+        accommodationService.updateAvailabilitiesForAccommodation(reservation.getAccommodationId(),
+                reservation.getFromDate(), reservation.getToDate());
+
     }
 
     @Override
@@ -96,8 +116,4 @@ public class ReservationService implements IReservationService {
 
     }
 
-    @Override
-    public void acceptOrDecline(Long ownerId, Long reservationId, boolean accept) {
-
-    }
 }
