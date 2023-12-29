@@ -2,7 +2,9 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.commentsAndRatings.CreateOwnerRatingDTO;
 import booker.BookingApp.dto.commentsAndRatings.OwnerRatingDTO;
+import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.commentsAndRatings.OwnerRating;
+import booker.BookingApp.model.requestsAndReservations.Reservation;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.repository.OwnerRatingRepository;
@@ -77,8 +79,10 @@ public class OwnerRatingService implements IOwnerRatingService {
 
             if (principal instanceof Guest) {
                 Guest user = (Guest) principal;
-                if (reservationRepository.findAllForGuest(user.getId(), createOwnerRatingDTO.getOwnerId()).isEmpty()) {
+                List<Reservation> reservations = reservationRepository.findAllForGuest(user.getId());
+                if (reservations.size() == 0) {
                     throw new RuntimeException("The guest has no uncancelled reservations. Rating is not allowed.");
+
                 }
 
                 rating.setGuest(user);
