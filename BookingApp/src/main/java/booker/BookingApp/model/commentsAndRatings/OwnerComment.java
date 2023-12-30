@@ -24,6 +24,9 @@ public @Data class OwnerComment {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @Column(name = "rating", nullable = false)
+    private double rating;
+
     @Column(name = "date", nullable = false)
     private Date date;
 

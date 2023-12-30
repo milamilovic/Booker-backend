@@ -43,7 +43,7 @@ public class EmailService {
 //        if (ipAddress.equals("")) {
 //            mail.setText("Pozdrav " + user.getName() + ",\n\n Activation Link: http://localhost:4200/activate_profile/" + user.getActivationLink());
 //        } else {
-//            mail.setText("Pozdrav " + user.getName() + ",\n\n Activation Link: http://"+ipAddress+":8080/activate_profile/" + user.getActivationLink());
+//        mail.setText("Pozdrav " + user.getName() + ",\n\n Activation Link: http://"+ipAddress+":4200/activate_profile/" + user.getActivationLink());
 //        }
 
         System.setProperty("mail.debug", "true");

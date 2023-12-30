@@ -112,14 +112,8 @@ public class OwnerCommentController {
     }
     @GetMapping(value = "/all/{owner_id}/comments")
     public ResponseEntity<List<OwnerCommentDTO>> getAllForOwner(@PathVariable Long owner_id) {
-        List<OwnerComment> comments = ownerCommentService.findAllForOwner(owner_id);
-        List<OwnerCommentDTO> commentDTOS = new ArrayList<>();
-
-        for(OwnerComment ownerComment : comments) {
-            commentDTOS.add(new OwnerCommentDTO(ownerComment));
-        }
-
-        return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
+        List<OwnerCommentDTO> comments = ownerCommentService.findAllForOwner(owner_id);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     @PutMapping(value = "/report/{comment_id}")
@@ -127,5 +121,11 @@ public class OwnerCommentController {
         ownerCommentService.report(comment_id);
         OwnerCommentDTO reportOwnerCommentDTO = new OwnerCommentDTO(ownerCommentService.findOne(comment_id));
         return new ResponseEntity<>(reportOwnerCommentDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all/{owner_id}/not_deleted")
+    public ResponseEntity<List<OwnerCommentDTO>> getAllNotDeleted(@PathVariable Long owner_id) {
+        List<OwnerCommentDTO> comments = ownerCommentService.findAllNotDeletedForOwner(owner_id);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 }

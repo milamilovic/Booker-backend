@@ -13,4 +13,7 @@ public interface OwnerCommentRepository extends JpaRepository<OwnerComment, Long
     @Query("select oc from OwnerComment oc where oc.reported = true")
     public List<OwnerComment> findAllReported();
 
+    @Query("select oc from OwnerComment  oc where oc.owner.id = ?1 and oc.deleted = false")
+    public List<OwnerComment> findAllNotDeletedForOwner(Long ownerId);
+
 }

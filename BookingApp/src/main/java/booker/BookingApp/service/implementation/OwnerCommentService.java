@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,8 +38,14 @@ public class OwnerCommentService implements IOwnerCommentService {
     }
 
     @Override
-    public List<OwnerComment> findAllForOwner(Long ownerId) {
-        return ownerCommentRepository.findAllForOwner(ownerId);
+    public List<OwnerCommentDTO> findAllForOwner(Long ownerId) {
+        List<OwnerComment> ownerComments = ownerCommentRepository.findAllForOwner(ownerId);
+        List<OwnerCommentDTO> ownerCommentDTOS = new ArrayList<>();
+        for (OwnerComment ownerComment : ownerComments) {
+            OwnerCommentDTO ownerCommentDTO = OwnerCommentDTO.createFromOwnerComment(ownerComment);
+            ownerCommentDTOS.add(ownerCommentDTO);
+        }
+        return ownerCommentDTOS;
     }
 
     @Transactional
@@ -74,6 +81,7 @@ public class OwnerCommentService implements IOwnerCommentService {
         ownerComment.setReported(false);
         ownerComment.setDate(new Date());
         ownerComment.setDeleted(false);
+        ownerComment.setRating(createOwnerCommentDTO.getRating());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null) {
@@ -81,7 +89,7 @@ public class OwnerCommentService implements IOwnerCommentService {
 
             if (principal instanceof Guest) {
                 Guest user = (Guest) principal;
-                if (reservationRepository.findAllForGuest(user.getId()).size() == 0) {
+                if (reservationRepository.findAllForGuest(user.getId(), createOwnerCommentDTO.getOwnerId()).size() == 0) {
                     throw new RuntimeException("The guest has no uncancelled reservations. Commenting is not allowed.");
                 }
 
@@ -126,6 +134,17 @@ public class OwnerCommentService implements IOwnerCommentService {
         OwnerComment comment = ownerCommentRepository.findById(id).orElseGet(null);
         comment.setReported(true);
         ownerCommentRepository.save(comment);
+    }
+
+    @Override
+    public List<OwnerCommentDTO> findAllNotDeletedForOwner(Long ownerId) {
+        List<OwnerComment> comments = ownerCommentRepository.findAllNotDeletedForOwner(ownerId);
+        List<OwnerCommentDTO> notDeleted = new ArrayList<>();
+        for (OwnerComment comment : comments) {
+            OwnerCommentDTO commentDTO = OwnerCommentDTO.createFromOwnerComment(comment);
+            notDeleted.add(commentDTO);
+        }
+        return notDeleted;
     }
 
 
