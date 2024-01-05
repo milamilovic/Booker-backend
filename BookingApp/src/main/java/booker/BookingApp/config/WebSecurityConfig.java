@@ -124,6 +124,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/accommodations/approve/{accommodationId}")).hasAuthority("ADMIN");    //for admin
                             auth.requestMatchers(antMatcher("/api/accommodations/admin/remove/*")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/requests/owner/**")).hasAuthority("OWNER");      //for owner
+                            auth.requestMatchers(antMatcher("/api/requests/owner/{ownerId}/filter")).hasAuthority("OWNER");      //for owner
                             auth.requestMatchers(antMatcher("/api/requests/guest/**")).hasAuthority("GUEST");      //for guest
                             auth.requestMatchers(antMatcher("/api/reservations/*")).hasAnyAuthority("GUEST", "OWNER");
                             auth.requestMatchers(antMatcher("/api/reservations/owner/**")).hasAuthority("OWNER");
@@ -134,6 +135,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/accommodations/priceType/*")).permitAll();    //used in search - everyone
                             auth.requestMatchers(antMatcher("/api/prices/{accId}/{fromDate}/{toDate}/{people}")).permitAll();        //for guest - making reservation reqest
                             auth.requestMatchers(antMatcher("/api/guests/{guestId}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/guests/{guestId}/cancelled")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/guests/delete/{guestId}")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/owners/*")).permitAll();      //used in acc view - for everyone
                             auth.requestMatchers(antMatcher("/api/owners")).hasAuthority("OWNER");      //used in acc view - for everyone
@@ -207,8 +209,6 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.POST, "/api/accommodations/search/**"),
                         antMatcher(HttpMethod.GET, "/api/accommodations/search/**"),
                         antMatcher(HttpMethod.POST, "/api/accommodations/add"),
-                        antMatcher(HttpMethod.PUT, "/api/requests/owner/**"),
-                        antMatcher(HttpMethod.GET, "/api/requests/owner/**"),
                         antMatcher(HttpMethod.POST, "/api/requests/**"),
                         antMatcher(HttpMethod.POST, "/api/requests"),
                         antMatcher(HttpMethod.GET, "/api/requests/**"),

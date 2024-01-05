@@ -1,11 +1,9 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
 import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.enums.ReservationRequestStatus;
 import booker.BookingApp.model.accommodation.Accommodation;
-import booker.BookingApp.model.accommodation.Filter;
 import booker.BookingApp.model.requestsAndReservations.ReservationRequest;
 import booker.BookingApp.repository.AccommodationRepository;
 import booker.BookingApp.repository.ReservationRequestRepository;
@@ -121,6 +119,48 @@ public class ReservationRequestService implements IReservationRequestService {
             throw new RuntimeException(e);
         }
         ArrayList<ReservationRequestDTO> requests = this.findGuestsRequests(guestId);
+        ArrayList<ReservationRequestDTO> adequateRequests = new ArrayList<>();
+        for(ReservationRequestDTO r : requests) {
+            AccommodationViewDTO accommodation = accommodationService.findOne(r.getAccommodationId());
+            Date startDate, endDate;
+            try {
+                startDate = dateFormat.parse(r.getFromDate());
+                endDate = dateFormat.parse(r.getToDate());
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            if(!name.equals("noNameSearching")) {
+                if(!dateString.equals("1111-01-01")) {  ///by name and date
+                    System.out.println("searching by name and date");
+                    if (accommodation.getTitle().contains(name) && date.compareTo(startDate) >= 0 && date.compareTo(endDate) <= 0) {
+                        adequateRequests.add(r);
+                    }
+                } else {    //just by name
+                    System.out.println("searching by name");
+                    if(accommodation.getTitle().contains(name)) {
+                        adequateRequests.add(r);
+                    }
+                }
+            } else {    //just by date
+                System.out.println("searching by date");
+                if (date.compareTo(startDate) >= 0 && date.compareTo(endDate) <= 0) {
+                    adequateRequests.add(r);
+                }
+            }
+        }
+        return adequateRequests;
+    }
+
+    @Override
+    public ArrayList<ReservationRequestDTO> searchForOwner(Long ownerId, String dateString, String name) throws IOException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date;
+        try {
+            date = dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<ReservationRequestDTO> requests = this.findOwnersRequests(ownerId);
         ArrayList<ReservationRequestDTO> adequateRequests = new ArrayList<>();
         for(ReservationRequestDTO r : requests) {
             AccommodationViewDTO accommodation = accommodationService.findOne(r.getAccommodationId());

@@ -21,6 +21,8 @@ public interface IReservationRequestService {
 
     ArrayList<ReservationRequestDTO> search(Long guestId, String dateString, String name) throws IOException;
 
+    ArrayList<ReservationRequestDTO> searchForOwner(Long ownerId, String dateString, String name) throws IOException;
+
     ArrayList<ReservationRequestDTO> applyFilters(ArrayList<ReservationRequestDTO> requests, ArrayList<ReservationRequestStatus> adequateTypes);
 
     ArrayList<ReservationRequestDTO> findGuestsRequests(Long guestId);

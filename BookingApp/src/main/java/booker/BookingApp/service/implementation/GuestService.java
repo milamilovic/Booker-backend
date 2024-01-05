@@ -160,5 +160,10 @@ public class GuestService implements IGuestService {
         return favourites;
     }
 
+    @Override
+    public int findNumOfCancellations(Long guestId) {
+        return userRepository.getNumOfCancellations(guestId);
+    }
+
 
 }
