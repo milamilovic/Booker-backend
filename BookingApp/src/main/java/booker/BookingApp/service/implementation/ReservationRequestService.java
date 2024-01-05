@@ -124,7 +124,12 @@ public class ReservationRequestService implements IReservationRequestService {
 
     @Override
     public ArrayList<ReservationRequestDTO> findGuestsRequests(Long guestId) {
-        return findOwnersRequests(1L);
+        ArrayList<ReservationRequest> requests = (ArrayList<ReservationRequest>) repository.findAllForGuest(guestId);
+        ArrayList<ReservationRequestDTO> dtos = new ArrayList<>();
+        for(ReservationRequest request : requests) {
+            dtos.add(ReservationRequestDTO.makeFromRequest(request));
+        }
+        return dtos;
     }
 
     @Override
