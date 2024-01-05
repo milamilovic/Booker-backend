@@ -209,6 +209,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.POST, "/api/accommodations/add"),
                         antMatcher(HttpMethod.PUT, "/api/requests/owner/**"),
                         antMatcher(HttpMethod.GET, "/api/requests/owner/**"),
+                        antMatcher(HttpMethod.POST, "/api/requests/**"),
                         antMatcher(HttpMethod.POST, "/api/requests"),
                         antMatcher(HttpMethod.GET, "/api/requests/**"),
                         antMatcher(HttpMethod.GET, "/api/notifications/**"),

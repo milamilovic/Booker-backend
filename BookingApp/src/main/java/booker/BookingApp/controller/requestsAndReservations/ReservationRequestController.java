@@ -1,6 +1,8 @@
 package booker.BookingApp.controller.requestsAndReservations;
 
 import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
+import booker.BookingApp.enums.AccommodationType;
+import booker.BookingApp.enums.ReservationRequestStatus;
 import booker.BookingApp.model.accommodation.Filter;
 import booker.BookingApp.service.interfaces.IReservationRequestService;
 import ch.qos.logback.core.net.SyslogOutputStream;
@@ -44,7 +46,7 @@ public class ReservationRequestController {
     {
         ArrayList<ReservationRequestDTO> requests = service.findOwnersRequests(ownerId);
         for(Filter filter : filters) {
-            requests = service.applyFilters(requests, filter);
+            //requests = service.applyFilters(requests, filter);
         }
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
@@ -57,7 +59,7 @@ public class ReservationRequestController {
                                                                                  @PathVariable String name)
     {
         ArrayList<ReservationRequestDTO> requests = service.findOwnersRequests(ownerId);
-        requests = service.search(date, name);
+        //requests = service.search(date, name);
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
@@ -71,10 +73,10 @@ public class ReservationRequestController {
                                                                                           @RequestBody ArrayList<Filter> filters)
     {
         ArrayList<ReservationRequestDTO> requests = service.findOwnersRequests(ownerId);
-        requests = service.search(date, name);
+        //requests = service.search(date, name);
         //TODO: make actual filter methods that service.applyFilter redirects to!!!
         for(Filter filter : filters) {
-            requests = service.applyFilters(requests, filter);
+            //requests = service.applyFilters(requests, filter);
         }
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
@@ -88,14 +90,22 @@ public class ReservationRequestController {
     }
 
     //find all requests for guest, filter by status
-    @GetMapping(value = "/guest/{guestId}/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/guest/{guestId}/filter", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<ReservationRequestDTO>> findGuestsRequestsByStatus(@PathVariable Long guestId,
                                                                                        @RequestBody ArrayList<Filter> filters)
     {
         ArrayList<ReservationRequestDTO> requests = service.findGuestsRequests(guestId);
+        ArrayList<ReservationRequestStatus> adequateTypes = new ArrayList<>();
         for(Filter filter : filters) {
-            requests = service.applyFilters(requests, filter);
+            if(filter.getName().equals("accepted")) {
+                adequateTypes.add(ReservationRequestStatus.ACCEPTED);
+            } else if(filter.getName().equals("denied")) {
+                adequateTypes.add(ReservationRequestStatus.DENIED);
+            } else if(filter.getName().equals("waiting")) {
+                adequateTypes.add(ReservationRequestStatus.WAITING);
+            }
         }
+        requests = service.applyFilters(requests, adequateTypes);
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
@@ -104,28 +114,31 @@ public class ReservationRequestController {
     @GetMapping(value = "/guest/{guestId}/search/{date}/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<ReservationRequestDTO>> searchGuestsRequests(@PathVariable Long guestId,
                                                                                  @PathVariable String date,
-                                                                                 @PathVariable String name)
-    {
-        ArrayList<ReservationRequestDTO> requests = service.findGuestsRequests(guestId);
-        requests = service.search(date, name);
+                                                                                 @PathVariable String name) throws IOException {
+        ArrayList<ReservationRequestDTO> requests = service.search(guestId, date, name);
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
     //   searching accommodations with filters, path looks like
     //   /api/requests/guest/5/search?date=12.12.2023.&name=Modern?status=WAITING
     //   and request body contains json with filter array
-    @GetMapping(value = "/guest/{guestId}/search/{date}/{name}/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/guest/{guestId}/search/{date}/{name}/filter", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<ReservationRequestDTO>> searchAndFilterGuestsRequests(@PathVariable Long guestId,
                                                                                           @PathVariable String date,
                                                                                           @PathVariable String name,
-                                                                                          @RequestBody ArrayList<Filter> filters)
-    {
-        ArrayList<ReservationRequestDTO> requests = service.findGuestsRequests(guestId);
-        requests = service.search(date, name);
-        //TODO: make actual filter methods that service.applyFilter redirects to!!!
+                                                                                          @RequestBody ArrayList<Filter> filters) throws IOException {
+        ArrayList<ReservationRequestDTO> requests = service.search(guestId, date, name);
+        ArrayList<ReservationRequestStatus> adequateTypes = new ArrayList<>();
         for(Filter filter : filters) {
-            requests = service.applyFilters(requests, filter);
+            if(filter.getName().equals("accepted")) {
+                adequateTypes.add(ReservationRequestStatus.ACCEPTED);
+            } else if(filter.getName().equals("denied")) {
+                adequateTypes.add(ReservationRequestStatus.DENIED);
+            } else if(filter.getName().equals("waiting")) {
+                adequateTypes.add(ReservationRequestStatus.WAITING);
+            }
         }
+        requests = service.applyFilters(requests, adequateTypes);
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
