@@ -19,8 +19,9 @@ public @Data @AllArgsConstructor @NoArgsConstructor class Reservation {
     private Long id;
     @Column(name = "guest_id")
     private Long guestId;
-    @Column(name = "accommodation_id")
-    private Long accommodationId;
+    @ManyToOne
+    @JoinColumn(name = "accommodation_id", nullable = false)
+    private Accommodation accommodation;
     @Column(name = "from_date", nullable = false)
     private String fromDate;
     @Column(name = "to_date", nullable = false)

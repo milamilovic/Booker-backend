@@ -10,7 +10,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     // TODO change accommodation_id
 
-    @Query("SELECT r FROM Reservation r WHERE r.guestId = ?1 AND r.status != 'CANCELED'")
+    @Query("SELECT r FROM Reservation r " +
+            "WHERE r.guestId = ?1 " +
+            "AND r.accommodation.owner_id = ?2 " +
+            "AND r.status != 'CANCELED'" +
+            "AND PARSEDATETIME(FORMATDATETIME(r.toDate, 'yyyy-MM-dd'), 'yyyy-MM-dd') < CURRENT_DATE")
 
-    public List<Reservation> findAllForGuest(Long guestId);
+    public List<Reservation> findAllForGuest(Long guestId, Long ownerId);
 }

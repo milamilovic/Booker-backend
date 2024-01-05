@@ -1,6 +1,7 @@
 package booker.BookingApp.dto.commentsAndRatings;
 
 import booker.BookingApp.model.commentsAndRatings.OwnerComment;
+import booker.BookingApp.model.users.ProfilePicture;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +10,11 @@ public @Data class OwnerCommentDTO {
     private Long id;
     private Long ownerId;
     private Long guestId;
+    private String guestName;
+    private String guestSurname;
+    private ProfilePicture guestProfilePicture;
     private String content;
+    private double rating;
     private Date date;
     private boolean reported;
     private boolean deleted;
@@ -18,14 +23,18 @@ public @Data class OwnerCommentDTO {
     }
 
     public OwnerCommentDTO(OwnerComment ownerComment) {
-        this(ownerComment.getId(), ownerComment.getOwner().getId(), ownerComment.getGuest().getId(), ownerComment.getContent(), ownerComment.getDate(), ownerComment.isReported(), ownerComment.isDeleted());
+        this(ownerComment.getId(), ownerComment.getOwner().getId(), ownerComment.getGuest().getId(), ownerComment.getGuest().getName(), ownerComment.getGuest().getSurname(), ownerComment.getGuest().getProfilePicture() ,ownerComment.getContent(), ownerComment.getRating(),ownerComment.getDate(), ownerComment.isReported(), ownerComment.isDeleted());
     }
 
-    public OwnerCommentDTO(Long id, Long ownerId, Long guestId, String content, Date date, boolean reported, boolean deleted) {
+    public OwnerCommentDTO(Long id, Long ownerId, Long guestId, String guestName, String guestSurname, ProfilePicture guestProfilePicture,String content, double rating,Date date, boolean reported, boolean deleted) {
         this.id = id;
         this.ownerId = ownerId;
         this.guestId = guestId;
+        this.guestName = guestName;
+        this.guestSurname = guestSurname;
+        this.guestProfilePicture = guestProfilePicture;
         this.content = content;
+        this.rating = rating;
         this.date = date;
         this.reported = reported;
         this.deleted = deleted;
@@ -35,7 +44,11 @@ public @Data class OwnerCommentDTO {
         return new OwnerCommentDTO(ownerComment.getId(),
                 ownerComment.getOwner().getId(),
                 ownerComment.getGuest().getId(),
+                ownerComment.getGuest().getName(),
+                ownerComment.getGuest().getSurname(),
+                ownerComment.getGuest().getProfilePicture(),
                 ownerComment.getContent(),
+                ownerComment.getRating(),
                 ownerComment.getDate(),
                 ownerComment.isReported(),
                 ownerComment.isDeleted());

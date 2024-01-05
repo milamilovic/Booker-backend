@@ -5,6 +5,7 @@ import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.enums.ReservationRequestStatus;
 import booker.BookingApp.enums.ReservationStatus;
 import booker.BookingApp.model.requestsAndReservations.Reservation;
+import booker.BookingApp.repository.AccommodationRepository;
 import booker.BookingApp.repository.ReservationRepository;
 import booker.BookingApp.service.interfaces.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class ReservationService implements IReservationService {
 
     @Autowired
     AccommodationService accommodationService;
+    @Autowired
+    AccommodationRepository accommodationRepository;
 
     @Override
     public ArrayList<ReservationDTO> findAll() {
@@ -86,7 +89,7 @@ public class ReservationService implements IReservationService {
     public void create(ReservationRequestDTO reservationRequest) {
         Reservation reservation = new Reservation();
         reservation.setGuestId(reservationRequest.getGuestId());
-        reservation.setAccommodationId(reservationRequest.getAccommodationId());
+        reservation.setAccommodation(accommodationRepository.findById(reservationRequest.getAccommodationId()).orElseGet(null));
         reservation.setFromDate(reservationRequest.getFromDate());
         reservation.setToDate(reservationRequest.getToDate());
         reservation.setNumberOfGuests(reservationRequest.getNumberOfGuests());
@@ -96,7 +99,7 @@ public class ReservationService implements IReservationService {
         reservation.setPrice(reservationRequest.getPrice());
         reservationRepository.save(reservation);
         System.out.println(reservation);
-        accommodationService.updateAvailabilitiesForAccommodation(reservation.getAccommodationId(),
+        accommodationService.updateAvailabilitiesForAccommodation(reservation.getAccommodation().getId(),
                 reservation.getFromDate(), reservation.getToDate());
 
     }
