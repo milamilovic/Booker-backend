@@ -284,7 +284,8 @@ VALUES
 
 INSERT INTO RESERVATION_REQUEST (guest_id, accommodation_id, from_date, to_date, number_of_guests, status, deleted, price)
 VALUES
-    (1, 1, '2023-01-01', '2023-01-05', 1, 1, false, 150.0),
+    (1, 1, '2025-01-01', '2025-01-05', 1, 2, false, 150.0),
+    (1, 1, '2023-01-01', '2023-01-05', 1, 2, false, 150.0),
     (1, 3, '2024-02-10', '2024-02-15', 1, 0, false, 120.0),
     (1, 5, '2023-03-20', '2023-03-25', 4, 2, true, 200.0),
     (1, 7, '2024-03-20', '2024-03-25', 4, 1, false, 200.0);

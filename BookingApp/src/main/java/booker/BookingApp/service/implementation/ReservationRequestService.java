@@ -78,7 +78,8 @@ public class ReservationRequestService implements IReservationRequestService {
 
     @Override
     public ReservationRequestDTO findOne(Long id) {
-        return new ReservationRequestDTO(id, 1L, 1L, "12.12.2023.", "15.12.2023.", 2, ReservationRequestStatus.WAITING, false, 150.5);
+        ReservationRequest request = repository.findById(id).get();
+        return ReservationRequestDTO.makeFromRequest(request);
     }
 
     @Override
@@ -94,7 +95,9 @@ public class ReservationRequestService implements IReservationRequestService {
         }
         List<ReservationRequest> requests = repository.findAllForOwner(accommodationIds);
         for (ReservationRequest r : requests) {
-            requestDTOS.add(ReservationRequestDTO.makeFromRequest(r));
+            if(!r.isDeleted()) {        //when guest deletes request before owner sees it
+                requestDTOS.add(ReservationRequestDTO.makeFromRequest(r));
+            }
         }
         return requestDTOS;
     }
@@ -211,14 +214,18 @@ public class ReservationRequestService implements IReservationRequestService {
         ArrayList<ReservationRequest> requests = (ArrayList<ReservationRequest>) repository.findAllForGuest(guestId);
         ArrayList<ReservationRequestDTO> dtos = new ArrayList<>();
         for(ReservationRequest request : requests) {
-            dtos.add(ReservationRequestDTO.makeFromRequest(request));
+            if(!request.isDeleted()) {          //when guest deletes request before owner sees it
+                dtos.add(ReservationRequestDTO.makeFromRequest(request));
+            }
         }
         return dtos;
     }
 
     @Override
     public void cancelRequest(Long userId, Long requestId) {
-
+        ReservationRequest request = repository.findById(requestId).get();
+        request.setDeleted(true);
+        repository.save(request);
     }
 
     @Override
