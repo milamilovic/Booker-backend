@@ -21,9 +21,11 @@ public interface IGuestService {
     OwnerDTO reportOwner(String ownerEmail);
     ArrayList<GuestDTO> getAllBlocked();
     ArrayList<GuestDTO> getAllReported();
-    ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId);
-    ArrayList<Long> removeFromFavouriteAccommodations(GuestDTO guest, Long accommodationId);
+    boolean addToFavouriteAccommodations(Long guestId, Long accommodationId);
+    boolean removeFromFavouriteAccommodations(Long guestId, Long accommodationId);
     ArrayList<FavouriteAccommodationDTO> findAllFavouriteAccommodations(GuestDTO guest) throws IOException;
+
+    boolean isFavourite(Long guestId, Long accId);
 
     int findNumOfCancellations(Long guestId);
 }

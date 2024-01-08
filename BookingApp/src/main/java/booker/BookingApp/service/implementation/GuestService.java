@@ -1,13 +1,11 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
 import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
 import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.enums.Role;
-import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
@@ -129,27 +127,23 @@ public class GuestService implements IGuestService {
     }
 
     @Override
-    public ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId) {
-        GuestDTO guestDTO = getGuestById(guest.getId());
-        if (guestDTO == null){
-            return null;
-        }
-        ArrayList<Long> favourites = guestDTO.getFavouriteAccommodations();
+    public boolean addToFavouriteAccommodations(Long guestId, Long accommodationId) {
+        Guest guest = (Guest) userRepository.findById(guestId).get();
+        ArrayList<Long> favourites = guest.getFavouriteAccommodations();
         favourites.add(accommodationId);
         guest.setFavouriteAccommodations(favourites);
-        return favourites;
+        this.userRepository.save(guest);
+        return true;
     }
 
     @Override
-    public ArrayList<Long> removeFromFavouriteAccommodations(GuestDTO guest, Long accommodationId) {
-        GuestDTO guestDTO = getGuestById(guest.getId());
-        if (guestDTO == null){
-            return null;
-        }
-        ArrayList<Long> favourites = guestDTO.getFavouriteAccommodations();
+    public boolean removeFromFavouriteAccommodations(Long guestId, Long accommodationId) {
+        Guest guest = (Guest) userRepository.findById(guestId).get();
+        ArrayList<Long> favourites = guest.getFavouriteAccommodations();
         favourites.remove(accommodationId);
         guest.setFavouriteAccommodations(favourites);
-        return favourites;
+        this.userRepository.save(guest);
+        return true;
     }
 
     @Override
@@ -161,6 +155,13 @@ public class GuestService implements IGuestService {
             favourites.add(FavouriteAccommodationDTO.makeFromAccommodationView(acc));
         }
         return favourites;
+    }
+
+    @Override
+    public boolean isFavourite(Long guestId, Long accId) {
+        GuestDTO guestDTO = getGuestById(guestId);
+        ArrayList<Long> favourites = guestDTO.getFavouriteAccommodations();
+        return favourites.contains(accId);
     }
 
     @Override
