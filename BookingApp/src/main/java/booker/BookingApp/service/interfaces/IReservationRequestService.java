@@ -1,8 +1,10 @@
 package booker.BookingApp.service.interfaces;
 
 import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
+import booker.BookingApp.enums.ReservationRequestStatus;
 import booker.BookingApp.model.accommodation.Filter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public interface IReservationRequestService {
@@ -17,9 +19,11 @@ public interface IReservationRequestService {
 
     ArrayList<ReservationRequestDTO> findAccommodationRequests(Long accommodationId);
 
-    ArrayList<ReservationRequestDTO> search(String date, String name);
+    ArrayList<ReservationRequestDTO> search(Long guestId, String dateString, String name) throws IOException;
 
-    ArrayList<ReservationRequestDTO> applyFilters(ArrayList<ReservationRequestDTO> requests, Filter filter);
+    ArrayList<ReservationRequestDTO> searchForOwner(Long ownerId, String dateString, String name) throws IOException;
+
+    ArrayList<ReservationRequestDTO> applyFilters(ArrayList<ReservationRequestDTO> requests, ArrayList<ReservationRequestStatus> adequateTypes);
 
     ArrayList<ReservationRequestDTO> findGuestsRequests(Long guestId);
 

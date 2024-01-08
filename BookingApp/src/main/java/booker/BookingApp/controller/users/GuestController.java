@@ -140,5 +140,11 @@ public class GuestController {
         return new ResponseEntity<>(favourites, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{guestId}/cancelled")
+    public ResponseEntity<Integer> getNumOfCancellations(@PathVariable Long guestId) {
+        int cancellations = guestService.findNumOfCancellations(guestId);
+        return new ResponseEntity<>(cancellations, HttpStatus.OK);
+    }
+
     // get all guest's notifications
 }

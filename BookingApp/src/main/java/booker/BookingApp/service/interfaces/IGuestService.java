@@ -23,4 +23,6 @@ public interface IGuestService {
     ArrayList<Long> addToFavouriteAccommodations(GuestDTO guest, Long accommodationId);
     ArrayList<Long> removeFromFavouriteAccommodations(GuestDTO guest, Long accommodationId);
     ArrayList<AccommodationListingDTO> findAllFavouriteAccommodations(GuestDTO guest) throws IOException;
+
+    int findNumOfCancellations(Long guestId);
 }

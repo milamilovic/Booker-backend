@@ -40,4 +40,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "UPDATE User u SET u.deleted = true WHERE u.id = :id")
     public User delete(@Param("id") Long id);
 
+    @Query(value = "SELECT count(r) from ReservationRequest r WHERE r.guestId = :guestId AND r.deleted=true")
+    public int getNumOfCancellations(@Param("guestId") Long guestId);
 }
