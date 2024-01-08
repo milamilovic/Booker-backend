@@ -1,10 +1,13 @@
 package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.accommodation.AccommodationListingDTO;
+import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
+import booker.BookingApp.dto.accommodation.FavouriteAccommodationDTO;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.enums.Role;
+import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
@@ -22,6 +25,9 @@ public class GuestService implements IGuestService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    AccommodationService accommodationService;
 
     @Override
     public ArrayList<GuestDTO> findAll() {
@@ -147,16 +153,13 @@ public class GuestService implements IGuestService {
     }
 
     @Override
-    public ArrayList<AccommodationListingDTO> findAllFavouriteAccommodations(GuestDTO guest) throws IOException {
+    public ArrayList<FavouriteAccommodationDTO> findAllFavouriteAccommodations(GuestDTO guest) throws IOException {
         ArrayList<Long> favouriteIds = guest.getFavouriteAccommodations();
-        ArrayList<AccommodationListingDTO> favourites = new ArrayList<>();
-//        AccommodationService accommodationService = new AccommodationService();
-//        ArrayList<AccommodationListingDTO> all = accommodationService.findAll();
-//        for(AccommodationListingDTO a : all){
-//            if(favouriteIds.contains(a.getId())){
-//                favourites.add(a);
-//            }
-//        }
+        ArrayList<FavouriteAccommodationDTO> favourites = new ArrayList<>();
+        for(Long id : favouriteIds){
+            AccommodationViewDTO acc = accommodationService.findOne(id);
+            favourites.add(FavouriteAccommodationDTO.makeFromAccommodationView(acc));
+        }
         return favourites;
     }
 

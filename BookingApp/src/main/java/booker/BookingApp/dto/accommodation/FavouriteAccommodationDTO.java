@@ -24,4 +24,10 @@ class FavouriteAccommodationDTO {
                 accommodation.getRatings().get(0).getRate(), accommodation.getAddress());
     }
 
+    public static FavouriteAccommodationDTO makeFromAccommodationView(AccommodationViewDTO accommodation) {
+        return new FavouriteAccommodationDTO(accommodation.getId(),
+                accommodation.getTitle(), accommodation.getDescription(),
+                accommodation.getImages().get(0), 0d,
+                0, accommodation.getAddress());
+    }
 }

@@ -131,9 +131,9 @@ public class GuestController {
     }
 
     @GetMapping(value = "/{guestId}/favouriteAccommodations/all")
-    public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllFavouriteReservations(@PathVariable Long guestId) throws IOException {
+    public ResponseEntity<ArrayList<FavouriteAccommodationDTO>> findAllFavouriteReservations(@PathVariable Long guestId) throws IOException {
         GuestDTO guestDTO = guestService.getGuestById(guestId);
-        ArrayList<AccommodationListingDTO> favourites = guestService.findAllFavouriteAccommodations(guestDTO);
+        ArrayList<FavouriteAccommodationDTO> favourites = guestService.findAllFavouriteAccommodations(guestDTO);
         if (favourites == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
