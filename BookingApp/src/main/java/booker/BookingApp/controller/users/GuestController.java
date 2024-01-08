@@ -110,34 +110,32 @@ public class GuestController {
         }
     }
 
-    @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/add/{accommodationId}")
-    public ResponseEntity<ArrayList<Long>> addToFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
-                                                                        @PathVariable Long accommodationId) throws Exception {
-        ArrayList<Long> favourites = guestService.addToFavouriteAccommodations(guestDTO, accommodationId);
-        if (favourites == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(favourites, HttpStatus.OK);
+    @PutMapping(value = "/favouriteAccommodations/add/{guestId}/{accommodationId}")
+    public ResponseEntity<Boolean> addToFavouriteAccommodations(@PathVariable Long accommodationId, @PathVariable Long guestId) throws Exception {
+        boolean added = guestService.addToFavouriteAccommodations(guestId, accommodationId);
+        return new ResponseEntity<>(added, HttpStatus.OK);
     }
 
-    @PutMapping(consumes = "application/json", value = "/favouriteAccommodations/remove/{accommodationId}")
-    public ResponseEntity<ArrayList<Long>> removeFromFavouriteAccommodations(@RequestBody GuestDTO guestDTO,
-                                                                        @PathVariable Long accommodationId) throws Exception {
-        ArrayList<Long> favourites = guestService.removeFromFavouriteAccommodations(guestDTO, accommodationId);
-        if (favourites == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(favourites, HttpStatus.OK);
+    @PutMapping(value = "/favouriteAccommodations/remove/{guestId}/{accommodationId}")
+    public ResponseEntity<Boolean> removeFromFavouriteAccommodations(@PathVariable Long accommodationId, @PathVariable Long guestId) throws Exception {
+        boolean added = guestService.removeFromFavouriteAccommodations(guestId, accommodationId);
+        return new ResponseEntity<>(added, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{guestId}/favouriteAccommodations/all")
-    public ResponseEntity<ArrayList<AccommodationListingDTO>> findAllFavouriteReservations(@PathVariable Long guestId) throws IOException {
+    public ResponseEntity<ArrayList<FavouriteAccommodationDTO>> findAllFavouriteReservations(@PathVariable Long guestId) throws IOException {
         GuestDTO guestDTO = guestService.getGuestById(guestId);
-        ArrayList<AccommodationListingDTO> favourites = guestService.findAllFavouriteAccommodations(guestDTO);
+        ArrayList<FavouriteAccommodationDTO> favourites = guestService.findAllFavouriteAccommodations(guestDTO);
         if (favourites == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(favourites, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/favourites/check/{guestId}/{accId}")
+    public ResponseEntity<Boolean> findAllFavouriteReservations(@PathVariable Long guestId, @PathVariable Long accId) throws IOException {
+        boolean isFavourite = this.guestService.isFavourite(guestId, accId);
+        return new ResponseEntity<>(isFavourite, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{guestId}/cancelled")
