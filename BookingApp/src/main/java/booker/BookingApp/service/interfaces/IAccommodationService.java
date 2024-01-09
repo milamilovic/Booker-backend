@@ -30,8 +30,6 @@ public interface IAccommodationService {
 
     ArrayList<AccommodationListingDTO> findOwnersActiveAccommodations(Long ownerId);
 
-    void removeFavoriteAccommodation(Long userId, Long accommodationId);
-
     ArrayList<AccommodationListingDTO> findAllUnapprovedAccommodations();
 
     void approve(Long accommodationId);

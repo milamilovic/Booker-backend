@@ -230,11 +230,6 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public void removeFavoriteAccommodation(Long userId, Long accommodationId) {
-        //TODO: remove favourite
-    }
-
-    @Override
     public ArrayList<AccommodationListingDTO> findAllUnapprovedAccommodations() {
         List<Accommodation> accommodations = repository.findUnapproved(false);
         ArrayList<AccommodationListingDTO> dtos = new ArrayList<>();
