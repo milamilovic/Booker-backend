@@ -112,6 +112,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/users/activate_profile/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/create_accommodation")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/accommodations/update_availability/**")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/accommodations/name/*")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/images/upload-multiple")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/accommodations/search/**")).permitAll();  //searching for everyone
                             auth.requestMatchers(antMatcher("/api/accommodations")).hasAnyAuthority("OWNER", "ADMIN");          //viewing acc for everyone
