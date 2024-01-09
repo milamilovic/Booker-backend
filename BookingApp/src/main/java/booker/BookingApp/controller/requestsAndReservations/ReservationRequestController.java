@@ -161,9 +161,17 @@ public class ReservationRequestController {
     }
     //accept or decline request for owner
     @PutMapping(value = "/owner/accept_reservation/{accept}", consumes = "application/json")
-    public ResponseEntity<Void> acceptOrDeclineReservationRequest(@PathVariable("accept") boolean accept,
+    public ResponseEntity<String> acceptOrDeclineReservationRequest(@PathVariable("accept") boolean accept,
                                                                   @RequestBody ReservationRequestDTO reservationRequestDTO) {
-        service.acceptOrDecline(accept, reservationRequestDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        boolean finished = service.acceptOrDecline(accept, reservationRequestDTO);
+        if (finished){
+            if(accept){
+                return new ResponseEntity<>("Reservation request is approved!\nReservation created!", HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<>("Reservation request is denied!", HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>("Error with accommodation availability for this request!", HttpStatus.OK);
     }
 }

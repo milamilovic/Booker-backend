@@ -29,7 +29,7 @@ public interface IReservationRequestService {
 
     void cancelRequest(Long userId, Long requestId);
 
-    void acceptOrDecline(boolean accept, ReservationRequestDTO reservationRequestDTO);
+    boolean acceptOrDecline(boolean accept, ReservationRequestDTO reservationRequestDTO);
 
     void declineOthers(ReservationRequestDTO acceptedRequest);
 }
