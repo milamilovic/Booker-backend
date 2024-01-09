@@ -26,4 +26,7 @@ public interface AccommodationRepository  extends JpaRepository<Accommodation, L
 
     @Query(value = "SELECT a FROM Accommodation a WHERE a.accepted = :accepted")
     public List<Accommodation>findUnapproved(@Param("accepted") Boolean accepted);
+
+    @Query(value = "SELECT a.id FROM Accommodation a WHERE a.title = :accName")
+    public Long findIdByName(@Param("accName") String accName);
 }

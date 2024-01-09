@@ -255,4 +255,16 @@ public class AccommodationController {
         return new ResponseEntity<>("Images uploaded successfully!", HttpStatus.OK);
     }
 
+    @GetMapping(value = "/owner/{id}/accommodationNames")
+    public ResponseEntity<ArrayList<AccommodationNameDTO>> getAccommodationNames(@PathVariable Long id) {
+        ArrayList<AccommodationNameDTO> names = service.getAccommodationNames(id);
+        return new ResponseEntity<>(names, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/name/{accName}")
+    public ResponseEntity<Long> getAccommodationId(@PathVariable String accName) {
+        Long id = service.getAccommodationId(accName);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
 }

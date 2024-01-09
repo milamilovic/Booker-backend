@@ -5,27 +5,21 @@ import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.model.users.Owner;
-import booker.BookingApp.model.users.User;
 import booker.BookingApp.repository.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
 import booker.BookingApp.util.ImageUploadUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.transaction.Transactional;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.beans.JavaBean;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -501,6 +495,21 @@ public class AccommodationService implements IAccommodationService {
         }
 
     }
+
+    @Override
+    public ArrayList<AccommodationNameDTO> getAccommodationNames(Long ownerId) {
+        List<AccommodationListingDTO> accommodations = findOwnersActiveAccommodations(ownerId);
+        ArrayList<AccommodationNameDTO> names = new ArrayList<>();
+        for(AccommodationListingDTO accommodation:accommodations) {
+            names.add(new AccommodationNameDTO(accommodation.getTitle(), accommodation.getId()));
+        }
+        return names;
+    }
+
+    @Override
+    public Long getAccommodationId(String accName) {
+        return repository.findIdByName(accName);
+    };
 
 
 }

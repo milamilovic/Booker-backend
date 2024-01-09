@@ -6,12 +6,10 @@ import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.Address;
 import booker.BookingApp.model.accommodation.Filter;
-import booker.BookingApp.model.accommodation.Image;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
 
 public interface IAccommodationService {
@@ -59,4 +57,8 @@ public interface IAccommodationService {
     void uploadImage(Long accommodationId, MultipartFile image) throws IOException;
 
     void updateAvailabilitiesForAccommodation(Long accommodationId, String startDate, String endDate);
+
+    ArrayList<AccommodationNameDTO> getAccommodationNames(Long ownerId);
+
+    Long getAccommodationId(String accName);
 }

@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -21,19 +22,20 @@ public class ReportController {
     IReportService service;
 
     //get report for owner for date interval
-    @GetMapping(value = "/owner/{ownerId}/interval", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/owner/{ownerId}/interval/{from}/{to}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<Report>> getIntervalReport(@PathVariable Long ownerId ,
-                                                               @RequestParam String from,
-                                                               @RequestParam String to){
+                                                               @PathVariable String from,
+                                                               @PathVariable String to){
         ArrayList<Report> reports = service.getIntervalReport(ownerId, from, to);
         return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 
     //get report for owners accommodation
-    @GetMapping(value = "/owner/{ownerId}/accommodation", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/owner/{ownerId}/accommodation/{year}/{accommodation}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<Report>> getAccommodationReport(@PathVariable Long ownerId ,
-                                                                         @RequestParam Long accommodation) throws IOException {
-        ArrayList<Report> data = service.getAccommodationReport(ownerId, accommodation);
+                                                                         @PathVariable int year,
+                                                                         @PathVariable Long accommodation) throws IOException, ParseException {
+        ArrayList<Report> data = service.getAccommodationReport(ownerId, accommodation, year);
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 

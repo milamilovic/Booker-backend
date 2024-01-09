@@ -48,6 +48,8 @@ INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2024-
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2024-02-15', '2024-02-28', 1);
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2024-03-20', '2024-04-05', 1);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 100.0, '2024-10-03', '2024-01-10', 0);
+INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 150.0, '2024-01-01', '2024-02-01', 0);
+INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 100.0, '2024-02-10', '2024-02-14', 0);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 120.0, '2024-02-15', '2024-02-28', 0);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 90.0, '2024-03-20', '2024-04-05', 0);
 INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES ('London', '456 Forest Avenue', 22.15, 32.15, 1);
@@ -280,7 +282,11 @@ VALUES
     (1, 1, '2023-01-01', '2023-01-05', 1, 'ACCEPTED', 'ACCEPTED', false, 150.0),
     (1, 2, '2023-02-10', '2023-02-15', 1, 'ACCEPTED', 'CANCELED', false, 120.0),
     (3, 3, '2023-03-20', '2023-03-25', 4, 'DENIED', 'ACCEPTED', false, 200.0),
-    (4, 4, '2023-03-20', '2023-03-25', 4, 'ACCEPTED', 'CANCELED', false, 200.0);
+    (4, 4, '2023-03-20', '2023-03-25', 4, 'ACCEPTED', 'CANCELED', false, 200.0),
+    (1, 1, '2024-01-01', '2024-01-05', 1, 'ACCEPTED', 'ACCEPTED', false, 150.0),
+    (1, 1, '2024-02-10', '2024-02-15', 1, 'ACCEPTED', 'CANCELED', false, 120.0),
+    (3, 3, '2024-03-20', '2024-03-25', 4, 'DENIED', 'ACCEPTED', false, 200.0),
+    (4, 4, '2024-03-20', '2024-03-25', 4, 'ACCEPTED', 'CANCELED', false, 200.0);
 
 INSERT INTO RESERVATION_REQUEST (guest_id, accommodation_id, from_date, to_date, number_of_guests, status, deleted, price)
 VALUES
