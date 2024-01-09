@@ -78,6 +78,19 @@ public class AvailabilityService implements IAvailabilityService {
     }
 
     @Override
+    public boolean checkIfAvailable(Long accommodationId, Date startDate, Date endDate) {
+        Accommodation accommodation = accommodationRepository.findById(accommodationId).get();
+        List<Availability> availabilities = accommodation.getAvailabilities();
+        for (Availability availability : availabilities){
+            if ((availability.getStartDate().equals(startDate) || availability.getStartDate().before(startDate))
+                    && (availability.getEndDate().equals(endDate) || availability.getEndDate().after(endDate))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void markAsNotAvailable(Long accommodationId, String startDate, String endDate) {
 
     }

@@ -52,10 +52,10 @@ public class ReservationRequestService implements IReservationRequestService {
 
     public boolean checkAvailability(Long accommodationId, String fromDate, String toDate){
         try{
-            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date from = sdf.parse(fromDate);
             Date to = sdf.parse(toDate);
-            return availabilityService.checkForDateRange(accommodationId, from, to);
+            return availabilityService.checkIfAvailable(accommodationId, from, to);
         } catch (ParseException e){
             System.out.println("Can not parse date");
         }
@@ -95,7 +95,8 @@ public class ReservationRequestService implements IReservationRequestService {
         }
         List<ReservationRequest> requests = repository.findAllForOwner(accommodationIds);
         for (ReservationRequest r : requests) {
-            if(!r.isDeleted()) {        //when guest deletes request before owner sees it
+            Accommodation acc = accommodationRepository.findById(r.getAccommodationId()).get();
+            if(!r.isDeleted() && acc.isManual_accepting()) {        //when guest deletes request before owner sees it
                 requestDTOS.add(ReservationRequestDTO.makeFromRequest(r));
             }
         }
@@ -229,21 +230,32 @@ public class ReservationRequestService implements IReservationRequestService {
     }
 
     @Override
-    public void acceptOrDecline(boolean accept, ReservationRequestDTO reservationRequestDTO) {
+    public boolean acceptOrDecline(boolean accept, ReservationRequestDTO reservationRequestDTO) {
         if (accept) {
-            reservationRequestDTO.setStatus(ReservationRequestStatus.ACCEPTED);
-            create(reservationRequestDTO);
-            declineOthers(reservationRequestDTO);
+            if (checkAvailability(reservationRequestDTO.getAccommodationId(), reservationRequestDTO.getFromDate(),
+                    reservationRequestDTO.getToDate())){
+                reservationRequestDTO.setStatus(ReservationRequestStatus.ACCEPTED);
+                reservationService.create(reservationRequestDTO);
+                declineOthers(reservationRequestDTO);
+                ReservationRequest request = new ReservationRequest(reservationRequestDTO.getId(),
+                        reservationRequestDTO.getGuestId(), reservationRequestDTO.getAccommodationId(), reservationRequestDTO.getFromDate(),
+                        reservationRequestDTO.getToDate(), reservationRequestDTO.getNumberOfGuests(), reservationRequestDTO.getStatus(),
+                        reservationRequestDTO.isDeleted(), reservationRequestDTO.getPrice());
+                repository.save(request);
+                return true;
+            }
         }
         else{
             reservationRequestDTO.setStatus(ReservationRequestStatus.DENIED);
+            ReservationRequest request = new ReservationRequest(reservationRequestDTO.getId(),
+                    reservationRequestDTO.getGuestId(), reservationRequestDTO.getAccommodationId(), reservationRequestDTO.getFromDate(),
+                    reservationRequestDTO.getToDate(), reservationRequestDTO.getNumberOfGuests(), reservationRequestDTO.getStatus(),
+                    reservationRequestDTO.isDeleted(), reservationRequestDTO.getPrice());
+            repository.save(request);
+            return true;
 
         }
-        ReservationRequest request = new ReservationRequest(reservationRequestDTO.getId(),
-                reservationRequestDTO.getGuestId(), reservationRequestDTO.getAccommodationId(), reservationRequestDTO.getFromDate(),
-                reservationRequestDTO.getToDate(), reservationRequestDTO.getNumberOfGuests(), reservationRequestDTO.getStatus(),
-                reservationRequestDTO.isDeleted(), reservationRequestDTO.getPrice());
-        repository.save(request);
+        return false;
     }
 
     @Override
