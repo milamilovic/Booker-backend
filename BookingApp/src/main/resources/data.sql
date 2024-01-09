@@ -49,6 +49,7 @@ INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2024-
 INSERT INTO Availability (start_date, end_date, accommodation_id) VALUES ('2024-03-20', '2024-04-05', 1);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 100.0, '2024-10-03', '2024-01-10', 0);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 150.0, '2024-01-01', '2024-02-01', 0);
+INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 80.0, '2023-01-01', '2023-02-01', 0);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 100.0, '2024-02-10', '2024-02-14', 0);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 120.0, '2024-02-15', '2024-02-28', 0);
 INSERT INTO Price (accommodation_id, cost, from_date, to_date, type) VALUES (1, 90.0, '2024-03-20', '2024-04-05', 0);

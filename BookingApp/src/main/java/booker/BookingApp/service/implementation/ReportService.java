@@ -27,10 +27,43 @@ public class ReportService implements IReportService {
     PriceRepository priceRepository;
 
     @Override
-    public ArrayList<Report> getIntervalReport(Long ownerId, String from, String to) {
+    public ArrayList<Report> getIntervalReport(Long ownerId, String from, String to) throws ParseException {
         ArrayList<Report> data = new ArrayList<>();
         ArrayList<AccommodationListingDTO> accommodations = accommodationService.findOwnersActiveAccommodations(ownerId);
-
+        double profit;
+        int count;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fromDate = sdf.parse(from);
+        Date toDate = sdf.parse(to);
+        for(AccommodationListingDTO accommodation : accommodations) {
+            profit = 0;
+            count = 0;
+            ArrayList<Reservation> reservations = (ArrayList<Reservation>) reservationRepository.findAllForAccommodation(accommodation.getId());
+            for(Reservation reservation : reservations) {
+                if( (sdf.parse(reservation.getFromDate()).compareTo(fromDate) >=0 && sdf.parse(reservation.getFromDate()).compareTo(toDate)<0)
+                || (sdf.parse(reservation.getToDate()).compareTo(fromDate) >=0 && sdf.parse(reservation.getToDate()).compareTo(toDate)<0)) {
+                    if (!reservation.isDeleted()) {
+                        count++;
+                        Date currentDate = sdf.parse(reservation.getFromDate());
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(currentDate);
+                        while (currentDate.before(sdf.parse(reservation.getToDate()))) {
+                            System.out.print("Date: " + sdf.format(currentDate)+", profit counts: ");
+                            if(currentDate.compareTo(fromDate) >= 0 && currentDate.compareTo(toDate) < 0) {
+                                System.out.print("true\n");
+                                profit += priceRepository.findPriceForDate(accommodation.getId(), currentDate);        //count profit
+                            }
+                            //increment date by one -> get the next day
+                            calendar.add(Calendar.DAY_OF_MONTH, 1);
+                            currentDate = calendar.getTime();
+                            System.out.println("Next day: " + sdf.format(currentDate));
+                        }
+                    }
+                }
+            }
+            Report report = new Report(accommodation.getTitle(), profit, count*100);
+            data.add(report);
+        }
         return data;
     }
 

@@ -23,9 +23,9 @@ public class ReportController {
 
     //get report for owner for date interval
     @GetMapping(value = "/owner/{ownerId}/interval/{from}/{to}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<Report>> getIntervalReport(@PathVariable Long ownerId ,
+    public ResponseEntity<ArrayList<Report>> getIntervalReport(@PathVariable Long ownerId,
                                                                @PathVariable String from,
-                                                               @PathVariable String to){
+                                                               @PathVariable String to) throws ParseException {
         ArrayList<Report> reports = service.getIntervalReport(ownerId, from, to);
         return new ResponseEntity<>(reports, HttpStatus.OK);
     }
