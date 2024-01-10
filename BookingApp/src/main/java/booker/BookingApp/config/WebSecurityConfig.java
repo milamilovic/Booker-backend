@@ -132,6 +132,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/reservations/owner/**")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/reservations/accommodation/**")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/reservations/guest/**")).hasAuthority("GUEST");
+                            auth.requestMatchers(antMatcher("/api/reservations/guest/{guestId}")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/report/owner/*/**")).permitAll();      //for owner
                             auth.requestMatchers(antMatcher("/api/notifications/*")).hasAnyAuthority("GUEST", "OWNER");      //they have notif
                             auth.requestMatchers(antMatcher("/api/accommodations/priceType/*")).permitAll();    //used in search - everyone

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -53,12 +54,10 @@ public class ReservationService implements IReservationService {
 
     @Override
     public ArrayList<ReservationDTO> getAllForGuest(Long guestId) {
-        ArrayList<ReservationDTO> all = findAll();
+        List<Reservation> all = reservationRepository.getAllForGuest(guestId);
         ArrayList<ReservationDTO> guestReservations = new ArrayList<>();
-        for (ReservationDTO r : all){
-            if(Objects.equals(r.getGuestId(), guestId)){
-                guestReservations.add(r);
-            }
+        for (Reservation r : all){
+            guestReservations.add(ReservationDTO.makeFromReservation(r));
         }
         return guestReservations;
     }
