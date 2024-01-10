@@ -103,9 +103,9 @@ public class AccommodationCommentController {
 //        }
 //    }
 
-    @PostMapping(value = "add_comment",  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CreateAccommodationCommentDTO> create(@RequestBody CreateAccommodationCommentDTO accommodationCommentDTO) {
-        CreateAccommodationCommentDTO commentDTO = accommodationCommentService.create(accommodationCommentDTO);
+    @PostMapping(value = "/add_comment",  consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AccommodationCommentDTO> create(@RequestBody CreateAccommodationCommentDTO accommodationCommentDTO) {
+        AccommodationCommentDTO commentDTO = accommodationCommentService.create(accommodationCommentDTO);
         return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
     }
 
