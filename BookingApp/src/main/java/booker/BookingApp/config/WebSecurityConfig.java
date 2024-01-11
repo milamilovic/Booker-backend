@@ -142,6 +142,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/guests/favouriteAccommodations/**")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/owners/*")).permitAll();      //used in acc view - for everyone
                             auth.requestMatchers(antMatcher("/api/owners")).hasAuthority("OWNER");      //used in acc view - for everyone
+                            auth.requestMatchers(antMatcher("/api/owners/{ownerId}/guests")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/owners/delete/{ownerId}")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/admin/**")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/guests")).hasAuthority("GUEST");

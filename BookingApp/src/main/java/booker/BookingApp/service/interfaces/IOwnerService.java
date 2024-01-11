@@ -20,4 +20,5 @@ public interface IOwnerService {
     GuestDTO reportGuest(String guestEmail);
     ArrayList<OwnerDTO> getAllBlocked();
     ArrayList<OwnerDTO> getAllReported();
+    ArrayList<GuestDTO> getAllGuestsForOwner(Long ownerId);
 }
