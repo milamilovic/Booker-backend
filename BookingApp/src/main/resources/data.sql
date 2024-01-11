@@ -303,7 +303,7 @@ VALUES
     (1, 1, '2024-02-10 10:30:00', '2024-02-15 15:15:00', 1, 'ACCEPTED', 'CANCELED', false, 120.0),
     (3, 3, '2024-03-20 08:00:00', '2024-03-25 17:45:00', 4, 'DENIED', 'ACCEPTED', false, 200.0),
     (4, 4, '2024-03-20 09:45:00', '2024-03-25 16:30:00', 4, 'ACCEPTED', 'CANCELED', false, 200.0),
-    (1, 1, '2024-01-10 22:41:00', '2024-01-10 23:14:00', 3, 'ACCEPTED', 'ACCEPTED', false, 250.0);
+    (1, 1, '2024-01-10 22:41:00', '2024-01-11 02:41:00', 3, 'ACCEPTED', 'ACCEPTED', false, 250.0);
 
 
 INSERT INTO RESERVATION_REQUEST (guest_id, accommodation_id, from_date, to_date, number_of_guests, status, deleted, price)

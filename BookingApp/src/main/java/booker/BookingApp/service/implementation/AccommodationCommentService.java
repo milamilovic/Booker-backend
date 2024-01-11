@@ -15,12 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -75,7 +77,7 @@ public class AccommodationCommentService implements IAccommodationCommentService
         if (authentication != null) {
             Object principal = authentication.getPrincipal();
 
-            if (principal instanceof Guest) {
+            if (principal instanceof User) {
                 User user = (User) principal;
                 if (reservationRepository.findAllForGuestInAccommodation(user.getId(), createAccommodationCommentDTO.getAccommodationId()).size() == 0) {
                     throw new RuntimeException("The guest has no uncancelled reservations. Commenting is not allowed.");
@@ -110,10 +112,29 @@ public class AccommodationCommentService implements IAccommodationCommentService
     public AccommodationCommentDTO update(AccommodationCommentDTO accommodationCommentDTO) {
         return accommodationCommentDTO;
     }
-
+    @Transactional
     @Override
     public void delete(Long id) {
-        accommodationCommentRepository.deleteById(id);
+        AccommodationComment accommodationComment = accommodationCommentRepository.findById(id).orElseGet(null);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof User) {
+                User user = (User) principal;
+                if (accommodationComment != null) {
+                    accommodationComment.setDeleted(true);
+                    accommodationCommentRepository.save(accommodationComment);
+                }
+            } else {
+                // Handle the case where the principal is not an instance of User
+                throw new RuntimeException("Unexpected principal type: " + principal.getClass());
+            }
+        } else {
+            // Handle the case where there is no authentication
+            throw new RuntimeException("User not authenticated");
+        }
     }
 
     @Override
@@ -132,6 +153,17 @@ public class AccommodationCommentService implements IAccommodationCommentService
     @Override
     public List<AccommodationComment> findAllReported() {
         return accommodationCommentRepository.findAllReported();
+    }
+
+    @Override
+    public List<AccommodationCommentDTO> findAllNotDeletedForAccommodation(Long accommodationId) {
+        List<AccommodationComment> accommodationComments = accommodationCommentRepository.findAllNotDeletedForAccommodation(accommodationId);
+        List<AccommodationCommentDTO> notDeleted = new ArrayList<>();
+        for (AccommodationComment accommodationComment : accommodationComments) {
+            AccommodationCommentDTO accommodationCommentDTO = AccommodationCommentDTO.createFromAccommodationComment(accommodationComment);
+            notDeleted.add(accommodationCommentDTO);
+        }
+        return notDeleted;
     }
 
     private boolean hasPassedFiveMinutesFromEnd(String endDateString) {

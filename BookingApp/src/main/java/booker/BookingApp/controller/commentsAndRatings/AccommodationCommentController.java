@@ -4,6 +4,7 @@ import booker.BookingApp.dto.accommodation.AccommodationCommentDTO;
 import booker.BookingApp.dto.accommodation.CreateAccommodationCommentDTO;
 import booker.BookingApp.dto.accommodation.ReportAccommodationCommentDTO;
 import booker.BookingApp.model.accommodation.AccommodationComment;
+import booker.BookingApp.model.commentsAndRatings.OwnerComment;
 import booker.BookingApp.service.implementation.AccommodationCommentService;
 import booker.BookingApp.service.implementation.AccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,10 +116,16 @@ public class AccommodationCommentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/remove/{accommodation_comment_id}")
+    @PutMapping(value = "/remove/{accommodation_comment_id}")
     public ResponseEntity<Void> delete(@PathVariable Long accommodation_comment_id) {
-        accommodationCommentService.delete(accommodation_comment_id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        AccommodationComment accommodationComment = accommodationCommentService.findOne(accommodation_comment_id);
+
+        if (accommodationComment != null) {
+            accommodationCommentService.delete(accommodation_comment_id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping(value = "/all/reported")
@@ -138,5 +145,11 @@ public class AccommodationCommentController {
         accommodationCommentService.report(comment_id);
         AccommodationCommentDTO accommodationCommentDTO = new AccommodationCommentDTO(accommodationCommentService.findOne(comment_id));
         return new ResponseEntity<>(accommodationCommentDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all/{accommodation_id}/not_deleted")
+    public ResponseEntity<List<AccommodationCommentDTO>> getAllNotDeleted(@PathVariable Long accommodation_id) {
+        List<AccommodationCommentDTO> commentDTOS = accommodationCommentService.findAllNotDeletedForAccommodation(accommodation_id);
+        return new ResponseEntity<>(commentDTOS, HttpStatus.OK);
     }
 }
