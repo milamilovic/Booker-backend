@@ -21,8 +21,12 @@ public @Data class AccommodationComment {
 
     @Column(name = "content", nullable = false) // unique = true
     private String content;
+    @Column(name = "rating", nullable = false)
+    private double rating;
     @Column(name = "date", nullable = false)
     private Date date;
     @Column(name = "reported", nullable = false)
     private boolean reported;
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
 }
