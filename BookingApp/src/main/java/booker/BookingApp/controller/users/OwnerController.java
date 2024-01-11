@@ -105,6 +105,13 @@ public class OwnerController {
     }
 
     // get all owner's guests
+    @GetMapping(value = "/{ownerId}/guests")
+    public ResponseEntity<ArrayList<GuestDTO>> getGuestsForOwner(@PathVariable("ownerId") Long ownerId){
+        ArrayList<GuestDTO> guests = ownerService.getAllGuestsForOwner(ownerId);
+        return new ResponseEntity<>(guests, HttpStatus.OK);
+    }
+
+
     // get all owner's notifications
 
 }
