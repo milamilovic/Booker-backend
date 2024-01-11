@@ -334,6 +334,12 @@ VALUES (1, 2, 'This is a comment.', 3.8, '2024-01-01', false, false);
 INSERT INTO Owner_Comment (guest_id, owner_id, content, rating, date, reported, deleted)
 VALUES (3, 2, 'Another comment.', 4.5, '2024-02-15', true, true);
 
+-- Insert data into UserReport table
+INSERT INTO User_Report (reported_id, reporter_id, reason, date) VALUES
+                                                                    (1, 2, 'Inappropriate behavior', '2024-01-11'),
+                                                                    (2, 3, 'Spamming', '2024-01-12'),
+                                                                    (3, 1, 'Harassment', '2024-01-13');
+
 
 
 

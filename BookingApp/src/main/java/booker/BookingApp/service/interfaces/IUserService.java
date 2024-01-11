@@ -1,5 +1,7 @@
 package booker.BookingApp.service.interfaces;
 
+import booker.BookingApp.dto.users.CreateReportUserDTO;
+import booker.BookingApp.dto.users.UserReportDTO;
 import booker.BookingApp.model.users.User;
 
 import java.util.List;
