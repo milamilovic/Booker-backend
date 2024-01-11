@@ -22,6 +22,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query(value="select r from Reservation r where r.accommodation.id=:accommodationId")
     public List<Reservation> findAllForAccommodation(@Param("accommodationId") Long accommodationId);
 
-    @Query(value = "SELECT DISTINCT r.guestId FROM Reservation r WHERE r.accommodation.owner_id=:ownerId")
+    @Query(value = "SELECT DISTINCT r.guestId FROM Reservation r WHERE r.accommodation.owner_id=:ownerId AND r.status='ACCEPTED' " +
+            "AND PARSEDATETIME(FORMATDATETIME(r.toDate, 'yyyy-MM-dd'), 'yyyy-MM-dd') < CURRENT_DATE")
     public List<Long> getAllGuestIdsForOwner(@Param("ownerId") Long ownerId);
 }
