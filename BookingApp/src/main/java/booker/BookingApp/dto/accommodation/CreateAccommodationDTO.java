@@ -20,8 +20,8 @@ public @Data class CreateAccommodationDTO {
 //    private List<ImageDTO> images;
     private String[] images;
     private AccommodationType type;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private CreatePriceDTO price;
     private int min_capacity;
     private int max_capacity;

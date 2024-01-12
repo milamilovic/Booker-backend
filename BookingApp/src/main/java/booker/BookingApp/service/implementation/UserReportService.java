@@ -41,14 +41,25 @@ public class UserReportService implements IUserReportService {
             if (principal instanceof User) {
                 User user = (User) principal;
                 if (user.getRole() == Role.GUEST) {
+                    System.out.println("Owner ID: "+ user.getId());
+                    System.out.println("Guest ID: " + createReportUserDTO.getReportedId());
                     if (reservationRepository.findAllPastForGuest(user.getId(), createReportUserDTO.getReportedId()).size() == 0){
+                        System.out.println("Owner ID: "+ user.getId());
+                        System.out.println("Guest ID: " + createReportUserDTO.getReportedId());
                         throw new RuntimeException("You didn't have any reservations in this owner's accommodations before!");
                     }
-                } else if (user.getRole() == Role.OWNER) {
-                    if (reservationRepository.findAllPastForOwner(user.getId(), createReportUserDTO.getReportedId()).size() == 0) {
-                        throw new RuntimeException("This guest didn't have any reservations in your accommodations before!");
+                }
+
+                if (user.getRole() == Role.OWNER) {
+                    System.out.println("Owner ID: "+ user.getId());
+                    System.out.println("Guest ID: " + createReportUserDTO.getReportedId());
+                    if (reservationRepository.findAllPastForGuest(createReportUserDTO.getReportedId(), user.getId()).size() == 0) {
+                        System.out.println("Owner ID: "+ user.getId());
+                        System.out.println("Guest ID: " + createReportUserDTO.getReportedId());
+                        throw new RuntimeException("This guest didn't have any reservation in your accommodations before!");
                     }
                 }
+
 
                 userReport.setReporter(user);
             } else {

@@ -144,8 +144,11 @@ public class AccommodationService implements IAccommodationService {
 //        accommodation.setImages(images);
 
         Availability availability = new Availability();
-        availability.setStartDate(accommodationDto.getStartDate());
-        availability.setEndDate(accommodationDto.getEndDate());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = simpleDateFormat.parse(accommodationDto.getStartDate());
+        Date endDate = simpleDateFormat.parse(accommodationDto.getEndDate());
+        availability.setStartDate(startDate);
+        availability.setEndDate(endDate);
         availability.setAccommodation(accommodation);
         ArrayList<Availability> availabilities = new ArrayList<Availability>();
         availabilities.add(availability);
