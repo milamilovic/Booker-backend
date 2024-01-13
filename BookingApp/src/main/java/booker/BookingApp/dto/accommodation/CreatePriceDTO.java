@@ -2,14 +2,22 @@ package booker.BookingApp.dto.accommodation;
 
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.Price;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.Date;
 
 public @Data class CreatePriceDTO {
+    @Min(1)
     private double cost;
+    @FutureOrPresent
     private Date fromDate;
+    @FutureOrPresent
     private Date toDate;
+    @NotNull
     private PriceType type;
 
     public CreatePriceDTO() {

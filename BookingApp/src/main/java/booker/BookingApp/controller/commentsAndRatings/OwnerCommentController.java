@@ -6,6 +6,7 @@ import booker.BookingApp.dto.commentsAndRatings.OwnerCommentDTO;
 import booker.BookingApp.dto.commentsAndRatings.ReportOwnerCommentDTO;
 import booker.BookingApp.model.commentsAndRatings.OwnerComment;
 import booker.BookingApp.service.implementation.OwnerCommentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -90,7 +91,7 @@ public class OwnerCommentController {
     }
 
     @PostMapping(value = "/add_comment", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OwnerCommentDTO> create(@RequestBody CreateOwnerCommentDTO commentDTO) {
+    public ResponseEntity<OwnerCommentDTO> create(@Valid @RequestBody CreateOwnerCommentDTO commentDTO) {
         OwnerCommentDTO ownerCommentDTO = ownerCommentService.create(commentDTO);
         return new ResponseEntity<>(ownerCommentDTO, HttpStatus.CREATED);
     }

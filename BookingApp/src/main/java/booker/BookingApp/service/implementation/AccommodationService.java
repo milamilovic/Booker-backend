@@ -4,6 +4,7 @@ import booker.BookingApp.dto.accommodation.*;
 import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
+import booker.BookingApp.model.requestsAndReservations.Reservation;
 import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.repository.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
@@ -63,6 +64,8 @@ public class AccommodationService implements IAccommodationService {
     PriceService priceService;
     @Autowired
     PriceRepository priceRepository;
+    @Autowired
+    ReservationRepository reservationRepository;
 
 
 
@@ -145,10 +148,10 @@ public class AccommodationService implements IAccommodationService {
 
         Availability availability = new Availability();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = simpleDateFormat.parse(accommodationDto.getStartDate());
-        Date endDate = simpleDateFormat.parse(accommodationDto.getEndDate());
-        availability.setStartDate(startDate);
-        availability.setEndDate(endDate);
+//        Date startDate = simpleDateFormat.parse(accommodationDto.getStartDate());
+//        Date endDate = simpleDateFormat.parse(accommodationDto.getEndDate());
+        availability.setStartDate(accommodationDto.getStartDate());
+        availability.setEndDate(accommodationDto.getEndDate());
         availability.setAccommodation(accommodation);
         ArrayList<Availability> availabilities = new ArrayList<Availability>();
         availabilities.add(availability);
@@ -387,7 +390,7 @@ public class AccommodationService implements IAccommodationService {
     }
 
     @Override
-    public Accommodation updateAvailability(Long accommodationId, UpdateAvailabilityDTO updateAvailabilityDTO) {
+    public Accommodation updateAvailability(Long accommodationId, UpdateAvailabilityDTO updateAvailabilityDTO) throws Exception{
         Accommodation accommodation = repository.findById(accommodationId).orElseGet(null);
         if (accommodation == null) {
             return null;
@@ -395,6 +398,17 @@ public class AccommodationService implements IAccommodationService {
         repository.save(accommodation);
 
         Availability availability = new Availability();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date startDate = simpleDateFormat.parse(updateAvailabilityDTO.getStartDate());
+//        Date endDate = simpleDateFormat.parse(updateAvailabilityDTO.getEndDate());
+        List<Reservation> reservations = reservationRepository.findAllForAccommodation(accommodationId);
+        for (Reservation reservation : reservations) {
+            Date start = simpleDateFormat.parse(reservation.getFromDate());
+            Date end = simpleDateFormat.parse(reservation.getToDate());
+            if (start.before(updateAvailabilityDTO.getStartDate()) || end.after(updateAvailabilityDTO.getEndDate())) {
+                throw new RuntimeException("This accommodation has active reservations in this period!");
+            }
+        }
         availability.setStartDate(updateAvailabilityDTO.getStartDate());
         availability.setEndDate(updateAvailabilityDTO.getEndDate());
         availability.setAccommodation(accommodation);
