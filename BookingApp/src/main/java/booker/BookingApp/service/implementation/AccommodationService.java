@@ -402,12 +402,9 @@ public class AccommodationService implements IAccommodationService {
 //        Date startDate = simpleDateFormat.parse(updateAvailabilityDTO.getStartDate());
 //        Date endDate = simpleDateFormat.parse(updateAvailabilityDTO.getEndDate());
         List<Reservation> reservations = reservationRepository.findAllForAccommodation(accommodationId);
-        for (Reservation reservation : reservations) {
-            Date start = simpleDateFormat.parse(reservation.getFromDate());
-            Date end = simpleDateFormat.parse(reservation.getToDate());
-            if (start.before(updateAvailabilityDTO.getStartDate()) || end.after(updateAvailabilityDTO.getEndDate())) {
-                throw new RuntimeException("This accommodation has active reservations in this period!");
-            }
+        List<Reservation> currentlyActive = reservationRepository.findCurrentlyActiveReservationsForAccommodation(accommodationId);
+        if (!currentlyActive.isEmpty()) {
+            throw new RuntimeException("This accommodation has active reservations in this period!");
         }
         availability.setStartDate(updateAvailabilityDTO.getStartDate());
         availability.setEndDate(updateAvailabilityDTO.getEndDate());

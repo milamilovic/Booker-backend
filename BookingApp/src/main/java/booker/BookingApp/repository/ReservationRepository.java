@@ -42,4 +42,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "AND r.accommodation.owner_id = ?2 " +
             "AND PARSEDATETIME(FORMATDATETIME(r.toDate, 'yyyy-MM-dd'), 'yyyy-MM-dd') < CURRENT_DATE")
     public List<Reservation> findAllPastForGuest(Long guestId, Long ownerId);
+
+    @Query("SELECT r FROM Reservation r " +
+            "where r.accommodation.id = ?1 " +
+            "AND PARSEDATETIME(FORMATDATETIME(r.fromDate, 'yyyy-MM-dd'), 'yyyy-MM-dd') < CURRENT_DATE " +
+            "AND PARSEDATETIME(FORMATDATETIME(r.toDate, 'yyyy-MM-dd'), 'yyyy-MM-dd') > CURRENT_DATE")
+    public List<Reservation> findCurrentlyActiveReservationsForAccommodation(Long accommodationId);
 }
