@@ -11,13 +11,9 @@ import lombok.Data;
 import java.util.Date;
 
 public @Data class CreatePriceDTO {
-    @Min(1)
     private double cost;
-    @FutureOrPresent
     private Date fromDate;
-    @FutureOrPresent
     private Date toDate;
-    @NotNull
     private PriceType type;
 
     public CreatePriceDTO() {
