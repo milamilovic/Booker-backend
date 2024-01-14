@@ -7,6 +7,8 @@ import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.model.users.User;
 import booker.BookingApp.service.implementation.UserService;
 import booker.BookingApp.util.TokenUtils;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +60,7 @@ public class UserController {
 
 
     @PostMapping(value = "/signup", consumes = "application/json")
-    public ResponseEntity<CreateUserDTO> saveUser(@RequestBody CreateUserDTO createUserDTO) throws InterruptedException {
+    public ResponseEntity<CreateUserDTO> saveUser(@Valid @RequestBody CreateUserDTO createUserDTO) throws InterruptedException {
 
         User user = null;
         if(createUserDTO.getRole() == Role.GUEST) {
@@ -112,7 +114,7 @@ public class UserController {
     }
 
     @PostMapping(value="/login", consumes = "application/json")
-    public ResponseEntity<Token> findByEmailAndPassword(@RequestBody LoginUserDTO loginUserDTO) {
+    public ResponseEntity<Token> findByEmailAndPassword(@Valid @RequestBody LoginUserDTO loginUserDTO) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginUserDTO.getEmail(), loginUserDTO.getPassword()));
 

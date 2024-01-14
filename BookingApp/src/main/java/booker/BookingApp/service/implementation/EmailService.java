@@ -39,7 +39,7 @@ public class EmailService {
         mail.setTo(user.getEmail());
         mail.setFrom(env.getProperty("spring.mail.username"));
         mail.setSubject("Primer slanja emaila pomoću asinhronog Spring taska");
-        mail.setText("Pozdrav " + user.getName() + ",\n\n Activation Link: http://localhost:4200/activate_profile/" + user.getActivationLink());
+        mail.setText("Pozdrav " + user.getName() + ",\n\n Activation Link: http://"+ getIpAddress() +":4200/activate_profile/" + user.getActivationLink());
 //        if (ipAddress.equals("")) {
 //            mail.setText("Pozdrav " + user.getName() + ",\n\n Activation Link: http://localhost:4200/activate_profile/" + user.getActivationLink());
 //        } else {
