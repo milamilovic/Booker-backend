@@ -45,36 +45,38 @@ public class ReservationRequestService implements IReservationRequestService {
             reservationService.create(requestDto);
         }
         //if accommodation is available for time slot
-        if(checkAvailability(request.getAccommodationId(), request.getFromDate(), request.getToDate())) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                Date from = sdf.parse(request.getFromDate());
-                Date to = sdf.parse(request.getToDate());
-                //if dates are valid (not in the past)
-                if(from.after(new Date()) && to.after(from)) {
-                    //and price is adequate
-                    if (request.getPrice() == accommodationService.findPriceForDateRange(request.getAccommodationId(), sdf.parse(request.getFromDate()), sdf.parse(request.getToDate()), requestDto.getNumberOfGuests())) {
-                        AccommodationViewDTO accommodation = accommodationService.findOne(requestDto.getAccommodationId());
-                        //and if number of guests is between min and max capacity
-                        if(request.getNumberOfGuests() >= accommodation.getMin_capacity() && request.getNumberOfGuests() <= accommodation.getMax_capacity()) {
-                            this.repository.save(request);
-                            return ReservationRequestDTO.makeFromRequest(request);
-                        } else {
-                            return null;
-                        }
-                    } else {
-                        return null;
-                    }
-                } else {
-                    return null;
-                }
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
+        if(!checkAvailability(request.getAccommodationId(), request.getFromDate(), request.getToDate())) {
             return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date from = sdf.parse(request.getFromDate());
+            Date to = sdf.parse(request.getToDate());
+            //dates have to be valid (not in the past)
+            if(!from.after(new Date()) || !to.after(from)) {
+                return null;
+            }
+            //price has to be adequate
+            if (request.getPrice() != accommodationService.findPriceForDateRange(request.getAccommodationId(), sdf.parse(request.getFromDate()), sdf.parse(request.getToDate()), requestDto.getNumberOfGuests())) {
+                return null;
+            }
+
+            AccommodationViewDTO accommodation = accommodationService.findOne(requestDto.getAccommodationId());
+            //and number of guests has to be between min and max capacity
+            if(request.getNumberOfGuests() >= accommodation.getMin_capacity() && request.getNumberOfGuests() <= accommodation.getMax_capacity()) {
+                return null;
+            }
+
+            //validation passed
+            this.repository.save(request);
+            return ReservationRequestDTO.makeFromRequest(request);
+
+        } catch (ParseException e) {
+            //date parsing exception
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            //if accommodation is not found
+            throw new RuntimeException(e);
         }
     }
 
