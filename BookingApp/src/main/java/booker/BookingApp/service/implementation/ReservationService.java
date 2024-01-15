@@ -67,12 +67,10 @@ public class ReservationService implements IReservationService {
 
     @Override
     public ArrayList<ReservationDTO> getAllForAccommodation(Long accommodationId) {
-        ArrayList<ReservationDTO> all = findAll();
+        List<Reservation> all = reservationRepository.getAllForAccommodation(accommodationId);
         ArrayList<ReservationDTO> accommodationReservations = new ArrayList<>();
-        for (ReservationDTO r : all){
-            if(Objects.equals(r.getAccommodationId(), accommodationId)){
-                accommodationReservations.add(r);
-            }
+        for (Reservation r : all){
+            accommodationReservations.add(ReservationDTO.makeFromReservation(r));
         }
         return accommodationReservations;
     }
