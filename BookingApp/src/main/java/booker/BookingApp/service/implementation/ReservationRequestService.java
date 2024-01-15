@@ -35,9 +35,7 @@ public class ReservationRequestService implements IReservationRequestService {
 
     @Override
     public ReservationRequestDTO create(ReservationRequestDTO requestDto) {
-        ReservationRequest request = new ReservationRequest(-1L, requestDto.getGuestId(), requestDto.getAccommodationId(),
-                requestDto.getFromDate(), requestDto.getToDate(), requestDto.getNumberOfGuests(),
-                requestDto.getStatus(), requestDto.isDeleted(), requestDto.getPrice());
+        ReservationRequest request = ReservationRequestDTO.makeRequestFromDTO(requestDto);
         // if accommodation has automatically accepting reservation requests option, then
         // create reservation and change reservation request status
         if (!checkReservationAcceptingType(request.getAccommodationId()) &&
@@ -46,8 +44,38 @@ public class ReservationRequestService implements IReservationRequestService {
             requestDto.setStatus(ReservationRequestStatus.ACCEPTED);
             reservationService.create(requestDto);
         }
-        this.repository.save(request);
-        return ReservationRequestDTO.makeFromRequest(request);
+        //if accommodation is available for time slot
+        if(checkAvailability(request.getAccommodationId(), request.getFromDate(), request.getToDate())) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date from = sdf.parse(request.getFromDate());
+                Date to = sdf.parse(request.getToDate());
+                //if dates are valid (not in the past)
+                if(from.after(new Date()) && to.after(from)) {
+                    //and price is adequate
+                    if (request.getPrice() == accommodationService.findPriceForDateRange(request.getAccommodationId(), sdf.parse(request.getFromDate()), sdf.parse(request.getToDate()), requestDto.getNumberOfGuests())) {
+                        AccommodationViewDTO accommodation = accommodationService.findOne(requestDto.getAccommodationId());
+                        //and if number of guests is between min and max capacity
+                        if(request.getNumberOfGuests() >= accommodation.getMin_capacity() && request.getNumberOfGuests() <= accommodation.getMax_capacity()) {
+                            this.repository.save(request);
+                            return ReservationRequestDTO.makeFromRequest(request);
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            return null;
+        }
     }
 
     public boolean checkAvailability(Long accommodationId, String fromDate, String toDate){
