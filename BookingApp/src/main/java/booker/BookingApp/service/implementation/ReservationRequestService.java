@@ -63,7 +63,7 @@ public class ReservationRequestService implements IReservationRequestService {
 
             AccommodationViewDTO accommodation = accommodationService.findOne(requestDto.getAccommodationId());
             //and number of guests has to be between min and max capacity
-            if(request.getNumberOfGuests() >= accommodation.getMin_capacity() && request.getNumberOfGuests() <= accommodation.getMax_capacity()) {
+            if(request.getNumberOfGuests() < accommodation.getMin_capacity() || request.getNumberOfGuests() > accommodation.getMax_capacity()) {
                 return null;
             }
 
@@ -72,10 +72,8 @@ public class ReservationRequestService implements IReservationRequestService {
             return ReservationRequestDTO.makeFromRequest(request);
 
         } catch (ParseException e) {
-            //date parsing exception
             throw new RuntimeException(e);
         } catch (IOException e) {
-            //if accommodation is not found
             throw new RuntimeException(e);
         }
     }
