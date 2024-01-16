@@ -69,7 +69,7 @@ public class ReservationRequestControllerTest {
                 1L, "lalala", "aaa", 2,
                 ReservationRequestStatus.WAITING, false, 250);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + tokenOwner);
+        headers.add("Authorization", "Bearer " + tokenGuest);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(requestDTO, headers);
 
         ResponseEntity<ReservationRequestDTO> responseEntity =
@@ -86,7 +86,7 @@ public class ReservationRequestControllerTest {
                 1L, "2024-03-05", "2024-03-15", 2,
                 ReservationRequestStatus.WAITING, false, 250);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + tokenOwner);
+        headers.add("Authorization", "Bearer " + tokenGuest);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(requestDTO, headers);
 
         ResponseEntity<ReservationRequestDTO> responseEntity =
@@ -103,7 +103,7 @@ public class ReservationRequestControllerTest {
                 1L, "2024-03-05", "2024-03-15", 2,
                 ReservationRequestStatus.WAITING, false, 250);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + tokenOwner);
+        headers.add("Authorization", "Bearer " + tokenGuest);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(requestDTO, headers);
 
         ResponseEntity<ReservationRequestDTO> responseEntity =
@@ -120,7 +120,7 @@ public class ReservationRequestControllerTest {
                 1L, "2023-02-20", "2023-02-25", 2,
                 ReservationRequestStatus.WAITING, false, 250);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + tokenOwner);
+        headers.add("Authorization", "Bearer " + tokenGuest);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(requestDTO, headers);
 
         ResponseEntity<ReservationRequestDTO> responseEntity =
@@ -137,7 +137,7 @@ public class ReservationRequestControllerTest {
                 1L, "2024-03-25", "2024-03-28", 2,
                 ReservationRequestStatus.WAITING, false, 250);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + tokenOwner);
+        headers.add("Authorization", "Bearer " + tokenGuest);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(requestDTO, headers);
 
         ResponseEntity<ReservationRequestDTO> responseEntity =
@@ -154,7 +154,7 @@ public class ReservationRequestControllerTest {
                 1L, "2024-03-25", "2024-03-28", 2,
                 ReservationRequestStatus.WAITING, false, 270);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + tokenOwner);
+        headers.add("Authorization", "Bearer " + tokenGuest);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(requestDTO, headers);
 
         ResponseEntity<ReservationRequestDTO> responseEntity =
