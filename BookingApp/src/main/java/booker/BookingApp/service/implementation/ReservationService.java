@@ -140,7 +140,7 @@ public class ReservationService implements IReservationService {
             if (checkDeadlineExpired(reservation.getFromDate(), reservation.getAccommodation())){
                 reservation.setStatus(ReservationStatus.CANCELED);
                 reservationRepository.save(reservation);
-                //availabilityService.refactorAvailability();
+                accommodationService.returnAvailabilitiesForAccommodation(reservation.getAccommodation().getId(), reservation.getFromDate(), reservation.getToDate());
                 return true;
             }
         }
