@@ -271,7 +271,7 @@ VALUES (2, 3, 3.8, '2024-02-15', false, false);
 INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported, deleted)
 VALUES (6, 3, 2.5, '2024-04-20', false, false);
 INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported, deleted)
-VALUES (6, 1, 4.0, '2024-05-05', true, true);
+VALUES (6, 1, 4.0, '2024-05-05', true, false);
 
 INSERT INTO Profile_Picture (path_front, path_mobile,  user_id)
 VALUES
@@ -330,7 +330,7 @@ VALUES (1, 2, 'This is a comment.', 3.8, '2024-01-01', false, false, true);
 
 -- Example 2: Inserting another OwnerComment with reported set to true
 INSERT INTO Owner_Comment (guest_id, owner_id, content, rating, date, reported, deleted, approved)
-VALUES (3, 2, 'Another comment.', 4.5, '2024-02-15', true, true, true);
+VALUES (3, 2, 'Another comment.', 4.5, '2024-02-15', true, false, true);
 
 -- Insert data into UserReport table
 INSERT INTO User_Report (reported_id, reporter_id, reason, date) VALUES

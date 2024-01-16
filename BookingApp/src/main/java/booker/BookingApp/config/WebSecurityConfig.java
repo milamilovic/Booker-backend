@@ -172,6 +172,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/owner_comments/all")).permitAll();
                             auth.requestMatchers(antMatcher("/api/owner_comments/*/comment")).permitAll();
                             auth.requestMatchers(antMatcher("/api/owner_comments/remove/*")).hasAuthority("GUEST");
+                            auth.requestMatchers(antMatcher("/api/owner_comments/delete/{comment_id}")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/owner_comments/add_comment")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/owner_comments/update")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/owner_comments/all/reported")).hasAuthority("ADMIN");
@@ -180,6 +181,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/owner_ratings/all")).permitAll();
                             auth.requestMatchers(antMatcher("/api/owner_ratings/*/rating")).permitAll();
                             auth.requestMatchers(antMatcher("/api/owner_ratings/remove/*")).hasAuthority("GUEST");
+                            auth.requestMatchers(antMatcher("/api/owner_ratings/delete/{rating_id}")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/owner_ratings/add_rating")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/owner_ratings/update")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/owner_ratings/*/ratings")).permitAll();
@@ -255,6 +257,8 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.GET, "/api/owner_ratings/all"),
                         antMatcher(HttpMethod.GET, "/api/owner_ratings/*/rating"),
                         antMatcher(HttpMethod.GET, "/api/owner_ratings/*/ratings"),
+                        antMatcher(HttpMethod.PUT, "/api/owner_ratings/delete/{rating_id}"),
+                        antMatcher(HttpMethod.PUT, "/api/owner_comments/delete/{comment_id}"),
                         antMatcher(HttpMethod.GET, "/api/users/*"),
                         antMatcher(HttpMethod.GET, "/api/owner_comments/all/*/not_deleted"),
                         antMatcher(HttpMethod.GET, "/api/accommodation_comments/all/*/not_deleted"),
