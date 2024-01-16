@@ -9,9 +9,7 @@ import booker.BookingApp.repository.ReservationRequestRepository;
 import booker.BookingApp.service.implementation.AccommodationService;
 import booker.BookingApp.service.implementation.AvailabilityService;
 import booker.BookingApp.service.implementation.ReservationRequestService;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -25,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.testng.annotations.BeforeMethod;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -59,6 +56,7 @@ public class ReservationRequestCreatingTest {
     }
 
     @Test
+    @DisplayName("Should not parse date")
     public void dateNotValid_returnsNull() throws IOException {
         ReservationRequestDTO requestDTO = new ReservationRequestDTO(1L, 1L,
                 1L, "lalala", "aaa", 2,
@@ -76,6 +74,7 @@ public class ReservationRequestCreatingTest {
     }
 
     @Test
+    @DisplayName("Should not find accommodation, it does not exist")
     public void accommodationNotAvailable_returnsNull() throws IOException, ParseException {
         ReservationRequestDTO requestDTO = new ReservationRequestDTO(1L, 1L,
                 1L, "2024-03-05", "2024-03-15", 2,
@@ -98,6 +97,7 @@ public class ReservationRequestCreatingTest {
     }
 
     @Test
+    @DisplayName("Should return null, start date is in the past")
     public void dateValidation_startDateInPast_returnsNull() throws IOException, ParseException {
         ReservationRequestDTO invalidRequestDTO = new ReservationRequestDTO(1L, 1L,
                 1L, "2023-01-05", "2023-01-15", 2,
@@ -120,6 +120,7 @@ public class ReservationRequestCreatingTest {
     }
 
     @Test
+    @DisplayName("Should return null, start date is after end date")
     public void dateValidation_endDateBeforeStartDate_returnsNull() throws ParseException, IOException {
         ReservationRequestDTO invalidRequestDTO = new ReservationRequestDTO(1L, 1L,
                 1L, "2024-03-05", "2024-02-15", 2,
@@ -142,6 +143,7 @@ public class ReservationRequestCreatingTest {
     }
 
     @Test
+    @DisplayName("Should return null, price is not good")
     public void priceValidation_priceNotGood_returnsNull() throws ParseException, IOException {
         ReservationRequestDTO invalidRequestDTO = new ReservationRequestDTO(1L, 1L,
                 1L, "2024-03-05", "2024-03-15", 2,
@@ -167,6 +169,7 @@ public class ReservationRequestCreatingTest {
 
     @ParameterizedTest
     @ValueSource(ints={-3, 0, 1, 4, 9})
+    @DisplayName("Should return null, number of guests is not good")
     public void numOfGuestsNotGood_returnsNull(int numOfPeople) throws ParseException, IOException {
         ReservationRequestDTO invalidRequestDTO = new ReservationRequestDTO(1L, 1L,
                 1L, "2024-03-05", "2024-03-15", numOfPeople,
@@ -191,6 +194,7 @@ public class ReservationRequestCreatingTest {
     }
 
     @Test
+    @DisplayName("Should create request")
     public void positiveTest_returnsReservationRequestDto() throws IOException, ParseException {
         ReservationRequestDTO validRequestDTO = new ReservationRequestDTO(1L, 1L,
                 1L, "2024-03-05", "2024-03-15", 2,

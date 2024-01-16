@@ -128,6 +128,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/requests/owner/{ownerId}/filter")).hasAuthority("OWNER");      //for owner
                             auth.requestMatchers(antMatcher("/api/requests/owner/accept_reservation/{accept}")).hasAuthority("OWNER");      //for owner
                             auth.requestMatchers(antMatcher("/api/requests/guest/**")).hasAuthority("GUEST");      //for guest
+                            auth.requestMatchers(antMatcher("/api/requests")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/reservations/*")).hasAnyAuthority("GUEST", "OWNER");
                             auth.requestMatchers(antMatcher("/api/reservations/owner/**")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/reservations/accommodation/**")).hasAuthority("OWNER");
