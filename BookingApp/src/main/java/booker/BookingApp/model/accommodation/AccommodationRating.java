@@ -26,4 +26,6 @@ public @Data class AccommodationRating {
     private Date date;
     @Column(name = "reported", nullable = false)
     private boolean reported;
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
 }
