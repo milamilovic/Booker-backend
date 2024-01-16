@@ -132,6 +132,9 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/reservations/owner/**")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/reservations/accommodation/**")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/reservations/guest/**")).hasAuthority("GUEST");
+                            auth.requestMatchers(antMatcher("/api/reservations/guest/{guestId}")).hasAuthority("GUEST");
+                            auth.requestMatchers(antMatcher("/api/reservations/accommodation/{accommodationId}")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/reservations/guest/cancel/{id}")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/report/owner/*/**")).permitAll();      //for owner
                             auth.requestMatchers(antMatcher("/api/notifications/*")).hasAnyAuthority("GUEST", "OWNER");      //they have notif
                             auth.requestMatchers(antMatcher("/api/accommodations/priceType/*")).permitAll();    //used in search - everyone
@@ -224,6 +227,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.DELETE, "/api/requests/guest/**"),
                         antMatcher(HttpMethod.POST, "/api/reservations/**"),
                         antMatcher(HttpMethod.PUT, "/api/reservations/**"),
+                        antMatcher(HttpMethod.PUT, "/api/reservations/guest/cancel/{id}"),
                         antMatcher(HttpMethod.GET, "/api/reservations/**"),
                         antMatcher(HttpMethod.DELETE, "/api/reservations/**"),
                         antMatcher(HttpMethod.DELETE, "/api/owners/**"),
