@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -80,12 +81,17 @@ public class AccommodationCommentService implements IAccommodationCommentService
 
             if (principal instanceof User) {
                 User user = (User) principal;
+                List<Reservation> reservations = reservationRepository.findAllForGuestInAccommodation(user.getId(), createAccommodationCommentDTO.getAccommodationId());
+                for (Reservation r : reservations) {
+                    System.out.println(r.toString());
+                }
                 if (reservationRepository.findAllForGuestInAccommodation(user.getId(), createAccommodationCommentDTO.getAccommodationId()).size() == 0) {
+
                     throw new RuntimeException("The guest has no uncancelled reservations. Commenting is not allowed.");
                 }
 
-                List<Reservation> reservations = reservationRepository.findAllForGuestInAccommodation(user.getId(), createAccommodationCommentDTO.getAccommodationId());
-                if(hasPassedFiveMinutesFromEnd(reservations.get(reservations.size() - 1).getToDate())) {
+                Reservation lastReservation = reservationRepository.findLastPastReservationForGuestInAccommodation(user.getId(), createAccommodationCommentDTO.getAccommodationId());
+                if(hasPassedFiveMinutesFromEnd(lastReservation.getToTime())) {
                     throw new RuntimeException("5 minutes passed");
                 }
 
@@ -167,18 +173,18 @@ public class AccommodationCommentService implements IAccommodationCommentService
         return notDeleted;
     }
 
-    private boolean hasPassedFiveMinutesFromEnd(String endDateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime endDate = LocalDateTime.parse(endDateString, formatter);
+    private boolean hasPassedFiveMinutesFromEnd(String endTimeString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalTime endTime = LocalTime.parse(endTimeString, formatter);
 
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        LocalDateTime fiveMinutesAfterEnd = endDate.plusMinutes(5);
+        LocalTime currentTime = LocalTime.now();
+        LocalTime fiveMinutesAfterEnd = endTime.plusMinutes(5);
 
-        System.out.println("Current Date Time: " + currentDateTime);
-        System.out.println("End Date: " + endDate);
+        System.out.println("Current Time: " + currentTime);
+        System.out.println("End Time: " + endTime);
         System.out.println("Five Minutes After End: " + fiveMinutesAfterEnd);
 
-        boolean result = currentDateTime.isAfter(fiveMinutesAfterEnd);
+        boolean result = currentTime.isAfter(fiveMinutesAfterEnd);
         System.out.println("Result: " + result);
 
         return result;
