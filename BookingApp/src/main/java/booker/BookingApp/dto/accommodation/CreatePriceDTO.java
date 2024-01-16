@@ -2,6 +2,10 @@ package booker.BookingApp.dto.accommodation;
 
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.Price;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.Date;

@@ -5,6 +5,7 @@ import booker.BookingApp.enums.AccommodationType;
 import booker.BookingApp.enums.PriceType;
 import booker.BookingApp.model.accommodation.*;
 import booker.BookingApp.service.interfaces.IAccommodationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,7 +34,7 @@ public class AccommodationController {
 
     //create an accommodation
     @PostMapping(value ="/create_accommodation", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AccommodationViewDTO> insert(@RequestBody CreateAccommodationDTO accommodation) throws Exception {
+    public ResponseEntity<AccommodationViewDTO> insert(@Valid @RequestBody CreateAccommodationDTO accommodation) throws Exception {
         AccommodationViewDTO dto = service.create(accommodation);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
@@ -230,7 +231,7 @@ public class AccommodationController {
 
     //@PreAuthorize("hasAuthority('OWNER')")
     @PutMapping(value = "/update_availability/{id}", consumes = "application/json")
-    public ResponseEntity<AccommodationViewDTO> updateAvailability(@PathVariable Long id, @RequestBody UpdateAvailabilityDTO updateAvailabilityDTO) {
+    public ResponseEntity<AccommodationViewDTO> updateAvailability(@PathVariable Long id, @Valid @RequestBody UpdateAvailabilityDTO updateAvailabilityDTO) throws Exception {
         Accommodation accommodation = service.updateAvailability(id, updateAvailabilityDTO);
         if (accommodation == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

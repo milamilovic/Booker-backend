@@ -4,10 +4,12 @@ import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.enums.Role;
+import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
 import booker.BookingApp.repository.AccommodationRepository;
+import booker.BookingApp.repository.ReservationRepository;
 import booker.BookingApp.repository.UserRepository;
 import booker.BookingApp.service.interfaces.IOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class OwnerService implements IOwnerService {
 
     @Autowired
     AccommodationRepository accommodationRepository;
+
+    @Autowired
+    ReservationRepository reservationRepository;
 
     @Override
     public ArrayList<OwnerDTO> findAll() {
@@ -128,5 +133,13 @@ public class OwnerService implements IOwnerService {
         return reported;
     }
 
-
+    @Override
+    public ArrayList<GuestDTO> getAllGuestsForOwner(Long ownerId) {
+        List<Long> allIds = reservationRepository.getAllGuestIdsForOwner(ownerId);
+        ArrayList<GuestDTO> guests = new ArrayList<>();
+        for(Long id : allIds){
+            guests.add(GuestDTO.makeFromGuest((Guest) userRepository.findById(id).get()));
+        }
+        return guests;
+    }
 }

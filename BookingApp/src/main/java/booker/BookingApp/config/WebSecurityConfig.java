@@ -145,6 +145,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/guests/favouriteAccommodations/**")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/owners/*")).permitAll();      //used in acc view - for everyone
                             auth.requestMatchers(antMatcher("/api/owners")).hasAuthority("OWNER");      //used in acc view - for everyone
+                            auth.requestMatchers(antMatcher("/api/owners/{ownerId}/guests")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/owners/delete/{ownerId}")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/admin/**")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/guests")).hasAuthority("GUEST");
@@ -185,6 +186,9 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/owner_ratings/report/*")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/users/*")).permitAll();
                             auth.requestMatchers(antMatcher("/api/owner_comments/all/*/not_deleted")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodation_comments/all/*/not_deleted")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/report_user/all")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/report_user/add_report")).hasAnyAuthority("GUEST", "OWNER");
                             auth.requestMatchers(antMatcher("/h2-console/**")).permitAll();     //for everyone
 
 
@@ -252,6 +256,8 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.GET, "/api/owner_ratings/*/ratings"),
                         antMatcher(HttpMethod.GET, "/api/users/*"),
                         antMatcher(HttpMethod.GET, "/api/owner_comments/all/*/not_deleted"),
+                        antMatcher(HttpMethod.GET, "/api/accommodation_comments/all/*/not_deleted"),
+                        antMatcher(HttpMethod.GET, "/api/report_user/all"),
                         antMatcher("/h2-console/**")
         );
     }

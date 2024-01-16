@@ -14,4 +14,7 @@ public interface AccommodationCommentRepository extends JpaRepository<Accommodat
 
     @Query("select ac from AccommodationComment ac where ac.reported = true")
     public List<AccommodationComment> findAllReported();
+
+    @Query("select ac from AccommodationComment ac where ac.accommodation.id = ?1 and ac.deleted = false and ac.approved = true")
+    public List<AccommodationComment> findAllNotDeletedForAccommodation(Long accommodationId);
 }

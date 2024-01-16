@@ -1,13 +1,22 @@
 package booker.BookingApp.service.implementation;
 
+import booker.BookingApp.dto.users.CreateReportUserDTO;
+import booker.BookingApp.dto.users.UserReportDTO;
+import booker.BookingApp.enums.Role;
+import booker.BookingApp.model.users.Guest;
+import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.model.users.User;
 //import booker.BookingApp.repository.UserRepository;
+import booker.BookingApp.model.users.UserReport;
+import booker.BookingApp.repository.ReservationRepository;
 import booker.BookingApp.repository.UserRepository;
 import booker.BookingApp.service.interfaces.IUserService;
 import booker.BookingApp.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +37,8 @@ public class UserService implements IUserService {
 
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     @Override
     public User findOne(Long id){
@@ -76,7 +87,6 @@ public class UserService implements IUserService {
         userRepository.save(user);
         return user;
     }
-
 
     private boolean isActivationLinkExpired(Date activationTimestamp) {
         //long expirationTimeMillis = 24 * 60 * 60 * 1000;

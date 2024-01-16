@@ -81,6 +81,7 @@ public class OwnerCommentService implements IOwnerCommentService {
         ownerComment.setReported(false);
         ownerComment.setDate(new Date());
         ownerComment.setDeleted(false);
+        ownerComment.setApproved(false);
         ownerComment.setRating(createOwnerCommentDTO.getRating());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
