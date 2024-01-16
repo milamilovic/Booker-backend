@@ -29,12 +29,9 @@ public class WebSocketController {
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value="/sendMessageRest", method = RequestMethod.POST)
     public ResponseEntity<?> sendMessage(@RequestBody Map<String, String> message) {
-        if (message.containsKey("message")) {
-            if (message.containsKey("toId") && message.get("toId") != null && !message.get("toId").equals("")) {
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.get("toId"), message);
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.get("fromId"), message);
-            } else {
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher", message);
+        if (message.containsKey("content")) {
+            if (message.containsKey("userId") && message.get("userId") != null && !message.get("userId").equals("")) {
+                this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.get("userId"), message);
             }
             return new ResponseEntity<>(message, new HttpHeaders(), HttpStatus.OK);
         }

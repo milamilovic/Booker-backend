@@ -26,6 +26,7 @@ public class ReservationRequestController {
     //create a request
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReservationRequestDTO> insert(@RequestBody ReservationRequestDTO request) throws Exception {
+        System.out.println(request.getAccommodationId());
         ReservationRequestDTO requestDTO = service.create(request);
         if(requestDTO == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
