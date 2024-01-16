@@ -64,7 +64,7 @@ public class ReservationRequestCreatingTest {
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
-                2L, 2, 3, true);
+                2L, 2, 3, true, 10);
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         assertNull(service.create(requestDTO));
         verify(accommodationService).findOne(1L);
@@ -86,7 +86,7 @@ public class ReservationRequestCreatingTest {
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
-                2L, 2, 3, true);
+                2L, 2, 3, true, 10);
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         assertNull(service.create(requestDTO));
         verify(availabilityService).checkIfAvailable(1L, startDate, endDate);
@@ -109,7 +109,7 @@ public class ReservationRequestCreatingTest {
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
-                2L, 2, 3, true);
+                2L, 2, 3, true, 10);
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         assertNull(service.create(invalidRequestDTO));
         verify(availabilityService).checkIfAvailable(1L, start, end);
@@ -132,7 +132,7 @@ public class ReservationRequestCreatingTest {
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
-                2L, 2, 3, true);
+                2L, 2, 3, true, 10);
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         assertNull(service.create(invalidRequestDTO));
         verify(availabilityService).checkIfAvailable(1L, start, end);
@@ -155,7 +155,7 @@ public class ReservationRequestCreatingTest {
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
-                2L, 2, 3, true);
+                2L, 2, 3, true, 10);
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         when(accommodationService.findPriceForDateRange(1L, start, end, 2)).thenReturn(200d);
         assertNull(service.create(invalidRequestDTO));
@@ -181,7 +181,7 @@ public class ReservationRequestCreatingTest {
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
-                2L, 2, 3, true);
+                2L, 2, 3, true, 10);
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         when(accommodationService.findPriceForDateRange(1L, start, end, numOfPeople)).thenReturn(250d);
         assertNull(service.create(invalidRequestDTO));
@@ -206,7 +206,7 @@ public class ReservationRequestCreatingTest {
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
-                2L, 2, 3, true);
+                2L, 2, 3, true, 10);
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         when(accommodationService.findPriceForDateRange(1L, start, end, 2)).thenReturn(250d);
         assertEquals(validRequestDTO, service.create(validRequestDTO));
