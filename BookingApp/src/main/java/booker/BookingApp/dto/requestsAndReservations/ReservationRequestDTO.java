@@ -37,9 +37,9 @@ public @Data @AllArgsConstructor class ReservationRequestDTO {
 
     public static ReservationRequest makeRequestFromDTO(ReservationRequestDTO requestDTO){
         ReservationRequest request = new ReservationRequest(
+                requestDTO.getId(),
                 requestDTO.getGuestId(),
                 requestDTO.getAccommodationId(),
-                requestDTO.getId(),
                 requestDTO.getFromDate(),
                 requestDTO.getToDate(),
                 requestDTO.getNumberOfGuests(),

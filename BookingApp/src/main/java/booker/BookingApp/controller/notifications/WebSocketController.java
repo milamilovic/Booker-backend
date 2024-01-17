@@ -29,8 +29,11 @@ public class WebSocketController {
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value="/sendMessageRest", method = RequestMethod.POST)
     public ResponseEntity<?> sendMessage(@RequestBody Map<String, String> message) {
+        System.out.println("PORUKA POSLATA");
         if (message.containsKey("content")) {
+            System.out.println("IMA CONTENT");
             if (message.containsKey("userId") && message.get("userId") != null && !message.get("userId").equals("")) {
+                System.out.println("IMA PRIMAOCA");
                 this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.get("userId"), message);
             }
             return new ResponseEntity<>(message, new HttpHeaders(), HttpStatus.OK);
