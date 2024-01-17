@@ -26,6 +26,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -85,15 +86,17 @@ public class AccommodationCommentService implements IAccommodationCommentService
                 for (Reservation r : reservations) {
                     System.out.println(r.toString());
                 }
-                if (reservationRepository.findAllForGuestInAccommodation(user.getId(), createAccommodationCommentDTO.getAccommodationId()).size() == 0) {
-
+                if (reservationRepository.findAllForGuestInAccommodation(user.getId(), createAccommodationCommentDTO.getAccommodationId()).size() != 0) {
+                    Reservation lastReservation = reservationRepository.findLastPastReservationForGuestInAccommodation(user.getId(), createAccommodationCommentDTO.getAccommodationId());
+                    System.out.println(lastReservation.toString());
+                    if(hasPassedFiveMinutesFromEnd(lastReservation.getToTime())) {
+                        throw new RuntimeException("5 minutes passed");
+                    }
+                } else {
                     throw new RuntimeException("The guest has no uncancelled reservations. Commenting is not allowed.");
                 }
 
-                Reservation lastReservation = reservationRepository.findLastPastReservationForGuestInAccommodation(user.getId(), createAccommodationCommentDTO.getAccommodationId());
-                if(hasPassedFiveMinutesFromEnd(lastReservation.getToTime())) {
-                    throw new RuntimeException("5 minutes passed");
-                }
+
 
 
 
@@ -174,19 +177,26 @@ public class AccommodationCommentService implements IAccommodationCommentService
     }
 
     private boolean hasPassedFiveMinutesFromEnd(String endTimeString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalTime endTime = LocalTime.parse(endTimeString, formatter);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date endTime = new Date();
+        try {
+            endTime = sdf.parse(endTimeString);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-        LocalTime currentTime = LocalTime.now();
-        LocalTime fiveMinutesAfterEnd = endTime.plusMinutes(5);
 
-        System.out.println("Current Time: " + currentTime);
-        System.out.println("End Time: " + endTime);
-        System.out.println("Five Minutes After End: " + fiveMinutesAfterEnd);
+        Date currentTime = new Date();
+        System.out.println("Current time: " + sdf.format(currentTime));
 
-        boolean result = currentTime.isAfter(fiveMinutesAfterEnd);
-        System.out.println("Result: " + result);
 
-        return result;
+        long timeDifference = currentTime.getTime() - endTime.getTime();
+
+        // Convert milliseconds to minutes
+        long minutesDifference = timeDifference / (60 * 1000);
+
+        // Check if 5 minutes have passed
+        return minutesDifference >= 5;
+
     }
 }

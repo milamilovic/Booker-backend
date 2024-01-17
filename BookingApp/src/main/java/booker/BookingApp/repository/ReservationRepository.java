@@ -36,8 +36,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query(value = "SELECT r FROM Reservation r " +
             "WHERE r.guestId = ?1 " +
             "AND r.accommodation.id = ?2 " +
-            "AND PARSEDATETIME(FORMATDATETIME(r.toDate, 'yyyy-MM-dd'), 'yyyy-MM-dd') < CURRENT_DATE " +
-            "AND PARSEDATETIME(FORMATDATETIME(r.toTime, 'HH:mm:ss'), 'HH:mm:ss') < CURRENT_TIME ")
+            "AND r.status = 'ACCEPTED' " +
+            "AND PARSEDATETIME(FORMATDATETIME(r.toTime, 'yyyy-MM-dd HH:mm:ss'), 'yyyy-MM-dd HH:mm:ss') <= CURRENT_TIMESTAMP " +
+            " ORDER BY r.toTime ASC ")
 
     public List<Reservation> findAllForGuestInAccommodation(Long guestId, Long accommodationId);
 
@@ -62,9 +63,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT r FROM Reservation r " +
             "WHERE  r.guestId = ?1 " +
             "AND r.accommodation.id = ?1 " +
-            "AND PARSEDATETIME(FORMATDATETIME(r.toDate, 'yyyy-MM-dd'), 'yyyy-MM-dd') < CURRENT_DATE " +
-            "AND PARSEDATETIME(FORMATDATETIME(r.toTime, 'HH:mm:ss'), 'HH:mm:ss') < CURRENT_TIME " +
-            "ORDER BY r.toDate DESC, r.toTime DESC " +
+            "AND r.status = 'ACCEPTED' " +
+            "AND PARSEDATETIME(FORMATDATETIME(r.toTime, 'yyyy-MM-dd HH:mm:ss'), 'yyyy-MM-dd HH:mm:ss') <= CURRENT_TIMESTAMP " +
+            "ORDER BY r.toTime DESC " +
             "LIMIT 1")
     public Reservation findLastPastReservationForGuestInAccommodation(Long guestId, Long accommodationId);
 
