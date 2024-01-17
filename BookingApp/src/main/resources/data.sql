@@ -253,14 +253,14 @@ VALUES
     (2, 2, 'Cozy and charming, highly recommend!', 5.0, '2024-09-28', false, false, true);
 
 
-INSERT INTO Accommodation_Rating (accommodation_id, guest_id, rate, date, reported, deleted) VALUES (1, 2, 4.0, '2024-10-01', false, false);
+INSERT INTO Accommodation_Rating (accommodation_id, guest_id, rate, date, reported, deleted) VALUES (1, 1, 4.0, '2024-10-01', false, false);
 
 -- Inserting additional data into AccommodationRating table
 INSERT INTO Accommodation_Rating (accommodation_id, guest_id, rate, date, reported, deleted)
 VALUES
     (1, 3, 5.0, '2024-10-03', false, false),
     (2, 1, 4.5, '2024-09-25', false, false),
-    (3, 2, 3.8, '2024-10-05', true, false);
+    (3, 1, 3.8, '2024-10-05', true, false);
 
 INSERT INTO Owner_Rating (owner_id, guest_id, rate, date, reported, deleted)
 VALUES (2, 1, 4.5, '2024-01-01', false, false);
