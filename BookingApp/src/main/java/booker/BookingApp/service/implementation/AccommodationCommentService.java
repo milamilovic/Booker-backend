@@ -199,4 +199,11 @@ public class AccommodationCommentService implements IAccommodationCommentService
         return minutesDifference >= 5;
 
     }
+
+    @Override
+    public void deleteForAdmin(Long id) {
+        AccommodationComment comment = accommodationCommentRepository.findById(id).orElseGet(null);
+        comment.setDeleted(true);
+        accommodationCommentRepository.save(comment);
+    }
 }
