@@ -169,5 +169,12 @@ public class GuestService implements IGuestService {
         return userRepository.getNumOfCancellations(guestId);
     }
 
+    @Override
+    public void updateSettings(GuestDTO guestDTO, boolean checked) {
+        Guest guest = (Guest) userRepository.findById(guestDTO.getId()).get();
+        guest.setNotificationEnabled(checked);
+        userRepository.save(guest);
+    }
+
 
 }

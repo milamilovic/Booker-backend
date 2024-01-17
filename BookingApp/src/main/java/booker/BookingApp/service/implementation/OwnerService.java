@@ -3,7 +3,6 @@ package booker.BookingApp.service.implementation;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.dto.users.UpdateUserDTO;
-import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.model.users.ProfilePicture;
@@ -141,5 +140,20 @@ public class OwnerService implements IOwnerService {
             guests.add(GuestDTO.makeFromGuest((Guest) userRepository.findById(id).get()));
         }
         return guests;
+    }
+
+    @Override
+    public void updateSettings(OwnerDTO ownerDTO, Long id, boolean checked) {
+        Owner owner = (Owner) userRepository.findById(ownerDTO.getId()).get();
+        if (id == 1L) {
+            owner.setRequestNotificationEnabled(checked);
+        } else if (id == 2L){
+            owner.setCancellationNotificationEnabled(checked);
+        } else if (id == 3L){
+            owner.setRatingNotificationEnabled(checked);
+        } else if (id == 4L){
+            owner.setAccNotificationEnabled(checked);
+        }
+        userRepository.save(owner);
     }
 }

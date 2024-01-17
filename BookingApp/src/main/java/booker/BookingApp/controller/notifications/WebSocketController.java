@@ -4,8 +4,17 @@ import java.io.IOException;
 import java.io.IOException;
 import java.util.Map;
 
+import booker.BookingApp.dto.users.GuestDTO;
+import booker.BookingApp.dto.users.OwnerDTO;
+import booker.BookingApp.dto.users.UserDTO;
+import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.notifications.Notification;
+import booker.BookingApp.model.users.Guest;
+import booker.BookingApp.model.users.User;
+import booker.BookingApp.service.implementation.GuestService;
 import booker.BookingApp.service.implementation.NotificationService;
+import booker.BookingApp.service.implementation.OwnerService;
+import booker.BookingApp.service.implementation.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,11 +38,52 @@ public class WebSocketController {
     @Autowired
     NotificationService notificationService;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    GuestService guestService;
+
+    @Autowired
+    OwnerService ownerService;
+
     // REST enpoint
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value="/sendMessageRest", method = RequestMethod.POST)
     public ResponseEntity<?> sendMessage(@RequestBody Notification message) {
-        this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.getUserId(), message);
+        User user = this.userService.findOne(message.getUserId());
+        if (user.getRole() == Role.GUEST){
+            GuestDTO guest = guestService.getGuestById(user.getId());
+            if (guest.isNotificationEnabled()){
+                this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.getUserId(), message);
+            }
+        } else if (user.getRole() == Role.OWNER) {
+            OwnerDTO owner = ownerService.getOwnerById(user.getId());
+            switch (message.getType()){
+                case RESERVATION_CANCELLATION:
+                    if (owner.isCancellationNotificationEnabled()){
+                        this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.getUserId(), message);
+                    }
+                    break;
+                case RESERVATION_REQUEST:
+                    if (owner.isRequestNotificationEnabled()){
+                        this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.getUserId(), message);
+                    }
+                    break;
+                case ACCOMMODATION_RATING:
+                    if (owner.isAccNotificationEnabled()){
+                        this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.getUserId(), message);
+                    }
+                    break;
+                case OWNER_RATING:
+                    if (owner.isRatingNotificationEnabled()){
+                        this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.getUserId(), message);
+                    }
+                    break;
+            }
+
+        }
+        //this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.getUserId(), message);
         notificationService.save(message);
         return new ResponseEntity<>(message, new HttpHeaders(), HttpStatus.OK);
     }

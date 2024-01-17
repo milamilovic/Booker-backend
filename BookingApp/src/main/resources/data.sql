@@ -3,7 +3,7 @@ INSERT INTO users (name, surname, email, password, address, phone, role, reporte
 VALUES ('Marko', 'Marković', 'email1@gmail.com', '$2a$12$Mn1xmYaoG3YjZ1NsPRwV0eDw5wwGbmkhBSooynq8gldJluzqybXP.', 'adresa1', '060000000', 'GUEST', false, false, false, ARRAY[1, 12, 8], 'activation_link1', true, false, null, true, false, false, false, false);
 
 INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired, activation_timestamp, notification_enabled, request_notification_enabled, cancellation_notification_enabled, rating_notification_enabled, acc_notification_enabled)
-VALUES ('Petar', 'Petrović', 'email2@gmail.com', '$2a$12$Mn1xmYaoG3YjZ1NsPRwV0eDw5wwGbmkhBSooynq8gldJluzqybXP.', 'adresa2', '060000001', 'OWNER', false, false, false, null, 'activation_link2', true, false, null, false, true, true, true, true);
+VALUES ('Petar', 'Petrović', 'email2@gmail.com', '$2a$12$Mn1xmYaoG3YjZ1NsPRwV0eDw5wwGbmkhBSooynq8gldJluzqybXP.', 'adresa2', '060000001', 'OWNER', false, false, false, null, 'activation_link2', true, false, null, false, false, true, true, true);
 
 INSERT INTO users (name, surname, email, password, address, phone, role, reported, blocked, deleted, favourite_accommodations, activation_link, activated, activation_expired, activation_timestamp, notification_enabled, request_notification_enabled, cancellation_notification_enabled, rating_notification_enabled, acc_notification_enabled)
 VALUES ('Adam', 'Adamović', 'email3@gmail.com', '$2a$12$Mn1xmYaoG3YjZ1NsPRwV0eDw5wwGbmkhBSooynq8gldJluzqybXP.', 'adresa3', '060000002', 'GUEST', false, false, false, ARRAY[5, 6, 7, 8, 9], 'activation_link3', true, false, null, true, false, false, false, false);
