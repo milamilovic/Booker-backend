@@ -338,6 +338,10 @@ INSERT INTO User_Report (reported_id, reporter_id, reason, date) VALUES
                                                                     (2, 3, 'Spamming', '2024-01-12'),
                                                                     (3, 1, 'Harassment', '2024-01-13');
 
+INSERT INTO Notification (user_id, time, content, type) VALUES
+(2, '2024-01-16 19:00:00', 'Somebody rated you!', 2),
+(2, '2024-01-16 19:10:00', 'Somebody rated your accommodation!', 3),
+(1, '2024-01-16 18:00:00', 'Your reservation request is answered!', 4);
 
 
 
