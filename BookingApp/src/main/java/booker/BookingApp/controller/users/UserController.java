@@ -122,8 +122,17 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         User user = (User) authentication.getPrincipal();
+        boolean blocked = false;
+        if (user.getRole() == Role.GUEST){
+            Guest guest = (Guest) userService.findOne(user.getId());
+            blocked = guest.isBlocked();
+        }
+        System.out.println("korisnik je " + blocked);
         if(!user.isActivated()){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        if (blocked) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
         String jwt = tokenUtils.generateToken(user.getUsername());
         Token token = new Token(user.getId(), jwt);
