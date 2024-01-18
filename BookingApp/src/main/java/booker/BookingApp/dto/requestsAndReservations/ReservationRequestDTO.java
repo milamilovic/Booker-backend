@@ -17,7 +17,6 @@ public @Data @AllArgsConstructor class ReservationRequestDTO {
     private Long guestId;
     @NotNull
     private Long accommodationId;
-    @NotNull
     private Long id;
     @NotEmpty
     private String fromDate;
