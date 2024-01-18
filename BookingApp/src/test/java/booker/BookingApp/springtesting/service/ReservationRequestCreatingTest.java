@@ -164,7 +164,7 @@ public class ReservationRequestCreatingTest {
         assertNull(service.create(invalidRequestDTO));
         verify(availabilityService).checkIfAvailable(1L, start, end);
         verify(accommodationService).findOne(1L);
-        verify(accommodationService).findPriceForDateRange(1L, start, end, 2);
+        verify(accommodationService, times(2)).findPriceForDateRange(1L, start, end, 2);
         verifyNoMoreInteractions(availabilityService);
         verifyNoMoreInteractions(accommodationService);
         verifyNoInteractions(repository);
