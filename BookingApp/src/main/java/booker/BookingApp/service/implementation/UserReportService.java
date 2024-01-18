@@ -3,6 +3,7 @@ package booker.BookingApp.service.implementation;
 import booker.BookingApp.dto.users.CreateReportUserDTO;
 import booker.BookingApp.dto.users.UserReportDTO;
 import booker.BookingApp.enums.Role;
+import booker.BookingApp.model.requestsAndReservations.Reservation;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.model.users.User;
@@ -28,6 +29,9 @@ public class UserReportService implements IUserReportService {
     private UserRepository userRepository;
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private ReservationService reservationService;
+
     @Override
     public UserReportDTO create(CreateReportUserDTO createReportUserDTO) {
         UserReport userReport = new UserReport();
@@ -113,6 +117,16 @@ public class UserReportService implements IUserReportService {
             guest.setBlocked(blocked);
             userRepository.save(guest);
             System.out.println(((Guest)userRepository.findById(userId).get()).isBlocked());
+
+            if(blocked){
+                List<Reservation> guestsReservations = reservationRepository.findAllFutureReservationsForGuest(userId);
+                if (!guestsReservations.isEmpty()) {
+                    for(Reservation r : guestsReservations){
+                        reservationService.cancel(r.getId());
+                    }
+                }
+            }
+
         } else if (user.getRole() == Role.OWNER) {
             System.out.println("domacin je");
             Owner owner = (Owner)userRepository.findById(userId).get();

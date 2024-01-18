@@ -69,4 +69,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "LIMIT 1")
     public Reservation findLastPastReservationForGuestInAccommodation(Long guestId, Long accommodationId);
 
+    @Query("SELECT r " +
+            "FROM Reservation r " +
+            "WHERE r.guestId = :guestId " +
+            "AND PARSEDATETIME(FORMATDATETIME(r.fromDate, 'yyyy-MM-dd'), 'yyyy-MM-dd') > CURRENT_DATE " +
+            "AND r.status = 'APPROVED'")
+    public List<Reservation> findAllFutureReservationsForGuest(@Param("guestId")Long guestId);
+
 }

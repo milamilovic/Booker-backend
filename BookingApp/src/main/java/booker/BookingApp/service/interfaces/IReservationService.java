@@ -22,4 +22,6 @@ public interface IReservationService {
     boolean checkDeadlineExpired(String fromDateString, Accommodation accommodation);
 
     boolean cancel(Long reservationId);
+
+    ArrayList<ReservationDTO> getAllFutureForGuest(Long guestId);
 }

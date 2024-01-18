@@ -2,7 +2,6 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.requestsAndReservations.ReservationDTO;
 import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
-import booker.BookingApp.enums.ReservationRequestStatus;
 import booker.BookingApp.enums.ReservationStatus;
 import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.requestsAndReservations.Reservation;
@@ -89,10 +88,10 @@ public class ReservationService implements IReservationService {
     public void create(ReservationRequestDTO reservationRequest) {
         Reservation reservation = new Reservation();
         reservation.setGuestId(reservationRequest.getGuestId());
-        reservation.setAccommodation(accommodationRepository.findById(reservationRequest.getAccommodationId()).orElseGet(null));
+        reservation.setAccommodation(accommodationRepository.findById(reservationRequest.getAccommodationId()).get());
         reservation.setFromDate(reservationRequest.getFromDate());
         reservation.setToDate(reservationRequest.getToDate());
-//        reservation.setToTime(reservationRequest.getToDate());
+        reservation.setToTime(" ");
         reservation.setNumberOfGuests(reservationRequest.getNumberOfGuests());
         reservation.setRequestStatus(reservationRequest.getStatus());
         reservation.setStatus(ReservationStatus.ACCEPTED);
@@ -148,4 +147,13 @@ public class ReservationService implements IReservationService {
         return false;
     }
 
+    @Override
+    public ArrayList<ReservationDTO> getAllFutureForGuest(Long guestId) {
+        List<Reservation> all = reservationRepository.findAllFutureReservationsForGuest(guestId);
+        ArrayList<ReservationDTO> guestReservations = new ArrayList<>();
+        for (Reservation r : all){
+            guestReservations.add(ReservationDTO.makeFromReservation(r));
+        }
+        return guestReservations;
+    }
 }
