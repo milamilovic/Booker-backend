@@ -11,13 +11,11 @@ public @Data class UserReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "reported_id")
-    private User reported;
+    @Column(name = "reported_id")
+    private Long reportedId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "reporter_id")
-    private User reporter;
+    @Column(name = "reporter_id")
+    private Long reporterId;
 
     @Column(name = "reason")
     private String reason;

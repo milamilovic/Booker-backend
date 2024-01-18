@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static booker.BookingApp.dto.users.AdminDTO.makeFromAdmin;
 
@@ -56,10 +57,11 @@ public class AdminService implements IAdminService {
 
     @Override
     public ArrayList<UserDTO> getAllReported() {
-        GuestService guestService = new GuestService();
-        OwnerService ownerService = new OwnerService();
-        ArrayList<UserDTO> reported = new ArrayList<>(guestService.getAllReported());
-        reported.addAll(ownerService.getAllReported());
+        List<User> allReported = userRepository.getAllReported();
+        ArrayList<UserDTO> reported = new ArrayList<>();
+        for(User u : allReported){
+            reported.add(UserDTO.makeFromUser(u));
+        }
         return reported;
     }
 }

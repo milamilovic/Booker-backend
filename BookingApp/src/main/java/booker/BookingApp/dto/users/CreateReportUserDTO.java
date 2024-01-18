@@ -17,7 +17,7 @@ public @Data class CreateReportUserDTO {
     }
 
     public CreateReportUserDTO(UserReport userReport) {
-        this(userReport.getReported().getId(), userReport.getReporter().getId(), userReport.getReason());
+        this(userReport.getReportedId(), userReport.getReporterId(), userReport.getReason());
     }
 
     public CreateReportUserDTO(Long reportedId, Long reporterId, String reason) {

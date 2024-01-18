@@ -61,7 +61,7 @@ public class UserReportService implements IUserReportService {
                 }
 
 
-                userReport.setReporter(user);
+                userReport.setReporterId(user.getId());
             } else {
                 // Handle the case where the principal is not an instance of User
                 throw new RuntimeException("Unexpected principal type: " + principal.getClass());
@@ -71,7 +71,7 @@ public class UserReportService implements IUserReportService {
             throw new RuntimeException("User not authenticated");
         }
         User reportedUser = userRepository.findById(createReportUserDTO.getReportedId()).orElseGet(null);
-        userReport.setReported(reportedUser);
+        userReport.setReportedId(reportedUser.getId());
         if (reportedUser.getRole() == Role.GUEST) {
             Guest guest = (Guest) reportedUser;
             guest.setReported(true);
@@ -96,5 +96,30 @@ public class UserReportService implements IUserReportService {
         }
 
         return userReportDTOS;
+    }
+
+    @Override
+    public List<UserReport> getAllForUser(Long userId) {
+        return userReportRepository.getAllForUser(userId);
+    }
+
+    @Override
+    public void blockOrUnblock(Long userId, boolean blocked) {
+        User user = userRepository.findById(userId).get();
+        if (user.getRole() == Role.GUEST){
+            System.out.println("gost je");
+            Guest guest = (Guest)userRepository.findById(userId).get();
+            System.out.println(guest.isBlocked());
+            guest.setBlocked(blocked);
+            userRepository.save(guest);
+            System.out.println(((Guest)userRepository.findById(userId).get()).isBlocked());
+        } else if (user.getRole() == Role.OWNER) {
+            System.out.println("domacin je");
+            Owner owner = (Owner)userRepository.findById(userId).get();
+            System.out.println(owner.isBlocked());
+            owner.setBlocked(blocked);
+            userRepository.save(owner);
+            System.out.println(((Owner)userRepository.findById(userId).get()).isBlocked());
+        }
     }
 }
