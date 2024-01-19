@@ -2,6 +2,7 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.users.CreateReportUserDTO;
 import booker.BookingApp.dto.users.UserReportDTO;
+import booker.BookingApp.enums.ReservationStatus;
 import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.requestsAndReservations.Reservation;
 import booker.BookingApp.model.users.Guest;
@@ -17,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -119,7 +122,23 @@ public class UserReportService implements IUserReportService {
             System.out.println(((Guest)userRepository.findById(userId).get()).isBlocked());
 
             if(blocked){
-                List<Reservation> guestsReservations = reservationRepository.findAllFutureReservationsForGuest(userId);
+                List<Reservation> allGuestsReservations = reservationRepository.getAllForGuest(userId);
+                List<Reservation> guestsReservations = new ArrayList<>();
+                for (Reservation r : allGuestsReservations){
+                    if (r.getStatus() == ReservationStatus.ACCEPTED){
+                        try{
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            Date from = sdf.parse(r.getFromDate());
+                            if (from.after(new Date())){
+                                guestsReservations.add(r);
+                            }
+                        } catch (ParseException e){
+                            System.out.println("Can not parse date");
+                        }
+                    }
+                }
+                System.out.println("buduce rez");
+                System.out.println(guestsReservations);
                 if (!guestsReservations.isEmpty()) {
                     for(Reservation r : guestsReservations){
                         reservationService.cancel(r.getId());

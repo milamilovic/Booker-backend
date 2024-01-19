@@ -247,6 +247,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.DELETE, "/api/reservations/**"),
                         antMatcher(HttpMethod.DELETE, "/api/owners/**"),
                         antMatcher(HttpMethod.DELETE, "/api/guests/**"),
+                        antMatcher(HttpMethod.GET, "/api/admin/reported"),
                         antMatcher(HttpMethod.PUT, "/api/guests/**"),
                         antMatcher(HttpMethod.GET, "/api/guests/**"),
                         antMatcher(HttpMethod.PUT, "/api/owners/**"),
@@ -277,6 +278,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.GET, "/api/owner_comments/all/*/not_deleted"),
                         antMatcher(HttpMethod.GET, "/api/accommodation_comments/all/*/not_deleted"),
                         antMatcher(HttpMethod.GET, "/api/report_user/all"),
+                        antMatcher(HttpMethod.GET, "/api/report_user/{userId}"),
                         antMatcher("/h2-console/**")
         );
     }

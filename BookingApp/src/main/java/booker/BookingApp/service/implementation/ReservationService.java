@@ -11,6 +11,7 @@ import booker.BookingApp.service.interfaces.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -149,10 +150,22 @@ public class ReservationService implements IReservationService {
 
     @Override
     public ArrayList<ReservationDTO> getAllFutureForGuest(Long guestId) {
-        List<Reservation> all = reservationRepository.findAllFutureReservationsForGuest(guestId);
+        List<Reservation> allGuestsReservations = reservationRepository.getAllForGuest(guestId);
         ArrayList<ReservationDTO> guestReservations = new ArrayList<>();
-        for (Reservation r : all){
-            guestReservations.add(ReservationDTO.makeFromReservation(r));
+        for (Reservation r : allGuestsReservations){
+            if (r.getStatus() == ReservationStatus.ACCEPTED){
+                try{
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date from = sdf.parse(r.getFromDate());
+                    System.out.println("datum");
+                    System.out.println(from);
+                    if (from.after(new Date())){
+                        guestReservations.add(ReservationDTO.makeFromReservation(r));
+                    }
+                } catch (ParseException e){
+                    System.out.println("Can not parse date");
+                }
+            }
         }
         return guestReservations;
     }
