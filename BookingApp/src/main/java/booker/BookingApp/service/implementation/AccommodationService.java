@@ -36,7 +36,7 @@ public class AccommodationService implements IAccommodationService {
     @Value("../../Booker-frontend/booker/src/assets/images/accommodation")
     private String imagesDirPathFront;
 
-    @Value("../../../../../res/drawable")
+    @Value("../../Booker-mobile/BookingApp/app/src/main/java/com/example/bookingapp/images")
     private String imagesDirPathMobile;
 
     @Autowired
@@ -177,7 +177,7 @@ public class AccommodationService implements IAccommodationService {
         ArrayList<Image> images = new ArrayList<Image>();
         for(String fileName : accommodationDto.getImages()) {
             Image image = new Image(null,"../../assets/images/accommodation" + fileName,
-                    "../../../../../res/drawable" + fileName, accommodation);
+                    "../../../../../java/com/example/bookingapp/images" + fileName, accommodation);
             images.add(image);
         }
 
@@ -445,31 +445,6 @@ public class AccommodationService implements IAccommodationService {
     }
 
 
-    public Image convertMultipartFileToImage(MultipartFile file) throws IOException {
-        Image image = new Image();
-        image.setPath_front(saveFile(file));
-
-        return image;
-    }
-
-    private String saveFile(MultipartFile file) throws IOException {
-        String fileName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-        String uploadDir = "images";
-
-        // Create the directory if it doesn't exist
-        File directory = new File(uploadDir);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-
-        // Use File.separator to ensure correct file path on different operating systems
-        String filePath = uploadDir + File.separator;
-
-        file.transferTo(new File(filePath));
-
-        return filePath;
-    }
-
     @Override
     public void deleteImage(Long accommodationId, Long imageId) {
         imageRepository.deleteById(imageId);
@@ -487,7 +462,7 @@ public class AccommodationService implements IAccommodationService {
         ImageUploadUtil.saveImage(imagesDirPathMobile, fileName, image);
         Image newImage = new Image();
         newImage.setPath_front("../../assets/images/accommodation" + accommodationId + "/" + fileName);
-        newImage.setPath_mobile("../../../../../res/drawable/" + fileName);
+        newImage.setPath_mobile("../../../../../java/com/example/bookingapp/images/" + fileName);
         Optional<Accommodation> a = repository.findById(accommodationId);
         newImage.setAccommodation(a.get());
         imageRepository.save(newImage);
