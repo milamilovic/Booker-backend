@@ -40,4 +40,9 @@ public @Data class UserDTO {
         this.role = role;
         this.profilePicture = profilePicture;
     }
+
+    public static UserDTO makeFromUser(User user){
+        return new UserDTO(user.getId(), user.getName(), user.getSurname(), user.getEmail(),
+                user.getPassword(), user.getAddress(), user.getPhone(), user.getRole(), user.getProfilePicture());
+    }
 }

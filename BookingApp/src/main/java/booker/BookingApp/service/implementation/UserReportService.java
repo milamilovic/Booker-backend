@@ -2,7 +2,9 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.users.CreateReportUserDTO;
 import booker.BookingApp.dto.users.UserReportDTO;
+import booker.BookingApp.enums.ReservationStatus;
 import booker.BookingApp.enums.Role;
+import booker.BookingApp.model.requestsAndReservations.Reservation;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.model.users.Owner;
 import booker.BookingApp.model.users.User;
@@ -16,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +32,9 @@ public class UserReportService implements IUserReportService {
     private UserRepository userRepository;
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private ReservationService reservationService;
+
     @Override
     public UserReportDTO create(CreateReportUserDTO createReportUserDTO) {
         UserReport userReport = new UserReport();
@@ -61,7 +68,7 @@ public class UserReportService implements IUserReportService {
                 }
 
 
-                userReport.setReporter(user);
+                userReport.setReporterId(user.getId());
             } else {
                 // Handle the case where the principal is not an instance of User
                 throw new RuntimeException("Unexpected principal type: " + principal.getClass());
@@ -71,7 +78,7 @@ public class UserReportService implements IUserReportService {
             throw new RuntimeException("User not authenticated");
         }
         User reportedUser = userRepository.findById(createReportUserDTO.getReportedId()).orElseGet(null);
-        userReport.setReported(reportedUser);
+        userReport.setReportedId(reportedUser.getId());
         if (reportedUser.getRole() == Role.GUEST) {
             Guest guest = (Guest) reportedUser;
             guest.setReported(true);
@@ -96,5 +103,56 @@ public class UserReportService implements IUserReportService {
         }
 
         return userReportDTOS;
+    }
+
+    @Override
+    public List<UserReport> getAllForUser(Long userId) {
+        return userReportRepository.getAllForUser(userId);
+    }
+
+    @Override
+    public void blockOrUnblock(Long userId, boolean blocked) {
+        User user = userRepository.findById(userId).get();
+        if (user.getRole() == Role.GUEST){
+            System.out.println("gost je");
+            Guest guest = (Guest)userRepository.findById(userId).get();
+            System.out.println(guest.isBlocked());
+            guest.setBlocked(blocked);
+            userRepository.save(guest);
+            System.out.println(((Guest)userRepository.findById(userId).get()).isBlocked());
+
+            if(blocked){
+                List<Reservation> allGuestsReservations = reservationRepository.getAllForGuest(userId);
+                List<Reservation> guestsReservations = new ArrayList<>();
+                for (Reservation r : allGuestsReservations){
+                    if (r.getStatus() == ReservationStatus.ACCEPTED){
+                        try{
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            Date from = sdf.parse(r.getFromDate());
+                            if (from.after(new Date())){
+                                guestsReservations.add(r);
+                            }
+                        } catch (ParseException e){
+                            System.out.println("Can not parse date");
+                        }
+                    }
+                }
+                System.out.println("buduce rez");
+                System.out.println(guestsReservations);
+                if (!guestsReservations.isEmpty()) {
+                    for(Reservation r : guestsReservations){
+                        reservationService.cancel(r.getId());
+                    }
+                }
+            }
+
+        } else if (user.getRole() == Role.OWNER) {
+            System.out.println("domacin je");
+            Owner owner = (Owner)userRepository.findById(userId).get();
+            System.out.println(owner.isBlocked());
+            owner.setBlocked(blocked);
+            userRepository.save(owner);
+            System.out.println(((Owner)userRepository.findById(userId).get()).isBlocked());
+        }
     }
 }

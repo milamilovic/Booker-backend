@@ -70,4 +70,10 @@ public class ReservationController {
         System.out.println("rezultat otkazivanja: " + cancelled);
         return new ResponseEntity<>(cancelled, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/guest/{guestId}/future/approved")
+    public ResponseEntity<ArrayList<ReservationDTO>> getAllFutureForGuest(@PathVariable Long guestId) {
+        ArrayList<ReservationDTO> reservations = reservationService.getAllFutureForGuest(guestId);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
 }

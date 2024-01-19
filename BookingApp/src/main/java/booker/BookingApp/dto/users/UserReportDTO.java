@@ -16,7 +16,7 @@ public @Data class UserReportDTO {
     }
 
     public UserReportDTO(UserReport userReport) {
-        this(userReport.getId(), userReport.getReported().getId(), userReport.getReporter().getId(), userReport.getReason(), userReport.getDate());
+        this(userReport.getId(), userReport.getReportedId(), userReport.getReporterId(), userReport.getReason(), userReport.getDate());
     }
 
     public UserReportDTO(Long id, Long reportedId, Long reporterId, String reason, Date date) {
@@ -29,8 +29,8 @@ public @Data class UserReportDTO {
 
     public static UserReportDTO createFromUserReport(UserReport userReport) {
         return new UserReportDTO(userReport.getId(),
-                                userReport.getReported().getId(),
-                                userReport.getReporter().getId(),
+                                userReport.getReportedId(),
+                                userReport.getReporterId(),
                                 userReport.getReason(),
                                 userReport.getDate());
     }

@@ -151,6 +151,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/owners/{ownerId}/guests")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/owners/delete/{ownerId}")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/admin/**")).hasAuthority("ADMIN");
+                            auth.requestMatchers(antMatcher("/api/admin/reported")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/guests")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/amenities/**")).permitAll();      //used in search - for everyone
                             auth.requestMatchers(antMatcher("/api/availability/**")).permitAll();   //used in search - for everyone
@@ -196,6 +197,8 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/owner_comments/all/*/not_deleted")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodation_comments/all/*/not_deleted")).permitAll();
                             auth.requestMatchers(antMatcher("/api/report_user/all")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/report_user/{userId}")).hasAuthority("ADMIN");
+                            auth.requestMatchers(antMatcher("/api/report_user/{userId}/block/{blocked}")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/report_user/add_report")).hasAnyAuthority("GUEST", "OWNER");
                             auth.requestMatchers(antMatcher("/socket/**")).permitAll();
                             auth.requestMatchers(antMatcher("/sendMessageRest")).permitAll();
@@ -244,6 +247,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.DELETE, "/api/reservations/**"),
                         antMatcher(HttpMethod.DELETE, "/api/owners/**"),
                         antMatcher(HttpMethod.DELETE, "/api/guests/**"),
+                        antMatcher(HttpMethod.GET, "/api/admin/reported"),
                         antMatcher(HttpMethod.PUT, "/api/guests/**"),
                         antMatcher(HttpMethod.GET, "/api/guests/**"),
                         antMatcher(HttpMethod.PUT, "/api/owners/**"),
@@ -274,6 +278,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.GET, "/api/owner_comments/all/*/not_deleted"),
                         antMatcher(HttpMethod.GET, "/api/accommodation_comments/all/*/not_deleted"),
                         antMatcher(HttpMethod.GET, "/api/report_user/all"),
+                        antMatcher(HttpMethod.GET, "/api/report_user/{userId}"),
                         antMatcher(HttpMethod.POST, "/sendMessageRest"),
                         antMatcher(HttpMethod.GET, "/sendMessageRest"),
                         antMatcher("/h2-console/**")

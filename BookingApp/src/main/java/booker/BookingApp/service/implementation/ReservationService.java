@@ -2,7 +2,6 @@ package booker.BookingApp.service.implementation;
 
 import booker.BookingApp.dto.requestsAndReservations.ReservationDTO;
 import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
-import booker.BookingApp.enums.ReservationRequestStatus;
 import booker.BookingApp.enums.ReservationStatus;
 import booker.BookingApp.model.accommodation.Accommodation;
 import booker.BookingApp.model.requestsAndReservations.Reservation;
@@ -12,6 +11,7 @@ import booker.BookingApp.service.interfaces.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -89,10 +89,10 @@ public class ReservationService implements IReservationService {
     public void create(ReservationRequestDTO reservationRequest) {
         Reservation reservation = new Reservation();
         reservation.setGuestId(reservationRequest.getGuestId());
-        reservation.setAccommodation(accommodationRepository.findById(reservationRequest.getAccommodationId()).orElseGet(null));
+        reservation.setAccommodation(accommodationRepository.findById(reservationRequest.getAccommodationId()).get());
         reservation.setFromDate(reservationRequest.getFromDate());
         reservation.setToDate(reservationRequest.getToDate());
-//        reservation.setToTime(reservationRequest.getToDate());
+        reservation.setToTime(" ");
         reservation.setNumberOfGuests(reservationRequest.getNumberOfGuests());
         reservation.setRequestStatus(reservationRequest.getStatus());
         reservation.setStatus(ReservationStatus.ACCEPTED);
@@ -148,4 +148,25 @@ public class ReservationService implements IReservationService {
         return false;
     }
 
+    @Override
+    public ArrayList<ReservationDTO> getAllFutureForGuest(Long guestId) {
+        List<Reservation> allGuestsReservations = reservationRepository.getAllForGuest(guestId);
+        ArrayList<ReservationDTO> guestReservations = new ArrayList<>();
+        for (Reservation r : allGuestsReservations){
+            if (r.getStatus() == ReservationStatus.ACCEPTED){
+                try{
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date from = sdf.parse(r.getFromDate());
+                    System.out.println("datum");
+                    System.out.println(from);
+                    if (from.after(new Date())){
+                        guestReservations.add(ReservationDTO.makeFromReservation(r));
+                    }
+                } catch (ParseException e){
+                    System.out.println("Can not parse date");
+                }
+            }
+        }
+        return guestReservations;
+    }
 }
