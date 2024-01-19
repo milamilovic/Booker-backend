@@ -14,7 +14,6 @@ import java.util.Date;
 public @Data @AllArgsConstructor @NoArgsConstructor class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Long id;
     @Column(name = "user_id", nullable = false)
     @NotNull

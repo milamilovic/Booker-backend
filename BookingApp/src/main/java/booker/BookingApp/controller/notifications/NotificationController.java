@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 @RestController
@@ -53,5 +54,11 @@ public class NotificationController {
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{userId}/new")
+    public ResponseEntity<NotificationDTO> findNewPersonal(@PathVariable Long userId) throws ParseException {
+        NotificationDTO notification = notificationService.findNewForUser(userId);
+        return new ResponseEntity<>(notification, HttpStatus.OK);
     }
 }
