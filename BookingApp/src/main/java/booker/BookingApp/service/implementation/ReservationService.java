@@ -92,7 +92,7 @@ public class ReservationService implements IReservationService {
         reservation.setAccommodation(accommodationRepository.findById(reservationRequest.getAccommodationId()).orElseGet(null));
         reservation.setFromDate(reservationRequest.getFromDate());
         reservation.setToDate(reservationRequest.getToDate());
-//        reservation.setToTime(reservationRequest.getToDate());
+        reservation.setToTime(" ");
         reservation.setNumberOfGuests(reservationRequest.getNumberOfGuests());
         reservation.setRequestStatus(reservationRequest.getStatus());
         reservation.setStatus(ReservationStatus.ACCEPTED);
