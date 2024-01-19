@@ -32,8 +32,6 @@ public interface IAccommodationService {
 
     void approve(Long accommodationId);
 
-    ArrayList<FavouriteAccommodationDTO> findGuestsFavouriteAccommodations(Long guestId) throws IOException;
-
     ArrayList<AccommodationListingDTO> search(String startDate, String endDate, String location, int people);
 
     ArrayList<AccommodationListingDTO> findAllOwnersAccommodations(Long ownerId);
@@ -63,4 +61,6 @@ public interface IAccommodationService {
     ArrayList<AccommodationNameDTO> getAccommodationNames(Long ownerId);
 
     Long getAccommodationId(String accName);
+
+    ArrayList<String> getImages(Long id) throws IOException;
 }

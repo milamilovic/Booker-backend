@@ -262,6 +262,12 @@ public class AccommodationController {
         return new ResponseEntity<>("Images uploaded successfully!", HttpStatus.OK);
     }
 
+    @GetMapping(value = "/images/{id}")
+    public ResponseEntity<ArrayList<String>> getImagesForAcc(@PathVariable Long id) throws IOException {
+        ArrayList<String> images = service.getImages(id);
+        return new ResponseEntity<>(images, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/owner/{id}/accommodationNames")
     public ResponseEntity<ArrayList<AccommodationNameDTO>> getAccommodationNames(@PathVariable Long id) {
         ArrayList<AccommodationNameDTO> names = service.getAccommodationNames(id);

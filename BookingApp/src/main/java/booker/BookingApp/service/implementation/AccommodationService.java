@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -30,14 +31,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class AccommodationService implements IAccommodationService {
 
-    @Value("src/main/resources/images/accommodations")
+    @Value("src/main/resources/images/accommodation")
     private String imagesDirPath;
 
     @Value("../../Booker-frontend/booker/src/assets/images/accommodation")
     private String imagesDirPathFront;
-
-    @Value("../../Booker-mobile/BookingApp/app/src/main/java/com/example/bookingapp/images")
-    private String imagesDirPathMobile;
 
     @Autowired
     AccommodationRepository repository;
@@ -177,7 +175,7 @@ public class AccommodationService implements IAccommodationService {
         ArrayList<Image> images = new ArrayList<Image>();
         for(String fileName : accommodationDto.getImages()) {
             Image image = new Image(null,"../../assets/images/accommodation" + fileName,
-                    "../../../../../java/com/example/bookingapp/images" + fileName, accommodation);
+                    fileName, accommodation);
             images.add(image);
         }
 
@@ -249,24 +247,6 @@ public class AccommodationService implements IAccommodationService {
             repository.save(accommodation);
         }
         System.out.println("dunja2");
-    }
-
-    @Override
-    public ArrayList<FavouriteAccommodationDTO> findGuestsFavouriteAccommodations(Long guestId) throws IOException {
-        AccommodationViewDTO accommodation = findOne(1L);
-
-        Image image1 = new Image(1L, "src/main/resources/lisbon_image.jpg", "", new Accommodation());
-        Image image2 = new Image(2L, "src/main/resources/london_image.jpg", "", new Accommodation());
-        Image image3 = new Image(3L, "src/main/resources/madrid_image.jpg", "", new Accommodation());
-        FavouriteAccommodationDTO accommodation1 = new FavouriteAccommodationDTO(1L, "Example accommodation 1", "Description 1", image1, 80.00, 4,new Address());
-        FavouriteAccommodationDTO accommodation2 = new FavouriteAccommodationDTO(2L, "Example accommodation 2", "Description 2", image2, 100.00, 5,new Address());
-        FavouriteAccommodationDTO accommodation3 = new FavouriteAccommodationDTO(3L, "Example accommodation 3", "Description 3", image3, 85.50, 3.2F,new Address());
-        ArrayList<FavouriteAccommodationDTO> accommodations = new ArrayList<>();
-        accommodations.add(accommodation1);
-        accommodations.add(accommodation2);
-        accommodations.add(accommodation3);
-        return accommodations;
-
     }
 
     @Override
@@ -439,7 +419,7 @@ public class AccommodationService implements IAccommodationService {
         // save to frontend folder
         ImageUploadUtil.saveImage(uploadDir, fileName, image);
         // save to mobile app folder
-        ImageUploadUtil.saveImage(imagesDirPathMobile, fileName, image);
+        ImageUploadUtil.saveImage(imagesDirPath + accommodation.getId() , fileName, image);
 
         repository.save(accommodation);
     }
@@ -459,10 +439,10 @@ public class AccommodationService implements IAccommodationService {
         // save to frontend folder
         ImageUploadUtil.saveImage(uploadDir, fileName, image);
         // save to mobile app folder
-        ImageUploadUtil.saveImage(imagesDirPathMobile, fileName, image);
+        ImageUploadUtil.saveImage(imagesDirPath + accommodation.getId(), fileName, image);
         Image newImage = new Image();
         newImage.setPath_front("../../assets/images/accommodation" + accommodationId + "/" + fileName);
-        newImage.setPath_mobile("../../../../../java/com/example/bookingapp/images/" + fileName);
+        newImage.setPath_mobile(fileName);
         Optional<Accommodation> a = repository.findById(accommodationId);
         newImage.setAccommodation(a.get());
         imageRepository.save(newImage);
@@ -512,7 +492,29 @@ public class AccommodationService implements IAccommodationService {
     @Override
     public Long getAccommodationId(String accName) {
         return repository.findIdByName(accName);
-    };
+    }
+
+    @Override
+    public ArrayList<String> getImages(Long id) throws IOException {
+        ArrayList<String> imagesBase64 = new ArrayList<>();
+        String directoryPath = StringUtils.cleanPath(imagesDirPath + id);
+        File directory = new File(directoryPath);
+        if(directory.exists() && directory.isDirectory()) {
+            File[] images = directory.listFiles();
+            if(images!=null) {
+                for(File image : images) {
+                    if(image.isFile()) {
+                        byte[] imageData = Files.readAllBytes(image.toPath());
+                        String imageBase64 = Base64.getEncoder().encodeToString(imageData);
+                        imagesBase64.add(imageBase64);
+                    }
+                }
+            }
+        }
+        return imagesBase64;
+    }
+
+    ;
 
 
 }

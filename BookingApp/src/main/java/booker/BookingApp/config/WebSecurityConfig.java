@@ -120,6 +120,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/accommodations")).hasAnyAuthority("OWNER", "ADMIN");          //viewing acc for everyone
                             auth.requestMatchers(antMatcher("/api/accommodations/add")).hasAuthority("OWNER");          //viewing acc for everyone
                             auth.requestMatchers(antMatcher("/api/accommodations/*")).permitAll();          //viewing acc for everyone
+                            auth.requestMatchers(antMatcher("/api/accommodations/images/*")).permitAll();          //getting accommodations
                             auth.requestMatchers(antMatcher("/api/accommodations/owner/*")).hasAuthority("OWNER");    //for owner
                             auth.requestMatchers(antMatcher("/api/accommodations/guest/**")).hasAuthority("GUEST");    //for owner
                             auth.requestMatchers(antMatcher("/api/accommodations/owner/{ownerId}/active")).hasAuthority("OWNER");
@@ -281,6 +282,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.GET, "/api/report_user/{userId}"),
                         antMatcher(HttpMethod.POST, "/sendMessageRest"),
                         antMatcher(HttpMethod.GET, "/sendMessageRest"),
+                        antMatcher(HttpMethod.GET, "/api/accommodations/images/*"),
                         antMatcher("/h2-console/**")
         );
     }
