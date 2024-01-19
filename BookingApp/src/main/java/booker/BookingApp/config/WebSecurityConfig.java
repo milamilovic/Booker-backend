@@ -274,6 +274,8 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.GET, "/api/owner_comments/all/*/not_deleted"),
                         antMatcher(HttpMethod.GET, "/api/accommodation_comments/all/*/not_deleted"),
                         antMatcher(HttpMethod.GET, "/api/report_user/all"),
+                        antMatcher(HttpMethod.POST, "/sendMessageRest"),
+                        antMatcher(HttpMethod.GET, "/sendMessageRest"),
                         antMatcher("/h2-console/**")
         );
     }
