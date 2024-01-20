@@ -65,10 +65,8 @@ public class ReservationRequestCreatingTest {
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
                 2L, 2, 3, true, 0);
-        when(accommodationService.findOne(1L)).thenReturn(accommodation);
         assertNull(service.create(requestDTO));
-        verify(accommodationService).findOne(1L);
-        verifyNoMoreInteractions(accommodationService);
+        verifyNoInteractions(accommodationService);
         verifyNoInteractions(availabilityService);
         verifyNoInteractions(repository);
     }
@@ -82,16 +80,10 @@ public class ReservationRequestCreatingTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = sdf.parse("2024-03-05");
         Date endDate = sdf.parse("2024-03-15");
-        when(availabilityService.checkIfAvailable(1L, startDate, endDate)).thenReturn(false);
-        AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
-                null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
-                new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
-                2L, 2, 3, true, 0);
-        when(accommodationService.findOne(1L)).thenReturn(accommodation);
+        when(availabilityService.checkForDateRange(1L, startDate, endDate)).thenReturn(false);
         assertNull(service.create(requestDTO));
-        verify(availabilityService).checkIfAvailable(1L, startDate, endDate);
-        verify(accommodationService).findOne(1L);
-        verifyNoMoreInteractions(accommodationService);
+        verify(availabilityService).checkForDateRange(1L, startDate, endDate);
+        verifyNoInteractions(accommodationService);
         verifyNoMoreInteractions(availabilityService);
         verifyNoInteractions(repository);
     }
@@ -105,14 +97,14 @@ public class ReservationRequestCreatingTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start = sdf.parse("2023-01-05");
         Date end = sdf.parse("2023-01-15");
-        when(availabilityService.checkIfAvailable(1L, start, end)).thenReturn(true);
+        when(availabilityService.checkForDateRange(1L, start, end)).thenReturn(true);
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
                 2L, 2, 3, true, 0);
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         assertNull(service.create(invalidRequestDTO));
-        verify(availabilityService).checkIfAvailable(1L, start, end);
+        verify(availabilityService).checkForDateRange(1L, start, end);
         verify(accommodationService).findOne(1L);
         verifyNoMoreInteractions(accommodationService);
         verifyNoMoreInteractions(availabilityService);
@@ -128,15 +120,14 @@ public class ReservationRequestCreatingTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start = sdf.parse("2024-03-05");
         Date end = sdf.parse("2024-02-15");
-        when(availabilityService.checkIfAvailable(1L, start, end)).thenReturn(true);
-
+        when(availabilityService.checkForDateRange(1L, start, end)).thenReturn(true);
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
                 2L, 2, 3, true, 0);
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         assertNull(service.create(invalidRequestDTO));
-        verify(availabilityService).checkIfAvailable(1L, start, end);
+        verify(availabilityService).checkForDateRange(1L, start, end);
         verify(accommodationService).findOne(1L);
         verifyNoMoreInteractions(accommodationService);
         verifyNoMoreInteractions(availabilityService);
@@ -152,17 +143,15 @@ public class ReservationRequestCreatingTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start = sdf.parse("2024-03-05");
         Date end = sdf.parse("2024-03-15");
-        when(availabilityService.checkIfAvailable(1L, start, end)).thenReturn(true);
-
+        when(availabilityService.checkForDateRange(1L, start, end)).thenReturn(true);
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
                 2L, 2, 3, true, 0);
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
-
         when(accommodationService.findPriceForDateRange(1L, start, end, 2)).thenReturn(200d);
         assertNull(service.create(invalidRequestDTO));
-        verify(availabilityService).checkIfAvailable(1L, start, end);
+        verify(availabilityService).checkForDateRange(1L, start, end);
         verify(accommodationService).findOne(1L);
         verify(accommodationService, times(2)).findPriceForDateRange(1L, start, end, 2);
         verifyNoMoreInteractions(availabilityService);
@@ -180,8 +169,7 @@ public class ReservationRequestCreatingTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start = sdf.parse("2024-03-05");
         Date end = sdf.parse("2024-03-15");
-        when(availabilityService.checkIfAvailable(1L, start, end)).thenReturn(true);
-
+        when(availabilityService.checkForDateRange(1L, start, end)).thenReturn(true);
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
@@ -189,7 +177,7 @@ public class ReservationRequestCreatingTest {
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         when(accommodationService.findPriceForDateRange(1L, start, end, numOfPeople)).thenReturn(250d);
         assertNull(service.create(invalidRequestDTO));
-        verify(availabilityService).checkIfAvailable(1L, start, end);
+        verify(availabilityService).checkForDateRange(1L, start, end);
         verify(accommodationService, times(2)).findOne(1L);
         verify(accommodationService).findPriceForDateRange(1L, start, end, numOfPeople);
         verifyNoMoreInteractions(availabilityService);
@@ -206,7 +194,7 @@ public class ReservationRequestCreatingTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date start = sdf.parse("2024-03-05");
         Date end = sdf.parse("2024-03-15");
-        when(availabilityService.checkIfAvailable(1L, start, end)).thenReturn(true);
+        when(availabilityService.checkForDateRange(1L, start, end)).thenReturn(true);
         AccommodationViewDTO accommodation = new AccommodationViewDTO(1L, "title", "description",
                 null, new ArrayList<Amenity>(), new ArrayList<Image>(), new ArrayList<AvailabilityDTO>(),
                 new ArrayList<Price>(), new ArrayList<AccommodationRating>(), new ArrayList<AccommodationComment>(),
@@ -214,7 +202,7 @@ public class ReservationRequestCreatingTest {
         when(accommodationService.findOne(1L)).thenReturn(accommodation);
         when(accommodationService.findPriceForDateRange(1L, start, end, 2)).thenReturn(250d);
         assertEquals(validRequestDTO, service.create(validRequestDTO));
-        verify(availabilityService).checkIfAvailable(1L, start, end);
+        verify(availabilityService).checkForDateRange(1L, start, end);
         verify(accommodationService, times(2)).findOne(1L);
         verify(accommodationService).findPriceForDateRange(1L, start, end, 2);
         verifyNoMoreInteractions(availabilityService);

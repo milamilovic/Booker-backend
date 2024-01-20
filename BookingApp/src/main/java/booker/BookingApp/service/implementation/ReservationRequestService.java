@@ -37,19 +37,18 @@ public class ReservationRequestService implements IReservationRequestService {
     public ReservationRequestDTO create(ReservationRequestDTO requestDto) {
         ReservationRequest request = ReservationRequestDTO.makeRequestFromDTO(requestDto);
         request.setAccommodationId(request.getAccommodationId());
-        // if accommodation has automatically accepting reservation requests option, then
-        // create reservation and change reservation request status
-        System.out.println("MILA PRVI PUT " + requestDto.getAccommodationId());
-        if (!checkReservationAcceptingType(request.getAccommodationId()) &&
-                !checkAvailability(request.getAccommodationId(), request.getFromDate(), request.getToDate())){
-            request.setStatus(ReservationRequestStatus.ACCEPTED);
-            requestDto.setStatus(ReservationRequestStatus.ACCEPTED);
-            reservationService.create(requestDto);
-        }
         //if accommodation is available for time slot
         if(!checkAvailability(request.getAccommodationId(), request.getFromDate(), request.getToDate())) {
             System.out.println("NIJE PROSAO VALIDACIJE ZA AVAILABILITY");
             return null;
+        }
+        // if accommodation has automatically accepting reservation requests option, then
+        // create reservation and change reservation request status
+        System.out.println("MILA PRVI PUT " + requestDto.getAccommodationId());
+        if (!checkReservationAcceptingType(request.getAccommodationId())){
+            request.setStatus(ReservationRequestStatus.ACCEPTED);
+            requestDto.setStatus(ReservationRequestStatus.ACCEPTED);
+            reservationService.create(requestDto);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -92,7 +91,7 @@ public class ReservationRequestService implements IReservationRequestService {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date from = sdf.parse(fromDate);
             Date to = sdf.parse(toDate);
-            return availabilityService.checkIfAvailable(accommodationId, from, to);
+            return availabilityService.checkForDateRange(accommodationId, from, to);
         } catch (ParseException e){
             System.out.println("Can not parse date");
         }
