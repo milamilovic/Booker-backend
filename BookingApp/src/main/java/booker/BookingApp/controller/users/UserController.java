@@ -11,14 +11,18 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -149,6 +153,36 @@ public class UserController {
 
         UserDTO dto = new UserDTO(user);
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/{userId}/upload_image")
+    public ResponseEntity<String> uploadImages(@PathVariable("userId")Long userId,
+                                               @RequestParam("images") Collection<MultipartFile> imageFiles) throws IOException {
+        if(imageFiles.size() == 1){
+            for (MultipartFile image: imageFiles){
+                userService.uploadImage(userId, image);
+            }
+        }
+        return new ResponseEntity<>("New profile picture uploaded successfully!", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/image/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<String>> getProfilePictureForUser(@PathVariable Long id) throws IOException {
+        String image = userService.getImage(id);
+        List<String> images = new ArrayList<>();
+        images.add(image);
+        return new ResponseEntity<>(images, HttpStatus.OK);
+    }
+
+    // upload image for mobile
+    @PostMapping(value = "/image/upload/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> saveProfilePictureForUser(@PathVariable Long id,
+                                                            @RequestBody List<String> images) throws IOException {
+        System.out.println("cuvanje slike pogodjeno");
+        for (String imageBase64String: images) {
+            userService.saveProfilePicture(imageBase64String, id);
+        }
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
 
