@@ -1,36 +1,45 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.dto.users.CreateReportUserDTO;
-import booker.BookingApp.dto.users.UserReportDTO;
-import booker.BookingApp.enums.Role;
-import booker.BookingApp.model.users.Guest;
-import booker.BookingApp.model.users.Owner;
+import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
+import booker.BookingApp.model.accommodation.Accommodation;
+import booker.BookingApp.model.accommodation.Image;
+import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
 //import booker.BookingApp.repository.UserRepository;
-import booker.BookingApp.model.users.UserReport;
+import booker.BookingApp.repository.ProfilePictureRepository;
 import booker.BookingApp.repository.ReservationRepository;
 import booker.BookingApp.repository.UserRepository;
 import booker.BookingApp.service.interfaces.IUserService;
+import booker.BookingApp.util.ImageUploadUtil;
 import booker.BookingApp.util.StringUtil;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserService implements IUserService {
 
+    @Value("src/main/resources/images/user")
+    private String imagesDirPath;
+
+    @Value("../../Booker-frontend/booker/src/assets/images/user")
+    private String imagesDirPathFront;
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ProfilePictureRepository profilePictureRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -116,9 +125,47 @@ public class UserService implements IUserService {
     }
 
 
+    @Override
+    public void uploadImage(Long userId, MultipartFile image) throws IOException {
+        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+        String uploadDir = StringUtils.cleanPath(imagesDirPathFront + userId);
+        // clean directory before upload new image
+        File directory = new File(imagesDirPathFront + userId);
+        if(directory.exists() && directory.isDirectory()) {
+            FileUtils.cleanDirectory(directory);
+        }
+        File directoryMobile = new File(imagesDirPath + userId);
+        if(directoryMobile.exists() && directoryMobile.isDirectory()) {
+            FileUtils.cleanDirectory(directoryMobile);
+        }
 
+        // save to frontend folder
+        ImageUploadUtil.saveImage(uploadDir, fileName, image);
+        // save to mobile app folder
+        ImageUploadUtil.saveImage(imagesDirPath + userId, fileName, image);
 
+        ProfilePicture profilePicture = profilePictureRepository.getProfilePictureForUser(userId);
+        profilePicture.setPath("../../assets/images/user" + userId + "/" + fileName);
+        profilePicture.setPath_mobile(fileName);
+        profilePictureRepository.save(profilePicture);
+    }
 
-
-
+    @Override
+    public String getImage(Long id) throws IOException {
+        String imageBase64 = "";
+        String directoryPath = StringUtils.cleanPath(imagesDirPath + id);
+        File directory = new File(directoryPath);
+        if(directory.exists() && directory.isDirectory()) {
+            File[] images = directory.listFiles();
+            if(images!=null) {
+                for(File image : images) {
+                    if(image.isFile()) {
+                        byte[] imageData = Files.readAllBytes(image.toPath());
+                        imageBase64 = Base64.getEncoder().encodeToString(imageData);
+                    }
+                }
+            }
+        }
+        return imageBase64;
+    }
 }

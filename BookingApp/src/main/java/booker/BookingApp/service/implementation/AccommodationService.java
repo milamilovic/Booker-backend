@@ -427,6 +427,9 @@ public class AccommodationService implements IAccommodationService {
 
     @Override
     public void deleteImage(Long accommodationId, Long imageId) {
+        Image image = imageRepository.findById(imageId).get();
+        File imageFile = new File(imagesDirPath+accommodationId+"/"+image.getPath_mobile());
+        imageFile.delete();
         imageRepository.deleteById(imageId);
     }
 
