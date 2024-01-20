@@ -19,4 +19,6 @@ public interface IUserService {
     void uploadImage(Long userId, MultipartFile image) throws IOException;
 
     String getImage(Long id) throws IOException;
+
+    void saveProfilePicture(String imageBase64String, Long id) throws IOException;
 }

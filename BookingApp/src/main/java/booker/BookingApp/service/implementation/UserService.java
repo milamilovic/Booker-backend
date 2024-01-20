@@ -1,8 +1,5 @@
 package booker.BookingApp.service.implementation;
 
-import booker.BookingApp.dto.accommodation.AccommodationViewDTO;
-import booker.BookingApp.model.accommodation.Accommodation;
-import booker.BookingApp.model.accommodation.Image;
 import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
 //import booker.BookingApp.repository.UserRepository;
@@ -15,14 +12,19 @@ import booker.BookingApp.util.StringUtil;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -167,5 +169,26 @@ public class UserService implements IUserService {
             }
         }
         return imageBase64;
+    }
+
+    @Override
+    public void saveProfilePicture(String imageBase64String, Long id) throws IOException {
+        byte[] imageBytes = imageBase64String.getBytes();
+        Path uploadPath = Paths.get(imagesDirPath + id);
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        try (InputStream inputStream = new ByteArrayInputStream(imageBytes)) {
+            Path filePath = uploadPath.resolve("profile_picture.jpg");
+
+            System.out.println("UploadPath je: " + uploadPath.toAbsolutePath());
+
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        } catch (IOException ioe) {
+            throw new IOException("Could not save file ", ioe);
+        }
     }
 }

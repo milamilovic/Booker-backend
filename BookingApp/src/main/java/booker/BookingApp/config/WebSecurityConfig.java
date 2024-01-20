@@ -114,6 +114,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/users/activate_profile/**")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/{userId}/upload_image")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/image/{id}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/users/image/upload/{id}")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodations/create_accommodation")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/accommodations/update_availability/**")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/accommodations/name/*")).hasAuthority("OWNER");
@@ -281,6 +282,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.GET, "/api/users/*"),
                         antMatcher(HttpMethod.POST, "/api/users/{userId}/upload_image"),
                         antMatcher(HttpMethod.GET, "/api/users/image/{id}"),
+                        antMatcher(HttpMethod.POST, "/api/users/image/upload/{id}"),
                         antMatcher(HttpMethod.GET, "/api/owner_comments/all/*/not_deleted"),
                         antMatcher(HttpMethod.GET, "/api/accommodation_comments/all/*/not_deleted"),
                         antMatcher(HttpMethod.GET, "/api/report_user/all"),

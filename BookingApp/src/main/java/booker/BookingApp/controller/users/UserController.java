@@ -174,6 +174,17 @@ public class UserController {
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
 
+    // upload image for mobile
+    @PostMapping(value = "/image/upload/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> saveProfilePictureForUser(@PathVariable Long id,
+                                                            @RequestBody List<String> images) throws IOException {
+        System.out.println("cuvanje slike pogodjeno");
+        for (String imageBase64String: images) {
+            userService.saveProfilePicture(imageBase64String, id);
+        }
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
 
 
 
