@@ -3,21 +3,30 @@ package booker.BookingApp.dto.users;
 import booker.BookingApp.enums.Role;
 import booker.BookingApp.model.users.ProfilePicture;
 import booker.BookingApp.model.users.User;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 public @Data class UserDTO {
     private Long id;
 
+    @NotEmpty
     private String name;
 
+    @NotEmpty
     private String surname;
 
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String password;
 
+    @NotEmpty
     private String address;
 
+    @NotEmpty
     private String phone;
+    @NotNull
     private Role role;
     private ProfilePicture profilePicture;
 

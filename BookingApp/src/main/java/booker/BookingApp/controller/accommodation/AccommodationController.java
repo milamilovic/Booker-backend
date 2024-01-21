@@ -189,7 +189,7 @@ public class AccommodationController {
     //update accommodation
     @PutMapping(value = "update/{accommodationId}" , consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateAccommodation(@PathVariable("accommodationId")Long accommodationId,
-            @RequestBody UpdateAccommodationDTO updatedAccommodation) {
+            @Valid @RequestBody UpdateAccommodationDTO updatedAccommodation) {
         try{
             AccommodationViewDTO existingAcc = service.findOne(accommodationId);
             if(existingAcc == null){
@@ -278,6 +278,12 @@ public class AccommodationController {
     public ResponseEntity<Long> getAccommodationId(@PathVariable String accName) {
         Long id = service.getAccommodationId(accName);
         return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/all/id")
+    public ResponseEntity<ArrayList<Long>> getAllIds() {
+        ArrayList<Long> ids = service.getAllIds();
+        return new ResponseEntity<>(ids, HttpStatus.OK);
     }
 
 }

@@ -8,6 +8,7 @@ import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.model.users.Guest;
 import booker.BookingApp.service.implementation.AccommodationService;
 import booker.BookingApp.service.implementation.GuestService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +23,9 @@ import java.util.List;
 @RequestMapping("/api/guests")
 @CrossOrigin(origins = "http://localhost:4200")
 public class GuestController {
-    private final GuestService guestService;
 
     @Autowired
-    public GuestController(GuestService guestService) {
-        this.guestService = guestService;
-    }
+    GuestService guestService;
 
     @GetMapping(value = "/all")
     public ResponseEntity<ArrayList<GuestDTO>> getAll() {
@@ -56,13 +54,13 @@ public class GuestController {
     }
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<GuestDTO> insert(@RequestBody GuestDTO guest) {
+    public ResponseEntity<GuestDTO> insert(@Valid @RequestBody GuestDTO guest) {
         GuestDTO guestDTO = guestService.insert(guest);
         return new ResponseEntity<>(guestDTO, HttpStatus.OK);
     }
 
     @PutMapping(value = "/{guestId}")
-    public ResponseEntity<GuestDTO> update(@PathVariable("guestId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<GuestDTO> update(@PathVariable("guestId") Long id, @Valid @RequestBody UpdateUserDTO updateUserDTO) {
         try{
             GuestDTO existingGuest = guestService.getGuestById(id);
             if (existingGuest == null){

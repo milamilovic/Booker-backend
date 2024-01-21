@@ -517,7 +517,11 @@ public class AccommodationService implements IAccommodationService {
         return imagesBase64;
     }
 
-    ;
+    @Override
+    public ArrayList<Long> getAllIds(){
+        ArrayList<Long> ids = repository.findAllIds();
+        return ids;
+    }
 
 
 }

@@ -60,7 +60,13 @@ public class NotificationService implements INotificationService {
 
     @Override
     public NotificationDTO findNewForUser(Long userId) throws ParseException {
+        if (userId == 0){
+            return null;
+        }
         List<Notification> notifications = repository.findAllPersonal(userId);
+        if (notifications.isEmpty()){
+            return null;
+        }
         Notification notification = notifications.get(notifications.size()-1);
         String notifTime = notification.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

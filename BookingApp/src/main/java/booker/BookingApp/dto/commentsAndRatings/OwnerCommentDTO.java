@@ -2,19 +2,30 @@ package booker.BookingApp.dto.commentsAndRatings;
 
 import booker.BookingApp.model.commentsAndRatings.OwnerComment;
 import booker.BookingApp.model.users.ProfilePicture;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 public @Data class OwnerCommentDTO {
     private Long id;
+    @NotNull
     private Long ownerId;
+    @NotNull
     private Long guestId;
+    @NotEmpty
     private String guestName;
+    @NotEmpty
     private String guestSurname;
     private ProfilePicture guestProfilePicture;
+    @NotEmpty
     private String content;
+    @Min(0)
     private double rating;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     private boolean reported;
     private boolean deleted;
