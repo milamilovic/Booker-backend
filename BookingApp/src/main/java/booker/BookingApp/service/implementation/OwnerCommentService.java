@@ -155,5 +155,12 @@ public class OwnerCommentService implements IOwnerCommentService {
         ownerCommentRepository.save(comment);
     }
 
+    @Override
+    public void approveComment(Long id) {
+        OwnerComment comment = ownerCommentRepository.findById(id).get();
+        comment.setApproved(true);
+        ownerCommentRepository.save(comment);
+    }
+
 
 }

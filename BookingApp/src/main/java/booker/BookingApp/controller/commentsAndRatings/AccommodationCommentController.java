@@ -160,4 +160,11 @@ public class AccommodationCommentController {
         AccommodationCommentDTO accommodationCommentDTO = new AccommodationCommentDTO(accommodationCommentService.findOne(comment_id));
         return new ResponseEntity<>(accommodationCommentDTO, HttpStatus.OK);
     }
+
+    @PutMapping(value = "/approve/{comment_id}")
+    public ResponseEntity<AccommodationCommentDTO> approveComment(@PathVariable Long comment_id) {
+        accommodationCommentService.approveComment(comment_id);
+        AccommodationCommentDTO accommodationCommentDTO = new AccommodationCommentDTO(accommodationCommentService.findOne(comment_id));
+        return new ResponseEntity<>(accommodationCommentDTO, HttpStatus.OK);
+    }
 }

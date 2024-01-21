@@ -136,4 +136,11 @@ public class OwnerCommentController {
         OwnerCommentDTO reportOwnerCommentDTO = new OwnerCommentDTO(ownerCommentService.findOne(comment_id));
         return new ResponseEntity<>(reportOwnerCommentDTO, HttpStatus.OK);
     }
+
+    @PutMapping(value = "/approve/{comment_id}")
+    public ResponseEntity<OwnerCommentDTO> approve(@PathVariable Long comment_id) {
+        ownerCommentService.deleteForAdmin(comment_id);
+        OwnerCommentDTO reportOwnerCommentDTO = new OwnerCommentDTO(ownerCommentService.findOne(comment_id));
+        return new ResponseEntity<>(reportOwnerCommentDTO, HttpStatus.OK);
+    }
 }

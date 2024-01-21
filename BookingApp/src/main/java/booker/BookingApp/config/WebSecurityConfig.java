@@ -170,6 +170,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/accommodation_comments/delete/{comment_id}")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/accommodation_comments/all/reported")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/accommodation_comments/report/*")).hasAuthority("OWNER");
+                            auth.requestMatchers(antMatcher("/api/accommodation_comments/approve/*")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/accommodation_ratings/all")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodation_ratings/*/rating")).permitAll();
                             auth.requestMatchers(antMatcher("/api/accommodation_ratings/all/*/ratings")).permitAll();
@@ -185,6 +186,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/owner_comments/delete/{comment_id}")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/owner_comments/add_comment")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/owner_comments/update")).hasAuthority("GUEST");
+                            auth.requestMatchers(antMatcher("/api/owner_comments/approve/*")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/owner_comments/all/reported")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/owner_comments/all/*/comments")).permitAll();
                             auth.requestMatchers(antMatcher("/api/owner_comments/report/*")).hasAuthority("OWNER");
@@ -290,6 +292,8 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.POST, "/sendMessageRest"),
                         antMatcher(HttpMethod.GET, "/sendMessageRest"),
                         antMatcher(HttpMethod.GET, "/api/accommodations/images/*"),
+                        antMatcher(HttpMethod.PUT, "/api/accommodation_comments/approve/*"),
+                        antMatcher(HttpMethod.PUT, "/api/owner_comments/approve*"),
                         antMatcher("/h2-console/**")
         );
     }
