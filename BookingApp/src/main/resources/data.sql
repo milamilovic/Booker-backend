@@ -244,7 +244,7 @@ INSERT INTO Address (city, street, latitude, longitude, accommodation_id) VALUES
 
 -- Inserting data into AccommodationComment table
 INSERT INTO Accommodation_Comment (accommodation_id, guest_id, content, rating, date, reported, deleted, approved)
-VALUES (1, 2, 'Great!', 3.8, '2024-10-01', false, false, true);
+VALUES (1, 3, 'Great!', 3.8, '2024-10-01', false, false, true);
 
 -- Inserting additional data into AccommodationComment table
 INSERT INTO Accommodation_Comment (accommodation_id, guest_id, content, rating, date, reported, deleted, approved)
@@ -253,7 +253,7 @@ VALUES
     (2, 1, 'Lovely cabin, enjoyed every moment.', 5.0, '2024-09-25', false, false, false),
     (3, 3, 'The city apartment was perfect for our stay.', 4.0, '2024-10-05', false, false, true),
     (1, 1, 'Not as expected, needs improvement.', 3.5, '2024-10-02', true, false, true),
-    (2, 2, 'Cozy and charming, highly recommend!', 5.0, '2024-09-28', false, false, true);
+    (2, 3, 'Cozy and charming, highly recommend!', 5.0, '2024-09-28', false, false, true);
 
 
 INSERT INTO Accommodation_Rating (accommodation_id, guest_id, rate, date, reported, deleted) VALUES (1, 1, 4.0, '2024-10-01', false, false);
