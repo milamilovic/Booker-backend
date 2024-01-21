@@ -12,7 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 public @Data @AllArgsConstructor @NoArgsConstructor class NotificationDTO {
-    @NotNull
     private Long id;
     @NotNull
     private Long userId;

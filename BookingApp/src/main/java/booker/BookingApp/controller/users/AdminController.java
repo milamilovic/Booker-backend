@@ -5,6 +5,7 @@ import booker.BookingApp.model.users.Admin;
 import booker.BookingApp.service.implementation.AdminService;
 import booker.BookingApp.service.implementation.GuestService;
 import booker.BookingApp.service.implementation.OwnerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +18,17 @@ import java.util.ArrayList;
 @RequestMapping("/api/admin")
 @CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
-    private final AdminService adminService;
+
     @Autowired
     GuestService guestService;
     @Autowired
     OwnerService ownerService;
 
     @Autowired
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
-    }
+    AdminService adminService;
 
     @PutMapping(value = "/{adminId}")
-    public ResponseEntity<AdminDTO> update(@PathVariable("adminId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<AdminDTO> update(@PathVariable("adminId") Long id, @Valid @RequestBody UpdateUserDTO updateUserDTO) {
         try{
             AdminDTO existingAdmin = adminService.get(id);
             if (existingAdmin == null){

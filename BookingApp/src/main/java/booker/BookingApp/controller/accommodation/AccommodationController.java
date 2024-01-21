@@ -189,7 +189,7 @@ public class AccommodationController {
     //update accommodation
     @PutMapping(value = "update/{accommodationId}" , consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateAccommodation(@PathVariable("accommodationId")Long accommodationId,
-            @RequestBody UpdateAccommodationDTO updatedAccommodation) {
+            @Valid @RequestBody UpdateAccommodationDTO updatedAccommodation) {
         try{
             AccommodationViewDTO existingAcc = service.findOne(accommodationId);
             if(existingAcc == null){

@@ -4,6 +4,7 @@ import booker.BookingApp.dto.requestsAndReservations.ReservationDTO;
 import booker.BookingApp.dto.requestsAndReservations.ReservationRequestDTO;
 import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.service.implementation.ReservationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/create", consumes = "application/json")
-    public ResponseEntity<ReservationDTO> insert(@RequestBody ReservationRequestDTO reservationRequest) {
+    public ResponseEntity<ReservationDTO> insert(@Valid @RequestBody ReservationRequestDTO reservationRequest) {
         reservationService.create(reservationRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
