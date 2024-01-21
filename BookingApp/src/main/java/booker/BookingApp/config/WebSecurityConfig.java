@@ -205,7 +205,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/report_user/all")).permitAll();
                             auth.requestMatchers(antMatcher("/api/report_user/{userId}")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/report_user/{userId}/block/{blocked}")).hasAuthority("ADMIN");
-                            auth.requestMatchers(antMatcher("/api/report_user/add_report")).hasAnyAuthority("GUEST", "OWNER");
+                            auth.requestMatchers(antMatcher("/api/report_user/add_report")).permitAll();
                             auth.requestMatchers(antMatcher("/socket/**")).permitAll();
                             auth.requestMatchers(antMatcher("/sendMessageRest")).permitAll();
                             auth.requestMatchers(antMatcher("/socket-subscriber")).permitAll();
@@ -294,6 +294,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.GET, "/api/accommodations/images/*"),
                         antMatcher(HttpMethod.PUT, "/api/accommodation_comments/approve/*"),
                         antMatcher(HttpMethod.PUT, "/api/owner_comments/approve*"),
+                        antMatcher(HttpMethod.POST, "/api/report_user/add_report"),
                         antMatcher("/h2-console/**")
         );
     }
