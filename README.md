@@ -17,7 +17,7 @@ Before you start, make sure you have the following installed on your machine:
 ## Starting 
 Follow the steps below to get the Booker App up and running on your local machine:
 1. **Clone the Repository:**
-   git clone https://github.com/your-username/booker-app.git
+   git clone https://github.com/booker-project-app/Booker-backend.git
 2. **Navigate to the Project Directory:**
    cd Booker-backend
 3. **Open the project in IDE**
