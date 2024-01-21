@@ -206,4 +206,13 @@ public class AccommodationCommentService implements IAccommodationCommentService
         comment.setDeleted(true);
         accommodationCommentRepository.save(comment);
     }
+
+    @Override
+    public void approveComment(Long id) {
+        AccommodationComment comment = accommodationCommentRepository.findById(id).orElseGet(null);
+        comment.setApproved(true);
+        accommodationCommentRepository.save(comment);
+    }
+
+
 }

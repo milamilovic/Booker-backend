@@ -19,4 +19,5 @@ public interface IAccommodationCommentService {
     public List<AccommodationComment> findAllReported();
     public List<AccommodationCommentDTO> findAllNotDeletedForAccommodation(Long accommodationId);
     public void deleteForAdmin(Long id);
+    public void approveComment(Long id);
 }

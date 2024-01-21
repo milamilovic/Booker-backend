@@ -40,43 +40,22 @@ public class UserReportService implements IUserReportService {
         UserReport userReport = new UserReport();
         userReport.setReason(createReportUserDTO.getReason());
         userReport.setDate(new Date());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null) {
-            Object principal = authentication.getPrincipal();
-
-            if (principal instanceof User) {
-                User user = (User) principal;
-                if (user.getRole() == Role.GUEST) {
-                    System.out.println("Owner ID: "+ user.getId());
-                    System.out.println("Guest ID: " + createReportUserDTO.getReportedId());
-                    if (reservationRepository.findAllPastForGuest(user.getId(), createReportUserDTO.getReportedId()).size() == 0){
-                        System.out.println("Owner ID: "+ user.getId());
-                        System.out.println("Guest ID: " + createReportUserDTO.getReportedId());
-                        throw new RuntimeException("You didn't have any reservations in this owner's accommodations before!");
-                    }
-                }
-
-                if (user.getRole() == Role.OWNER) {
-                    System.out.println("Owner ID: "+ user.getId());
-                    System.out.println("Guest ID: " + createReportUserDTO.getReportedId());
-                    if (reservationRepository.findAllPastForGuest(createReportUserDTO.getReportedId(), user.getId()).size() == 0) {
-                        System.out.println("Owner ID: "+ user.getId());
-                        System.out.println("Guest ID: " + createReportUserDTO.getReportedId());
-                        throw new RuntimeException("This guest didn't have any reservation in your accommodations before!");
-                    }
-                }
+        userReport.setReporterId(createReportUserDTO.getReporterId());
+        User reporter = userRepository.findById(createReportUserDTO.getReporterId()).get();
 
 
-                userReport.setReporterId(user.getId());
-            } else {
-                // Handle the case where the principal is not an instance of User
-                throw new RuntimeException("Unexpected principal type: " + principal.getClass());
+        if (reporter.getRole() == Role.GUEST) {
+            if (reservationRepository.findAllPastForGuest(createReportUserDTO.getReporterId(), createReportUserDTO.getReportedId()).isEmpty()) {
+                throw new RuntimeException("Reporting isn't allowed!");
             }
-        } else {
-            // Handle the case where there is no authentication
-            throw new RuntimeException("User not authenticated");
         }
+
+        if (reporter.getRole() == Role.OWNER) {
+            if (reservationRepository.findAllPastForOwner(createReportUserDTO.getReporterId(), createReportUserDTO.getReportedId()).isEmpty()) {
+                throw new RuntimeException("Reporting isn't allowed!");
+            }
+        }
+
         User reportedUser = userRepository.findById(createReportUserDTO.getReportedId()).orElseGet(null);
         userReport.setReportedId(reportedUser.getId());
         if (reportedUser.getRole() == Role.GUEST) {
