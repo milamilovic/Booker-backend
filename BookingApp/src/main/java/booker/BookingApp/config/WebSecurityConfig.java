@@ -156,6 +156,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/owners/{ownerId}/guests")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/owners/delete/{ownerId}")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/admin/**")).hasAuthority("ADMIN");
+                            auth.requestMatchers(antMatcher("/api/admin/{adminId}")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/admin/reported")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/guests")).hasAuthority("GUEST");
                             auth.requestMatchers(antMatcher("/api/amenities/**")).permitAll();      //used in search - for everyone
@@ -257,6 +258,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.DELETE, "/api/owners/**"),
                         antMatcher(HttpMethod.DELETE, "/api/guests/**"),
                         antMatcher(HttpMethod.GET, "/api/admin/reported"),
+                        antMatcher(HttpMethod.PUT, "/api/admin/{adminId}"),
                         antMatcher(HttpMethod.PUT, "/api/guests/**"),
                         antMatcher(HttpMethod.GET, "/api/guests/**"),
                         antMatcher(HttpMethod.PUT, "/api/owners/**"),
