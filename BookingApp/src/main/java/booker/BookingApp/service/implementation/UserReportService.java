@@ -40,7 +40,9 @@ public class UserReportService implements IUserReportService {
         UserReport userReport = new UserReport();
         userReport.setReason(createReportUserDTO.getReason());
         userReport.setDate(new Date());
+        userReport.setReporterId(createReportUserDTO.getReporterId());
         User reporter = userRepository.findById(createReportUserDTO.getReporterId()).get();
+
 
         if (reporter.getRole() == Role.GUEST) {
             if (reservationRepository.findAllPastForGuest(createReportUserDTO.getReporterId(), createReportUserDTO.getReportedId()).isEmpty()) {
