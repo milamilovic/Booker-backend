@@ -63,4 +63,6 @@ public interface IAccommodationService {
     Long getAccommodationId(String accName);
 
     ArrayList<String> getImages(Long id) throws IOException;
+
+    ArrayList<Long> getAllIds();
 }

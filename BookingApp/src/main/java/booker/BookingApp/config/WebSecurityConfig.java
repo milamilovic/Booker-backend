@@ -115,6 +115,7 @@ public class WebSecurityConfig {
                             auth.requestMatchers(antMatcher("/api/users/{userId}/upload_image")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/image/{id}")).permitAll();
                             auth.requestMatchers(antMatcher("/api/users/image/upload/{id}")).permitAll();
+                            auth.requestMatchers(antMatcher("/api/accommodations/all/id")).hasAuthority("ADMIN");
                             auth.requestMatchers(antMatcher("/api/accommodations/create_accommodation")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/accommodations/update_availability/**")).hasAuthority("OWNER");
                             auth.requestMatchers(antMatcher("/api/accommodations/name/*")).hasAuthority("OWNER");
@@ -235,6 +236,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.PUT, "/api/accommodations"),
                         antMatcher(HttpMethod.PUT, "/api/accommodations/**"),
                         antMatcher(HttpMethod.GET, "/api/accommodations/**"),
+                        antMatcher(HttpMethod.GET, "/api/accommodations/all/id"),
                         antMatcher(HttpMethod.POST, "/api/accommodations/search/**"),
                         antMatcher(HttpMethod.GET, "/api/accommodations/search/**"),
                         antMatcher(HttpMethod.POST, "/api/accommodations/add"),
@@ -287,6 +289,7 @@ public class WebSecurityConfig {
                         antMatcher(HttpMethod.GET, "/api/accommodation_comments/all/*/not_deleted"),
                         antMatcher(HttpMethod.GET, "/api/report_user/all"),
                         antMatcher(HttpMethod.GET, "/api/report_user/{userId}"),
+                        antMatcher(HttpMethod.GET, "/api/report_user/{userId}/block/{blocked}"),
                         antMatcher(HttpMethod.POST, "/sendMessageRest"),
                         antMatcher(HttpMethod.GET, "/sendMessageRest"),
                         antMatcher(HttpMethod.GET, "/api/accommodations/images/*"),

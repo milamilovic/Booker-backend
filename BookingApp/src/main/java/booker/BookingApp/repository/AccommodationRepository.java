@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.parameters.P;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,4 +30,7 @@ public interface AccommodationRepository  extends JpaRepository<Accommodation, L
 
     @Query(value = "SELECT a.id FROM Accommodation a WHERE a.title = :accName")
     public Long findIdByName(@Param("accName") String accName);
+
+    @Query(value = "SELECT a.id FROM Accommodation a")
+    public ArrayList<Long> findAllIds();
 }
