@@ -280,4 +280,10 @@ public class AccommodationController {
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/all/id")
+    public ResponseEntity<ArrayList<Long>> getAllIds() {
+        ArrayList<Long> ids = service.getAllIds();
+        return new ResponseEntity<>(ids, HttpStatus.OK);
+    }
+
 }
