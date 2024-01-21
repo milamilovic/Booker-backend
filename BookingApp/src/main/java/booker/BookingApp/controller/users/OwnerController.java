@@ -5,6 +5,7 @@ import booker.BookingApp.dto.users.GuestDTO;
 import booker.BookingApp.dto.users.OwnerDTO;
 import booker.BookingApp.dto.users.UpdateUserDTO;
 import booker.BookingApp.service.implementation.OwnerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +18,9 @@ import java.util.ArrayList;
 @RequestMapping("/api/owners")
 @CrossOrigin(origins = "http://localhost:4200")
 public class OwnerController {
-    private final OwnerService ownerService;
 
     @Autowired
-    public OwnerController(OwnerService ownerService) {
-        this.ownerService = ownerService;
-    }
+    OwnerService ownerService;
 
     @GetMapping(value = "/all")
     public ResponseEntity<ArrayList<OwnerDTO>> getAll() {
@@ -57,7 +55,7 @@ public class OwnerController {
     }
 
     @PutMapping(value = "/{ownerId}")
-    public ResponseEntity<OwnerDTO> update(@PathVariable("ownerId") Long id, @RequestBody UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<OwnerDTO> update(@PathVariable("ownerId") Long id, @Valid @RequestBody UpdateUserDTO updateUserDTO) {
         try{
             OwnerDTO existingOwner = ownerService.getOwnerById(id);
             if(existingOwner == null){
