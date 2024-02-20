@@ -1,6 +1,9 @@
 # Booker-backend
 Project for subject ISS
 
+## Description
+The backend server in Spring for Booker, an accommodation booking application, is a robust and efficient system designed to handle the core business logic of the application. It is built using the Spring framework, utilizing controllers, services, and repositories (JPA repositories) to manage the flow of data and business rules. The server also features authentication and authorization mechanisms, ensuring secure access to the application's features. Furthermore, the backend server includes validation and testing functionalities to guarantee the integrity and reliability of the application's data and processes. With these features, the backend server serves as the backbone of Booker, providing a stable and scalable platform for managing accommodation bookings.
+
 ## Contributors:
 * Jelena Adamović SV6/2021
 * Dunja Matejić SV21/2021
